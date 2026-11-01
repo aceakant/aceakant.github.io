@@ -39,8 +39,12 @@ jobs:
               if not v:
                   print(f"SHAPE {n}: not saved"); continue
               s = v.strip()
-              print(f"SHAPE {n}: length {len(v)} | starts like a Claude API key (sk-ant-api): {'yes' if s.startswith('sk-ant-api') else 'NO'}"
-                    f" | spaces/line breaks at the ends: {'YES' if s != v else 'no'} | quote marks: {'YES' if any(c in s for c in chr(34) + chr(39)) else 'no'}")
+              print(f"SHAPE {n}: length {len(v)} | spaces/line breaks at the ends: {'YES' if s != v else 'no'} | quote marks: {'YES' if any(c in s for c in chr(34) + chr(39)) else 'no'}")
+          k = {n: os.environ.get(n, "").strip() for n in ["VERTAXNODE_ANTHROPIC_API_KEY", "ANALYST_ANTHROPIC_API_KEY", "OLD_ANTHROPIC_API_KEY"]}
+          same = lambda a, b: "SAME" if k[a] and k[a] == k[b] else "different"
+          print("COMPARE articles key vs old key:", same("VERTAXNODE_ANTHROPIC_API_KEY", "OLD_ANTHROPIC_API_KEY"))
+          print("COMPARE analyst key vs old key:", same("ANALYST_ANTHROPIC_API_KEY", "OLD_ANTHROPIC_API_KEY"))
+          print("COMPARE articles key vs analyst key:", same("VERTAXNODE_ANTHROPIC_API_KEY", "ANALYST_ANTHROPIC_API_KEY"))
           PY
           for name in VERTAXNODE_ANTHROPIC_API_KEY ANALYST_ANTHROPIC_API_KEY OLD_ANTHROPIC_API_KEY; do
             [ -z "${!name}" ] && continue
