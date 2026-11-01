@@ -1,114 +1,114 @@
 {
   "sample": "retail-loan-book",
-  "generated": "2026-11-01T20:47:32.969Z",
+  "generated": "2026-11-01T21:37:40.389Z",
   "seconds": 29,
   "summary_chars": 5124,
-  "title": "Retail loan book: early arrears trend",
+  "title": "Retail loan book: early delinquency review",
   "draft": {
     "findings": [
       {
         "id": "F1",
         "severity": "high",
-        "headline": "Early arrears have nearly doubled since Q2 2025",
-        "detail": "The share of loans 30+ days past due at 6 months was 6.6% for Q2 25 loans and 12.8% for Q1 26 loans (12.8 ÷ 6.6 ≈ 1.9 times). It has risen in each of the last three quarters, from 7.8% to 9.7% to 12.8%."
+        "headline": "30-day arrears rate has almost doubled in five quarters",
+        "detail": "The share of loans 30+ days past due at 6 months rose from 7.2% (Q1 25) to 12.8% (Q1 26), after a dip to 6.6% in Q2 25. Volumes were steady at about 1,000 loans a quarter, so this is not a mix-of-volume effect."
       },
       {
         "id": "F2",
         "severity": "high",
-        "headline": "Deterioration is concentrated in Personal and Card loans",
-        "detail": "Personal loans went from 8.7% in Q2 25 to 21.0% in Q1 26, and Card from 12.2% to 20.2%. Car stayed near 6% and Home near 0.5%."
+        "headline": "Personal and Card loans drive the deterioration",
+        "detail": "Personal rose from 9.3% to 21.0% and Card from 11.2% to 20.2% between Q1 25 and Q1 26. Car stayed near 6% and Home near 0.5%."
       },
       {
         "id": "F3",
         "severity": "high",
-        "headline": "Shared phone numbers go with very high missed payments",
-        "detail": "9 phone values repeat across 42 rows. 83.3% of those rows were 30+ days past due at 6 months, against 8.8% overall, and 81% missed the first payment, against 2.3% overall. This looks like a possible fraud or application-duplication signal."
+        "headline": "Shared phone numbers go with very high default and missed first payments",
+        "detail": "9 phone values repeat across 42 loans. 83.3% of those loans reached 30+ days past due (about 35 loans) against 8.8% overall, and 81% missed the first payment against 2.3% overall. This is a possible fraud or duplicate-borrower signal."
       },
       {
         "id": "F4",
         "severity": "medium",
         "headline": "Digital and self-employed borrowers show higher arrears",
-        "detail": "Digital loans run at 13.0% against 5.8% for Branch. Self-employed borrowers run at 12.2% against 6.5% for salaried. These are patterns, not proven causes, and may overlap with the Personal and Card mix."
+        "detail": "Digital is at 13.0% against 5.8% for Branch, and its average bureau score is lower (715.4 against 733.7). Self-employed borrowers are at 12.2% against 6.5% for salaried."
       },
       {
         "id": "F5",
         "severity": "medium",
         "headline": "Income is missing for 39.7% of Partner loans",
-        "detail": "Income is 6.9% missing overall, and 90.8% of the gaps are in the Partner channel. Any income-based analysis or rule will be weaker for that channel."
+        "detail": "Income is missing in 6.9% of all rows, and 90.8% of the gaps are in the Partner channel. Any income-based analysis or affordability checks on Partner loans may be unreliable."
       }
     ],
     "next_steps": [
-      "Split Q1 26 Personal and Card arrears by channel, employment and loan size to find which part of the new lending is driving the rise.",
-      "Refer the 42 loans sharing phone values to fraud review, and check whether the same applicants or partners appear in them.",
-      "Confirm every Q4 25 and Q1 26 loan has a full 6 months of history, and ask Partner sourcing why income is missing."
+      "Investigate the 42 loans sharing phone numbers: check applications, origination channel and branch, and consider a hold on similar new applications.",
+      "Review Personal and Card underwriting and recent cohorts, including the Digital channel mix, to see what changed from Q3 25. Also check whether the Q1 26 loans have a full 6-month window.",
+      "Ask Partner originators why income is missing, and test whether Digital and self-employed arrears hold when product is held constant."
     ]
   },
   "reviews": [
     {
       "id": "F1",
-      "verdict": "confirmed",
-      "note": "6.6% to 12.8% is about 1.9 times. Q3 25 7.8%, Q4 25 9.7% and Q1 26 12.8% are each higher than the quarter before."
+      "verdict": "corrected",
+      "note": "7.2% to 12.8% is about 1.8 times, not nearly double. Removed the unsupported 'not a mix effect' claim; volumes of 984 to 1,038 are steady."
     },
     {
       "id": "F2",
       "verdict": "corrected",
-      "note": "Personal and Card figures match. Car ranged 4.7% to 6.3% and Home 0% to 1.1%, so I gave ranges instead of 'near'."
+      "note": "Personal 9.3% to 21.0% and Card 11.2% to 20.2% confirmed. Replaced 'drive' with 'goes with'; Car 4.7-6.3% and Home 0-1.1% fit."
     },
     {
       "id": "F3",
       "verdict": "corrected",
-      "note": "Numbers match and 42 rows is large enough. I removed the fraud guess, which the data cannot support, and lowered severity to medium."
+      "note": "42 rows, 83.3% (about 35 loans) and 81% confirmed. Cut the fraud speculation and lowered severity to medium, as 35 is 8% of the 440 positives."
     },
     {
       "id": "F4",
       "verdict": "confirmed",
-      "note": "Digital 13.0% vs Branch 5.8% and self-employed 12.2% vs salaried 6.5% match. Caution about overlap with product mix is fair."
+      "note": "Digital 13.0% vs Branch 5.8%, bureau 715.4 vs 733.7, self-employed 12.2% vs salaried 6.5% all match. Medium severity is fair."
     },
     {
       "id": "F5",
       "verdict": "confirmed",
-      "note": "39.7% missing within Partner, 90.8% of all gaps in Partner and 6.9% overall all match the summary."
+      "note": "6.9% missing, 90.8% of gaps in Partner and 39.7% missing within Partner all match the summary. Medium severity is fair."
     }
   ],
   "findings": [
     {
       "id": "F1",
       "severity": "high",
-      "headline": "Early arrears have nearly doubled since Q2 2025",
-      "detail": "The share of loans 30+ days past due at 6 months was 6.6% for Q2 25 and 12.8% for Q1 26 (12.8 ÷ 6.6 ≈ 1.9 times). It has risen in each of the last three quarters: 7.8%, 9.7%, then 12.8%."
+      "headline": "30-day arrears rate rose from 7.2% to 12.8%",
+      "detail": "The share of loans 30 or more days past due at 6 months rose from 7.2% in Q1 25 to 12.8% in Q1 26, about 1.8 times as high. It dipped to 6.6% in Q2 25, and quarterly volumes stayed between 984 and 1,038 loans."
     },
     {
       "id": "F2",
       "severity": "high",
-      "headline": "The rise is concentrated in Personal and Card loans",
-      "detail": "Personal went from 8.7% in Q2 25 to 21.0% in Q1 26, and Card from 12.2% to 20.2%. Car stayed between 4.7% and 6.3%, and Home between 0% and 1.1%."
+      "headline": "The rise goes with Personal and Card loans",
+      "detail": "Personal went from 9.3% to 21.0% and Card from 11.2% to 20.2% between Q1 25 and Q1 26. Car stayed between 4.7% and 6.3%, and Home stayed at or below 1.1%."
     },
     {
       "id": "F3",
       "severity": "medium",
-      "headline": "Loans sharing phone numbers show very high missed payments",
-      "detail": "9 phone values repeat across 42 rows. 83.3% of those rows were 30+ days past due at 6 months, against 8.8% overall, and 81% missed the first payment, against 2.3% overall. The group is small, but the gap is large enough to review."
+      "headline": "Shared phone numbers go with very high arrears and missed first payments",
+      "detail": "9 phone values repeat across 42 loans. 83.3% of these loans (about 35) reached 30+ days past due against 8.8% overall, and 81% missed the first payment against 2.3% overall. The group is small but clearly worth checking."
     },
     {
       "id": "F4",
       "severity": "medium",
       "headline": "Digital and self-employed borrowers show higher arrears",
-      "detail": "Digital loans run at 13.0% against 5.8% for Branch. Self-employed borrowers run at 12.2% against 6.5% for salaried. These go with higher arrears but are not proven causes, and may overlap with the Personal and Card mix."
+      "detail": "Digital is at 13.0% against 5.8% for Branch, and its average bureau score is lower (715.4 against 733.7). Self-employed borrowers are at 12.2% against 6.5% for salaried. Product mix has not been separated out."
     },
     {
       "id": "F5",
       "severity": "medium",
       "headline": "Income is missing for 39.7% of Partner loans",
-      "detail": "Income is 6.9% missing overall, and 90.8% of the gaps are in the Partner channel. Any income-based analysis or rule will be weaker for that channel."
+      "detail": "Income is missing in 6.9% of all rows, and 90.8% of those gaps are in the Partner channel. Income-based analysis for Partner loans is less reliable."
     }
   ],
   "next_steps": [
-    "Split Q1 26 Personal and Card arrears by channel, employment and loan size to see which new lending is behind the rise.",
-    "Review the 42 loans sharing phone values, checking whether they link to the same applicants, branches or partners.",
-    "Confirm Q4 25 and Q1 26 loans have a full 6 months of history, and ask Partner sourcing why income is missing."
+    "Review the 42 loans that share phone numbers: check their applications and how they were originated, and consider extra checks on new applications with repeated phone numbers.",
+    "Look at Personal and Card lending from Q3 25 onwards, and confirm that Q1 26 loans have had a full 6 months to show the outcome.",
+    "Test whether the Digital and self-employed gaps remain when product is held constant, and ask Partner originators why income is missing."
   ],
-  "conclusion": "Early arrears are clearly worsening, from 6.6% in Q2 25 to 12.8% in Q1 26, and the rise sits mainly in Personal and Card lending. Do first: break down recent Personal and Card loans by channel, employment and loan size to find where the weakness is. Then review the 42 loans sharing phone numbers and fix the missing Partner income.",
-  "limits": "This review uses summary statistics only, so it cannot show why arrears are rising, whether the recent quarters have a full 6 months of history, or whether the channel, employment and product patterns overlap.",
+  "conclusion": "Early arrears have risen from 7.2% to 12.8% over five quarters, and the rise goes with Personal and Card loans rather than Car or Home. First, check whether the Q1 26 figure is complete and comparable, then review Personal and Card lending since Q3 25. The shared-phone group is small but has very high arrears and deserves a separate look.",
+  "limits": "This review uses summary statistics only, so it cannot show why arrears rose, whether channel or employment gaps survive once product is allowed for, or whether recent quarters have fully matured.",
   "model": "claude-sonnet-5-5",
   "version": "2026-11-02"
 }
