@@ -46,6 +46,39 @@ def nice_date(iso):
     return f"{d.day} {d.strftime('%b %Y')}"
 
 
+def accountability_view(config, published, data):
+    """How the site's AI is held to account: fact-checks behind each published article, and the
+    Analyst on Call checker's verdicts (prepared samples + live reviews), plus tool use."""
+    rows, claims, corrected, removed, sources = [], 0, 0, 0, 0
+    for a in sorted(published, key=lambda x: x["week_no"]):
+        rep = ROOT / "content" / "media" / a["slug"] / "factcheck-report.json"
+        checks = json.loads(rep.read_text()).get("checks", []) if rep.exists() else []
+        c = sum(1 for x in checks if x.get("status") == "corrected")
+        r = sum(1 for x in checks if x.get("status") == "removed")
+        n = len(a.get("sources") or [])
+        rows.append(dict(a=a, claims=len(checks), corrected=c, removed=r, sources=n))
+        claims += len(checks); corrected += c; removed += r; sources += n
+    verified = max(0, claims - corrected - removed)
+    verdicts = {"confirmed": 0, "corrected": 0, "removed": 0, "added": 0}
+    for f in sorted((ROOT / "site" / "static" / "analyst" / "samples").glob("*.review.json")):
+        for rv in json.loads(f.read_text()).get("reviews", []):
+            if rv.get("verdict") in verdicts:
+                verdicts[rv["verdict"]] += 1
+    live = (data or {}).get("analyst_live") or {}
+    for k in verdicts:
+        verdicts[k] += int((live.get("verdicts") or {}).get(k, 0))
+    checked = sum(verdicts.values())
+    tools = (data or {}).get("tools") or {}
+    an = config.get("analyst") or {}
+    return dict(
+        fc=dict(articles=len(rows), claims=claims, verified=verified, corrected=corrected, removed=removed, sources=sources, rows=rows,
+                pct_verified=round(verified / claims * 100) if claims else 0, pct_corrected=round(corrected / claims * 100) if claims else 0),
+        mc=dict(checked=checked, verdicts=[dict(name=k, count=v, pct=round(v / checked * 100) if checked else 0) for k, v in verdicts.items()],
+                live_reviews=int(live.get("reviews", 0)), live_avg=round(live["seconds"] / live["reviews"]) if live.get("reviews") else None,
+                samples_opened=sum((tools.get("samples") or {}).values()), uploads=int(tools.get("uploads", 0)),
+                free=an.get("free_per_visitor", 5), cap=an.get("daily_cap", 20), live_on=bool(an.get("worker_url"))))
+
+
 def pulse_view(config, labs, published):
     """Numbers for the Pulse page, from content/pulse.json (written each morning by scripts/pulse_fetch.py)."""
     pcfg = config.get("pulse") or {}
@@ -53,7 +86,8 @@ def pulse_view(config, labs, published):
     data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
     v = dict(on=bool((config.get("analytics") or {}).get("goatcounter")), ready=False,
              min_visitors=pcfg.get("min_visitors", 200),
-             since=nice_date(data["since"]) if data else None)
+             since=nice_date(data["since"]) if data else None,
+             acc=accountability_view(config, published, data))
     if not data or data.get("visitors", 0) < v["min_visitors"]:
         return v
     updated = datetime.datetime.fromisoformat(data["updated"].replace("Z", "+00:00")).astimezone(IST)

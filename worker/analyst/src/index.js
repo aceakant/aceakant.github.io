@@ -24,6 +24,11 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
     const url = new URL(request.url);
     if (request.method === "GET" && url.pathname === "/") return json({ ok: true, service: "analyst-on-call", version: VERSION }, 200, cors);
+    // Public accountability tally for the Pulse page: totals only, nothing about any file or visitor.
+    if (request.method === "GET" && url.pathname === "/stats") {
+      const st = env.LIMITS ? JSON.parse((await env.LIMITS.get("stats")) || "null") : null;
+      return json(st || { reviews: 0 }, 200, { ...cors, "Access-Control-Allow-Origin": "*" });
+    }
     if (!allowed.includes(origin)) return json({ error: "origin", message: "This service only answers Ajay Kant's website." }, 403, cors);
     if (!env.LIMITS || !env.ANTHROPIC_API_KEY) return json({ error: "not_ready", message: "The live analyst is not switched on yet." }, 503, cors);
 
@@ -52,6 +57,7 @@ export default {
       return json({ error: "bad_request", message: "Expected a statistics summary." }, 400, cors);
 
     let result;
+    const started = Date.now();
     try {
       result = await runReview(summary, { apiKey: env.ANTHROPIC_API_KEY, backupKey: env.ANTHROPIC_API_KEY_BACKUP, workspace: env.ANTHROPIC_WORKSPACE_ID, model: env.MODEL || "claude-sonnet-5-5" });
     } catch (e) {
@@ -59,6 +65,15 @@ export default {
     }
     await env.LIMITS.put(vKey, String(used + 1), { expirationTtl: windowDays * 86400 });
     await env.LIMITS.put(dKey, String(today + 1), { expirationTtl: 2 * 86400 });
+    if (request.headers.get("X-Analyst-Test") !== "1") {  // the deploy job's own test isn't counted
+      const st = JSON.parse((await env.LIMITS.get("stats")) || "null") || { since: day, reviews: 0, findings: 0, seconds: 0, verdicts: { confirmed: 0, corrected: 0, removed: 0, added: 0 } };
+      st.reviews += 1;
+      st.findings += result.findings.length;
+      st.seconds += Math.round((Date.now() - started) / 1000);
+      (result.reviews || []).forEach((r) => { if (r.verdict in st.verdicts) st.verdicts[r.verdict] += 1; });
+      st.last = day;
+      await env.LIMITS.put("stats", JSON.stringify(st));
+    }
     return json({ ...result, remaining: Math.max(0, perVisitor - used - 1), free: perVisitor }, 200, cors);
   },
 };

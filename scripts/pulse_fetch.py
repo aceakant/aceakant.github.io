@@ -68,6 +68,18 @@ def day_counts(hit):
     return out
 
 
+def analyst_live(cfg):
+    """The live Analyst on Call service's public tally (reviews run, checker verdicts). None if unreachable."""
+    url = ((cfg.get("analyst") or {}).get("worker_url") or "").rstrip("/")
+    if not url:
+        return None
+    try:
+        r = requests.get(url + "/stats", timeout=20)
+        return r.json() if r.ok else None
+    except Exception:
+        return None
+
+
 def main():
     cfg = yaml.safe_load((ROOT / "config.yaml").read_text())
     code = ((cfg.get("analytics") or {}).get("goatcounter") or "").strip()
@@ -99,6 +111,7 @@ def main():
     places = gc.get("/stats/locations", limit=100, **rng).get("stats") or []
 
     games, articles, weekly, first_day = {}, {}, {}, None
+    tools = {"samples": {}, "uploads": 0, "reviews": 0}
     for h in hits:
         path, count, days = h.get("path") or "", int(h.get("count") or 0), day_counts(h)
         if days:
@@ -117,6 +130,14 @@ def main():
         elif s:
             g = games.setdefault(s.group(1), {"players": 0, "finished": 0, "scores": {}})
             g["scores"][int(s.group(2))] = g["scores"].get(int(s.group(2)), 0) + count
+        elif h.get("event") and path.startswith("tool-analyst-"):
+            if path.startswith("tool-analyst-sample-"):
+                k = path[len("tool-analyst-sample-"):]
+                tools["samples"][k] = tools["samples"].get(k, 0) + count
+            elif path == "tool-analyst-upload":
+                tools["uploads"] += count
+            elif path == "tool-analyst-review":
+                tools["reviews"] += count
         elif not h.get("event"):
             a = ARTICLE_PATH.search(path)
             if a:
@@ -149,6 +170,8 @@ def main():
         "sources": sources,
         "games": games,
         "articles": [{"slug": k, "reads": v} for k, v in sorted(articles.items(), key=lambda kv: -kv[1])],
+        "tools": tools,
+        "analyst_live": analyst_live(cfg),
     }
     OUT.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"Pulse: {visitors} visitors, {data['players']} plays, {data['article_reads']} article reads, {data['countries']} countries")

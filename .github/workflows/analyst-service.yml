@@ -124,7 +124,7 @@ jobs:
           URL: ${{ steps.prep.outputs.url }}
         run: |
           node -e "const P=require('./site/static/analyst/profile.js'),fs=require('fs');const s=P.summaryForAI(P.profile(P.parseCSV(fs.readFileSync('site/static/analyst/samples/fraud-alert-queue.csv','utf8')),{name:'fraud-alert-queue.csv'}));fs.writeFileSync('/tmp/body.json',JSON.stringify({summary:s}))"
-          code=$(curl -sS -o /tmp/out.json -w "%{http_code}" -X POST -H "Origin: https://aceakant.github.io" -H "Content-Type: application/json" --data @/tmp/body.json --max-time 150 "$URL/review" || true)
+          code=$(curl -sS -o /tmp/out.json -w "%{http_code}" -X POST -H "Origin: https://aceakant.github.io" -H "X-Analyst-Test: 1" -H "Content-Type: application/json" --data @/tmp/body.json --max-time 150 "$URL/review" || true)
           echo "HTTP $code"
           python3 - <<'PY'
           import json

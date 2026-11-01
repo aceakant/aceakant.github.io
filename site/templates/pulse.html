@@ -4,11 +4,72 @@
 {% block content %}
 {% set p = pulse %}
 <section class="wrap pl-head">
-  <p class="kicker mono"><span class="pl-live{% if not p.ready %} off{% endif %}"></span>Pulse · {% if p.ready %}updated {{ p.updated }}{% else %}warming up{% endif %}</p>
-  <h1>How people are using this site, live.</h1>
-  <p class="lede">Visitors, games played in the <a href="index.html#playground">Playground</a>, and the most-read {{ site.weekly_name }} pieces. Counted anonymously, with no cookies, and refreshed every morning.</p>
+  <p class="kicker mono"><span class="pl-live"></span>Pulse · {% if p.ready %}updated {{ p.updated }}{% else %}refreshed every morning{% endif %}</p>
+  <h1>How this site is used, and how its AI is kept honest.</h1>
+  <p class="lede">Fact-checks and maker-checker verdicts behind the AI, then visitors, games played in the <a href="index.html#playground">Playground</a> and the most-read {{ site.weekly_name }} pieces. Counted anonymously, with no cookies, and refreshed every morning.</p>
 </section>
 
+{% set acc = p.acc %}
+<section class="wrap" id="accountability">
+  <h2 class="sec">Accountability</h2>
+  <p class="pg-intro">How the AI on this site is held to account. Every {{ site.weekly_name }} claim is checked against sources before it is published, and every Analyst on Call finding has to get past a second, checker AI.</p>
+  <div class="acc-grid">
+    <div class="pl-panel acc-card">
+      <span class="mono acc-k">{{ site.weekly_name }} · fact-checking</span>
+      <h3>Checked before it goes out</h3>
+      <div class="acc-tiles">
+        <div><b>{{ acc.fc.claims | num }}</b><span>claims checked against sources</span></div>
+        <div><b>{{ acc.fc.corrected | num }}</b><span>corrected before publishing</span></div>
+        <div><b>{{ acc.fc.sources | num }}</b><span>sources cited</span></div>
+        <div><b>{{ acc.fc.articles | num }}</b><span>articles, each human-reviewed</span></div>
+      </div>
+      {% if acc.fc.claims %}
+      <div class="acc-bar" role="img" aria-label="{{ acc.fc.pct_verified }}% of claims verified as written, {{ acc.fc.pct_corrected }}% corrected">
+        <span class="ok" style="width:{{ acc.fc.pct_verified }}%"></span><span class="fix" style="width:{{ acc.fc.pct_corrected }}%"></span>
+      </div>
+      <p class="acc-legend"><i class="ok"></i>Verified as written {{ acc.fc.pct_verified }}% <i class="fix"></i>Corrected by the fact-checker {{ acc.fc.pct_corrected }}%</p>
+      {% endif %}
+      <p class="acc-note">"Corrected" means the fact-checking agent found a claim that didn't match its source, or a newer figure, and fixed it before a person reviewed the piece. The notes behind every check are kept.</p>
+    </div>
+    <div class="pl-panel acc-card">
+      <span class="mono acc-k">Analyst on Call · maker-checker</span>
+      <h3>A second AI checks the first</h3>
+      <div class="acc-tiles">
+        <div><b>{{ acc.mc.checked | num }}</b><span>findings put through the checker</span></div>
+        <div><b>{{ acc.mc.live_reviews | num }}</b><span>live reviews of visitors' files{% if acc.mc.live_avg %} · about {{ acc.mc.live_avg }}s each{% endif %}</span></div>
+        <div><b>{{ acc.mc.uploads | num }}</b><span>files checked privately in the browser</span></div>
+        <div><b>{{ acc.mc.samples_opened | num }}</b><span>sample reviews opened</span></div>
+      </div>
+      {% for v in acc.mc.verdicts %}
+      <div class="pl-hb acc-v {{ v.name }}"><p>{{ {'confirmed': 'Confirmed as written', 'corrected': 'Corrected by the checker', 'removed': 'Removed as unsupported', 'added': 'Added by the checker'}[v.name] }}</p><div class="track"><div class="fill" style="width:{{ v.pct }}%"></div></div><b>{{ v.count }}</b></div>
+      {% endfor %}
+    </div>
+  </div>
+  <ul class="acc-guard">
+    <li>Visitors' files never leave their browser</li>
+    <li>Personal-looking columns send no values</li>
+    <li>{{ acc.mc.free }} free reviews per visitor, {{ acc.mc.cap }} a day in total</li>
+    <li>Monthly spending caps on every AI key</li>
+    <li>Fact-check notes kept for every article</li>
+  </ul>
+  {% if acc.fc.rows %}
+  <div class="pl-panel">
+    <h2>Fact-checks behind each {{ site.weekly_name }} piece</h2><p class="pl-sub">Claims checked by the fact-checking agent, then a human review before publishing</p>
+    <div class="pl-table-wrap">
+    <table class="pl-table">
+      <thead><tr><th>Week</th><th>Article</th><th class="n">Claims checked</th><th class="n">Corrected</th><th class="n">Sources</th></tr></thead>
+      <tbody>
+      {% for r in acc.fc.rows | reverse %}
+      <tr><td>{{ r.a.week_no }}</td><td><a href="{{ r.a.url }}">{{ r.a.title }}</a></td><td class="n">{{ r.claims }}</td><td class="n">{{ r.corrected }}</td><td class="n">{{ r.sources }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+<section class="wrap"><h2 class="sec">Visitors and games</h2></section>
 {% if not p.ready %}
 <section class="wrap">
   <div class="pl-warm">
