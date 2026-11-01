@@ -32,6 +32,7 @@ jobs:
       - name: Maker, checker, conclusion for each sample
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANALYST_ANATHROPIC_KEY || secrets.ANALYST_ANTHROPIC_KEY || secrets.ANTHROPIC_API_KEY }}   # Analyst on Call key
+          ANTHROPIC_API_KEY_BACKUP: ${{ secrets.ANTHROPIC_API_KEY }}   # used only if the key above is rejected
           ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
         run: node scripts/analyst/make_reviews.mjs
       - name: Save and rebuild the site

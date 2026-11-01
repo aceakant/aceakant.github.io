@@ -144,7 +144,8 @@ async function ask(system, user, tool, opts) {
   const body = JSON.stringify({ model: opts.model, max_tokens: opts.maxTokens || 2000, system, messages: [{ role: "user", content: user }],
     output_config: { format: { type: "json_schema", schema: tool.input_schema } } });
   let res;
-  for (const style of authStyles(opts.apiKey)) {
+  const main = String(opts.apiKey || "").trim(), backup = String(opts.backupKey || "").trim();
+  for (const style of authStyles(main).concat(backup && backup !== main ? authStyles(backup) : [])) {
     const headers = { ...style, "anthropic-version": "2023-06-01", "content-type": "application/json" };
     if (opts.workspace) headers["anthropic-workspace-id"] = opts.workspace;
     res = await (opts.fetch || fetch)(opts.apiUrl || "https://api.anthropic.com/v1/messages", { method: "POST", headers, body });

@@ -47,3 +47,6 @@ jobs:
             echo "--- $name: found, testing…"
             if ANTHROPIC_API_KEY="${!name}" python scripts/api_check.py; then echo "RESULT $name: CONNECTED"; else echo "RESULT $name: FAILED"; fi
           done
+          echo "--- As the jobs run it (main key, falling back to the old key if needed):"
+          ANTHROPIC_API_KEY="${VERTAX_ANTHROPIC_API_KEY:-${VERTEX_ANTHROPIC_API_KEY:-$OLD_ANTHROPIC_API_KEY}}" ANTHROPIC_API_KEY_BACKUP="$OLD_ANTHROPIC_API_KEY" python scripts/api_check.py && echo "RESULT weekly VertexNode job: WILL WORK" || echo "RESULT weekly VertexNode job: WOULD FAIL"
+          ANTHROPIC_API_KEY="${ANALYST_ANATHROPIC_KEY:-${ANALYST_ANTHROPIC_KEY:-$OLD_ANTHROPIC_API_KEY}}" ANTHROPIC_API_KEY_BACKUP="$OLD_ANTHROPIC_API_KEY" python scripts/api_check.py && echo "RESULT Analyst on Call job: WILL WORK" || echo "RESULT Analyst on Call job: WOULD FAIL"

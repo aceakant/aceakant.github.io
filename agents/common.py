@@ -45,7 +45,8 @@ def ask_claude(system, prompt, web_search=False, max_tokens=12000, cache=None):
     With caching, that repeated part is read from cache at a fraction of the price. One-off calls are not
     cached by default, because a cache write costs a little extra and would never be read back."""
     cfg = config()["agents"]
-    styles = auth_styles(os.environ["ANTHROPIC_API_KEY"])
+    main, backup = os.environ["ANTHROPIC_API_KEY"].strip(), os.environ.get("ANTHROPIC_API_KEY_BACKUP", "").strip()
+    styles = auth_styles(main) + (auth_styles(backup) if backup and backup != main else [])
     headers = dict(styles[0], **{"anthropic-version": "2023-06-01", "content-type": "application/json"})
     if os.environ.get("ANTHROPIC_WORKSPACE_ID"):  # only needed for keys not tied to a workspace
         headers["anthropic-workspace-id"] = os.environ["ANTHROPIC_WORKSPACE_ID"]
@@ -70,8 +71,10 @@ def ask_claude(system, prompt, web_search=False, max_tokens=12000, cache=None):
     used = {"input_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0, "output_tokens": 0}
     for _ in range(6):  # long searches can pause; continue up to 6 times
         r = requests.post(API_URL, headers=headers, json=body, timeout=600)
-        if r.status_code == 401 and len(styles) > 1:  # wrong key style: switch once and keep it
+        while r.status_code == 401 and len(styles) > 1:  # rejected: try the other style, then the backup key
             styles.pop(0)
+            if len(styles) == 2:
+                log("claude", "main key rejected; using the backup key")
             for k in ("x-api-key", "Authorization"):
                 headers.pop(k, None)
             headers.update(styles[0])

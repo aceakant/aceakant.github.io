@@ -92,8 +92,9 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           KEY: ${{ secrets.ANALYST_ANATHROPIC_KEY || secrets.ANALYST_ANTHROPIC_KEY || secrets.ANTHROPIC_API_KEY }}
           WS: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+          BACKUP: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          python3 -c "import json,os; d={'ANTHROPIC_API_KEY': os.environ['KEY']}; ws=os.environ.get('WS'); d.update({'ANTHROPIC_WORKSPACE_ID': ws} if ws else {}); print(json.dumps(d))" | npx --yes wrangler@4 secret bulk
+          python3 -c "import json,os; d={'ANTHROPIC_API_KEY': os.environ['KEY']}; b=os.environ.get('BACKUP'); d.update({'ANTHROPIC_API_KEY_BACKUP': b} if b else {}); ws=os.environ.get('WS'); d.update({'ANTHROPIC_WORKSPACE_ID': ws} if ws else {}); print(json.dumps(d))" | npx --yes wrangler@4 secret bulk
 
       - name: Check it answers
         if: steps.ready.outputs.go == 'true'

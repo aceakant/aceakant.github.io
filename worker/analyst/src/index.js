@@ -53,7 +53,7 @@ export default {
 
     let result;
     try {
-      result = await runReview(summary, { apiKey: env.ANTHROPIC_API_KEY, workspace: env.ANTHROPIC_WORKSPACE_ID, model: env.MODEL || "claude-sonnet-5-5" });
+      result = await runReview(summary, { apiKey: env.ANTHROPIC_API_KEY, backupKey: env.ANTHROPIC_API_KEY_BACKUP, workspace: env.ANTHROPIC_WORKSPACE_ID, model: env.MODEL || "claude-sonnet-5-5" });
     } catch (e) {
       return json({ error: "upstream", message: "The analyst couldn't finish this one. Please try again in a minute." }, 502, cors);
     }

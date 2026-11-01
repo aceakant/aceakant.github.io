@@ -18,7 +18,7 @@ for (const s of JSON.parse(fs.readFileSync(path.join(DIR, "samples.json"), "utf8
   const prof = P.profile(P.parseCSV(fs.readFileSync(path.join(DIR, s.file), "utf8")), { name: s.file });
   const summary = P.summaryForAI(prof);
   const t0 = Date.now();
-  const result = await runReview(summary, { apiKey: process.env.ANTHROPIC_API_KEY, workspace: process.env.ANTHROPIC_WORKSPACE_ID, model });
+  const result = await runReview(summary, { apiKey: process.env.ANTHROPIC_API_KEY, backupKey: process.env.ANTHROPIC_API_KEY_BACKUP, workspace: process.env.ANTHROPIC_WORKSPACE_ID, model });
   const out = { sample: s.id, generated: new Date().toISOString(), seconds: Math.round((Date.now() - t0) / 1000), summary_chars: JSON.stringify(summary).length, ...result };
   fs.writeFileSync(path.join(DIR, `${s.id}.review.json`), JSON.stringify(out, null, 2) + "\n");
   console.log(`[analyst] ${s.id}: ${result.findings.length} final findings, verdicts ${result.reviews.map((r) => r.verdict).join("/")}, ${out.seconds}s`);
