@@ -6,6 +6,7 @@
 site:
   title: "Ajay Kant · Risk, Data & AI"
   author: "Ajay Kant"
+  weekly_name: "VertexNode"   # name of the weekly analysis series
   tagline: "I find fraud early, lend more safely, and put AI to work inside risk teams. Every week I break down one real problem and how it was solved."
   base_url: "https://aceakant.github.io/insights"
   linkedin_url: "https://www.linkedin.com/in/ajuhack"

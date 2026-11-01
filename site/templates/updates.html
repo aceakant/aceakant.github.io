@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% from "_macros.html" import update_card %}
-{% block title %}Weekly Updates · {{ site.author }}{% endblock %}
+{% block title %}{{ site.weekly_name }} · {{ site.author }}{% endblock %}
 {% block content %}
 <section class="wrap uhead">
   <div>
-    <p class="kicker mono">Weekly Updates</p>
+    <p class="kicker mono">{{ site.weekly_name }} · weekly analysis</p>
     <h1>One real problem. Solved in public, every week.</h1>
     <p class="lede">Each piece has a quick guessing game, a STAR breakdown, an ROI calculator you can play with, and a 3-question Myth or Fact.</p>
   </div>

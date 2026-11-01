@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Risk Lab · {{ site.author }}{% endblock %}
+{% block content %}
+{% include "_labhead.html" %}
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">Risk Lab · Run the bank for a day · 2 minutes</p>
+      <h1>Set the cut-off. Make the most profit.</h1>
+      <p>{{ "{:,}".format(labs.risk.customers) }} people applied for a loan today, and {{ (labs.risk.bad_rate * 100) | round | int }}% of them won't pay you back. Everyone has a credit score. Approve everyone above your cut-off. Each good loan earns ₹{{ labs.risk.earn_good }}k, each bad loan loses ₹{{ labs.risk.lose_bad }}k.</p>
+      <ul class="play-points">
+        <li>Too strict: you turn away good customers</li>
+        <li>Too generous: defaults eat your profit</li>
+        <li>Then switch on recession mode and watch the right answer move</li>
+      </ul>
+    </div>
+    <div class="game" id="risk-game" aria-live="polite">
+      <div class="game-head"><span class="mono">RUN THE BANK FOR A DAY</span>
+        <label class="toggle"><input type="checkbox" id="risk-recession"> <span>Recession mode</span></label></div>
+      <svg class="dist" id="risk-plot" viewBox="0 0 320 170" role="img" aria-label="Score distributions of good and bad customers with your cut-off"></svg>
+      <div class="dist-legend"><span><i class="g"></i>Will repay</span><span><i class="b"></i>Will default</span><span><i class="c"></i>Your cut-off</span></div>
+      <label class="slider-label" for="risk-cut">Approve scores above <output id="risk-out">600</output></label>
+      <input type="range" id="risk-cut" min="450" max="800" step="5" value="600">
+      <div class="risk-stats">
+        <div><b id="rs-approved">0</b><span>approved</span></div>
+        <div><b id="rs-turned">0</b><span>good customers turned away</span></div>
+        <div><b id="rs-bad">0</b><span>bad loans approved</span></div>
+        <div class="profit"><b id="rs-profit">₹0</b><span>profit today</span></div>
+      </div>
+      <div class="game-foot" id="risk-foot"><button class="btn small" type="button" id="risk-go">Lock in my cut-off</button></div>
+      <script type="application/json" id="risk-data">{{ labs.risk | tojson }}</script>
+    </div>
+  </div>
+</section>
+{% include "_labnext.html" %}
+{% endblock %}

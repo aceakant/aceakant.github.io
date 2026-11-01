@@ -1,0 +1,6 @@
+{# Header + switcher shared by the four lab pages. Needs: lab, labs #}
+<nav class="lab-switch wrap" aria-label="Labs">
+  {% for l in labs.labs %}
+  <a class="lab-pill {{ l.color }}" href="{{ l.slug }}.html" {% if l.slug == lab.slug %}aria-current="page"{% endif %}><i></i>{{ l.name }}</a>
+  {% endfor %}
+</nav>

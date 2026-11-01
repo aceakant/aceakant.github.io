@@ -61,6 +61,8 @@
     })();
   }
 
+  window.akConfetti = confetti;
+
   /* ---------- Spot the fraud ---------- */
   var game = $("#game");
   if (game) {

@@ -1,0 +1,12 @@
+{# Small animated icon per lab. Needs: l #}
+<span class="lab-icon {{ l.color }}" aria-hidden="true">
+{% if l.slug == 'analytics-lab' %}
+  <svg viewBox="0 0 64 64"><g class="sc">{% for p in [(10,50),(18,44),(24,40),(30,34),(36,30),(44,22),(50,18),(56,12),(22,46),(40,28)] %}<circle cx="{{ p[0] }}" cy="{{ p[1] }}" r="3"/>{% endfor %}</g><line x1="8" y1="54" x2="58" y2="10"/></svg>
+{% elif l.slug == 'risk-lab' %}
+  <svg viewBox="0 0 64 64"><path class="c1" d="M4 54 C16 54 18 18 26 18 S36 54 48 54"/><path class="c2" d="M16 54 C28 54 30 26 38 26 S48 54 60 54"/><line class="cut" x1="34" y1="8" x2="34" y2="58"/></svg>
+{% elif l.slug == 'fraud-lab' %}
+  <svg viewBox="0 0 64 64"><path class="sh" d="M32 6 L54 14 V30 C54 44 44 54 32 58 C20 54 10 44 10 30 V14 Z"/><path class="tick" d="M22 32 L29 39 L43 24"/></svg>
+{% else %}
+  <svg viewBox="0 0 64 64"><rect class="l1" x="8" y="40" width="48" height="12" rx="4"/><rect class="l2" x="14" y="25" width="36" height="12" rx="4"/><rect class="l3" x="20" y="10" width="24" height="12" rx="4"/></svg>
+{% endif %}
+</span>

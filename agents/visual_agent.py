@@ -77,14 +77,14 @@ def frame_base(accent, footer=True):
             img.paste(face, (72, H - 100), mask)
             x = 72 + size + 20
         d.text((x, H - 96), cfg["author"], font=font("SemiBold", 30), fill=INK)
-        d.text((x, H - 58), "Weekly insight · Risk, Data & AI", font=font("Regular", 24), fill=MUTED)
+        d.text((x, H - 58), config()["site"].get("weekly_name", "Weekly") + " · Risk, Data & AI", font=font("Regular", 24), fill=MUTED)
     return img, d
 
 
 def star_card(art, accent, path):
     """One-image STAR summary used on the website and as the LinkedIn image."""
     img, d = frame_base(accent)
-    d.text((72, 64), "THIS WEEK'S PROBLEM, SOLVED", font=font("SemiBold", 24), fill=GOLD)
+    d.text((72, 64), config()["site"].get("weekly_name", "").upper() + " · THIS WEEK'S PROBLEM, SOLVED", font=font("SemiBold", 24), fill=GOLD)
     y = draw_lines(d, (72, 108), wrap(d, art["title"], font("Bold", 50), W - 144)[:3], font("Bold", 50), INK, 1.18)
     y += 26
     labels = [("S", "Situation", "situation"), ("T", "Task", "task"), ("A", "Action", "action"), ("R", "Result", "result")]

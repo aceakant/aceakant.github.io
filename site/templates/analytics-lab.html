@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Analytics Lab · {{ site.author }}{% endblock %}
+{% block content %}
+{% include "_labhead.html" %}
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">Analytics Lab · Guess the correlation · 60 seconds</p>
+      <h1>How strongly do they move together?</h1>
+      <p>Each round shows made-up data on two everyday things. Slide to guess the correlation, from −1 (perfectly opposite) to +1 (perfectly together). Five rounds, best score 500.</p>
+      <ul class="play-points">
+        <li>+1: they rise together · 0: no link · −1: one rises, the other falls</li>
+        <li>Each answer comes with a reality check</li>
+        <li>Correlation is not causation, and the game will remind you</li>
+      </ul>
+    </div>
+    <div class="game" id="corr-game" aria-live="polite">
+      <div class="game-head"><span class="mono">GUESS THE CORRELATION</span><span class="mono" id="corr-round">Round 1 of 5</span></div>
+      <svg class="scatter" id="corr-plot" viewBox="0 0 320 230" role="img" aria-label="Scatter plot of made-up data"></svg>
+      <div class="axis-labels"><span id="corr-x">x</span><span id="corr-y">y</span></div>
+      <label class="slider-label" for="corr-guess">Your guess: <output id="corr-out">0.00</output></label>
+      <input type="range" id="corr-guess" min="-1" max="1" step="0.05" value="0">
+      <div class="game-foot" id="corr-foot"><button class="btn small" type="button" id="corr-go">Lock in my guess</button><span class="score" id="corr-score">Score 0</span></div>
+      <script type="application/json" id="corr-data">{{ labs.analytics | tojson }}</script>
+    </div>
+  </div>
+</section>
+{% include "_labnext.html" %}
+{% endblock %}

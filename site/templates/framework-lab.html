@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Framework Lab · {{ site.author }}{% endblock %}
+{% block content %}
+{% include "_labhead.html" %}
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">Framework Lab · Sort it out · 2 minutes</p>
+      <h1>Who owns which risk?</h1>
+      <p>Banks split risk work into three lines of defence: the people doing the work, the people setting the rules, and the people checking independently. Start with cricket, then try the real thing.</p>
+      <ul class="play-points">
+        <li>Three rounds: cricket, banking, and KPI or KRI</li>
+        <li>Tap the right box for each card</li>
+        <li>Finish all three for your score</li>
+      </ul>
+    </div>
+    <div class="game" id="sort-game" aria-live="polite">
+      <div class="game-head"><span class="mono">SORT IT OUT</span><span class="mono" id="sort-round">Round 1 of 3</span></div>
+      <h2 class="game-q" id="sort-title"></h2>
+      <p class="muted small" id="sort-intro"></p>
+      <div class="sort-items" id="sort-items"></div>
+      <div class="game-foot" id="sort-foot"><span class="hint">Pick the right box for each card.</span></div>
+      <script type="application/json" id="sort-data">{{ labs.framework | tojson }}</script>
+    </div>
+  </div>
+</section>
+{% include "_labnext.html" %}
+{% endblock %}

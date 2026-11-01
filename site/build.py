@@ -42,6 +42,7 @@ def build():
     profile = yaml.safe_load((ROOT / "content" / "profile.yaml").read_text())
     game = yaml.safe_load((ROOT / "content" / "game.yaml").read_text())
     leadership = yaml.safe_load((ROOT / "content" / "leadership.yaml").read_text())
+    labs = yaml.safe_load((ROOT / "content" / "labs.yaml").read_text())
     topics = yaml.safe_load((ROOT / "content" / "topics.yaml").read_text())["topics"]
     upcoming = next((t["title"] for t in topics if t.get("status") == "pending"), None)
 
@@ -63,7 +64,7 @@ def build():
         shutil.copytree(media, OUT / "media", ignore=shutil.ignore_patterns("*.txt", "*.json"))
 
     env = Environment(loader=FileSystemLoader(ROOT / "site" / "templates"), autoescape=True)
-    common = dict(site=config["site"], profile=profile, leadership=leadership,
+    common = dict(site=config["site"], profile=profile, leadership=leadership, labs=labs,
                   year=datetime.date.today().year, upcoming=upcoming)
 
     show_drafts = os.environ.get("PREVIEW_DRAFTS") == "1"
@@ -74,7 +75,7 @@ def build():
     pages = {
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
         "portfolio.html": {},
-        "lab.html": dict(game=game),
+        **{f"{l['slug']}.html": dict(lab=l, game=game) for l in labs["labs"]},
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
     }
     for name, ctx in pages.items():
@@ -103,9 +104,9 @@ def build():
             (OUT / "cases" / f"{p['slug']}.html").write_text(html, encoding="utf-8")
 
     # old addresses keep working
-    for old in ("profile.html", "leadership.html"):
-        (OUT / old).write_text('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=portfolio.html">'
-                               '<link rel="canonical" href="portfolio.html"><a href="portfolio.html">Portfolio</a>')
+    for old, new in (("profile.html", "portfolio.html"), ("leadership.html", "portfolio.html"), ("lab.html", "fraud-lab.html")):
+        (OUT / old).write_text(f'<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={new}">'
+                               f'<link rel="canonical" href="{new}"><a href="{new}">Continue</a>')
 
     (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /insights/drafts/\nDisallow: /drafts/\n")
     (OUT / ".nojekyll").write_text("")

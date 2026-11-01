@@ -1,0 +1,75 @@
+# The Playground: four labs, one game each. All data is made up for play.
+labs:
+  - slug: analytics-lab
+    name: "Analytics Lab"
+    game: "Guess the correlation"
+    hook: "Chai vs code, rain vs umbrellas. How strongly do they move together?"
+    teaches: "Reading data quickly, and remembering that correlation is not causation."
+    color: teal
+  - slug: risk-lab
+    name: "Risk Lab"
+    game: "Run the bank for a day"
+    hook: "Set the approval cut-off. Too strict loses customers, too loose loses money."
+    teaches: "The trade-off every lender makes between growth, losses and profit."
+    color: amber
+  - slug: fraud-lab
+    name: "Fraud Lab"
+    game: "Spot the fraud"
+    hook: "A fraud ring, a card-testing attack and a money mule. Can you catch all three?"
+    teaches: "The early signals fraud teams use to stop losses before they happen."
+    color: red
+  - slug: framework-lab
+    name: "Framework Lab"
+    game: "Sort it out"
+    hook: "Who plays which line of defence, at a cricket match and in a bank?"
+    teaches: "How risk responsibilities are split, and the difference between a KPI and a KRI."
+    color: green
+
+analytics:
+  rounds:
+    - { x: "Cups of chai before noon", y: "Lines of code written", r: 0.62, quip: "Strong-ish. But is it the chai, or do early starters just drink more chai?" }
+    - { x: "Rainy days in the month", y: "Umbrellas sold", r: 0.91, quip: "Very strong, and here the cause really is obvious." }
+    - { x: "Shoe size", y: "Exam marks", r: 0.03, quip: "Basically nothing. Big feet won't save you in maths." }
+    - { x: "Hours of late-night cricket", y: "Hours of sleep", r: -0.78, quip: "Strongly negative: one goes up, the other goes down." }
+    - { x: "Ice-cream sales", y: "Swimming-pool visits", r: 0.71, quip: "Strong, but neither causes the other. Hot weather drives both." }
+
+risk:
+  customers: 10000          # applicants in your day as a bank
+  bad_rate: 0.08            # share who will not repay
+  good_mean: 690            # average score of customers who repay
+  bad_mean: 590             # average score of customers who default
+  spread: 55                # how spread out the scores are
+  earn_good: 12             # ₹ thousand earned per good loan
+  lose_bad: 70              # ₹ thousand lost per bad loan
+  recession_shift: 40       # in recession mode, defaulters look more like good customers
+  recession_bad_rate: 0.12  # ...and more people default
+
+framework:
+  rounds:
+    - title: "Cricket edition"
+      intro: "A cricket match runs on three lines of defence too. Who plays which line?"
+      buckets: ["1st line: does the work, owns the risk", "2nd line: sets the rules, watches", "3rd line: independent review"]
+      items:
+        - { text: "The batter decides whether to play each ball", answer: 0 }
+        - { text: "The on-field umpire applies the rules in real time", answer: 1 }
+        - { text: "The match referee reviews the whole match afterwards", answer: 2 }
+        - { text: "The bowler sticks to the no-ball line", answer: 0 }
+    - title: "Banking edition"
+      intro: "Now the real thing. Place each task in the right line of defence."
+      buckets: ["1st line: business & operations", "2nd line: risk & compliance", "3rd line: internal audit"]
+      items:
+        - { text: "Branch officer checks a customer's ID", answer: 0 }
+        - { text: "Fraud strategy team sets transaction limits", answer: 1 }
+        - { text: "Internal audit tests whether fraud controls work", answer: 2 }
+        - { text: "Product team builds checks into a loan journey", answer: 0 }
+        - { text: "Compliance reviews a new product against regulation", answer: 1 }
+    - title: "KPI or KRI?"
+      intro: "A KPI tracks performance. A KRI warns you that risk is building. Which is which?"
+      buckets: ["KPI: how well are we doing?", "KRI: is risk building up?"]
+      items:
+        - { text: "Loans approved per day", answer: 0 }
+        - { text: "Applications from the same device in 24 hours", answer: 1 }
+        - { text: "Average time to approve a loan", answer: 0 }
+        - { text: "Loans missing a payment in the first 3 months", answer: 1 }
+        - { text: "Customer satisfaction score", answer: 0 }
+        - { text: "Fraud losses as a share of new lending", answer: 1 }

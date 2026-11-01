@@ -1,0 +1,13 @@
+{# "Try another lab" strip at the bottom of each lab page. Needs: lab, labs #}
+<section class="wrap">
+  <h2 class="sec">Try another lab</h2>
+  <div class="pg-grid small">
+    {% for l in labs.labs if l.slug != lab.slug %}
+    <a class="pg-card {{ l.color }}" href="{{ l.slug }}.html">
+      {% include "_labicon.html" %}
+      <span class="mono">{{ l.name }}</span>
+      <h3>{{ l.game }}</h3>
+    </a>
+    {% endfor %}
+  </div>
+</section>

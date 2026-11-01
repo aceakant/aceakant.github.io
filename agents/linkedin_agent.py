@@ -18,7 +18,8 @@ def escape(text):
 def build_commentary(article, url):
     tags = config()["linkedin"]["hashtags"]
     body = escape(article["linkedin_post"].strip())
-    body += "\n\n" + escape("Full article, STAR video and sources: ") + url
+    name = config()["site"].get("weekly_name", "the full article")
+    body += "\n\n" + escape(f"Read it on {name}, with the interactive calculator and sources: ") + url
     if tags:
         body += "\n\n" + " ".join("{hashtag|\\#|%s}" % t for t in tags)
     return body
@@ -26,7 +27,8 @@ def build_commentary(article, url):
 
 def preview_text(article, url):
     tags = " ".join("#" + t for t in config()["linkedin"]["hashtags"])
-    return f"{article['linkedin_post'].strip()}\n\nFull article, STAR video and sources: {url}\n\n{tags}"
+    name = config()["site"].get("weekly_name", "the full article")
+    return f"{article['linkedin_post'].strip()}\n\nRead it on {name}, with the interactive calculator and sources: {url}\n\n{tags}"
 
 
 def _headers(token, version, json_body=True):

@@ -11,7 +11,7 @@
       </ul>
       <div class="btns">
         <a class="btn" href="portfolio.html">See my portfolio</a>
-        <a class="btn ghost" href="updates.html">Read my weekly analysis{% if week_count %} · {{ week_count }}{% endif %}</a>
+        <a class="btn ghost" href="updates.html">Read {{ site.weekly_name }}{% if week_count %} · {{ week_count }}{% endif %}</a>
       </div>
     </div>
     <figure class="portrait">
@@ -55,10 +55,12 @@
   </div>
 </section>
 
+{% include "_playground.html" %}
+
 {% include "_proof.html" %}
 
 <section class="wrap">
-  <h2 class="sec">This week's analysis</h2>
+  <h2 class="sec">This week on {{ site.weekly_name }}</h2>
   {% if latest %}
   <a class="feature reveal" href="{{ latest.url }}">
     {% if latest.image %}<img src="{{ latest.image }}" alt="STAR summary of {{ latest.title }}" width="1080" height="1350">{% endif %}
@@ -72,22 +74,11 @@
   {% else %}
   <div class="empty-week reveal">
     <span class="mono">WEEK 1 · COMING SOON</span>
-    <h3>{{ upcoming or "The first weekly piece is on its way" }}</h3>
+    <h3>{{ upcoming or "The first " ~ site.weekly_name ~ " piece is on its way" }}</h3>
     <p>Each week: one real risk problem, how to solve it, and what it is worth, with a calculator you can try on your own numbers.</p>
   </div>
   {% endif %}
 </section>
 
-<section class="wrap">
-  <a class="lab-teaser reveal" href="lab.html">
-    <span class="lab-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
-    <div>
-      <span class="mono">FRAUD LAB</span>
-      <h2>Try the call my teams make every day.</h2>
-      <p>A 60-second game: spot the fraud ring, the card-testing attack and the money mule.</p>
-    </div>
-    <span class="btn">Open the Fraud Lab</span>
-  </a>
-</section>
 {% include "_talk.html" %}
 {% endblock %}

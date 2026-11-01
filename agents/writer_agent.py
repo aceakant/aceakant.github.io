@@ -4,7 +4,7 @@ import yaml
 
 from common import DRY_RUN, ROOT, ask_claude, config, extract_json, load_yaml, log, slugify
 
-SYSTEM = """You are the ghost-writer for {author}, a senior risk-analytics leader. You write his weekly piece
+SYSTEM = """You are the ghost-writer for {author}, a senior risk-analytics leader. You write his weekly piece for his series "{series}"
 on an OPEN industry subject: the problem, how a practitioner would solve it, and what it is worth.
 
 VOICE: {voice}
@@ -84,6 +84,7 @@ def write(topic):
         author=cfg["site"]["author"], voice=cfg["writing_rules"]["voice"],
         banned=", ".join(f'"{p}"' for p in cfg["writing_rules"]["banned_phrases"]),
         words=cfg["agents"]["article_words"], market=topic.get("market", "Global"),
+        series=cfg["site"].get("weekly_name", "Weekly"),
     )
     profile = load_yaml("content/profile.yaml")
     prompt = PROMPT.format(

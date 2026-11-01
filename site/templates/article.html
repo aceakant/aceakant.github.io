@@ -17,7 +17,7 @@
   </div>
   {% endif %}
 
-  <a class="back-link" href="{{ root }}updates.html">← All weekly updates</a>
+  <a class="back-link" href="{{ root }}updates.html">← All {{ site.weekly_name }} pieces</a>
   <div class="tagline"><span class="mono">{% if a.week_no %}Week {{ a.week_no }}{% else %}Draft{% endif %}</span><span>{{ a.category }}</span>{% if a.market %}<span>{{ a.market }}</span>{% endif %}<span>{{ a.date_label }}</span><span>{{ a.read_min }} min read</span></div>
   <h1>{{ a.title }}</h1>
   <p class="lede">{{ a.summary }}</p>
