@@ -8,7 +8,7 @@ test_run: true
 market: India
 scenario: a mid-sized Indian private-sector bank (illustrative composite, not a real institution)
 publish_at: null
-review_issue: null
+review_issue: 2
 reminded: false
 summary: Most UPI scam money has to land in a mule account first, and the early behaviour of that account is surprisingly readable. Here is the typical pattern, the first-week signals worth scoring, and what catching a mule 14 days earlier could be worth in an illustrative model.
 hook:
