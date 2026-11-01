@@ -1,0 +1,114 @@
+{
+  "sample": "fraud-alert-queue",
+  "generated": "2026-11-01T20:45:44.350Z",
+  "seconds": 55,
+  "summary_chars": 5979,
+  "title": "Fraud alert queue, June to September 2026",
+  "draft": {
+    "findings": [
+      {
+        "id": "F1",
+        "severity": "high",
+        "headline": "Confirmed fraud is concentrated in three alert rules",
+        "detail": "Of 3,000 alerts, 313 (10.4%) were confirmed fraud. The rate is 31.7% for Mule account inbound (243 alerts), 21.9% for New device + high amount (556) and 15.4% for Velocity (408)."
+      },
+      {
+        "id": "F2",
+        "severity": "high",
+        "headline": "New device + high amount hit rate rises every month",
+        "detail": "Its confirmed-fraud rate went 18.1%, 22.1%, 23.6%, 24.3% from June to September. It also takes 24.7% of handling minutes from 18.5% of alerts."
+      },
+      {
+        "id": "F3",
+        "severity": "medium",
+        "headline": "Two rules produce very little confirmed fraud",
+        "detail": "Round-amount transfer (0.6%) and Night-time login (1.6%) make up 33.3% of alerts (17.1 + 16.2). Their rates imply only about 11 confirmed cases between them, roughly 3 and 8."
+      },
+      {
+        "id": "F4",
+        "severity": "medium",
+        "headline": "Analyst confirmation rates vary widely",
+        "detail": "Among the eight analysts shown, rates run from 6.0% (Analyst 06) to 13.1% (Analyst 05), each on 244 to 275 alerts. This may reflect which rules each analyst gets, which the data does not show."
+      },
+      {
+        "id": "F5",
+        "severity": "stable",
+        "headline": "Overall fraud rate steady and the data is clean",
+        "detail": "The monthly rate stays between 9.7% and 11.1%, and Retail (10.8%) and Business (9.4%) are close. There are no missing cells and no duplicate rows."
+      }
+    ],
+    "next_steps": [
+      "Review the thresholds and routing for Round-amount transfer and Night-time login, to see whether alerts can be cut without losing the few confirmed cases.",
+      "Investigate why New device + high amount is rising: check whether the alert mix, amounts or fraud pattern has changed since June.",
+      "Compare analysts after adjusting for rule mix, then check whether the high and low confirmation rates reflect differences in practice."
+    ]
+  },
+  "reviews": [
+    {
+      "id": "F1",
+      "verdict": "confirmed",
+      "note": "Counts and rates match the summary. Rough arithmetic gives about 262 of 313 confirmed cases in these three rules. Severity fair."
+    },
+    {
+      "id": "F2",
+      "verdict": "corrected",
+      "note": "Monthly rates and the 24.7% versus 18.5% shares are right. Lowered severity to medium: four monthly points, no monthly counts shown. Plainer wording."
+    },
+    {
+      "id": "F3",
+      "verdict": "confirmed",
+      "note": "0.6% of 512 is about 3, 1.6% of 485 is about 8. 17.1 + 16.2 = 33.3%. All correct."
+    },
+    {
+      "id": "F4",
+      "verdict": "corrected",
+      "note": "Rates and counts are right, but only eight of 12 analysts appear and rule mix is untested. Changed 'vary widely' to 'differ'."
+    },
+    {
+      "id": "F5",
+      "verdict": "confirmed",
+      "note": "Monthly range 9.7% to 11.1%, Retail 10.8%, Business 9.4%, no missing cells or duplicates all match the summary."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "high",
+      "headline": "Confirmed fraud is concentrated in three alert rules",
+      "detail": "Of 3,000 alerts, 313 (10.4%) were confirmed fraud. The rate is 31.7% for Mule account inbound (243 alerts), 21.9% for New device + high amount (556) and 15.4% for Velocity (408)."
+    },
+    {
+      "id": "F2",
+      "severity": "medium",
+      "headline": "New device + high amount confirmed rate goes up each month",
+      "detail": "Its confirmed-fraud rate went 18.1%, 22.1%, 23.6%, 24.3% from June to September. It also takes 24.7% of handling minutes from 18.5% of alerts. Four monthly points are a short run."
+    },
+    {
+      "id": "F3",
+      "severity": "medium",
+      "headline": "Two rules produce very little confirmed fraud",
+      "detail": "Round-amount transfer (0.6%) and Night-time login (1.6%) make up 33.3% of alerts (17.1 + 16.2). Their rates imply only about 11 confirmed cases between them, roughly 3 and 8."
+    },
+    {
+      "id": "F4",
+      "severity": "medium",
+      "headline": "Analyst confirmation rates differ among those shown",
+      "detail": "Among the eight analysts shown (four are not listed), rates run from 6.0% (Analyst 06) to 13.1% (Analyst 05), each on 244 to 275 alerts. This may reflect which rules each analyst gets, which the data does not show."
+    },
+    {
+      "id": "F5",
+      "severity": "stable",
+      "headline": "Overall fraud rate steady and the data is clean",
+      "detail": "The monthly rate stays between 9.7% and 11.1%, and Retail (10.8%) and Business (9.4%) are close. There are no missing cells and no duplicate rows."
+    }
+  ],
+  "next_steps": [
+    "Review thresholds and routing for Round-amount transfer and Night-time login, checking whether alerts can be cut without losing the few confirmed cases.",
+    "Check whether the rise in New device + high amount confirmed rate since June holds up, using monthly alert counts, amounts and the alert mix.",
+    "Compare analysts after allowing for rule mix before drawing any conclusion about practice or performance."
+  ],
+  "conclusion": "The queue is mostly false positives (89.6%), and confirmed fraud sits mainly in Mule account inbound, New device + high amount and Velocity. The overall rate is steady and the data is clean. Do first: review the two low-yield rules, Round-amount transfer and Night-time login, which are 33.3% of alerts but about 11 confirmed cases.",
+  "limits": "This review uses summary statistics only, so it cannot show why rates differ, whether analyst gaps are real once rule mix is considered, or what any change would do to missed fraud.",
+  "model": "claude-sonnet-5-5",
+  "version": "2026-11-02"
+}

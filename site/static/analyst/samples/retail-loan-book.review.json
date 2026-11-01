@@ -1,0 +1,114 @@
+{
+  "sample": "retail-loan-book",
+  "generated": "2026-11-01T20:44:20.411Z",
+  "seconds": 31,
+  "summary_chars": 5124,
+  "title": "Retail Loan Book: Early Delinquency Review",
+  "draft": {
+    "findings": [
+      {
+        "id": "F1",
+        "severity": "high",
+        "headline": "Shared phone numbers go with very high delinquency",
+        "detail": "9 phone values repeat across 42 loans. 83.3% of these reached 30+ days overdue at 6 months (about 35 loans), against 8.8% overall, and 81% missed their first payment against 2.3% overall. This pattern looks like possible fraud."
+      },
+      {
+        "id": "F2",
+        "severity": "high",
+        "headline": "Delinquency has climbed since Q2 2025",
+        "detail": "The 30-days-overdue rate at 6 months rose from 6.6% in Q2 25 to 12.8% in Q1 26, almost double. Quarterly loan counts stayed near 1,000, so this is not a volume effect."
+      },
+      {
+        "id": "F3",
+        "severity": "high",
+        "headline": "Personal and Card loans drive the deterioration",
+        "detail": "Personal loans went from 9.3% in Q1 25 to 21.0% in Q1 26, and Card from 11.2% to 20.2%. Car stayed near 6% (6.3% in Q1 26) and Home stayed at or below 1.1%."
+      },
+      {
+        "id": "F4",
+        "severity": "medium",
+        "headline": "Digital and self-employed loans show higher delinquency",
+        "detail": "Digital is at 13.0% against 5.8% for Branch, and self-employed is at 12.2% against 6.5% for salaried. Digital also has a lower average bureau score (715.4 against 733.7 for Branch). These groups overlap with product mix, so check them together."
+      },
+      {
+        "id": "F5",
+        "severity": "medium",
+        "headline": "Income is missing mainly for Partner loans",
+        "detail": "Income is missing for 6.9% of rows. 90.8% of the gaps are in the Partner channel, where 39.7% of loans have no income. Any income-based analysis will under-represent Partner loans."
+      }
+    ],
+    "next_steps": [
+      "Review the 42 loans sharing phone numbers for application fraud and check the channel and source of each linked group.",
+      "Split the Q1 26 rise in Personal and Card delinquency by channel and employment to see whether Digital or self-employed lending explains it.",
+      "Ask the Partner channel owner why income is blank for 39.7% of loans and set a mandatory capture rule."
+    ]
+  },
+  "reviews": [
+    {
+      "id": "F1",
+      "verdict": "corrected",
+      "note": "42 rows, 83.3% is about 35 loans, 81% is about 34: numbers hold. Removed 'possible fraud' as a cause the data cannot show; severity kept."
+    },
+    {
+      "id": "F2",
+      "verdict": "corrected",
+      "note": "6.6% to 12.8% is correct and 12.8/6.6 is about 1.9. Reworded the volume claim to the actual range of 984 to 1,038."
+    },
+    {
+      "id": "F3",
+      "verdict": "corrected",
+      "note": "All rates match. Car ranged 4.7% to 6.3%, so 'near 6%' was loose. Replaced causal 'drive' with 'rises are concentrated in'."
+    },
+    {
+      "id": "F4",
+      "verdict": "confirmed",
+      "note": "Digital 13.0 vs Branch 5.8, self-employed 12.2 vs salaried 6.5, bureau 715.4 vs 733.7 all match the summary. Medium severity is fair."
+    },
+    {
+      "id": "F5",
+      "verdict": "confirmed",
+      "note": "6.9%, 90.8% and 39.7% match the summary. 39.7% of 793 is about 315, which is consistent with the 90.8% share of gaps."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "high",
+      "headline": "Shared phone numbers go with very high delinquency",
+      "detail": "9 phone values repeat across 42 loans. 83.3% of these (about 35 loans) were 30+ days overdue at 6 months against 8.8% overall, and 81% missed the first payment against 2.3% overall. The group is only 0.8% of the book, but the pattern needs a manual review."
+    },
+    {
+      "id": "F2",
+      "severity": "high",
+      "headline": "Delinquency has risen steadily since Q2 2025",
+      "detail": "The 30-days-overdue rate at 6 months went from 6.6% in Q2 25 to 7.8%, 9.7% and then 12.8% in Q1 26, almost double. Quarterly loan counts stayed between 984 and 1,038."
+    },
+    {
+      "id": "F3",
+      "severity": "high",
+      "headline": "The rise is concentrated in Personal and Card loans",
+      "detail": "Personal loans went from 9.3% in Q1 25 to 21.0% in Q1 26, and Card from 11.2% to 20.2%. Car stayed between 4.7% and 6.3%, and Home stayed at or below 1.1%."
+    },
+    {
+      "id": "F4",
+      "severity": "medium",
+      "headline": "Digital and self-employed loans show higher delinquency",
+      "detail": "Digital is at 13.0% against 5.8% for Branch, and self-employed is at 12.2% against 6.5% for salaried. Digital also has a lower average bureau score (715.4 against 733.7 for Branch). These groups may overlap with product mix, so check them together."
+    },
+    {
+      "id": "F5",
+      "severity": "medium",
+      "headline": "Income is missing mainly for Partner loans",
+      "detail": "Income is missing for 6.9% of rows. 90.8% of the gaps are in the Partner channel, where 39.7% of loans have no income. Any income-based analysis will under-represent Partner loans."
+    }
+  ],
+  "next_steps": [
+    "Review the 42 loans sharing phone numbers, checking the channel, product and source of each linked group.",
+    "Split the Q1 26 rise in Personal and Card delinquency by channel and employment to see whether Digital or self-employed lending goes with it.",
+    "Ask the Partner channel owner why income is blank for 39.7% of loans and agree a rule to capture it."
+  ],
+  "conclusion": "The draft is broadly sound after small wording fixes. The main concern is that delinquency has risen from 6.6% to 12.8% in three quarters, mostly in Personal and Card loans. First, split that rise by channel and employment, and review the 42 loans with shared phone numbers alongside it.",
+  "limits": "This review uses summary figures only, so it cannot show causes, test whether product, channel and employment effects overlap, or confirm what the shared phone numbers mean.",
+  "model": "claude-sonnet-5-5",
+  "version": "2026-11-02"
+}
