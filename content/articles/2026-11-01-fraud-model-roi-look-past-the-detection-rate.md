@@ -8,7 +8,7 @@ test_run: false
 market: Global
 scenario: a mid-sized multi-country retail bank (a composite, not a real institution)
 publish_at: null
-review_issue: null
+review_issue: 6
 reminded: false
 summary: A fraud model's detection rate tells you what it caught, not what it cost you. Here is one simple view that puts losses prevented, false-positive cost, customer friction and analyst time on the same page.
 hook:
