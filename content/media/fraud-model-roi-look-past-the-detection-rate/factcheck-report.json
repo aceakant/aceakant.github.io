@@ -1,0 +1,55 @@
+{
+  "status": "needs-review",
+  "summary": "4 corrected, 3 verified · Needs review: GASA appears to have run a 2026 global survey (58,900 respondents, 42 markets), and regional 2026 reports (US, Europe, Asia, Brazil, Spain) have been published. I could not find the 2026 global headline figures (share of adults scammed, total losses). Before publishing, check gasa.org for a Global State of Scams 2026 release and update the 57% and USD 442 billion figures and the year if it is out.; GASA's 2025 report also gives a broader 'encountered a scam' measure of about seven in ten adults. The article uses the narrower 'experienced a scam' figure of 57%, which matches GASA's headline wording. The full report is member-only, so I checked the figures through GASA's press release and homepage and not the full PDF.; The scenario inputs (USD 30/hour analyst cost, USD 12 friction cost, 6 minutes per alert, USD 40k run cost, alert volumes) are invented assumptions and are labelled illustrative. They are not benchmarked against any external source.",
+  "checks": [
+    {
+      "claim": "57% of surveyed adults experienced a scam in the previous 12 months (draft attributed this to the 2024 report).",
+      "status": "corrected",
+      "source_url": "https://gasa.org/knowledge-base/blog/global-scams-on-the-rise-over-half-of-adults-worldwide-report-scam-encounters",
+      "source_title": "GASA, Global State of Scams 2025 press release (Oct 2025)",
+      "note": "57% (and 23% lost money) comes from the 2025 report: 46,000 adults, 42 markets, released 7 Oct 2025. It is not from the 2024 report. The hook, article, myth/fact, claims and LinkedIn post were re-attributed to the 2025 report. The answer value of 57 is unchanged."
+    },
+    {
+      "claim": "Total scam losses of about USD 1.03 trillion (draft attributed this to the 2024 report).",
+      "status": "corrected",
+      "source_url": "https://gasa.org/knowledge-base/blog/global-state-of-scams-report-2024-1-trillion-stolen-in-12-months-gasa-feedzai",
+      "source_title": "GASA, Global State of Scams Report 2024 press release",
+      "note": "USD 1.03 trillion was the 2024 report's headline, so the draft's attribution was right but the figure is out of date. The 2025 report estimates about USD 442 billion across the 42 surveyed markets. It dropped global extrapolation, so the two figures are not comparable. The newer figure is used and the 1.03 trillion claim is removed."
+    },
+    {
+      "claim": "USD 442 billion estimated losses in the 42 surveyed markets (latest figure).",
+      "status": "verified",
+      "source_url": "https://gasa.org/knowledge-base/blog/gasa-policy-agenda-2026",
+      "source_title": "GASA, Global Anti-Scam Alliance Policy Agenda 2026",
+      "note": "GASA's own policy document confirms the USD 442 billion estimate for the 42 countries surveyed, with 23% of 46,000 individuals reporting losses. GASA's Nov 2025 release notes say results now reflect only the surveyed markets and global extrapolation was discontinued."
+    },
+    {
+      "claim": "The loss figure is survey-based and not a count of bank-reported losses (myth/fact item).",
+      "status": "corrected",
+      "source_url": "https://gasa.org/knowledge-base/blog/new-report-reveals-brazilians-face-252-scam-encounters-annually-despite-high-confidence-in-spotting",
+      "source_title": "GASA, State of Scams Brazil 2025 release (methodology note)",
+      "note": "The draft said 'extrapolated to a global scale'. That was true of the 2024 figure, but the 2025 methodology stopped global extrapolation. The item was rewritten around the USD 442 billion survey-based estimate for the surveyed markets."
+    },
+    {
+      "claim": "Detection rate (recall) = TP / (TP + FN) and ignores false positives.",
+      "status": "verified",
+      "source_url": "https://scikit-learn.org/stable/modules/generated/sklearn.metrics.recall_score.html",
+      "source_title": "scikit-learn, sklearn.metrics.recall_score documentation",
+      "note": "Recall is defined as tp / (tp + fn). False positives do not enter the formula, so the claim holds. Fraud teams may call it 'detection rate' or 'value detection rate'."
+    },
+    {
+      "claim": "Scenario arithmetic: 60%/67% detection, USD 15 per false alert, net values USD 450k and 730k, USD 240k monthly gain, USD 2.9m a year, 1,200 hours.",
+      "status": "verified",
+      "source_url": "https://gasa.org/",
+      "source_title": "Internal arithmetic check (illustrative model, no external source)",
+      "note": "Recomputed: 900/1500 = 60%; 1000/1500 = 66.7%; 6 min at USD 30/h = USD 3, plus USD 12 friction = USD 15; 30,000 × 15 = 450k; 18,000 × 15 = 270k; net 450k and 730k; uplift 280k minus 40k = 240k; × 12 = 2.88m; 12,000 × 6 min = 1,200 h. All internally consistent and labelled illustrative."
+    },
+    {
+      "claim": "'Every fraud team I have met can recite its detection rate' (implied personal experience).",
+      "status": "corrected",
+      "source_url": "https://gasa.org/",
+      "source_title": "Editorial change (no external source)",
+      "note": "Softened to 'Most fraud teams can recite their detection rate' to avoid any implied personal or employer-linked experience. No employer names appear in the draft."
+    }
+  ]
+}
