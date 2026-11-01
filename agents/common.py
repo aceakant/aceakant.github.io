@@ -30,10 +30,12 @@ def ask_claude(system, prompt, web_search=False, max_tokens=12000):
     """Call Claude and return (text, sources). Optional live web search for fact-checking."""
     cfg = config()["agents"]
     headers = {
-        "x-api-key": os.environ["ANTHROPIC_API_KEY"],
+        "Authorization": f"Bearer {os.environ['ANTHROPIC_API_KEY']}",
         "anthropic-version": "2023-06-01",
         "content-type": "application/json",
     }
+    if os.environ.get("ANTHROPIC_WORKSPACE_ID"):  # only needed for keys not tied to a workspace
+        headers["anthropic-workspace-id"] = os.environ["ANTHROPIC_WORKSPACE_ID"]
     body = {
         "model": cfg["model"],
         "max_tokens": max_tokens,
