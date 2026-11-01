@@ -6,6 +6,9 @@ on:
   schedule:
     - cron: "30 3 * * 1"   # Monday 03:30 UTC = 09:00 IST
   workflow_dispatch:       # "Run workflow" button for a manual run
+  push:                    # or: edit content/run-now.txt (any text) to run immediately
+    branches: [main]
+    paths: ["content/run-now.txt"]
 
 permissions:
   contents: write
