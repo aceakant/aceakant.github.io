@@ -3,7 +3,7 @@ title: 'EU AI Act and credit scoring: a practical high-risk checklist'
 slug: eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist
 date: '2026-11-01'
 category: Credit Risk
-status: draft
+status: published
 test_run: false
 market: EU
 scenario: a mid-sized EU retail bank with a consumer-lending book (an illustrative composite, not a real institution)

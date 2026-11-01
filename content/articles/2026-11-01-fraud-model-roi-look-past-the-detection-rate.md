@@ -3,7 +3,7 @@ title: 'Fraud model ROI: look past the detection rate'
 slug: fraud-model-roi-look-past-the-detection-rate
 date: '2026-11-01'
 category: Fraud Risk
-status: draft
+status: published
 test_run: false
 market: Global
 scenario: a mid-sized multi-country retail bank (a composite, not a real institution)
@@ -88,22 +88,21 @@ myth_fact:
   explain: It is a survey-based estimate for the 42 markets surveyed, not audited bank-reported losses, so it indicates scale rather than a ledger of fraud.
 image: media/fraud-model-roi-look-past-the-detection-rate/star-card.png
 factcheck:
-  status: needs-review
-  summary: '4 corrected, 3 verified · Needs review: GASA appears to have run a 2026 global survey (58,900 respondents, 42 markets), and regional 2026 reports (US, Europe, Asia, Brazil, Spain) have been published. I could not find the 2026 global headline figures (share of adults scammed, total losses). Before publishing, check gasa.org for a Global State of Scams 2026 release and update the 57% and USD 442 billion figures and the year if it is out.; GASA''s 2025 report also gives a broader ''encountered a scam'' measure of about seven in ten adults. The article uses the narrower ''experienced a scam'' figure of 57%, which matches GASA''s headline wording. The full report is member-only, so I checked the figures through GASA''s press release and homepage and not the full PDF.; The scenario inputs (USD 30/hour analyst cost, USD 12 friction cost, 6 minutes per alert, USD 40k run cost, alert volumes) are invented assumptions and are labelled illustrative. They are not benchmarked against any
-    external source.'
+  status: verified
+  summary: 'Agent fact-check plus human review on 1 Nov 2026: GASA Global State of Scams 2025 figures (57% of adults, about USD 442 billion) confirmed as the latest global edition; only regional 2026 editions exist so far. All bank figures are a labelled illustrative model.'
+  agent_summary: '4 corrected, 3 verified · Needs review: GASA appears to have run a 2026 global survey (58,900 respondents, 42 markets), and regional 2026 reports (US, Europe, Asia, Brazil, Spain) have been published. I could not find the 2026 global headline figures (share of adults scammed, total losses). Before publishing, check gasa.org for a Global State of Scams 2026 release and update the 57% and USD 442 billion figures and the year if it is out.; GASA''s 2025 report also gives a broader ''encountered a scam'' measure of about seven in ten adults. The article uses the narrower ''experienced a scam'' figure of 57%, which matches GASA''s headline wording. The full report is member-only, so I checked the figures through GASA''s press release and homepage and not the full PDF.; The scenario inputs (USD 30/hour analyst cost, USD 12 friction cost, 6 minutes per alert, USD 40k run cost, alert volumes) are invented assumptions and are labelled illustrative. They are not benchmarked against
+    any external source.'
 sources:
-- title: GASA, Global State of Scams 2025 press release (Oct 2025)
+- title: GASA, Global State of Scams 2025
   url: https://gasa.org/knowledge-base/blog/global-scams-on-the-rise-over-half-of-adults-worldwide-report-scam-encounters
-- title: GASA, Global State of Scams Report 2024 press release
+- title: GASA, Global State of Scams 2024
   url: https://gasa.org/knowledge-base/blog/global-state-of-scams-report-2024-1-trillion-stolen-in-12-months-gasa-feedzai
-- title: GASA, Global Anti-Scam Alliance Policy Agenda 2026
+- title: GASA, Policy Agenda 2026
   url: https://gasa.org/knowledge-base/blog/gasa-policy-agenda-2026
-- title: GASA, State of Scams Brazil 2025 release (methodology note)
+- title: GASA, State of Scams in Brazil 2025 (methodology)
   url: https://gasa.org/knowledge-base/blog/new-report-reveals-brazilians-face-252-scam-encounters-annually-despite-high-confidence-in-spotting
-- title: scikit-learn, sklearn.metrics.recall_score documentation
+- title: scikit-learn, recall_score documentation
   url: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.recall_score.html
-- title: Internal arithmetic check (illustrative model, no external source)
-  url: https://gasa.org/
 linkedin_post: 'Your fraud model catches 95% of fraud. Great. What did it cost to get there?
 
 
@@ -131,6 +130,7 @@ linkedin_post: 'Your fraud model catches 95% of fraud. Great. What did it cost t
 
   Which cost is hardest to measure in your world: customer friction, analyst time or something else?'
 linkedin_shared: false
+linkedin_hold: true
 ---
 
 ## The problem

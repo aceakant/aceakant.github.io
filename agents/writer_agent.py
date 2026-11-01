@@ -44,7 +44,7 @@ ANONYMISED NOTES FROM THE AUTHOR (optional; use the ideas, never names or number
 
 Return ONLY a JSON object with exactly these keys:
 {{
-  "title": "headline, max 12 words",
+  "title": "headline in sentence case (capital only on the first word, proper nouns and acronyms), max 12 words",
   "category": "one of: Fraud Risk | Credit Risk | Automation | Data Analytics | GenAI | Team & Process",
   "summary": "2 sentences for the Weekly Updates page",
   "scenario": "who the illustrative STAR organisation is, e.g. 'a mid-sized Indian NBFC'",

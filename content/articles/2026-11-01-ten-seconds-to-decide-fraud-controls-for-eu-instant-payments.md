@@ -1,9 +1,9 @@
 ---
-title: 'Ten Seconds to Decide: Fraud Controls for EU Instant Payments'
+title: 'Ten seconds to decide: fraud controls for EU instant payments'
 slug: ten-seconds-to-decide-fraud-controls-for-eu-instant-payments
 date: '2026-11-01'
 category: Fraud Risk
-status: draft
+status: published
 test_run: false
 market: EU
 scenario: a composite mid-sized euro-area retail bank (illustrative, not a real institution)
@@ -88,22 +88,23 @@ myth_fact:
   explain: For instant payments the Regulation replaces per-transaction screening against EU targeted financial sanctions with verification of the bank's own customers at least daily, and after new listings.
 image: media/ten-seconds-to-decide-fraud-controls-for-eu-instant-payments/star-card.png
 factcheck:
-  status: needs-review
-  summary: '7 verified, 4 corrected · Needs review: PSD3/PSR formal adoption status: the Council published its first-reading texts on 21 October 2026 and adoption in the Official Journal was still pending in late October 2026. Re-check before publication and update the wording if the PSR is adopted.; Check whether a 2026 edition of the joint EBA/ECB payment fraud report has been published since the 15 December 2025 edition. I found no newer edition.; I could not open the operative text of Article 5a of Regulation (EU) 2024/886 in the search tool. The ten-second rule is confirmed by multiple secondary sources, including a Spanish consumer portal and legal summaries. A human should confirm the exact wording against EUR-Lex if citing the article number.; The STAR ''about a third'' fraud reduction and the ''fewer than 1% challenged'' figure are assumptions. Keep them labelled as illustrative.'
+  status: verified
+  summary: 'Agent fact-check plus human review on 1 Nov 2026: Instant Payments Regulation (EU) 2024/886 ten-second rule and the 9 January / 9 October 2025 dates confirmed; the EBA/ECB December 2025 report is the latest edition; PSR adoption is correctly described as pending. Benefit figures are a labelled illustrative model.'
+  agent_summary: '7 verified, 4 corrected · Needs review: PSD3/PSR formal adoption status: the Council published its first-reading texts on 21 October 2026 and adoption in the Official Journal was still pending in late October 2026. Re-check before publication and update the wording if the PSR is adopted.; Check whether a 2026 edition of the joint EBA/ECB payment fraud report has been published since the 15 December 2025 edition. I found no newer edition.; I could not open the operative text of Article 5a of Regulation (EU) 2024/886 in the search tool. The ten-second rule is confirmed by multiple secondary sources, including a Spanish consumer portal and legal summaries. A human should confirm the exact wording against EUR-Lex if citing the article number.; The STAR ''about a third'' fraud reduction and the ''fewer than 1% challenged'' figure are assumptions. Keep them labelled as illustrative.'
 sources:
 - title: EUR-Lex, Regulation (EU) 2024/886 (Instant Payments Regulation)
   url: https://eur-lex.europa.eu/eli/reg/2024/886/oj
 - title: European Central Bank, Instant Payments Regulation
   url: https://www.ecb.europa.eu/paym/retail/instant_payments/html/instant_payments_regulation.en.html
-- title: Central Bank of Cyprus, Application of Instant Payments Regulation
+- title: Central Bank of Cyprus, Application of the Instant Payments Regulation
   url: https://www.centralbank.cy/en/announcements/application-of-instant-payments-regulation-eu-2024-886-10-12-2024
-- title: European Payments Council, Verification Of Payee Scheme Rulebook
+- title: European Payments Council, Verification of Payee scheme rulebook
   url: https://www.europeanpaymentscouncil.eu/document-library/rulebooks/verification-payee-scheme-rulebook
-- title: ECB/EBA press release, Joint EBA-ECB report on payment fraud, 15 Dec 2025
+- title: EBA and ECB, joint report on payment fraud (December 2025)
   url: https://www.bde.es/f/webbe/GAP/Secciones/SalaPrensa/ComunicadosBCE/NotasInformativasBCE/25/presbce2025-151en.pdf
-- title: EUR-Lex, Regulation (EU) 2022/2554 (DORA), Article 64
+- title: EUR-Lex, Regulation (EU) 2022/2554 (DORA)
   url: https://eur-lex.europa.eu/eli/reg/2022/2554/oj
-- title: 'Norton Rose Fulbright, PSD3 and PSR: provisional agreement to 2026'
+- title: Norton Rose Fulbright, PSD3 and PSR, from provisional agreement to 2026
   url: https://www.nortonrosefulbright.com/en/knowledge/publications/cedd39c6/psd3-and-psr-from-provisional-agreement-to-2026-readiness
 linkedin_post: 'Ten seconds. That is how long a euro-area bank now has to make an instant payment available to the payee, and it is roughly how long my laptop needs to decide it urgently needs an update.
 
@@ -126,6 +127,7 @@ linkedin_post: 'Ten seconds. That is how long a euro-area bank now has to make a
 
   How does your team measure the cost of a challenge today: in euros, or in gut feel?'
 linkedin_shared: false
+linkedin_hold: true
 ---
 
 ## The problem
