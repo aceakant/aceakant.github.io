@@ -1,0 +1,2 @@
+{# "WhatsApp me" button. Needs: site.whatsapp. Optional: wa_class #}
+{% if site.whatsapp %}{% set digits = site.whatsapp | replace(' ', '') | replace('+', '') %}<a class="{{ wa_class | default('btn ghost') }}" href="#" data-wa="{{ digits[:5] }}|{{ digits[5:] }}" data-msg="Hi Ajay, I found your website and would like to connect." target="_blank" rel="noopener">WhatsApp me</a>{% endif %}

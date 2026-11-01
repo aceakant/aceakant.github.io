@@ -7,6 +7,11 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
+  /* WhatsApp buttons: join the number in the browser */
+  $$("a[data-wa]").forEach(function (a) {
+    a.href = "https://wa.me/" + a.getAttribute("data-wa").split("|").join("") + "?text=" + encodeURIComponent(a.getAttribute("data-msg") || "");
+  });
+
   /* night look only: clear any old light-mode choice saved by the former switch */
   try { localStorage.removeItem("ak-theme"); } catch (e) {}
 

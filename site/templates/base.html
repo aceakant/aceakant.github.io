@@ -45,7 +45,10 @@
       <b>{{ site.author }}</b>
       <span>Every {{ site.weekly_name }} piece is fact-checked against cited sources. Views are my own.</span>
     </div>
-    <a class="btn small" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    <div class="foot-btns">
+      {% set wa_class = "btn small ghost" %}{% include "_whatsapp.html" %}
+      <a class="btn small" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    </div>
   </div>
   <div class="wrap fine">© {{ year }} {{ site.author }}</div>
 </footer>
