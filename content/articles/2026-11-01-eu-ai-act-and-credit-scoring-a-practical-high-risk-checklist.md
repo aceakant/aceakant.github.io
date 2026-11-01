@@ -8,7 +8,7 @@ test_run: false
 market: EU
 scenario: a mid-sized EU retail bank with a consumer-lending book (an illustrative composite, not a real institution)
 publish_at: null
-review_issue: null
+review_issue: 5
 reminded: false
 summary: Credit scoring of consumers is explicitly listed as high-risk under the EU AI Act. Here is a practical checklist for data, documentation, human oversight and monitoring, and what it could be worth to a risk analytics team.
 hook:
