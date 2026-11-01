@@ -1,18 +1,20 @@
 # Topic backlog. The Topic agent picks the first "pending" topic each week.
 # Add your own ideas at the top. When the list runs out, the agent proposes new ones itself.
-# market: India | Global | US | UK & EU — every statistic in that week's article must come from this market.
 
 topics:
 - title: Using an LLM agent to take routine fraud analytics off a risk team's plate
-  angle: Where an analytics agent fits, what it should not do, and how to measure the time it gives back.
+  angle: Where an analytics agent fits, what it should not do, and how to measure
+    the time it gives back.
   market: Global
   status: used 2026-11-01
 - title: 'Money mules on UPI: how banks can spot mule accounts in the first week'
-  angle: The typical mule account pattern, the signals that show up early, and the cost of catching it late.
+  angle: The typical mule account pattern, the signals that show up early, and the
+    cost of catching it late.
   market: India
-  status: pending
+  status: used 2026-11-01
 - title: 'Digital lending fraud: catching synthetic and borrowed identities at onboarding'
-  angle: Device, velocity and document signals that separate genuine first-time borrowers from fraud rings.
+  angle: Device, velocity and document signals that separate genuine first-time borrowers
+    from fraud rings.
   market: India
   status: pending
 - title: 'Early-warning KRIs for a retail loan book: five that actually move decisions'
@@ -20,7 +22,8 @@ topics:
   market: India
   status: pending
 - title: 'Account Aggregator data in underwriting: real lift or extra risk?'
-  angle: How to test AA data for approval lift, keep consent clean under the DPDP Act, and measure the result.
+  angle: How to test AA data for approval lift, keep consent clean under the DPDP
+    Act, and measure the result.
   market: India
   status: pending
 - title: 'Automating MIS: from spreadsheet sprawl to a governed data pipeline'
@@ -28,10 +31,12 @@ topics:
   market: Global
   status: pending
 - title: 'Measuring a fraud model''s ROI: beyond detection rate'
-  angle: Losses prevented, false-positive cost, customer friction and analyst time in one simple view.
+  angle: Losses prevented, false-positive cost, customer friction and analyst time
+    in one simple view.
   market: Global
   status: pending
 - title: 'APP scams and reimbursement rules: what changes for fraud analytics teams'
-  angle: How mandatory reimbursement shifts where banks invest in detection and how to size the impact.
+  angle: How mandatory reimbursement shifts where banks invest in detection and how
+    to size the impact.
   market: UK & EU
   status: pending
