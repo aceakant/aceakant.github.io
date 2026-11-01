@@ -26,6 +26,9 @@ def main(file_rel):
              if verified and when else
              "⚠️ **This draft will NOT publish by itself.** Something could not be verified. Check the notes above."),
             "",
+            "### LinkedIn post that will go out with it",
+            "> " + meta.get("linkedin_post", "").strip().replace("\n", "\n> "),
+            "",
             "### Your controls (reply to this issue with one word)",
             "- `approve` → publish now",
             "- `hold` → stop it from publishing",

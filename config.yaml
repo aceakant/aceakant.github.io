@@ -29,7 +29,7 @@ agents:
 
 linkedin:
   enabled: true
-  api_version: "202510"        # LinkedIn API version (YYYYMM); update yearly
+  api_version: "202605"        # LinkedIn API version (YYYYMM); each lasts ~1 year, update when a newer one is out
   hashtags: ["RiskAnalytics", "FraudPrevention", "GenAI", "DataAnalytics", "BankingInnovation"]
 
 writing_rules:

@@ -1,0 +1,30 @@
+# Checks the LinkedIn connection every Monday before the weekly run (never posts anything).
+# Run it any time: edit content/check-linkedin.txt, or use "Run workflow".
+name: 5 · LinkedIn connection check
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"    # Monday 08:30 IST
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["content/check-linkedin.txt"]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Check LinkedIn (no posting)
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/linkedin_check.py
