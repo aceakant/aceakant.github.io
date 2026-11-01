@@ -2,18 +2,21 @@
 # Add your own ideas at the top. When the list runs out, the agent proposes new ones itself.
 
 topics:
-  - title: "Using an LLM agent to take routine fraud analytics off a risk team's plate"
-    angle: "Where an analytics agent fits, what it should not do, and how to measure the time it gives back."
-    status: pending
-  - title: "Early-warning signals for loan fraud: a practical KRI design"
-    angle: "Choosing a handful of KRIs that catch fraud early without flooding ops with false alerts."
-    status: pending
-  - title: "Alternate data in underwriting: getting value without getting burned"
-    angle: "How to test alternate data sources, measure lift, and stay compliant (DPDP, GDPR)."
-    status: pending
-  - title: "Building a risk analytics team from zero: the first 90 days"
-    angle: "Hiring order, first deliverables, and how to show ROI to leadership early."
-    status: pending
-  - title: "Automating MIS: from spreadsheet sprawl to a governed data pipeline"
-    angle: "Operational gains, BCBS 239 data lineage, and a simple ROI model."
-    status: pending
+- title: Using an LLM agent to take routine fraud analytics off a risk team's plate
+  angle: Where an analytics agent fits, what it should not do, and how to measure
+    the time it gives back.
+  status: used 2026-11-01
+- title: 'Early-warning signals for loan fraud: a practical KRI design'
+  angle: Choosing a handful of KRIs that catch fraud early without flooding ops with
+    false alerts.
+  status: pending
+- title: 'Alternate data in underwriting: getting value without getting burned'
+  angle: How to test alternate data sources, measure lift, and stay compliant (DPDP,
+    GDPR).
+  status: pending
+- title: 'Building a risk analytics team from zero: the first 90 days'
+  angle: Hiring order, first deliverables, and how to show ROI to leadership early.
+  status: pending
+- title: 'Automating MIS: from spreadsheet sprawl to a governed data pipeline'
+  angle: Operational gains, BCBS 239 data lineage, and a simple ROI model.
+  status: pending
