@@ -54,8 +54,21 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           set -euo pipefail
-          API="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID"
           H=(-H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json")
+          # Check the token and find the right account (never prints the token)
+          echo "Token status: $(curl -sS "${H[@]}" https://api.cloudflare.com/client/v4/user/tokens/verify | jq -r '.result.status // (.errors[0].message // "unknown")')"
+          ACCS=$(curl -sS "${H[@]}" "https://api.cloudflare.com/client/v4/accounts?per_page=50")
+          N=$(echo "$ACCS" | jq '.result | length // 0')
+          echo "Accounts this token can use: $N"
+          ACC="$(echo -n "$CLOUDFLARE_ACCOUNT_ID" | tr -d '[:space:]')"
+          if echo "$ACCS" | jq -e --arg a "$ACC" '.result[]? | select(.id==$a)' >/dev/null; then
+            echo "The saved Account ID matches the token's account."
+          else
+            python3 -c "import os,re;v=os.environ['CLOUDFLARE_ACCOUNT_ID'].strip();print('Saved Account ID does NOT match. Its shape: length', len(v), '| 32 letters/numbers (0-9, a-f):', 'yes' if re.fullmatch(r'[0-9a-f]{32}', v) else 'NO')"
+            if [ "$N" = "1" ]; then ACC=$(echo "$ACCS" | jq -r '.result[0].id'); echo "Using the token's only account instead."; else echo "Can't pick an account automatically."; exit 1; fi
+          fi
+          echo "account=$ACC" >> "$GITHUB_OUTPUT"
+          API="https://api.cloudflare.com/client/v4/accounts/$ACC"
           TITLE="analyst-on-call-limits"
           ID=$(curl -fsS "${H[@]}" "$API/storage/kv/namespaces?per_page=100" | jq -r --arg t "$TITLE" '.result[] | select(.title==$t) | .id' | head -1)
           if [ -z "$ID" ]; then
@@ -81,7 +94,7 @@ jobs:
         working-directory: worker/analyst
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ steps.prep.outputs.account }}
         run: npx --yes wrangler@4 deploy
 
       - name: Give the service its Claude key (kept inside Cloudflare, never in the website)
@@ -89,7 +102,7 @@ jobs:
         working-directory: worker/analyst
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ steps.prep.outputs.account }}
           KEY: ${{ secrets.ANALYST_ANTHROPIC_API_KEY || secrets.ANALYST_ANATHROPIC_KEY || secrets.ANALYST_ANTHROPIC_KEY || secrets.ANTHROPIC_API_KEY }}
           WS: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
           BACKUP: ${{ secrets.ANTHROPIC_API_KEY }}
