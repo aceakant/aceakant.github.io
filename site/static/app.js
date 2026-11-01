@@ -7,13 +7,8 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
-  /* ---------- theme toggle ---------- */
-  var tbtn = $("#theme-toggle");
-  if (tbtn) tbtn.addEventListener("click", function () {
-    var light = doc.getAttribute("data-theme") === "light";
-    if (light) doc.removeAttribute("data-theme"); else doc.setAttribute("data-theme", "light");
-    try { localStorage.setItem("ak-theme", light ? "" : "light"); } catch (e) {}
-  });
+  /* night look only: clear any old light-mode choice saved by the former switch */
+  try { localStorage.removeItem("ak-theme"); } catch (e) {}
 
   /* ---------- scroll reveal + count-up ---------- */
   function countUp(el) {

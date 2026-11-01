@@ -56,8 +56,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 nav{display:flex;align-items:center;gap:2px}
 nav a{text-decoration:none;color:var(--muted);font-weight:500;font-size:15px;padding:8px 12px;border-radius:8px}
 nav a:hover,nav a[aria-current]{color:var(--ink);background:var(--sunk)}
-.theme{border:0;background:transparent;color:var(--muted);padding:8px;border-radius:8px;cursor:pointer;display:grid;place-items:center}
-.theme:hover{background:var(--sunk);color:var(--ink)}
 .progress{height:3px;background:transparent}.progress span{display:block;height:100%;width:0;background:var(--amber);transition:width .1s linear}
 
 /* buttons */
@@ -766,11 +764,9 @@ em.confirm{font-style:normal;font-size:11px;font-family:var(--mono);text-transfo
 /* four menu items on small phones */
 @media (max-width:640px){
   .top-inner{gap:8px}
-  nav a{font-size:13.5px;padding:7px 6px}
-  .theme{padding:6px}
+  nav a{font-size:14px;padding:7px 8px}
 }
 @media (max-width:380px){
   nav a{font-size:12.5px;padding:6px 4px}
   .mark{width:32px;height:32px;font-size:13px}
 }
-@media (max-width:340px){.theme{display:none}}
