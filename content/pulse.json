@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-01T22:13:52Z",
+  "updated": "2026-11-01T22:27:00Z",
   "since": "2026-11-02",
   "visitors": 17,
   "players": 5,
@@ -115,5 +115,16 @@
       "slug": "ten-seconds-to-decide-fraud-controls-for-eu-instant-payments",
       "reads": 3
     }
-  ]
+  ],
+  "tools": {
+    "samples": {
+      "card-transactions": 1,
+      "retail-loan-book": 1
+    },
+    "uploads": 0,
+    "reviews": 0
+  },
+  "analyst_live": {
+    "reviews": 0
+  }
 }
