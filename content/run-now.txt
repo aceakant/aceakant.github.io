@@ -1,1 +1,1 @@
-Edit this line (any text) and commit to run the weekly agents immediately. Last test run: 2026-11-01T13:06:51Z
+TEST run requested 2026-11-01T14:08:59Z. Write the word TEST here for a held test run; any other text for a real run.
