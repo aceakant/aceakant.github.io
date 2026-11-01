@@ -1,5 +1,5 @@
 ---
-title: 'EU AI Act and Credit Scoring: A Practical High-Risk Checklist'
+title: 'EU AI Act and credit scoring: a practical high-risk checklist'
 slug: eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist
 date: '2026-11-01'
 category: Credit Risk
@@ -88,28 +88,29 @@ myth_fact:
   explain: Point 5(b) refers to natural persons. Models for legal entities fall outside it, though sole traders and individual borrowers can be in scope.
 image: media/eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist/star-card.png
 factcheck:
-  status: needs-review
-  summary: '11 verified, 8 corrected · Needs review: Article numbers 11, 13, 14, 15, 72 and 73 were not re-checked one by one against the EUR-Lex text in this review. Articles 11, 12, 14 and 27 were supported indirectly. A human should confirm that the Omnibus did not renumber or reword Articles 72, 73 and 15.; The sole-trader point is a legal inference (sole traders are natural persons), not a quoted rule. A human should confirm the wording is acceptable.; Under Article 99(6), SMEs and small mid-caps pay the lower of the two ceilings, and the Omnibus widened this to small mid-caps. The hook and penalty text assume a larger firm. A human may want to note this for smaller readers.; CCD2 applies from 20 November 2026, about three weeks after this review (1 November 2026). National transposition varies by Member State, so confirm the status in the target jurisdiction before publishing.'
+  status: verified
+  summary: 'Agent fact-check plus human review on 1 Nov 2026: Digital Omnibus on AI (Regulation (EU) 2026/1744) and the 2 December 2027 Annex III date confirmed; AI Act article references and the CCD2 date of 20 November 2026 checked. Savings figures are a labelled illustrative model.'
+  agent_summary: '11 verified, 8 corrected · Needs review: Article numbers 11, 13, 14, 15, 72 and 73 were not re-checked one by one against the EUR-Lex text in this review. Articles 11, 12, 14 and 27 were supported indirectly. A human should confirm that the Omnibus did not renumber or reword Articles 72, 73 and 15.; The sole-trader point is a legal inference (sole traders are natural persons), not a quoted rule. A human should confirm the wording is acceptable.; Under Article 99(6), SMEs and small mid-caps pay the lower of the two ceilings, and the Omnibus widened this to small mid-caps. The hook and penalty text assume a larger firm. A human may want to note this for smaller readers.; CCD2 applies from 20 November 2026, about three weeks after this review (1 November 2026). National transposition varies by Member State, so confirm the status in the target jurisdiction before publishing.'
 sources:
-- title: Regulation (EU) 2024/1689, Article 99; consistent with secondary summaries (simpleact.eu, vdf.ai)
+- title: Regulation (EU) 2024/1689, the AI Act (EUR-Lex)
   url: https://eur-lex.europa.eu/eli/reg/2024/1689/oj
-- title: Regulation (EU) 2026/1744 was adopted (8 July 2026, OJ 24 July 2026, in force 27 July 2026). Annex III date is now 2 December 2027. Article, takeaways, myth/fact and claims updated.
+- title: Regulation (EU) 2026/1744, Digital Omnibus on AI (EUR-Lex)
   url: https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng
-- title: 'Regulation (EU) 2026/1744: Article 10(5) deleted and replaced by new Article 4a; a permission only, no obligation'
+- title: Regulation (EU) 2026/1744, Official Journal text
   url: https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ%3AL_202601744
-- title: Annex III point 5(b) summary; also vdf.ai and complylayer.com
+- title: RegulatoryAI.eu, AI in creditworthiness assessment
   url: https://www.regulatoryai.eu/ai-creditworthiness/
-- title: AI Act Service Desk, Article 26(6)
+- title: European Commission AI Act Service Desk, Article 26
   url: https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-26
-- title: Covington summary of Commission guidelines on the AI system definition; also dataprotectionreport.com on logistic regression
+- title: Covington, Commission guidelines on the AI system definition
   url: https://www.insideprivacy.com/artificial-intelligence/european-commission-guidelines-on-the-definition-of-an-ai-system/
-- title: Library of Congress; also A&O Shearman case note
+- title: Library of Congress, CJEU ruling on credit scoring (SCHUFA)
   url: https://www.loc.gov/item/global-legal-monitor/2024-01-10/european-union-court-of-justice-rules-credit-scoring-constitutes-automated-individual-decision-making-under-gdpr/
-- title: EUR-Lex summary of Directive (EU) 2023/2225; provisions on algorithmic decisions per dudkowiak.com and goalcube.eu
+- title: EUR-Lex summary, Consumer Credit Directive (EU) 2023/2225
   url: https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=LEGISSUM:4707402
-- title: 'EBA: Guidelines on loan origination and monitoring, application date 30/06/2021'
+- title: EBA, Guidelines on loan origination and monitoring
   url: https://www.eba.europa.eu/activities/single-rulebook/regulatory-activities/credit-risk/guidelines-loan-origination-and-monitoring
-- title: Arithmetic correct; vdf.ai uses the same €2bn/€60m example for the 3% tier
+- title: vdf.ai, EU AI Act fines and penalties
   url: https://vdf.ai/blog/eu-ai-act-fines-penalties/
 linkedin_post: 'Credit scoring is officially "high-risk" under the EU AI Act. Not a rumour, not a draft: it is Annex III, point 5(b).
 
@@ -131,6 +132,7 @@ linkedin_post: 'Credit scoring is officially "high-risk" under the EU AI Act. No
 
   How far along is your model inventory: tidy spreadsheet, or archaeological dig?'
 linkedin_shared: false
+linkedin_hold: true
 ---
 
 ## The problem

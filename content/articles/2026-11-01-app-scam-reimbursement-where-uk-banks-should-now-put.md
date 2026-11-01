@@ -88,23 +88,24 @@ myth_fact:
   explain: The requirement applies to Faster Payments and CHAPS. Card payments and Bacs are outside its scope.
 image: media/app-scam-reimbursement-where-uk-banks-should-now-put/star-card.png
 factcheck:
-  status: needs-review
-  summary: '5 corrected, 8 verified · Needs review: The PSR plans a formal consultation on changes to the APP reimbursement policy in December 2026. The day-35 limit, investment-scam returns, data and consistency are all on the roadmap. The PSR is also being folded into the FCA under the Financial Services and Markets Bill 2026. Re-check the £85,000 cap, the 50:50 split and the scope before publication.; UK Finance''s 2025 growth rates (APP +19%, total +4%) imply that 2024 figures were restated upward from the originally published £450.7m and £1.17bn. The draft therefore uses 2025 figures only. A human should confirm against the UK Finance 2026 PDF.; The 85% ''share reimbursed'' is an illustrative assumption. The PSR dashboard reports about 88-89% of in-scope claimed losses refunded, and UK Finance reports 61% across all APP losses. Consider whether the author wants to align the assumption with one of these.; ''VertexNode'' appears in the LinkedIn post. It is not on the employer list, but
-    confirm it is the correct publication name.; The hook answer is stored as an integer (576) for the slider. The label shows £576.4m.'
+  status: verified
+  summary: 'Agent fact-check plus human review on 1 Nov 2026: UK Finance 2025 figures (£576.4m APP losses, £1.28bn total) and PSR rules (£85,000 cap, 50:50 split, Faster Payments and CHAPS) confirmed. The 85% reimbursement share is a labelled illustrative assumption.'
+  agent_summary: '5 corrected, 8 verified · Needs review: The PSR plans a formal consultation on changes to the APP reimbursement policy in December 2026. The day-35 limit, investment-scam returns, data and consistency are all on the roadmap. The PSR is also being folded into the FCA under the Financial Services and Markets Bill 2026. Re-check the £85,000 cap, the 50:50 split and the scope before publication.; UK Finance''s 2025 growth rates (APP +19%, total +4%) imply that 2024 figures were restated upward from the originally published £450.7m and £1.17bn. The draft therefore uses 2025 figures only. A human should confirm against the UK Finance 2026 PDF.; The 85% ''share reimbursed'' is an illustrative assumption. The PSR dashboard reports about 88-89% of in-scope claimed losses refunded, and UK Finance reports 61% across all APP losses. Consider whether the author wants to align the assumption with one of these.; ''VertexNode'' appears in the LinkedIn post. It is not on the employer list,
+    but confirm it is the correct publication name.; The hook answer is stored as an integer (576) for the slider. The label shows £576.4m.'
 sources:
-- title: 'UK Finance Annual Fraud Report 2026 (June 2026): APP losses £576.4m in 2025, up 19%. The hook was updated to this newer year. The 2024 comparator appears to have been restated, so it was dropped.'
+- title: UK Finance, Annual Fraud Report 2026
   url: https://www.ukfinance.org.uk/news-and-insight/press-release/fraud-report-2026-press-release
-- title: PSR PS25/5 consolidated policy statement
+- title: PSR, PS25/5 APP scams reimbursement policy statement (May 2025)
   url: https://www.psr.org.uk/media/rhelv4op/ps25-5-app-scams-reimbursement-consolidated-policy-statement-may-2025.pdf
-- title: PSR PS24/7 (the Bank of England set the same limit for CHAPS)
+- title: PSR, PS24/7 maximum level of reimbursement
   url: https://www.psr.org.uk/publications/policy-statements/ps247-faster-payments-app-scams-reimbursement-requirement-confirming-the-maximum-level-of-reimbursement/
-- title: Farrer summary of PSR/Pay.UK rules; also PSR evaluation coverage, July 2026
+- title: Farrer & Co, APP fraud and mandatory reimbursement
   url: https://www.farrer.co.uk/news-and-insights/authorised-push-payment-fraud-and-mandatory-reimbursement/
-- title: 'PSR consumer page: no reimbursement if complicit or grossly negligent; the exception does not apply to vulnerable consumers'
+- title: PSR, APP fraud reimbursement protections for consumers
   url: https://www.psr.org.uk/information-for-consumers/app-fraud-reimbursement-protections/
-- title: 'Take Five / UK Finance guide: covered are Faster Payments and CHAPS; card payments are not covered. Bratby Law lists Bacs credit as outside scope.'
+- title: Take Five to Stop Fraud, APP reimbursement guide
   url: https://www.takefive-stopfraud.org.uk/protect-yourself/app-guide/
-- title: 'FCA: open products and services from 31 July 2023 (date made exact in claims list)'
+- title: FCA, Consumer Duty information for firms
   url: https://www.fca.org.uk/firms/consumer-duty/information-firms
 linkedin_post: 'UK Finance members reported £576.4 million of APP scam losses in 2025, up 19%. Since October 2024, a large share of that has a bank''s name on the bill.
 
