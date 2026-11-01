@@ -30,6 +30,18 @@ jobs:
           ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
         run: |
           [ -n "$ANTHROPIC_WORKSPACE_ID" ] && echo "Note: ANTHROPIC_WORKSPACE_ID is set; delete it if your keys belong to a workspace."
+          # Shape of each saved value, to spot copy-paste problems. Never prints the key itself.
+          python3 - <<'PY'
+          import os
+          for n in ["VERTAX_ANTHROPIC_API_KEY", "VERTEX_ANTHROPIC_API_KEY", "ANALYST_ANATHROPIC_KEY", "ANALYST_ANTHROPIC_KEY", "OLD_ANTHROPIC_API_KEY"]:
+              v = os.environ.get(n, "")
+              if not v:
+                  continue
+              s = v.strip()
+              print(f"SHAPE {n}: length {len(v)} | looks like a Claude API key (starts sk-ant-api): {'yes' if s.startswith('sk-ant-api') else 'NO'}"
+                    f" | spaces or line breaks at the ends: {'YES' if s != v else 'no'} | spaces inside: {'YES' if any(c.isspace() for c in s) else 'no'}"
+                    f" | quote marks: {'YES' if any(c in s for c in chr(34) + chr(39)) else 'no'}")
+          PY
           for name in VERTAX_ANTHROPIC_API_KEY VERTEX_ANTHROPIC_API_KEY ANALYST_ANATHROPIC_KEY ANALYST_ANTHROPIC_KEY OLD_ANTHROPIC_API_KEY; do
             if [ -z "${!name}" ]; then echo "--- $name: not saved"; continue; fi
             echo "--- $name: found, testing…"
