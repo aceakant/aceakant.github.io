@@ -13,7 +13,39 @@ const SHARED_RULES = `Rules that always apply:
 - Plain British English, short sentences, explain any jargon, no hype, no emojis, no markdown.
 - Never repeat personal data. Columns marked "personal" have no values in the summary; keep it that way.`;
 
-const FINDING_SHAPE = `{"id": "F1", "severity": "high" | "medium" | "stable", "headline": "max 10 words", "detail": "1-2 sentences with the key numbers"}`;
+// Answers come back through a forced tool call, so they are always well-formed JSON.
+const FINDING = {
+  type: "object",
+  properties: {
+    id: { type: "string", description: "F1, F2, …" },
+    severity: { type: "string", enum: ["high", "medium", "stable"] },
+    headline: { type: "string", description: "at most 10 words" },
+    detail: { type: "string", description: "1-2 sentences with the key numbers" },
+  },
+  required: ["id", "severity", "headline", "detail"],
+};
+const STEPS = { type: "array", items: { type: "string" }, description: "exactly 3 short, specific actions" };
+export const MAKER_TOOL = {
+  name: "submit_draft",
+  description: "Submit the maker's draft findings.",
+  input_schema: { type: "object", properties: { title: { type: "string" }, findings: { type: "array", items: FINDING }, next_steps: STEPS }, required: ["title", "findings", "next_steps"] },
+};
+export const CHECKER_TOOL = {
+  name: "submit_review",
+  description: "Submit the checker's verdicts, the final findings and the conclusion.",
+  input_schema: {
+    type: "object",
+    properties: {
+      reviews: { type: "array", items: { type: "object", properties: {
+        id: { type: "string" }, verdict: { type: "string", enum: ["confirmed", "corrected", "removed", "added"] }, note: { type: "string" } }, required: ["id", "verdict", "note"] } },
+      findings: { type: "array", items: FINDING },
+      next_steps: STEPS,
+      conclusion: { type: "string" },
+      limits: { type: "string" },
+    },
+    required: ["reviews", "findings", "next_steps", "conclusion", "limits"],
+  },
+};
 
 export const MAKER_SYSTEM = `You are the MAKER in a maker-checker review for "Analyst on Call", a tool on a risk-analytics leader's website.
 You receive a JSON summary of statistics about one dataset. Write the first read an experienced risk analyst would give a busy leader: what matters, how big it is, and what to look at next.
@@ -23,10 +55,9 @@ If there is no obvious risk outcome in the data, give the most useful general fi
 
 ${SHARED_RULES}
 
-Reply with JSON only, no other text:
-{"title": "max 8 words naming what this data is",
- "findings": [3 to 5 items shaped like ${FINDING_SHAPE}],
- "next_steps": ["3 short, specific actions, each max 25 words"]}`;
+Submit your draft with the submit_draft tool: a title of at most 8 words naming what this data is; 3 to 5 findings
+(each: id F1, F2…; severity; a headline of at most 10 words; a detail of 1-2 sentences with the key numbers);
+and exactly 3 short, specific next steps of at most 25 words each.`;
 
 export const CHECKER_SYSTEM = `You are the CHECKER in a maker-checker review for "Analyst on Call". Banks use maker-checker so that no single person's work goes out unchecked; you are the second pair of eyes.
 You receive the same statistics summary and the MAKER's draft. Check every finding against the summary:
@@ -38,12 +69,10 @@ Then write the final conclusion a leader can act on, and one sentence on the lim
 
 ${SHARED_RULES}
 
-Reply with JSON only, no other text:
-{"reviews": [one per maker finding, plus any added: {"id": "F1", "verdict": "confirmed" | "corrected" | "removed" | "added", "note": "max 25 words: what you checked or changed"}],
- "findings": [the final list after your changes, 2 to 5 items shaped like ${FINDING_SHAPE}],
- "next_steps": ["3 short, specific actions, each max 25 words"],
- "conclusion": "2-3 sentences: the overall verdict and the one thing to do first",
- "limits": "1 sentence on what this review cannot tell you"}`;
+Submit your review with the submit_review tool: one review per maker finding (plus any you add), each with the
+finding's id, your verdict and a note of at most 25 words on what you checked or changed; the final findings after
+your changes (2 to 5, keeping each finding's id); exactly 3 next steps; a 2-3 sentence conclusion with the overall
+verdict and the one thing to do first; and one sentence on what this review cannot tell you.`;
 
 const SEVERITIES = ["high", "medium", "stable"];
 const VERDICTS = ["confirmed", "corrected", "removed", "added"];
@@ -52,10 +81,19 @@ function clean(s, max) {
   return String(s == null ? "" : s).replace(/<[^>]*>/g, "").replace(/[\u0000-\u001f<>]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
 }
 
+// Fallback only, if a reply ever arrives as text: take the first complete {...} object.
 function extractJSON(text) {
-  const a = text.indexOf("{"), b = text.lastIndexOf("}");
-  if (a < 0 || b <= a) throw new Error("no JSON in reply");
-  return JSON.parse(text.slice(a, b + 1));
+  const a = text.indexOf("{");
+  if (a < 0) throw new Error("no JSON in reply");
+  let depth = 0, inStr = false, esc = false;
+  for (let i = a; i < text.length; i++) {
+    const c = text[i];
+    if (inStr) { if (esc) esc = false; else if (c === "\\") esc = true; else if (c === '"') inStr = false; continue; }
+    if (c === '"') inStr = true;
+    else if (c === "{") depth++;
+    else if (c === "}" && --depth === 0) return JSON.parse(text.slice(a, i + 1));
+  }
+  throw new Error("incomplete JSON in reply");
 }
 
 function findings(list, min, max) {
@@ -92,7 +130,7 @@ export function checkChecker(obj) {
   };
 }
 
-async function ask(system, user, opts) {
+async function ask(system, user, tool, opts) {
   const headers = {
     "Authorization": `Bearer ${opts.apiKey}`,
     "anthropic-version": "2023-06-01",
@@ -101,11 +139,14 @@ async function ask(system, user, opts) {
   if (opts.workspace) headers["anthropic-workspace-id"] = opts.workspace;
   const res = await (opts.fetch || fetch)(opts.apiUrl || "https://api.anthropic.com/v1/messages", {
     method: "POST", headers,
-    body: JSON.stringify({ model: opts.model, max_tokens: opts.maxTokens || 2000, system, messages: [{ role: "user", content: user }] }),
+    body: JSON.stringify({ model: opts.model, max_tokens: opts.maxTokens || 2000, system, messages: [{ role: "user", content: user }],
+      tools: [tool], tool_choice: { type: "tool", name: tool.name } }),
   });
   if (!res.ok) throw new Error(`Claude API ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const data = await res.json();
-  return (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("");
+  const call = (data.content || []).find((b) => b.type === "tool_use" && b.name === tool.name);
+  if (call && call.input && typeof call.input === "object") return call.input;
+  return extractJSON((data.content || []).filter((b) => b.type === "text").map((b) => b.text).join(""));
 }
 
 // The whole review: maker drafts, checker verifies, final conclusion. Retries each step once if the reply is malformed.
@@ -113,14 +154,14 @@ export async function runReview(summary, opts) {
   const facts = JSON.stringify(summary);
   let draft;
   for (let attempt = 0; attempt < 2 && !draft; attempt++) {
-    try { draft = checkMaker(extractJSON(await ask(MAKER_SYSTEM, `STATISTICS SUMMARY (JSON):\n${facts}`, { ...opts, maxTokens: 1500 }))); }
+    try { draft = checkMaker(await ask(MAKER_SYSTEM, `STATISTICS SUMMARY (JSON):\n${facts}`, MAKER_TOOL, { ...opts, maxTokens: 2000 })); }
     catch (e) { if (attempt === 1) throw e; }
   }
   let checked;
   for (let attempt = 0; attempt < 2 && !checked; attempt++) {
     try {
-      checked = checkChecker(extractJSON(await ask(CHECKER_SYSTEM,
-        `STATISTICS SUMMARY (JSON):\n${facts}\n\nMAKER'S DRAFT (JSON):\n${JSON.stringify(draft)}`, { ...opts, maxTokens: 2200 })));
+      checked = checkChecker(await ask(CHECKER_SYSTEM,
+        `STATISTICS SUMMARY (JSON):\n${facts}\n\nMAKER'S DRAFT (JSON):\n${JSON.stringify(draft)}`, CHECKER_TOOL, { ...opts, maxTokens: 3000 }));
     } catch (e) { if (attempt === 1) throw e; }
   }
   return { title: draft.title, draft: { findings: draft.findings, next_steps: draft.next_steps }, ...checked, model: opts.model, version: VERSION };
