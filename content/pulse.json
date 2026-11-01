@@ -1,0 +1,62 @@
+{
+  "updated": "2026-11-01T19:55:24Z",
+  "since": "2026-11-02",
+  "visitors": 0,
+  "players": 0,
+  "article_reads": 0,
+  "countries": 0,
+  "weekly": [
+    {
+      "week": "2026-09-07",
+      "players": 0
+    },
+    {
+      "week": "2026-09-14",
+      "players": 0
+    },
+    {
+      "week": "2026-09-21",
+      "players": 0
+    },
+    {
+      "week": "2026-09-28",
+      "players": 0
+    },
+    {
+      "week": "2026-10-05",
+      "players": 0
+    },
+    {
+      "week": "2026-10-12",
+      "players": 0
+    },
+    {
+      "week": "2026-10-19",
+      "players": 0
+    },
+    {
+      "week": "2026-10-26",
+      "players": 0
+    }
+  ],
+  "sources": [
+    {
+      "name": "LinkedIn",
+      "count": 0
+    },
+    {
+      "name": "Direct link or bookmark",
+      "count": 0
+    },
+    {
+      "name": "Google and other search",
+      "count": 0
+    },
+    {
+      "name": "Other sites",
+      "count": 0
+    }
+  ],
+  "games": {},
+  "articles": []
+}
