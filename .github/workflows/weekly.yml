@@ -5,6 +5,7 @@ name: 1 · Weekly article
 on:
   schedule:
     - cron: "30 3 * * 1"   # Monday 03:30 UTC = 09:00 IST
+    - cron: "30 5 * * 1"   # backup at 11:00 IST; a scheduled run skips itself if today's draft already exists
   workflow_dispatch:       # "Run workflow" button for a manual run
   push:                    # or: edit content/run-now.txt (any text) to run immediately
     branches: [main]
@@ -24,18 +25,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
 
+      - name: Already drafted this week?
+        id: guard
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && [ -n "$(git log --since="$(date -u +%F)T00:00:00Z" --grep='^Draft:' --format=%h)" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"; echo "This week's draft already exists. Backup run skipped."
+          fi
+
       - name: Test or real run?
+        if: steps.guard.outputs.skip != 'true'
         run: |
           if [ "${{ github.event_name }}" = "push" ] && grep -qi "test" content/run-now.txt; then
             echo "RUN_MODE=test" >> "$GITHUB_ENV"; echo "Test run: the draft will be held and never auto-publish."
           fi
 
       - name: Run the agents
+        if: steps.guard.outputs.skip != 'true'
         id: run
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -43,6 +55,7 @@ jobs:
         run: python agents/pipeline.py
 
       - name: Save the draft
+        if: steps.guard.outputs.skip != 'true'
         run: |
           git config user.name "insights-bot"
           git config user.email "insights-bot@users.noreply.github.com"
@@ -51,6 +64,7 @@ jobs:
           git push
 
       - name: Open the review issue
+        if: steps.guard.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -60,6 +74,7 @@ jobs:
           git push
 
       - name: Build the preview page
+        if: steps.guard.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh workflow run deploy.yml

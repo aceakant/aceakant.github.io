@@ -4,8 +4,12 @@ name: 2 · Publish on schedule
 
 on:
   schedule:
-    - cron: "11 * * * *"
+    - cron: "11 * * * *"   # twice an hour, so a delayed or dropped GitHub schedule doesn't matter
+    - cron: "41 * * * *"
   workflow_dispatch:
+  push:                    # also runs once whenever this file changes (self-test)
+    branches: [main]
+    paths: [".github/workflows/publish.yml"]
 
 permissions:
   contents: write
