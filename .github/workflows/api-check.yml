@@ -1,4 +1,6 @@
-# Checks the Claude API key and prompt caching with two tiny calls (never writes or publishes anything).
+# Checks the Claude keys and prompt caching with small calls (never writes or publishes anything).
+# Keys: VERTAXNODE_ANTHROPIC_API_KEY (weekly VertexNode articles), ANALYST_ANTHROPIC_API_KEY (Analyst on Call),
+# ANTHROPIC_API_KEY (old key, kept as the automatic backup). Keys are never printed.
 # Run it any time: edit content/check-api.txt, or use "Run workflow".
 name: 6 · Claude API check
 
@@ -20,33 +22,30 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Test each saved Claude key by name (keys are never printed)
+      - name: Test each saved Claude key, then each job as it really runs
         env:
-          VERTAX_ANTHROPIC_API_KEY: ${{ secrets.VERTAX_ANTHROPIC_API_KEY }}
-          VERTEX_ANTHROPIC_API_KEY: ${{ secrets.VERTEX_ANTHROPIC_API_KEY }}
-          ANALYST_ANATHROPIC_KEY: ${{ secrets.ANALYST_ANATHROPIC_KEY }}
-          ANALYST_ANTHROPIC_KEY: ${{ secrets.ANALYST_ANTHROPIC_KEY }}
+          VERTAXNODE_ANTHROPIC_API_KEY: ${{ secrets.VERTAXNODE_ANTHROPIC_API_KEY }}
+          ANALYST_ANTHROPIC_API_KEY: ${{ secrets.ANALYST_ANTHROPIC_API_KEY }}
           OLD_ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ART_KEY: ${{ secrets.VERTAXNODE_ANTHROPIC_API_KEY || secrets.VERTEXNODE_ANTHROPIC_API_KEY || secrets.VERTAX_ANTHROPIC_API_KEY || secrets.ANTHROPIC_API_KEY }}
+          ANA_KEY: ${{ secrets.ANALYST_ANTHROPIC_API_KEY || secrets.ANALYST_ANATHROPIC_KEY || secrets.ANALYST_ANTHROPIC_KEY || secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
         run: |
           [ -n "$ANTHROPIC_WORKSPACE_ID" ] && echo "Note: ANTHROPIC_WORKSPACE_ID is set; delete it if your keys belong to a workspace."
-          # Shape of each saved value, to spot copy-paste problems. Never prints the key itself.
           python3 - <<'PY'
           import os
-          for n in ["VERTAX_ANTHROPIC_API_KEY", "VERTEX_ANTHROPIC_API_KEY", "ANALYST_ANATHROPIC_KEY", "ANALYST_ANTHROPIC_KEY", "OLD_ANTHROPIC_API_KEY"]:
+          for n in ["VERTAXNODE_ANTHROPIC_API_KEY", "ANALYST_ANTHROPIC_API_KEY", "OLD_ANTHROPIC_API_KEY"]:
               v = os.environ.get(n, "")
               if not v:
-                  continue
+                  print(f"SHAPE {n}: not saved"); continue
               s = v.strip()
-              print(f"SHAPE {n}: length {len(v)} | looks like a Claude API key (starts sk-ant-api): {'yes' if s.startswith('sk-ant-api') else 'NO'}"
-                    f" | spaces or line breaks at the ends: {'YES' if s != v else 'no'} | spaces inside: {'YES' if any(c.isspace() for c in s) else 'no'}"
-                    f" | quote marks: {'YES' if any(c in s for c in chr(34) + chr(39)) else 'no'}")
+              print(f"SHAPE {n}: length {len(v)} | starts like a Claude API key (sk-ant-api): {'yes' if s.startswith('sk-ant-api') else 'NO'}"
+                    f" | spaces/line breaks at the ends: {'YES' if s != v else 'no'} | quote marks: {'YES' if any(c in s for c in chr(34) + chr(39)) else 'no'}")
           PY
-          for name in VERTAX_ANTHROPIC_API_KEY VERTEX_ANTHROPIC_API_KEY ANALYST_ANATHROPIC_KEY ANALYST_ANTHROPIC_KEY OLD_ANTHROPIC_API_KEY; do
-            if [ -z "${!name}" ]; then echo "--- $name: not saved"; continue; fi
-            echo "--- $name: found, testing…"
+          for name in VERTAXNODE_ANTHROPIC_API_KEY ANALYST_ANTHROPIC_API_KEY OLD_ANTHROPIC_API_KEY; do
+            [ -z "${!name}" ] && continue
             if ANTHROPIC_API_KEY="${!name}" python scripts/api_check.py; then echo "RESULT $name: CONNECTED"; else echo "RESULT $name: FAILED"; fi
           done
-          echo "--- As the jobs run it (main key, falling back to the old key if needed):"
-          ANTHROPIC_API_KEY="${VERTAX_ANTHROPIC_API_KEY:-${VERTEX_ANTHROPIC_API_KEY:-$OLD_ANTHROPIC_API_KEY}}" ANTHROPIC_API_KEY_BACKUP="$OLD_ANTHROPIC_API_KEY" python scripts/api_check.py && echo "RESULT weekly VertexNode job: WILL WORK" || echo "RESULT weekly VertexNode job: WOULD FAIL"
-          ANTHROPIC_API_KEY="${ANALYST_ANATHROPIC_KEY:-${ANALYST_ANTHROPIC_KEY:-$OLD_ANTHROPIC_API_KEY}}" ANTHROPIC_API_KEY_BACKUP="$OLD_ANTHROPIC_API_KEY" python scripts/api_check.py && echo "RESULT Analyst on Call job: WILL WORK" || echo "RESULT Analyst on Call job: WOULD FAIL"
+          echo "--- As the jobs run (their key, falling back to the old key if it is rejected):"
+          ANTHROPIC_API_KEY="$ART_KEY" ANTHROPIC_API_KEY_BACKUP="$OLD_ANTHROPIC_API_KEY" python scripts/api_check.py && echo "RESULT weekly VertexNode job: WILL WORK" || echo "RESULT weekly VertexNode job: WOULD FAIL"
+          ANTHROPIC_API_KEY="$ANA_KEY" ANTHROPIC_API_KEY_BACKUP="$OLD_ANTHROPIC_API_KEY" python scripts/api_check.py && echo "RESULT Analyst on Call job: WILL WORK" || echo "RESULT Analyst on Call job: WOULD FAIL"
