@@ -148,7 +148,11 @@ async function ask(system, user, tool, opts) {
   for (const style of authStyles(main).concat(backup && backup !== main ? authStyles(backup) : [])) {
     const headers = { ...style, "anthropic-version": "2023-06-01", "content-type": "application/json" };
     if (opts.workspace) headers["anthropic-workspace-id"] = opts.workspace;
-    res = await (opts.fetch || fetch)(opts.apiUrl || "https://api.anthropic.com/v1/messages", { method: "POST", headers, body });
+    for (let busy = 0; busy < 3; busy++) {  // Claude briefly busy (429/5xx): wait a moment and try again
+      res = await (opts.fetch || fetch)(opts.apiUrl || "https://api.anthropic.com/v1/messages", { method: "POST", headers, body });
+      if (![429, 500, 502, 503, 504, 529].includes(res.status)) break;
+      await new Promise((r) => setTimeout(r, opts.retryDelayMs != null ? opts.retryDelayMs : 2000 * (busy + 1)));
+    }
     if (res.status !== 401) break;
   }
   if (!res.ok) throw new Error(`Claude API ${res.status}: ${(await res.text()).slice(0, 200)}`);
