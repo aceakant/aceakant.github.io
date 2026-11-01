@@ -1,63 +1,73 @@
 # Topic backlog. The Topic agent picks the first "pending" topic each week.
-# Add your own ideas anywhere; order = publishing order. When the list runs out, the agent proposes new ones.
-# market: UK | EU | Global | India | US — every statistic in that week's article must come from this market.
-# Plan: UK, EU and Global first, then India.
+# Add your own ideas at the top. When the list runs out, the agent proposes new ones itself.
 
 topics:
 - title: Using an LLM agent to take routine fraud analytics off a risk team's plate
-  angle: Where an analytics agent fits, what it should not do, and how to measure the time it gives back.
+  angle: Where an analytics agent fits, what it should not do, and how to measure
+    the time it gives back.
   market: Global
   status: used 2026-11-01
 - title: 'Money mules on UPI: how banks can spot mule accounts in the first week'
-  angle: The typical mule account pattern, the signals that show up early, and the cost of catching it late.
+  angle: The typical mule account pattern, the signals that show up early, and the
+    cost of catching it late.
   market: India
   status: used 2026-11-01 (test draft on hold, can publish in the India phase)
-
-# ---------- Phase 1: UK, EU and Global ----------
-- title: 'APP scams and mandatory reimbursement: what changes for fraud analytics teams'
-  angle: How reimbursement rules shift where banks invest in detection, and how to size the impact.
+- title: 'APP scams and mandatory reimbursement: what changes for fraud analytics
+    teams'
+  angle: How reimbursement rules shift where banks invest in detection, and how to
+    size the impact.
   market: UK
-  status: pending
-- title: 'The EU AI Act and credit scoring: what "high-risk" means for risk analytics teams'
-  angle: The practical checklist for data, documentation, human oversight and monitoring of credit models.
+  status: used 2026-11-01
+- title: 'The EU AI Act and credit scoring: what "high-risk" means for risk analytics
+    teams'
+  angle: The practical checklist for data, documentation, human oversight and monitoring
+    of credit models.
   market: EU
   status: pending
 - title: 'Measuring a fraud model''s ROI: beyond detection rate'
-  angle: Losses prevented, false-positive cost, customer friction and analyst time in one simple view.
+  angle: Losses prevented, false-positive cost, customer friction and analyst time
+    in one simple view.
   market: Global
   status: pending
-- title: 'Instant payments and Verification of Payee: fraud controls when money moves in seconds'
-  angle: Which checks still work at instant speed, and how to measure friction against fraud prevented.
+- title: 'Instant payments and Verification of Payee: fraud controls when money moves
+    in seconds'
+  angle: Which checks still work at instant speed, and how to measure friction against
+    fraud prevented.
   market: EU
   status: pending
 - title: 'Automating MIS: from spreadsheet sprawl to a governed data pipeline'
   angle: Operational gains, BCBS 239-style data lineage, and a simple ROI model.
   market: Global
   status: pending
-- title: 'Consumer Duty and credit decisions: proving good customer outcomes with data'
-  angle: The outcome metrics a lender can actually track, and how analytics turns them into evidence.
+- title: 'Consumer Duty and credit decisions: proving good customer outcomes with
+    data'
+  angle: The outcome metrics a lender can actually track, and how analytics turns
+    them into evidence.
   market: UK
   status: pending
 - title: 'Finding the ring, not just the account: graph analytics for money-mule networks'
-  angle: How network analysis exposes mule rings that single-account rules miss, with a simple value model.
+  angle: How network analysis exposes mule rings that single-account rules miss, with
+    a simple value model.
   market: Global
   status: pending
-- title: 'DORA in practice: what operational resilience asks of analytics and model teams'
-  angle: Third-party and ICT risk for the data and model stack, and the testing evidence teams should keep.
+- title: 'DORA in practice: what operational resilience asks of analytics and model
+    teams'
+  angle: Third-party and ICT risk for the data and model stack, and the testing evidence
+    teams should keep.
   market: EU
   status: pending
-- title: 'Validating an LLM agent before it touches risk data'
-  angle: 'A light model-risk framework for GenAI tools in risk teams: scope, testing, monitoring, sign-off.'
+- title: Validating an LLM agent before it touches risk data
+  angle: 'A light model-risk framework for GenAI tools in risk teams: scope, testing,
+    monitoring, sign-off.'
   market: Global
   status: pending
 - title: 'One EU AML supervisor: getting transaction monitoring ready for AMLA'
   angle: What a single EU AML authority means for alert quality, data and model governance.
   market: EU
   status: pending
-
-# ---------- Phase 2: India ----------
 - title: 'Digital lending fraud: catching synthetic and borrowed identities at onboarding'
-  angle: Device, velocity and document signals that separate genuine first-time borrowers from fraud rings.
+  angle: Device, velocity and document signals that separate genuine first-time borrowers
+    from fraud rings.
   market: India
   status: pending
 - title: 'Early-warning KRIs for a retail loan book: five that actually move decisions'
@@ -65,6 +75,7 @@ topics:
   market: India
   status: pending
 - title: 'Account Aggregator data in underwriting: real lift or extra risk?'
-  angle: How to test AA data for approval lift, keep consent clean under the DPDP Act, and measure the result.
+  angle: How to test AA data for approval lift, keep consent clean under the DPDP
+    Act, and measure the result.
   market: India
   status: pending

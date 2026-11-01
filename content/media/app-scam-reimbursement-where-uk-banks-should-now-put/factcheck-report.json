@@ -1,0 +1,84 @@
+{
+  "status": "needs-review",
+  "summary": "5 corrected, 8 verified · Needs review: The PSR plans a formal consultation on changes to the APP reimbursement policy in December 2026. The day-35 limit, investment-scam returns, data and consistency are all on the roadmap. The PSR is also being folded into the FCA under the Financial Services and Markets Bill 2026. Re-check the £85,000 cap, the 50:50 split and the scope before publication.; UK Finance's 2025 growth rates (APP +19%, total +4%) imply that 2024 figures were restated upward from the originally published £450.7m and £1.17bn. The draft therefore uses 2025 figures only. A human should confirm against the UK Finance 2026 PDF.; The 85% 'share reimbursed' is an illustrative assumption. The PSR dashboard reports about 88-89% of in-scope claimed losses refunded, and UK Finance reports 61% across all APP losses. Consider whether the author wants to align the assumption with one of these.; 'VertexNode' appears in the LinkedIn post. It is not on the employer list, but confirm it is the correct publication name.; The hook answer is stored as an integer (576) for the slider. The label shows £576.4m.",
+  "checks": [
+    {
+      "claim": "Hook: UK APP scam losses in 2024 were £450.7m",
+      "status": "corrected",
+      "source_url": "https://www.ukfinance.org.uk/news-and-insight/press-release/fraud-report-2026-press-release",
+      "note": "UK Finance Annual Fraud Report 2026 (June 2026): APP losses £576.4m in 2025, up 19%. The hook was updated to this newer year. The 2024 comparator appears to have been restated, so it was dropped."
+    },
+    {
+      "claim": "Total fraud losses about £1.17bn (2024)",
+      "status": "corrected",
+      "source_url": "https://www.ukfinance.org.uk/news-and-insight/press-release/fraud-report-2026-press-release",
+      "note": "Newer UK Finance figure: £1.28bn total payment fraud losses in 2025, up 4%"
+    },
+    {
+      "claim": "Banks reimbursed a share of APP losses (replaces 'before the mandatory regime a meaningful share was never returned')",
+      "status": "corrected",
+      "source_url": "https://www.ukfinance.org.uk/news-and-insight/press-release/fraud-report-2026-press-release",
+      "note": "UK Finance 2026: £354.3m reimbursed in 2025, 61% of APP losses (all-APP measure)"
+    },
+    {
+      "claim": "Mandatory reimbursement in force 7 October 2024 for Faster Payments and CHAPS",
+      "status": "verified",
+      "source_url": "https://www.psr.org.uk/media/rhelv4op/ps25-5-app-scams-reimbursement-consolidated-policy-statement-may-2025.pdf",
+      "note": "PSR PS25/5 consolidated policy statement"
+    },
+    {
+      "claim": "Maximum reimbursement £85,000 per claim",
+      "status": "verified",
+      "source_url": "https://www.psr.org.uk/publications/policy-statements/ps247-faster-payments-app-scams-reimbursement-requirement-confirming-the-maximum-level-of-reimbursement/",
+      "note": "PSR PS24/7 (the Bank of England set the same limit for CHAPS)"
+    },
+    {
+      "claim": "Cost split 50:50 between sending and receiving firms",
+      "status": "verified",
+      "source_url": "https://www.farrer.co.uk/news-and-insights/authorised-push-payment-fraud-and-mandatory-reimbursement/",
+      "note": "Farrer summary of PSR/Pay.UK rules; also PSR evaluation coverage, July 2026"
+    },
+    {
+      "claim": "Reimbursement within five business days, with stop-the-clock",
+      "status": "verified",
+      "source_url": "https://www.farrer.co.uk/news-and-insights/authorised-push-payment-fraud-and-mandatory-reimbursement/",
+      "note": "Five business days subject to a stop-the-clock provision (up to 35 business days)"
+    },
+    {
+      "claim": "Gross negligence exception",
+      "status": "verified",
+      "source_url": "https://www.psr.org.uk/information-for-consumers/app-fraud-reimbursement-protections/",
+      "note": "PSR consumer page: no reimbursement if complicit or grossly negligent; the exception does not apply to vulnerable consumers"
+    },
+    {
+      "claim": "Card payments and Bacs are outside the mandatory regime",
+      "status": "verified",
+      "source_url": "https://www.takefive-stopfraud.org.uk/protect-yourself/app-guide/",
+      "note": "Take Five / UK Finance guide: covered are Faster Payments and CHAPS; card payments are not covered. Bratby Law lists Bacs credit as outside scope."
+    },
+    {
+      "claim": "FCA Consumer Duty in force for open products from July 2023",
+      "status": "corrected",
+      "source_url": "https://www.fca.org.uk/firms/consumer-duty/information-firms",
+      "note": "FCA: open products and services from 31 July 2023 (date made exact in claims list)"
+    },
+    {
+      "claim": "Personal-experience and unsourced generalisations ('In my experience...', 'Most teams are surprised...', 'realistic first-year ambition')",
+      "status": "corrected",
+      "source_url": "",
+      "note": "Softened or reworded so they read as illustrative reasoning, not personal results or unsupported claims"
+    },
+    {
+      "claim": "Listed employers mentioned or hinted at",
+      "status": "verified",
+      "source_url": "",
+      "note": "None of the listed employers appear in the draft"
+    },
+    {
+      "claim": "ROI rows and calculator basis",
+      "status": "verified",
+      "source_url": "",
+      "note": "All labelled 'Illustrative model'. Arithmetic checked: £8.5m, £850k, 112.5%, 87.5%, 5.65 months."
+    }
+  ]
+}
