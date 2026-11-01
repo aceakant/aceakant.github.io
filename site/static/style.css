@@ -614,3 +614,106 @@ em.confirm{font-style:normal;font-size:11px;font-family:var(--mono);text-transfo
   .dock.away{transform:translateY(150%)}
   .foot{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 }
+
+/* lab page: intro, game stage, games shelf */
+.lab-intro{padding-top:20px}
+.lab-intro h1{font-size:clamp(30px,4.6vw,44px);margin:0 0 4px}
+.lab-intro h1::after{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--lab);box-shadow:0 0 12px var(--lab);margin-left:10px;vertical-align:middle}
+.lab-intro p{margin:0;color:var(--muted);max-width:70ch}
+.lab-intro a{color:var(--lab);font-weight:600;white-space:nowrap;text-decoration:none}
+.game-stage{scroll-margin-top:72px}
+.game-stage[hidden]{display:none}
+.game-title{font-size:clamp(28px,4vw,40px);line-height:1.12;margin:6px 0 12px}
+.page-analytics-lab .play,.page-risk-lab .play,.page-fraud-lab .play,.page-framework-lab .play{padding-block:24px 48px}
+.shelf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.shelf-card{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;gap:6px;padding:18px 20px;border-radius:18px;border:1px solid var(--line);background:var(--surface);min-width:0;transition:transform .2s,border-color .2s,box-shadow .2s;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.shelf-card:hover{transform:translateY(-3px);border-color:var(--lab)}
+.shelf-card:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.shelf-card b{font:700 20px/1.2 var(--display)}
+.shelf-hook{color:var(--muted);font-size:14.5px}
+.shelf-tag{color:var(--lab);font-size:11.5px}
+.shelf-cta{margin-top:4px;font-weight:600;color:var(--lab);font-size:14px}
+.shelf-cta .now{display:none}
+.shelf-card[aria-pressed="true"]{border-color:var(--lab);box-shadow:0 0 30px color-mix(in srgb,var(--lab) 18%,transparent);background:color-mix(in srgb,var(--lab) 8%,var(--surface))}
+.shelf-card[aria-pressed="true"] .now{display:inline-flex;align-items:center;gap:6px}
+.shelf-card[aria-pressed="true"] .now::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--lab);animation:twinkle 1.6s ease-in-out infinite}
+.shelf-card[aria-pressed="true"] .play-it{display:none}
+.shelf-note{margin-top:12px}
+.new-badge{font-style:normal;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;background:var(--lab);color:#04121c;border-radius:999px;padding:2px 8px;margin-left:6px;vertical-align:1px}
+.pg-card .more small{color:var(--muted);font-weight:500;margin-left:6px}
+/* shared answer buttons */
+.opts{display:grid;gap:8px;margin-top:12px}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;padding:11px 14px;border-radius:12px;border:1px solid var(--line);background:var(--sunk);font-size:14.5px;line-height:1.35;transition:border-color .15s}
+.opt:hover:not([disabled]){border-color:var(--accent)}
+.opt.right{border-color:var(--safe);background:var(--safe-soft);color:var(--safe);font-weight:600}
+.opt.wrong{border-color:var(--amber);background:var(--amber-soft)}
+.opt[disabled]{cursor:default}
+/* chart tricks */
+.trick{width:100%;height:auto;display:block;margin-top:4px;background:var(--sunk);border:1px solid var(--line);border-radius:14px}
+.trick .ax{stroke:var(--muted);stroke-width:1.2}
+.trick .grid{stroke:var(--line);stroke-width:.8;stroke-dasharray:2 3}
+.trick .tick,.trick .leg{fill:var(--muted);font:9.5px var(--mono)}
+.trick .leg{fill:var(--ink);font-size:11px}
+.trick .val{fill:var(--ink);font:700 11px var(--mono)}
+.trick .val.ok{fill:var(--safe)}
+.trick .lbl{fill:var(--amber);font:600 9.5px var(--mono)}
+.trick .bar{fill:color-mix(in srgb,var(--accent) 45%,transparent);stroke:var(--accent)}
+.trick .bar.hi{fill:var(--accent)}
+.trick .line{fill:none;stroke:var(--risk);stroke-width:2.5;stroke-linejoin:round}
+.trick .dot{fill:var(--risk)}
+.trick .zone{fill:color-mix(in srgb,var(--amber) 14%,transparent)}
+.trick .slice{stroke:var(--bg);stroke-width:1.5}
+.trick .s0{fill:#2FD3C8}.trick .s1{fill:#F5C04E}.trick .s2{fill:#4ADE9A}.trick .s3{fill:#FF7A6E}
+.trick .head{fill:color-mix(in srgb,var(--accent) 55%,transparent)}
+.trick .head.big{fill:var(--amber)}
+/* survive the recession */
+.book-rows{display:grid;gap:4px;margin-top:10px}
+.book-row{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.6fr) 64px;gap:12px;align-items:center}
+.bk-name{font-weight:600;font-size:15px;display:flex;flex-direction:column;line-height:1.2}
+.bk-name small{font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
+.risk-dots{font-style:normal;color:var(--amber);letter-spacing:1px}
+.book-row output{font:700 14px var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.book-bar{display:flex;height:12px;border-radius:999px;overflow:hidden;background:var(--sunk);margin:10px 0 12px;border:1px solid var(--line)}
+.book-bar span{display:block;height:100%;transition:width .2s}
+.econ{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.econ div{background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0;text-align:center}
+.econ span{font-size:11px;color:var(--muted)}
+.econ b{display:block;font:800 22px/1.2 var(--display);font-variant-numeric:tabular-nums}
+.econ .up{border-color:var(--safe)} .econ .up b{color:var(--safe);text-shadow:var(--halo)}
+.econ .down{border-color:var(--risk);background:var(--risk-soft)} .econ .down b{color:var(--risk)}
+/* scam or legit */
+.phone{margin:12px auto 0;max-width:380px;background:var(--sunk);border:1px solid var(--line);border-radius:22px;padding:16px 14px 20px;min-height:150px}
+.phone-from{font:600 12.5px var(--mono);color:var(--muted);text-align:center;margin-bottom:12px}
+.bubble{background:var(--surface);border:1px solid var(--line);border-radius:16px 16px 16px 4px;padding:12px 14px;font-size:15px;line-height:1.45;max-width:92%;word-break:break-word;transition:border-color .2s,background .2s}
+.bubble.is-scam{border-color:var(--risk);background:var(--risk-soft)}
+.bubble.is-legit{border-color:var(--safe);background:var(--safe-soft)}
+.phish-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.phish-btns[hidden]{display:none}
+.phish-btns .btn{justify-content:center;background:var(--sunk);color:var(--ink);border-color:var(--line);box-shadow:none}
+.phish-btns .btn.scam:hover:not([disabled]){border-color:var(--risk)}
+.phish-btns .btn.legit:hover:not([disabled]){border-color:var(--safe)}
+.phish-btns .btn.right{border-color:var(--safe);background:var(--safe-soft);color:var(--safe)}
+.phish-btns .btn.wrong{border-color:var(--amber);background:var(--amber-soft)}
+.phish-btns .btn[disabled]{cursor:default;transform:none}
+.flags{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:14px}
+/* put it in order */
+.order-picked{margin:6px 0 12px;padding-left:26px;display:grid;gap:6px;min-height:44px}
+.order-picked li{background:var(--sunk);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14.5px;animation:fadeUp .25s ease both}
+.order-picked li.empty{list-style:none;margin-left:-26px;border-style:dashed;color:var(--muted);text-align:center}
+.order-picked li.ok{border-color:var(--safe);background:var(--safe-soft)}
+.order-picked li.miss{border-color:var(--amber);background:var(--amber-soft)}
+.order-picked li small{display:block;color:var(--amber);font:600 11.5px var(--mono);margin-top:2px}
+.order-pool{display:flex;flex-wrap:wrap;gap:8px}
+.step-btn{all:unset;box-sizing:border-box;cursor:pointer;padding:9px 12px;border-radius:10px;border:1px dashed var(--lab,var(--accent));font-size:14px;line-height:1.3;background:var(--surface);transition:transform .15s}
+.step-btn:hover{transform:translateY(-2px)}
+.btns{display:inline-flex;gap:8px;flex-wrap:wrap}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+@media (max-width:640px){
+  .shelf{grid-template-columns:1fr}
+  .book-row{grid-template-columns:minmax(0,1fr) 64px;gap:0 10px}
+  .book-row input{grid-column:1 / -1;grid-row:2}
+  .econ b{font-size:19px}
+  .game-title{font-size:28px}
+}
+.game-stage .play-grid{align-items:start}
+.game-stage .play-copy{padding-top:14px}

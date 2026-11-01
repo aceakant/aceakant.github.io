@@ -1,15 +1,15 @@
 {# Home page Playground: the four labs #}
 <section class="wrap" id="playground">
   <h2 class="sec">Playground</h2>
-  <p class="pg-intro">Four labs, one quick game each. Made-up data, real lessons from risk and analytics work. No sign-up, nothing stored.</p>
+  <p class="pg-intro">Four labs, new games added over time. Made-up data, real lessons from risk and analytics work. No sign-up, nothing stored.</p>
   <div class="pg-grid">
     {% for l in labs.labs %}
     <a class="pg-card {{ l.color }} reveal" href="{{ l.slug }}.html">
       {% include "_labicon.html" %}
-      <span class="mono">{{ l.name }}</span>
-      <h3>{{ l.game }}</h3>
-      <p>{{ l.hook }}</p>
-      <span class="more">Play →</span>
+      <span class="mono">{{ l.name }}{% if l.games[0].new %} <em class="new-badge">New game</em>{% endif %}</span>
+      <h3>{{ l.games[0].name }}</h3>
+      <p>{{ l.games[0].hook }}</p>
+      <span class="more">Play →{% if l.games | length > 1 %} <small>+{{ l.games | length - 1 }} earlier game{{ 's' if l.games | length > 2 else '' }}</small>{% endif %}</span>
     </a>
     {% endfor %}
   </div>

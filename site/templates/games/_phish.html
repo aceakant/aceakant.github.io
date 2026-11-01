@@ -1,0 +1,27 @@
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">Fraud Lab · Scam or legit? · 60 seconds</p>
+      <h2 class="game-title">Six messages. Which ones are trying to rob you?</h2>
+      <p>The messages everyone gets: KYC updates, parcel fees, job offers, OTPs, UPI requests. Decide in a tap, then see the red flags a fraud analyst would spot.</p>
+      <ul class="play-points">
+        <li>Made-up messages from a made-up bank</li>
+        <li>Each answer lists the tell-tale signs</li>
+        <li>Share it with family: it might save them money</li>
+      </ul>
+    </div>
+    <div class="game" id="phish-game" aria-live="polite">
+      <div class="game-head"><span class="mono">SCAM OR LEGIT?</span><span class="mono" id="phish-round">1 of 6</span></div>
+      <div class="phone">
+        <div class="phone-from" id="phish-from"></div>
+        <div class="bubble" id="phish-text"></div>
+      </div>
+      <div class="phish-btns" id="phish-btns">
+        <button type="button" class="btn scam" data-pick="scam">🚩 Scam</button>
+        <button type="button" class="btn legit" data-pick="legit">✅ Legit</button>
+      </div>
+      <div class="game-foot" id="phish-foot"><span class="hint">Trust your gut, then check the flags.</span><span class="score" id="phish-score">0 / 6</span></div>
+      <script type="application/json" id="phish-data">{{ labs.phish | tojson }}</script>
+    </div>
+  </div>
+</section>

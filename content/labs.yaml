@@ -1,75 +1,340 @@
-# The Playground: four labs, one game each. All data is made up for play.
+# The Playground: four labs. The first game in each list is the newest (featured);
+# older games move to the 'Earlier games' shelf on the same lab page. All data is made up for play.
 labs:
-  - slug: analytics-lab
-    name: "Analytics Lab"
-    game: "Guess the correlation"
-    hook: "Chai vs code, rain vs umbrellas. How strongly do they move together?"
-    teaches: "Reading data quickly, and remembering that correlation is not causation."
-    color: teal
-  - slug: risk-lab
-    name: "Risk Lab"
-    game: "Run the bank for a day"
-    hook: "Set the approval cut-off. Too strict loses customers, too loose loses money."
-    teaches: "The trade-off every lender makes between growth, losses and profit."
-    color: amber
-  - slug: fraud-lab
-    name: "Fraud Lab"
-    game: "Spot the fraud"
-    hook: "A fraud ring, a card-testing attack and a money mule. Can you catch all three?"
-    teaches: "The early signals fraud teams use to stop losses before they happen."
-    color: red
-  - slug: framework-lab
-    name: "Framework Lab"
-    game: "Sort it out"
-    hook: "Who plays which line of defence, at a cricket match and in a bank?"
-    teaches: "How risk responsibilities are split, and the difference between a KPI and a KRI."
-    color: green
-
+- slug: analytics-lab
+  name: Analytics Lab
+  teaches: Reading data quickly, and remembering that correlation is not causation.
+  color: teal
+  games:
+  - id: chart-tricks
+    name: Spot the chart trick
+    part: chart
+    added: Nov 2026
+    new: true
+    hook: A chart that makes 2% look like 300%? Find the trick before it fools your boss.
+  - id: correlation
+    name: Guess the correlation
+    part: corr
+    added: Nov 2026
+    hook: Chai vs code, rain vs umbrellas. How strongly do they move together?
+- slug: risk-lab
+  name: Risk Lab
+  teaches: The trade-off every lender makes between growth, losses and profit.
+  color: amber
+  games:
+  - id: survive-recession
+    name: Survive the recession
+    part: book
+    added: Nov 2026
+    new: true
+    hook: Build a ₹100 crore loan book. Earn the most, but don't lose money when the recession hits.
+  - id: cut-off
+    name: Run the bank for a day
+    part: riskcut
+    added: Nov 2026
+    hook: Set the approval cut-off. Too strict loses customers, too loose loses money.
+- slug: fraud-lab
+  name: Fraud Lab
+  teaches: The early signals fraud teams use to stop losses before they happen.
+  color: red
+  games:
+  - id: scam-or-legit
+    name: Scam or legit?
+    part: phish
+    added: Nov 2026
+    new: true
+    hook: Six messages land on your phone. Which ones are trying to rob you?
+  - id: spot-the-fraud
+    name: Spot the fraud
+    part: spotfraud
+    added: Nov 2026
+    hook: A fraud ring, a card-testing attack and a money mule. Can you catch all three?
+- slug: framework-lab
+  name: Framework Lab
+  teaches: How risk responsibilities are split, and the difference between a KPI and a KRI.
+  color: green
+  games:
+  - id: in-order
+    name: Put it in order
+    part: order
+    added: Nov 2026
+    new: true
+    hook: Making chai, launching a model, handling an incident. What comes first?
+  - id: sort-it-out
+    name: Sort it out
+    part: sort
+    added: Nov 2026
+    hook: Who plays which line of defence, at a cricket match and in a bank?
 analytics:
   rounds:
-    - { x: "Cups of chai before noon", y: "Lines of code written", r: 0.62, quip: "Strong-ish. But is it the chai, or do early starters just drink more chai?" }
-    - { x: "Rainy days in the month", y: "Umbrellas sold", r: 0.91, quip: "Very strong, and here the cause really is obvious." }
-    - { x: "Shoe size", y: "Exam marks", r: 0.03, quip: "Basically nothing. Big feet won't save you in maths." }
-    - { x: "Hours of late-night cricket", y: "Hours of sleep", r: -0.78, quip: "Strongly negative: one goes up, the other goes down." }
-    - { x: "Ice-cream sales", y: "Swimming-pool visits", r: 0.71, quip: "Strong, but neither causes the other. Hot weather drives both." }
-
+  - x: Cups of chai before noon
+    y: Lines of code written
+    r: 0.62
+    quip: Strong-ish. But is it the chai, or do early starters just drink more chai?
+  - x: Rainy days in the month
+    y: Umbrellas sold
+    r: 0.91
+    quip: Very strong, and here the cause really is obvious.
+  - x: Shoe size
+    y: Exam marks
+    r: 0.03
+    quip: Basically nothing. Big feet won't save you in maths.
+  - x: Hours of late-night cricket
+    y: Hours of sleep
+    r: -0.78
+    quip: 'Strongly negative: one goes up, the other goes down.'
+  - x: Ice-cream sales
+    y: Swimming-pool visits
+    r: 0.71
+    quip: Strong, but neither causes the other. Hot weather drives both.
 risk:
-  customers: 10000          # applicants in your day as a bank
-  bad_rate: 0.08            # share who will not repay
-  good_mean: 690            # average score of customers who repay
-  bad_mean: 590             # average score of customers who default
-  spread: 55                # how spread out the scores are
-  earn_good: 12             # ₹ thousand earned per good loan
-  lose_bad: 70              # ₹ thousand lost per bad loan
-  recession_shift: 40       # in recession mode, defaulters look more like good customers
-  recession_bad_rate: 0.12  # ...and more people default
-
+  customers: 10000
+  bad_rate: 0.08
+  good_mean: 690
+  bad_mean: 590
+  spread: 55
+  earn_good: 12
+  lose_bad: 70
+  recession_shift: 40
+  recession_bad_rate: 0.12
 framework:
   rounds:
-    - title: "Cricket edition"
-      intro: "A cricket match runs on three lines of defence too. Who plays which line?"
-      buckets: ["1st line: does the work, owns the risk", "2nd line: sets the rules, watches", "3rd line: independent review"]
-      items:
-        - { text: "The batter decides whether to play each ball", answer: 0 }
-        - { text: "The on-field umpire applies the rules in real time", answer: 1 }
-        - { text: "The match referee reviews the whole match afterwards", answer: 2 }
-        - { text: "The bowler sticks to the no-ball line", answer: 0 }
-    - title: "Banking edition"
-      intro: "Now the real thing. Place each task in the right line of defence."
-      buckets: ["1st line: business & operations", "2nd line: risk & compliance", "3rd line: internal audit"]
-      items:
-        - { text: "Branch officer checks a customer's ID", answer: 0 }
-        - { text: "Fraud strategy team sets transaction limits", answer: 1 }
-        - { text: "Internal audit tests whether fraud controls work", answer: 2 }
-        - { text: "Product team builds checks into a loan journey", answer: 0 }
-        - { text: "Compliance reviews a new product against regulation", answer: 1 }
-    - title: "KPI or KRI?"
-      intro: "A KPI tracks performance. A KRI warns you that risk is building. Which is which?"
-      buckets: ["KPI: how well are we doing?", "KRI: is risk building up?"]
-      items:
-        - { text: "Loans approved per day", answer: 0 }
-        - { text: "Applications from the same device in 24 hours", answer: 1 }
-        - { text: "Average time to approve a loan", answer: 0 }
-        - { text: "Loans missing a payment in the first 3 months", answer: 1 }
-        - { text: "Customer satisfaction score", answer: 0 }
-        - { text: "Fraud losses as a share of new lending", answer: 1 }
+  - title: Cricket edition
+    intro: A cricket match runs on three lines of defence too. Who plays which line?
+    buckets:
+    - '1st line: does the work, owns the risk'
+    - '2nd line: sets the rules, watches'
+    - '3rd line: independent review'
+    items:
+    - text: The batter decides whether to play each ball
+      answer: 0
+    - text: The on-field umpire applies the rules in real time
+      answer: 1
+    - text: The match referee reviews the whole match afterwards
+      answer: 2
+    - text: The bowler sticks to the no-ball line
+      answer: 0
+  - title: Banking edition
+    intro: Now the real thing. Place each task in the right line of defence.
+    buckets:
+    - '1st line: business & operations'
+    - '2nd line: risk & compliance'
+    - '3rd line: internal audit'
+    items:
+    - text: Branch officer checks a customer's ID
+      answer: 0
+    - text: Fraud strategy team sets transaction limits
+      answer: 1
+    - text: Internal audit tests whether fraud controls work
+      answer: 2
+    - text: Product team builds checks into a loan journey
+      answer: 0
+    - text: Compliance reviews a new product against regulation
+      answer: 1
+  - title: KPI or KRI?
+    intro: A KPI tracks performance. A KRI warns you that risk is building. Which is which?
+    buckets:
+    - 'KPI: how well are we doing?'
+    - 'KRI: is risk building up?'
+    items:
+    - text: Loans approved per day
+      answer: 0
+    - text: Applications from the same device in 24 hours
+      answer: 1
+    - text: Average time to approve a loan
+      answer: 0
+    - text: Loans missing a payment in the first 3 months
+      answer: 1
+    - text: Customer satisfaction score
+      answer: 0
+    - text: Fraud losses as a share of new lending
+      answer: 1
+charts:
+  rounds:
+  - title: '"Sales tripled this year!"'
+    kind: bar
+    bars:
+    - label: Last year
+      v: 102
+    - label: This year
+      v: 104
+    ymin: 100
+    ymax: 105
+    options:
+    - The y-axis starts at 100, so a 2% rise looks like 3×
+    - The bars are the wrong colour
+    - There should be more years shown
+    answer: 0
+    explain: 'Sales went from 102 to 104: up about 2%. Starting the axis at 100 makes the second bar look three times taller.'
+  - title: '"Customer complaints are rising fast"'
+    kind: line
+    series:
+    - 60
+    - 58
+    - 55
+    - 57
+    - 52
+    - 50
+    - 48
+    - 46
+    - 40
+    - 41
+    - 43
+    - 46
+    window: 4
+    options:
+    - The line should be a bar chart
+    - Only the last 4 months are shown; over the year complaints fell sharply
+    - Complaints should be shown as a percentage
+    answer: 1
+    explain: Zoom out and complaints fell from 60 to 46 over the year. Picking the last four months tells the opposite story.
+  - title: '"Office survey: favourite snack"'
+    kind: pie
+    slices:
+    - label: Samosa
+      v: 45
+    - label: Biscuits
+      v: 40
+    - label: Fruit
+      v: 30
+    - label: Chips
+      v: 15
+    options:
+    - Pie charts should be 3D
+    - Fruit is under-reported
+    - The slices add up to 130%, so people could pick more than one
+    answer: 2
+    explain: 45 + 40 + 30 + 15 = 130%. A pie only works when every answer is exclusive and the parts add up to 100%.
+  - title: '"Average salary at our 10-person startup: ₹42 lakh"'
+    kind: people
+    values:
+    - 8
+    - 8
+    - 8
+    - 8
+    - 8
+    - 8
+    - 8
+    - 8
+    - 8
+    - 348
+    unit: L
+    options:
+    - One founder's pay drags the average up; the typical person earns ₹8 lakh
+    - Startups always pay well
+    - The chart needs a legend
+    answer: 0
+    explain: Nine people earn ₹8 lakh and one earns ₹3.48 crore. The average is ₹42 lakh, but the median, the honest number here, is ₹8 lakh.
+book:
+  funding_cost: 6.5
+  appetite: 0.0
+  target: 3.0
+  products:
+  - id: home
+    name: Home loans
+    yield: 8.5
+    loss:
+      boom: 0.2
+      normal: 0.5
+      recession: 1.5
+  - id: car
+    name: Car loans
+    yield: 10.5
+    loss:
+      boom: 0.6
+      normal: 1.2
+      recession: 3.5
+  - id: personal
+    name: Personal loans
+    yield: 16
+    loss:
+      boom: 2.0
+      normal: 3.5
+      recession: 13
+  - id: card
+    name: Credit cards
+    yield: 26
+    loss:
+      boom: 3.0
+      normal: 5.5
+      recession: 24
+  start:
+    home: 25
+    car: 25
+    personal: 25
+    card: 25
+phish:
+  messages:
+  - from: VM-YRBANK
+    text: 'Dear customer, your KYC expires today. Update now or your account will be BLOCKED: http://yourbank-kyc-update.xyz'
+    scam: true
+    flags:
+    - Urgent threat ("BLOCKED", "today")
+    - A strange web address that isn't the bank's site
+    - Banks don't ask for KYC via SMS links
+  - from: VM-YRBANK
+    text: ₹2,450 debited from A/c XX4417 at CITY GROCERS on 01-Nov. Not you? Call the number on the back of your card.
+    scam: false
+    flags:
+    - No link to click
+    - Doesn't ask for any details
+    - Points you to the number you already have
+  - from: +91 98xxx xx210
+    text: 'Your parcel is on hold due to unpaid customs fee of ₹49. Pay here to release: bit.ly/parcel-fee'
+    scam: true
+    flags:
+    - A tiny fee to make you lower your guard
+    - Shortened link hides the real address
+    - Sent from a personal mobile number
+  - from: HR Team
+    text: Congratulations! Work from home, earn ₹8,000/day liking videos. Pay ₹500 registration to start.
+    scam: true
+    flags:
+    - Too good to be true
+    - You pay them to get a job
+    - No company name, no interview
+  - from: VM-YRBANK
+    text: Your OTP for login is 482910. Valid for 5 minutes. Never share your OTP with anyone, including bank staff.
+    scam: false
+    flags:
+    - Expected if you just tried to log in
+    - Warns you not to share it
+    - No link, no request
+  - from: UPI Request
+    text: Rohit has sent you a request of ₹4,999. Enter your UPI PIN to RECEIVE the money.
+    scam: true
+    flags:
+    - You never need a PIN to receive money
+    - A PIN means money is leaving your account
+    - Pressure to act fast on a "collect" request
+order:
+  rounds:
+  - title: Chai, the governance way
+    intro: Even chai has a lifecycle. Put the steps in the right order.
+    steps:
+    - Ask who wants chai and how they like it
+    - Check the milk, sugar and tea leaves
+    - Brew the chai
+    - Taste a sip before serving
+    - Get a nod from the chai expert
+    - Serve everyone
+    - Check if anyone wants a refill
+  - title: Launching a risk model
+    intro: From idea to production, the way a regulator would expect it.
+    steps:
+    - Define the business problem
+    - Collect and check the data
+    - Build the model
+    - Independent validation
+    - Approval at the model risk committee
+    - Deploy into production
+    - Monitor performance and review
+  - title: Handling a fraud incident
+    intro: A fraud attack is under way. What do you do, in order?
+    steps:
+    - Detect the unusual activity
+    - 'Contain it: block cards or accounts'
+    - Investigate the root cause
+    - Fix the weak control
+    - Report to leadership and regulators
+    - Learn and update the rules

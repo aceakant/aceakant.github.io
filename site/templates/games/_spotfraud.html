@@ -1,13 +1,9 @@
-{% extends "base.html" %}
-{% block title %}Fraud Lab · {{ site.author }}{% endblock %}
-{% block content %}
-{% include "_labhead.html" %}
 {% set r = game.rounds[0] %}
 <section class="play">
   <div class="wrap play-grid">
     <div class="play-copy">
       <p class="kicker mono">Fraud Lab · Spot the fraud · 60 seconds</p>
-      <h1>Try the call my teams make every day.</h1>
+      <h2 class="game-title">Try the call my teams make every day.</h2>
       <p>Fraud teams decide in seconds which application, payment or account to stop. Three quick rounds: pick the one case you would block, and see the signal that gives it away.</p>
       <ul class="play-points">
         <li>Real fraud patterns, fictional cases</li>
@@ -36,6 +32,3 @@
     </div>
   </div>
 </section>
-
-{% include "_labnext.html" %}
-{% endblock %}

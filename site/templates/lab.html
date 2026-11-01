@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ lab.name }} · {{ site.author }}{% endblock %}
+{% block description %}{{ lab.name }}: {{ lab.teaches }}{% endblock %}
+{% block content %}
+{% include "_labhead.html" %}
+<header class="wrap lab-intro {{ lab.color }}">
+  <h1>{{ lab.name }}</h1>
+  <p>{{ lab.teaches }} <a href="#shelf">{{ lab.games | length }} games in this lab ↓</a></p>
+</header>
+
+{% for g in lab.games %}
+<div class="game-stage {{ lab.color }}" data-game="{{ g.id }}" id="{{ g.id }}" {% if not loop.first %}hidden{% endif %}>
+  {% include "games/_" ~ g.part ~ ".html" %}
+</div>
+{% endfor %}
+
+<section class="wrap">
+  <h2 class="sec">Games in the {{ lab.name }}</h2>
+  <div class="shelf" id="shelf">
+    {% for g in lab.games %}
+    <button type="button" class="shelf-card {{ lab.color }}" data-game="{{ g.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">
+      <span class="shelf-tag mono">{% if loop.first %}New · {{ g.added }}{% else %}Earlier game · {{ g.added }}{% endif %}</span>
+      <b>{{ g.name }}</b>
+      <span class="shelf-hook">{{ g.hook }}</span>
+      <span class="shelf-cta"><span class="now">Now playing</span><span class="play-it">Play this game →</span></span>
+    </button>
+    {% endfor %}
+  </div>
+  <p class="muted small shelf-note">New games arrive at the top. Earlier ones stay here, ready to play any time.</p>
+</section>
+
+{% include "_labnext.html" %}
+{% endblock %}

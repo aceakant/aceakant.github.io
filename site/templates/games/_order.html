@@ -1,0 +1,23 @@
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">Framework Lab · Put it in order · 2 minutes</p>
+      <h2 class="game-title">What comes first?</h2>
+      <p>Good frameworks are mostly about order: you validate before you approve, and you contain before you investigate. Tap the steps in the order you would do them. Start with chai.</p>
+      <ul class="play-points">
+        <li>Three rounds: chai, a risk model launch, a fraud incident</li>
+        <li>Tap a step to add it; tap "Undo" to take one back</li>
+        <li>Points for every step in the right place</li>
+      </ul>
+    </div>
+    <div class="game" id="order-game" aria-live="polite">
+      <div class="game-head"><span class="mono">PUT IT IN ORDER</span><span class="mono" id="order-round">Round 1 of 3</span></div>
+      <h3 class="game-q" id="order-title"></h3>
+      <p class="muted small" id="order-intro"></p>
+      <ol class="order-picked" id="order-picked"></ol>
+      <div class="order-pool" id="order-pool"></div>
+      <div class="game-foot" id="order-foot"></div>
+      <script type="application/json" id="order-data">{{ labs.order | tojson }}</script>
+    </div>
+  </div>
+</section>

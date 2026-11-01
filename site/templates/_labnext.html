@@ -6,7 +6,7 @@
     <a class="pg-card {{ l.color }}" href="{{ l.slug }}.html">
       {% include "_labicon.html" %}
       <span class="mono">{{ l.name }}</span>
-      <h3>{{ l.game }}</h3>
+      <h3>{{ l.games[0].name }}</h3>
     </a>
     {% endfor %}
   </div>

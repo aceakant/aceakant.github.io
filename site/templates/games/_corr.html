@@ -1,12 +1,8 @@
-{% extends "base.html" %}
-{% block title %}Analytics Lab · {{ site.author }}{% endblock %}
-{% block content %}
-{% include "_labhead.html" %}
 <section class="play">
   <div class="wrap play-grid">
     <div class="play-copy">
       <p class="kicker mono">Analytics Lab · Guess the correlation · 60 seconds</p>
-      <h1>How strongly do they move together?</h1>
+      <h2 class="game-title">How strongly do they move together?</h2>
       <p>Each round shows made-up data on two everyday things. Slide to guess the correlation, from −1 (perfectly opposite) to +1 (perfectly together). Five rounds, best score 500.</p>
       <ul class="play-points">
         <li>+1: they rise together · 0: no link · −1: one rises, the other falls</li>
@@ -25,5 +21,3 @@
     </div>
   </div>
 </section>
-{% include "_labnext.html" %}
-{% endblock %}

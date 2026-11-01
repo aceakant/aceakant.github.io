@@ -75,11 +75,11 @@ def build():
     pages = {
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
         "portfolio.html": {},
-        **{f"{l['slug']}.html": dict(lab=l, game=game) for l in labs["labs"]},
+        **{f"{l['slug']}.html": dict(lab=l, game=game, template="lab.html") for l in labs["labs"]},
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
     }
     for name, ctx in pages.items():
-        html = env.get_template(name).render(root="", page=name, **common, **ctx)
+        html = env.get_template(ctx.pop("template", name)).render(root="", page=name, **common, **ctx)
         (OUT / name).write_text(html, encoding="utf-8")
 
     for a in published + drafts:

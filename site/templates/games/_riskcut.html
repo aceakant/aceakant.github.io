@@ -1,12 +1,8 @@
-{% extends "base.html" %}
-{% block title %}Risk Lab · {{ site.author }}{% endblock %}
-{% block content %}
-{% include "_labhead.html" %}
 <section class="play">
   <div class="wrap play-grid">
     <div class="play-copy">
       <p class="kicker mono">Risk Lab · Run the bank for a day · 2 minutes</p>
-      <h1>Set the cut-off. Make the most profit.</h1>
+      <h2 class="game-title">Set the cut-off. Make the most profit.</h2>
       <p>{{ "{:,}".format(labs.risk.customers) }} people applied for a loan today, and {{ (labs.risk.bad_rate * 100) | round | int }}% of them won't pay you back. Everyone has a credit score. Approve everyone above your cut-off. Each good loan earns ₹{{ labs.risk.earn_good }}k, each bad loan loses ₹{{ labs.risk.lose_bad }}k.</p>
       <ul class="play-points">
         <li>Too strict: you turn away good customers</li>
@@ -32,5 +28,3 @@
     </div>
   </div>
 </section>
-{% include "_labnext.html" %}
-{% endblock %}

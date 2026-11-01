@@ -1,0 +1,22 @@
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">Analytics Lab · Spot the chart trick · 90 seconds</p>
+      <h2 class="game-title">This chart is lying. Can you tell how?</h2>
+      <p>Four charts you might see in a board pack or on social media. Each one hides a trick that changes the story. Pick what's wrong, then see the honest version.</p>
+      <ul class="play-points">
+        <li>Squashed axes, cherry-picked dates, impossible pies and sneaky averages</li>
+        <li>Each answer shows the chart told honestly</li>
+        <li>Four rounds, best score 4</li>
+      </ul>
+    </div>
+    <div class="game" id="chart-game" aria-live="polite">
+      <div class="game-head"><span class="mono">SPOT THE CHART TRICK</span><span class="mono" id="chart-round">Round 1 of 4</span></div>
+      <h3 class="game-q" id="chart-title"></h3>
+      <svg class="trick" id="chart-plot" viewBox="0 0 320 200" role="img" aria-label="Chart to inspect"></svg>
+      <div class="opts" id="chart-opts"></div>
+      <div class="game-foot" id="chart-foot"><span class="hint">What's the trick?</span><span class="score" id="chart-score">0 / 4</span></div>
+      <script type="application/json" id="chart-data">{{ labs.charts | tojson }}</script>
+    </div>
+  </div>
+</section>
