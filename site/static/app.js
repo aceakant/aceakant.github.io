@@ -97,7 +97,7 @@
         var msg = score === n ? "Flawless. You think like a fraud analyst. Want the job? 😄" : score >= n - 1 ? "Sharp eye! Fraud teams would be glad to have you." : score > 0 ? "Not bad. Fraud is sneaky, that's why it needs patterns, not hunches." : "Fraud won this time. That's exactly why we build detection models!";
         $("#game-prompt").textContent = "Your result";
         casesEl.innerHTML = '<div class="final"><span class="mono">YOU CAUGHT</span><div class="big">' + score + " / " + n + "</div><p>" + msg + "</p></div>";
-        foot.innerHTML = dots() + '<span class="btns"><button class="btn small ghost" type="button" id="game-again">Play again</button><a class="btn small" href="leadership.html">See how I do it for real</a></span>';
+        foot.innerHTML = dots() + '<span class="btns"><button class="btn small ghost" type="button" id="game-again">Play again</button><a class="btn small" href="portfolio.html">See how I do it for real</a></span>';
         if (score === n) confetti();
       }
       if (ev.target.id === "game-again") { round = 0; results = []; render(); }

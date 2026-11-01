@@ -13,7 +13,7 @@
   {% if p.status != 'live' %}
   <div class="draft-banner"><b>Draft for Ajay's review</b><span>Lines marked <em class="confirm">to confirm</em> are drafted from the CV and need his check before this page goes public.</span></div>
   {% endif %}
-  <a class="back-link" href="{{ root }}leadership.html#{{ c.id }}">← {{ c.org }} · all leadership cases</a>
+  <a class="back-link" href="{{ root }}portfolio.html#{{ c.id }}">← {{ c.org }} · all cases</a>
 
   <header class="case-hero">
     <p class="kicker mono">{{ c.org }} · {{ c.role }} · {{ c.period }}</p>
@@ -106,7 +106,7 @@
   <section>
     <h2 class="sec">More from {{ c.org }}</h2>
     <div class="read-next">
-      {% for o in c.projects if o.slug != p.slug %}<a href="{{ root }}leadership.html#{{ c.id }}"><span class="mono">Leadership case</span><b>{{ o.title }}</b></a>{% endfor %}
+      {% for o in c.projects if o.slug != p.slug %}<a href="{{ root }}portfolio.html#{{ c.id }}"><span class="mono">Case</span><b>{{ o.title }}</b></a>{% endfor %}
     </div>
   </section>
 </article>

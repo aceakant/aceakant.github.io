@@ -73,7 +73,7 @@ def build():
 
     pages = {
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
-        "leadership.html": {},
+        "portfolio.html": {},
         "lab.html": dict(game=game),
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
     }
@@ -102,9 +102,10 @@ def build():
             html = env.get_template("case.html").render(root="../", page="case", c=c, p=p, nodes=nodes, **common)
             (OUT / "cases" / f"{p['slug']}.html").write_text(html, encoding="utf-8")
 
-    # old address keeps working
-    (OUT / "profile.html").write_text('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=leadership.html">'
-                                      '<link rel="canonical" href="leadership.html"><a href="leadership.html">Leadership</a>')
+    # old addresses keep working
+    for old in ("profile.html", "leadership.html"):
+        (OUT / old).write_text('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=portfolio.html">'
+                               '<link rel="canonical" href="portfolio.html"><a href="portfolio.html">Portfolio</a>')
 
     (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /insights/drafts/\nDisallow: /drafts/\n")
     (OUT / ".nojekyll").write_text("")

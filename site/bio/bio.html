@@ -53,7 +53,7 @@ h2{font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#0B7470;m
     {% endfor %}
   </section>
   <section>
-    <h2>Selected leadership work</h2>
+    <h2>Selected work</h2>
     <ul class="cases">
       {% for c in leadership.companies %}{% for p in c.projects %}
       <li><b>{{ p.title }}</b><span>{{ c.org }} · {{ p.results | join(" · ") }}</span></li>

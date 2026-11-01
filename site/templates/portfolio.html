@@ -1,11 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Leadership · {{ site.author }}{% include "_talk.html" %}
-{% endblock %}
+{% block title %}Portfolio · {{ site.author }}{% endblock %}
 {% block content %}
 <section class="wrap phead">
   <img class="phead-photo" src="{{ profile.avatar }}" alt="{{ profile.name }}" width="400" height="400">
   <div>
-    <p class="kicker mono">Leadership</p>
+    <p class="kicker mono">Portfolio</p>
     <h1>{{ profile.name }}</h1>
     <p class="role">{{ profile.headline }}</p>
     <p class="muted">{{ profile.subline }}</p>
@@ -66,7 +65,7 @@
     {% else %}
     <div class="case-card">
     {% endif %}
-      <span class="mono">Leadership case {{ loop.index }}{% if not p.published %} · full case coming soon{% endif %}</span>
+      <span class="mono">Case {{ loop.index }}{% if not p.published %} · full case coming soon{% endif %}</span>
       <h3>{{ p.title }}</h3>
       <p>{{ p.summary }}</p>
       <ul class="case-results">{% for r in p.results %}<li>{{ r }}</li>{% endfor %}</ul>

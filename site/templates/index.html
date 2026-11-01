@@ -10,7 +10,7 @@
         {% for c in profile.hero.credentials %}<li>{{ c }}</li>{% endfor %}
       </ul>
       <div class="btns">
-        <a class="btn" href="leadership.html">See leadership in practice</a>
+        <a class="btn" href="portfolio.html">See my portfolio</a>
         <a class="btn ghost" href="updates.html">Read my weekly analysis{% if week_count %} · {{ week_count }}{% endif %}</a>
       </div>
     </div>
@@ -38,10 +38,10 @@
 </section>
 
 <section class="wrap">
-  <h2 class="sec">Leadership in practice</h2>
+  <h2 class="sec">Teams built from zero</h2>
   <div class="co-grid">
     {% for c in leadership.companies %}
-    <a class="co-card reveal" href="leadership.html#{{ c.id }}">
+    <a class="co-card reveal" href="portfolio.html#{{ c.id }}">
       <div class="co-top">
         <span class="mono">{{ c.period }}</span>
         <span class="team-pill"><b>{{ c.team }}</b> people</span>
@@ -49,7 +49,7 @@
       <h3>{{ c.org }}</h3>
       <p class="muted small">{{ c.role }}</p>
       <ul class="co-projects">{% for p in c.projects %}<li>{{ p.title }}</li>{% endfor %}</ul>
-      <span class="more">See the 3 leadership cases →</span>
+      <span class="more">See the 3 cases →</span>
     </a>
     {% endfor %}
   </div>
