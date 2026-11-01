@@ -20,8 +20,16 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Two small calls, the second should hit the cache
+      - name: "Main key (weekly articles): two small calls, the second should hit the cache"
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
         run: python scripts/api_check.py
+      - name: "Analyst on Call key (if saved): same check"
+        if: always()
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANALYST_ANTHROPIC_KEY }}
+          ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "No ANALYST_ANTHROPIC_KEY saved: the analyst will use the main key."; exit 0; fi
+          python scripts/api_check.py
