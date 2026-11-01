@@ -1,7 +1,7 @@
 ---
 title: 'APP scam reimbursement: where UK banks should now put detection money'
 slug: app-scam-reimbursement-where-uk-banks-should-now-put
-date: '2026-11-01'
+date: '2026-10-07'
 category: Fraud Risk
 status: published
 test_run: false

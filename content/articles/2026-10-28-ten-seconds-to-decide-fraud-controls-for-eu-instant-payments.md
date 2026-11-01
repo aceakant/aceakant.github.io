@@ -1,7 +1,7 @@
 ---
 title: 'Ten seconds to decide: fraud controls for EU instant payments'
 slug: ten-seconds-to-decide-fraud-controls-for-eu-instant-payments
-date: '2026-11-01'
+date: '2026-10-28'
 category: Fraud Risk
 status: published
 test_run: false

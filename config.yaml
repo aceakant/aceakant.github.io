@@ -26,6 +26,7 @@ topics:
 agents:
   model: "claude-sonnet-5-5"
   max_searches: 10             # web searches the fact-checker may run per article
+  prompt_cache: true           # cache the fact-checker's long web-search turns (cheaper, faster); false switches it off
   article_words: "900-1300"
 
 linkedin:

@@ -1,7 +1,7 @@
 ---
 title: 'Fraud model ROI: look past the detection rate'
 slug: fraud-model-roi-look-past-the-detection-rate
-date: '2026-11-01'
+date: '2026-10-21'
 category: Fraud Risk
 status: published
 test_run: false

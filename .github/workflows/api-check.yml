@@ -1,0 +1,27 @@
+# Checks the Claude API key and prompt caching with two tiny calls (never writes or publishes anything).
+# Run it any time: edit content/check-api.txt, or use "Run workflow".
+name: 6 · Claude API check
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["content/check-api.txt"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Two small calls, the second should hit the cache
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+        run: python scripts/api_check.py

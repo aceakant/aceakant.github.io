@@ -1,7 +1,7 @@
 ---
 title: 'EU AI Act and credit scoring: a practical high-risk checklist'
 slug: eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist
-date: '2026-11-01'
+date: '2026-10-14'
 category: Credit Risk
 status: published
 test_run: false
