@@ -9,35 +9,37 @@ Outcome:
 import json
 import re
 
-import yaml
-
 from common import DRY_RUN, ask_claude, config, extract_json, load_yaml, log
 
 SYSTEM = """You are a strict fact-checker for a professional article published under a real person's name.
 Use web search to verify every external factual claim, the hook question's answer and every Myth/Fact
-answer. Prefer primary sources (regulators, central banks, company filings, major research firms).
+answer. Prefer primary sources (regulators, central banks, government statistics, company filings).
 
 Rules:
-- A claim about the AUTHOR is valid only if it appears in the PROFILE. Otherwise remove it.
+- MARKET: the article's market is given. Every statistic, regulation, example and currency must belong
+  to that market (Global = cross-market sources such as BIS, FATF, IMF, World Bank). Replace or remove
+  anything from another market.
+- LATEST DATA: if a newer official figure exists than the one used, update it and its year.
+- NO EMPLOYERS: remove any mention of, or hint at, the author's employers listed below, and any claim of
+  a personal result. The STAR story must read as an illustrative scenario.
 - Wrong external claim: correct it and cite the source. Unverifiable: remove or soften it.
-- If the hook answer cannot be verified, replace the hook with one you CAN verify (same JSON shape)
-  and set its source_url.
+- If the hook answer cannot be verified, replace the hook with one you CAN verify (same JSON shape).
 - Every Myth/Fact item must have a correct "fact" value; rewrite any item you cannot support.
-- Do not add new claims. Keep the author's voice, the light humour and the H2 structure.
-- ROI rows and the calculator basis must be honest (measured, sourced, or "Illustrative model").
+- Do not add new claims. Keep the voice, the light humour and the H2 structure.
+- ROI rows and the calculator basis must be honest (sourced with year, or "Illustrative model").
 Reply with JSON only."""
 
-PROMPT = """PROFILE (the only allowed personal facts):
-{profile}
+PROMPT = """MARKET: {market}
+EMPLOYERS THAT MUST NOT APPEAR: {employers}
 
 DRAFT (JSON):
 {draft}
 
 Return the full corrected draft as JSON with the same keys as the DRAFT, plus:
-  "checks": [{{"claim": "...", "status": "verified|corrected|removed|personal-ok", "source_url": "...", "note": "short source title"}}],
+  "checks": [{{"claim": "...", "status": "verified|corrected|removed", "source_url": "...", "note": "short source title"}}],
   "unresolved": ["anything a human must look at; empty list if none"]"""
 
-REQUIRED = ["title", "category", "summary", "hook", "star", "article_markdown", "process",
+REQUIRED = ["title", "category", "summary", "scenario", "hook", "star", "article_markdown", "process",
             "calculator", "roi", "myth_fact", "linkedin_post"]
 
 
@@ -66,6 +68,22 @@ def problems(d):
     return out
 
 
+def employers():
+    orgs = [e["org"] for e in load_yaml("content/profile.yaml")["experience"]]
+    names = set()
+    for o in orgs:
+        names.add(o.split("(")[0].strip())
+        if "(" in o:
+            names.add(o.split("(")[1].split()[0].strip(")"))
+    names |= {"L&T", "JPMC", "Dhani"}
+    return sorted(n for n in names if n)
+
+
+def employer_hits(text):
+    low = text.lower()
+    return [n for n in employers() if n.lower() in low]
+
+
 def banned_hits(text):
     low = text.lower()
     return [p for p in config()["writing_rules"]["banned_phrases"] if p.lower() in low]
@@ -83,8 +101,8 @@ def check(draft):
         return result
 
     log("fact-check", "Verifying claims with live web search…")
-    profile = yaml.safe_dump(load_yaml("content/profile.yaml"), allow_unicode=True)
-    text, sources = ask_claude(SYSTEM, PROMPT.format(profile=profile, draft=json.dumps(draft, ensure_ascii=False)),
+    text, sources = ask_claude(SYSTEM, PROMPT.format(market=draft.get("market", "Global"), employers=", ".join(employers()),
+                                                     draft=json.dumps(draft, ensure_ascii=False)),
                                web_search=True, max_tokens=16000)
     fc = extract_json(text)
 
@@ -95,9 +113,13 @@ def check(draft):
 
     unresolved = list(fc.get("unresolved") or [])
     unresolved += problems(result)
-    hits = banned_hits(result["article_markdown"] + result["linkedin_post"])
+    everything = json.dumps({k: result.get(k) for k in REQUIRED}, ensure_ascii=False)
+    hits = banned_hits(everything)
     if hits:
         unresolved.append("banned phrases present: " + ", ".join(hits))
+    named = employer_hits(everything)
+    if named:
+        unresolved.append("employer named: " + ", ".join(named))
 
     counts = {}
     for c in fc.get("checks", []):

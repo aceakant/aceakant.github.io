@@ -12,15 +12,17 @@ def main(file_rel):
         preview, _ = urls(meta)
         when = parse_time(meta.get("publish_at"))
         verified = meta["factcheck"]["status"] != "needs-review"
+        test = meta.get("test_run")
         lines = [
-            f"## 📝 This week's draft is ready for review",
+            ("## 🧪 TEST RUN — this draft is on hold and will not publish" if test else "## 📝 This week's draft is ready for review"),
             f"**{meta['title']}**",
             "",
             f"👉 **Preview it here:** {preview}",
             "",
             f"**Fact-check:** {meta['factcheck']['status']} — {meta['factcheck']['summary']}",
             "",
-            (f"⏰ **Goes live automatically on {ist_label(when)}** (website + LinkedIn) unless you hold it."
+            ("🧪 Test run: reply `approve` only if you want this test article published." if test else
+             f"⏰ **Goes live automatically on {ist_label(when)}** (website + LinkedIn) unless you hold it."
              if verified and when else
              "⚠️ **This draft will NOT publish by itself.** Something could not be verified. Check the notes above."),
             "",
@@ -31,7 +33,8 @@ def main(file_rel):
             "",
             f"To change wording: open `{path.relative_to(path.parents[2])}` in GitHub, tap the pencil, edit, and *Commit changes*.",
         ]
-        url = gh("issue", "create", "--title", f"Review: {meta['title']}", "--body", "\n".join(lines))
+        title = f"Review: {'[TEST] ' if test else ''}{meta['title']}"
+        url = gh("issue", "create", "--title", title, "--body", "\n".join(lines))
         meta["review_issue"] = int(url.rstrip("/").split("/")[-1])
         save(path, meta, body)
         print(f"Opened review issue {url}")

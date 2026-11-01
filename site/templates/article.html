@@ -12,13 +12,13 @@
 <article class="article wrap">
   {% if a.status != 'published' %}
   <div class="draft-banner">
-    <b>{% if a.status == 'hold' %}On hold{% else %}Draft preview{% endif %}</b>
-    <span>{% if a.status == 'hold' %}This piece will not publish until it is released.{% elif a.factcheck.status == 'needs-review' %}Needs your review before it can go live.{% else %}Goes live automatically on {{ a.publish_label }} unless put on hold.{% endif %} This page is unlisted.</span>
+    <b>{% if a.test_run %}Test run · on hold{% elif a.status == 'hold' %}On hold{% else %}Draft preview{% endif %}</b>
+    <span>{% if a.status == 'hold' %}This piece will not publish until it is approved or released.{% elif a.factcheck.status == 'needs-review' %}Needs your review before it can go live.{% else %}Goes live automatically on {{ a.publish_label }} unless put on hold.{% endif %} This page is unlisted.</span>
   </div>
   {% endif %}
 
   <a class="back-link" href="{{ root }}updates.html">← All weekly updates</a>
-  <div class="tagline"><span class="mono">{% if a.week_no %}Week {{ a.week_no }}{% else %}Draft{% endif %}</span><span>{{ a.category }}</span><span>{{ a.date_label }}</span><span>{{ a.read_min }} min read</span></div>
+  <div class="tagline"><span class="mono">{% if a.week_no %}Week {{ a.week_no }}{% else %}Draft{% endif %}</span><span>{{ a.category }}</span>{% if a.market %}<span>{{ a.market }}</span>{% endif %}<span>{{ a.date_label }}</span><span>{{ a.read_min }} min read</span></div>
   <h1>{{ a.title }}</h1>
   <p class="lede">{{ a.summary }}</p>
 
@@ -47,6 +47,7 @@
 
   <section class="block star-steps" id="star">
     <span class="mono">THE STAR BREAKDOWN · TAP THROUGH</span>
+    {% if a.scenario %}<p class="muted small scenario">Illustrative scenario: {{ a.scenario }}</p>{% endif %}
     <div class="star-tabs" role="tablist">
       {% for k, label in [('situation','Situation'),('task','Task'),('action','Action'),('result','Result')] %}
       <button type="button" role="tab" class="star-tab" aria-selected="{{ 'true' if loop.first else 'false' }}" data-i="{{ loop.index0 }}"><b>{{ label[0] }}</b><span>{{ label }}</span></button>

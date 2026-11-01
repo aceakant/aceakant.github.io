@@ -29,6 +29,12 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
 
+      - name: Test or real run?
+        run: |
+          if [ "${{ github.event_name }}" = "push" ] && grep -qi "test" content/run-now.txt; then
+            echo "RUN_MODE=test" >> "$GITHUB_ENV"; echo "Test run: the draft will be held and never auto-publish."
+          fi
+
       - name: Run the agents
         id: run
         env:

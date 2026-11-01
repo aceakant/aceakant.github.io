@@ -21,7 +21,9 @@ IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
 def save_article(art, slug, date, image, publish_at):
     front = {
         "title": art["title"], "slug": slug, "date": date, "category": art.get("category"),
-        "status": "draft",
+        "status": "hold" if os.environ.get("RUN_MODE") == "test" else "draft",
+        "test_run": os.environ.get("RUN_MODE") == "test",
+        "market": art.get("market"), "scenario": art.get("scenario"),
         "publish_at": publish_at,               # None = waits for a human "approve"
         "review_issue": None, "reminded": False,
         "summary": art["summary"],
@@ -54,6 +56,9 @@ def main():
     status = checked["factcheck"]["status"]
     hours = config()["review"]["hours_before_publish"]
     publish_at = (now + datetime.timedelta(hours=hours)).isoformat().replace("+00:00", "Z") if status != "needs-review" else None
+    if os.environ.get("RUN_MODE") == "test":
+        publish_at = None  # test run: never publishes on its own
+        log("pipeline", "TEST RUN — draft is on hold and will not publish")
     path = save_article(checked, slug, date, image, publish_at)
     topic_agent.mark_used(topic["title"], date)
     log("pipeline", f"Saved {path.relative_to(ROOT)} — fact-check: {status}; publish_at: {publish_at or 'waits for approval'}")
@@ -64,6 +69,7 @@ def main():
                 .strftime("%a %d %b, %I:%M %p IST") if publish_at else "")
         with open(gh_out, "a") as f:
             f.write(f"title={checked['title']}\nslug={slug}\nstatus={status}\nwhen={when}\nfile={path.relative_to(ROOT)}\n")
+            f.write(f"test={'true' if os.environ.get('RUN_MODE') == 'test' else 'false'}\n")
             f.write("summary<<EOF\n" + checked["factcheck"]["summary"] + "\nEOF\n")
 
 

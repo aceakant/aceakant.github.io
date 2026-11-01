@@ -22,16 +22,16 @@ def pick_topic():
         raise RuntimeError("Backlog empty — add topics to content/topics.yaml")
 
     log("topic", "Backlog empty — asking Claude for fresh topics")
-    profile = load_yaml("content/profile.yaml")
+    profile = {k: load_yaml("content/profile.yaml")[k] for k in ("skills", "regulation")}
     done = [t["title"] for t in data["topics"]]
     text, _ = ask_claude(
         system="You plan a weekly professional article series. Reply with JSON only.",
         prompt=(
             f"Author profile:\n{yaml.safe_dump(profile)}\n\nAlready covered:\n- " + "\n- ".join(done) +
-            "\n\nPropose 5 new topics. Each must be a real organisational problem in banking/fintech risk, "
-            "operations or analytics that the author could solve with analytics, automation or AI, "
-            "and where ROI or operational gain can be measured. "
-            'Return {"topics":[{"title":"...","angle":"..."}]}'
+            "\n\nPropose 5 new OPEN topics (industry problems, not about any employer). Each must be a real "
+            "organisational problem in banking/fintech risk, operations or analytics, solvable with analytics, "
+            "automation or AI, with measurable ROI. Give each one market: India, Global, US or UK & EU. "
+            'Return {"topics":[{"title":"...","angle":"...","market":"India"}]}'
         ),
     )
     new = [{**t, "status": "pending"} for t in extract_json(text)["topics"]]

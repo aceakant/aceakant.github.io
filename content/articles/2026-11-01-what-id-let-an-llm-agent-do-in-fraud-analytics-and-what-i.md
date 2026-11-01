@@ -3,7 +3,7 @@ title: What I'd let an LLM agent do in fraud analytics, and what I wouldn't
 slug: what-id-let-an-llm-agent-do-in-fraud-analytics-and-what-i
 date: '2026-11-01'
 category: GenAI
-status: draft
+status: hold
 publish_at: null
 review_issue: 1
 reminded: false
