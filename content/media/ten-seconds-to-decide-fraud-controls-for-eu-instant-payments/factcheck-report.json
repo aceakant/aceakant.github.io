@@ -1,0 +1,83 @@
+{
+  "status": "needs-review",
+  "summary": "7 verified, 4 corrected · Needs review: PSD3/PSR formal adoption status: the Council published its first-reading texts on 21 October 2026 and adoption in the Official Journal was still pending in late October 2026. Re-check before publication and update the wording if the PSR is adopted.; Check whether a 2026 edition of the joint EBA/ECB payment fraud report has been published since the 15 December 2025 edition. I found no newer edition.; I could not open the operative text of Article 5a of Regulation (EU) 2024/886 in the search tool. The ten-second rule is confirmed by multiple secondary sources, including a Spanish consumer portal and legal summaries. A human should confirm the exact wording against EUR-Lex if citing the article number.; The STAR 'about a third' fraud reduction and the 'fewer than 1% challenged' figure are assumptions. Keep them labelled as illustrative.",
+  "checks": [
+    {
+      "claim": "Hook: instant credit transfers must be made available to the payee within 10 seconds, 24/7 (Regulation (EU) 2024/886).",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/886/oj",
+      "source_title": "EUR-Lex, Regulation (EU) 2024/886 (Instant Payments Regulation)",
+      "note": "Ten seconds, 24/7 is confirmed by several secondary summaries of the Regulation. I could not read the operative Article 5a text itself in the search tool. I removed the unsourced phrase that the payment 'cannot be recalled afterwards'."
+    },
+    {
+      "claim": "Euro-area receiving deadline 9 January 2025; sending and VoP 9 October 2025; non-euro receiving 9 January 2027, sending and VoP 9 July 2027.",
+      "status": "verified",
+      "source_url": "https://www.ecb.europa.eu/paym/retail/instant_payments/html/instant_payments_regulation.en.html",
+      "source_title": "European Central Bank, Instant Payments Regulation",
+      "note": "All four dates match the ECB timeline."
+    },
+    {
+      "claim": "Deadlines applied to 'euro-area payment service providers' generally.",
+      "status": "corrected",
+      "source_url": "https://www.centralbank.cy/en/announcements/application-of-instant-payments-regulation-eu-2024-886-10-12-2024",
+      "source_title": "Central Bank of Cyprus, Application of Instant Payments Regulation",
+      "note": "The 9 January 2025 and 9 October 2025 send/receive dates apply to banks. Payment and e-money institutions have until 9 April 2027, so I narrowed the wording to banks and added the later date. VoP applies to euro-area PSPs from 9 October 2025."
+    },
+    {
+      "claim": "VoP returns match, close match, no match or 'unable to verify'.",
+      "status": "verified",
+      "source_url": "https://www.europeanpaymentscouncil.eu/document-library/rulebooks/verification-payee-scheme-rulebook",
+      "source_title": "European Payments Council, Verification Of Payee Scheme Rulebook",
+      "note": "The EPC rulebook lists match, no match, close match and 'verification check not possible'. I aligned the wording to the scheme term."
+    },
+    {
+      "claim": "The Regulation replaces per-transaction sanctions screening for instant payments with at least daily customer screening.",
+      "status": "verified",
+      "source_url": "https://www.ecb.europa.eu/paym/retail/instant_payments/html/instant_payments_regulation.en.html",
+      "source_title": "European Central Bank, Instant Payments Regulation",
+      "note": "Article 5d requires PSPs offering instant credit transfers to verify their users periodically and at least daily against targeted financial restrictive measures, and after new listings. I made the draft wording more precise: it covers EU targeted financial sanctions only, and screening for other purposes is unaffected."
+    },
+    {
+      "claim": "EBA/ECB joint report: transactions authenticated with SCA show lower fraud rates than those without; social engineering a concern for credit transfers.",
+      "status": "corrected",
+      "source_url": "https://www.bde.es/f/webbe/GAP/Secciones/SalaPrensa/ComunicadosBCE/NotasInformativasBCE/25/presbce2025-151en.pdf",
+      "source_title": "ECB/EBA press release, Joint EBA-ECB report on payment fraud, 15 Dec 2025",
+      "note": "Updated from the 2024 edition to the 2025 edition (published 15 December 2025, data 2022 to 2024). The report says SCA lowers fraud mainly for cards and that the effect is less clear for credit transfers. The draft's blanket 'lower fraud rates' claim was therefore wrong for credit transfers. Manipulation of the payer accounted for over half of fraudulent credit transfer value (secondary reports of the EBA/ECB report: Payment Expert, financialcrime.lu)."
+    },
+    {
+      "claim": "DORA applicable since January 2025 (Regulation (EU) 2022/2554).",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj",
+      "source_title": "EUR-Lex, Regulation (EU) 2022/2554 (DORA), Article 64",
+      "note": "Applies from 17 January 2025 (entered into force 16 January 2023). Confirmed via secondary sources citing Article 64. I softened 'means the fraud engine needs tested failover' to a recommendation, because DORA does not mention fraud engines specifically."
+    },
+    {
+      "claim": "The Commission's June 2023 PSR proposal 'points towards' fraud-data sharing.",
+      "status": "corrected",
+      "source_url": "https://www.nortonrosefulbright.com/en/knowledge/publications/cedd39c6/psd3-and-psr-from-provisional-agreement-to-2026-readiness",
+      "source_title": "Norton Rose Fulbright, PSD3 and PSR: provisional agreement to 2026",
+      "note": "The proposal was published on 28 June 2023 (European Parliament Legislative Train). A provisional political agreement followed on 27 November 2025, and PSPs may exchange specified fraud data under structured arrangements. Final texts are published but formal adoption and Official Journal publication were still pending in late October 2026. I updated the wording to say 'proposed in June 2023, politically agreed in November 2025, adoption pending'."
+    },
+    {
+      "claim": "Illustrative arithmetic: €375,000 prevented, €90,000 friction, €285,000 net; hit rate 0.25% (1 in 400); break-even 36 cases; €5 friction gives €75,000 net.",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/886/oj",
+      "source_title": "Illustrative model (own calculation), no external source",
+      "note": "Recalculated: 150×2,500=375,000; 60,000×1.5=90,000; net 285,000; 150/60,000=0.25%; 90,000/2,500=36; 60,000×5=300,000, so net 75,000. Labelled as an illustrative model throughout."
+    },
+    {
+      "claim": "STAR result: fraud losses fall by about a third with under 1% of payments challenged.",
+      "status": "corrected",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/886/oj",
+      "source_title": "Illustrative scenario (no external source)",
+      "note": "Marked explicitly as an assumption, not a measured outcome. No employer or personal result is claimed. Wording 'I use/track/run' in the method section was changed to conditional 'I'd' so it reads as a recommendation."
+    },
+    {
+      "claim": "Employer mentions (Axis Bank, Dhani, JPMC, L&T, TCS, Westpac etc.).",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/886/oj",
+      "source_title": "Internal check, not applicable",
+      "note": "None of the listed employers appear in the draft. The scenario is a composite, unnamed euro-area bank."
+    }
+  ]
+}
