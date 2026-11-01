@@ -9,13 +9,13 @@ labs:
   - id: chart-tricks
     name: Spot the chart trick
     part: chart
-    added: Nov 2026
+    added: November 2026
     new: true
     hook: A chart that makes 2% look like 300%? Find the trick before it fools your boss.
   - id: correlation
     name: Guess the correlation
     part: corr
-    added: Nov 2026
+    added: October 2026
     hook: Chai vs code, rain vs umbrellas. How strongly do they move together?
 - slug: risk-lab
   name: Risk Lab
@@ -25,13 +25,13 @@ labs:
   - id: survive-recession
     name: Survive the recession
     part: book
-    added: Nov 2026
+    added: November 2026
     new: true
     hook: Build a ₹100 crore loan book. Earn the most, but don't lose money when the recession hits.
   - id: cut-off
     name: Run the bank for a day
     part: riskcut
-    added: Nov 2026
+    added: October 2026
     hook: Set the approval cut-off. Too strict loses customers, too loose loses money.
 - slug: fraud-lab
   name: Fraud Lab
@@ -41,13 +41,13 @@ labs:
   - id: scam-or-legit
     name: Scam or legit?
     part: phish
-    added: Nov 2026
+    added: November 2026
     new: true
     hook: Six messages land on your phone. Which ones are trying to rob you?
   - id: spot-the-fraud
     name: Spot the fraud
     part: spotfraud
-    added: Nov 2026
+    added: October 2026
     hook: A fraud ring, a card-testing attack and a money mule. Can you catch all three?
 - slug: framework-lab
   name: Framework Lab
@@ -57,13 +57,13 @@ labs:
   - id: in-order
     name: Put it in order
     part: order
-    added: Nov 2026
+    added: November 2026
     new: true
     hook: Making chai, launching a model, handling an incident. What comes first?
   - id: sort-it-out
     name: Sort it out
     part: sort
-    added: Nov 2026
+    added: October 2026
     hook: Who plays which line of defence, at a cricket match and in a bank?
 analytics:
   rounds:

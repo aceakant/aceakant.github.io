@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ root }}static/style.css">
+<link rel="stylesheet" href="{{ root }}static/style.css?v={{ asset_v }}">
 <script>try{if(localStorage.getItem('ak-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
 </head>
 <body class="page-{{ page | replace('.html','') }}">
@@ -54,8 +54,8 @@
 </footer>
 
 <a class="dock" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Connect with Ajay</a>
-<script src="{{ root }}static/sky.js" defer></script>
-<script src="{{ root }}static/app.js" defer></script>
-{% if page.endswith('-lab.html') %}<script src="{{ root }}static/labs.js" defer></script>{% endif %}
+<script src="{{ root }}static/sky.js?v={{ asset_v }}" defer></script>
+<script src="{{ root }}static/app.js?v={{ asset_v }}" defer></script>
+{% if page.endswith('-lab.html') %}<script src="{{ root }}static/labs.js?v={{ asset_v }}" defer></script>{% endif %}
 </body>
 </html>

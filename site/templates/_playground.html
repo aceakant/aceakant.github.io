@@ -9,7 +9,7 @@
       <span class="mono">{{ l.name }}{% if l.games[0].new %} <em class="new-badge">New game</em>{% endif %}</span>
       <h3>{{ l.games[0].name }}</h3>
       <p>{{ l.games[0].hook }}</p>
-      <span class="more">Play →{% if l.games | length > 1 %} <small>+{{ l.games | length - 1 }} earlier game{{ 's' if l.games | length > 2 else '' }}</small>{% endif %}</span>
+      <span class="more">Play →{% if l.games | length > 1 %} <small>+ {{ l.games[1].added.split()[0] }}{% if l.games | length > 2 %} and earlier{% endif %} game{{ 's' if l.games | length > 2 else '' }}</small>{% endif %}</span>
     </a>
     {% endfor %}
   </div>

@@ -64,8 +64,10 @@ def build():
         shutil.copytree(media, OUT / "media", ignore=shutil.ignore_patterns("*.txt", "*.json"))
 
     env = Environment(loader=FileSystemLoader(ROOT / "site" / "templates"), autoescape=True)
+    # new version tag on every build, so browsers fetch fresh styles and scripts
+    asset_v = (os.environ.get("GITHUB_SHA") or datetime.datetime.now().strftime("%Y%m%d%H%M%S"))[:10]
     common = dict(site=config["site"], profile=profile, leadership=leadership, labs=labs,
-                  year=datetime.date.today().year, upcoming=upcoming)
+                  year=datetime.date.today().year, upcoming=upcoming, asset_v=asset_v)
 
     show_drafts = os.environ.get("PREVIEW_DRAFTS") == "1"
     for c in leadership["companies"]:

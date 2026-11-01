@@ -19,14 +19,14 @@
   <div class="shelf" id="shelf">
     {% for g in lab.games %}
     <button type="button" class="shelf-card {{ lab.color }}" data-game="{{ g.id }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">
-      <span class="shelf-tag mono">{% if loop.first %}New · {{ g.added }}{% else %}Earlier game · {{ g.added }}{% endif %}</span>
+      <span class="shelf-tag mono">{% if g.new %}<em class="new-badge">New</em> {{ g.added }} game{% else %}{{ g.added }} game{% endif %}</span>
       <b>{{ g.name }}</b>
       <span class="shelf-hook">{{ g.hook }}</span>
       <span class="shelf-cta"><span class="now">Now playing</span><span class="play-it">Play this game →</span></span>
     </button>
     {% endfor %}
   </div>
-  <p class="muted small shelf-note">New games arrive at the top. Earlier ones stay here, ready to play any time.</p>
+  <p class="muted small shelf-note">A new game arrives every month and goes first. Earlier months stay here, ready to play any time.</p>
 </section>
 
 {% include "_labnext.html" %}
