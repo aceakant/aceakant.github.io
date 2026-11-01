@@ -1,7 +1,7 @@
 {
   "sample": "fraud-alert-queue",
-  "generated": "2026-11-01T20:45:44.350Z",
-  "seconds": 55,
+  "generated": "2026-11-01T20:48:21.633Z",
+  "seconds": 25,
   "summary_chars": 5979,
   "title": "Fraud alert queue, June to September 2026",
   "draft": {
@@ -9,106 +9,106 @@
       {
         "id": "F1",
         "severity": "high",
-        "headline": "Confirmed fraud is concentrated in three alert rules",
-        "detail": "Of 3,000 alerts, 313 (10.4%) were confirmed fraud. The rate is 31.7% for Mule account inbound (243 alerts), 21.9% for New device + high amount (556) and 15.4% for Velocity (408)."
+        "headline": "Nearly 9 in 10 alerts are false positives",
+        "detail": "Only 313 of 3,000 alerts (10.4%) were confirmed fraud, so 89.6% of analyst effort went on alerts that were not fraud. The confirmed rate has stayed between 9.7% and 11.1% each month."
       },
       {
         "id": "F2",
         "severity": "high",
-        "headline": "New device + high amount hit rate rises every month",
-        "detail": "Its confirmed-fraud rate went 18.1%, 22.1%, 23.6%, 24.3% from June to September. It also takes 24.7% of handling minutes from 18.5% of alerts."
+        "headline": "Three rules carry most of the confirmed fraud",
+        "detail": "Mule account inbound (31.7%, 243 alerts), New device + high amount (21.9%, 556) and Velocity (15.4%, 408) have the highest confirmed rates. Round-amount transfer (0.6%) and Night-time login (1.6%) almost never find fraud."
       },
       {
         "id": "F3",
         "severity": "medium",
-        "headline": "Two rules produce very little confirmed fraud",
-        "detail": "Round-amount transfer (0.6%) and Night-time login (1.6%) make up 33.3% of alerts (17.1 + 16.2). Their rates imply only about 11 confirmed cases between them, roughly 3 and 8."
+        "headline": "New device + high amount hit rate is rising",
+        "detail": "Its monthly confirmed rate went from 18.1% in June to 24.3% in September. This is worth checking, though the monthly groups are smaller than the full 556 alerts."
       },
       {
         "id": "F4",
         "severity": "medium",
-        "headline": "Analyst confirmation rates vary widely",
-        "detail": "Among the eight analysts shown, rates run from 6.0% (Analyst 06) to 13.1% (Analyst 05), each on 244 to 275 alerts. This may reflect which rules each analyst gets, which the data does not show."
+        "headline": "Low-yield rules take much of the queue",
+        "detail": "Round-amount transfer and Night-time login are 33.3% of alerts (17.1% plus 16.2%) and 22.3% of handling time (12.2% plus 10.1%). Together they found few confirmed cases, about 0.6% and 1.6% of their alerts."
       },
       {
         "id": "F5",
-        "severity": "stable",
-        "headline": "Overall fraud rate steady and the data is clean",
-        "detail": "The monthly rate stays between 9.7% and 11.1%, and Retail (10.8%) and Business (9.4%) are close. There are no missing cells and no duplicate rows."
+        "severity": "medium",
+        "headline": "Larger amounts and longer cases go with more fraud",
+        "detail": "The top fifth of alerts by amount (above 34,533) has a 19.8% confirmed rate, against 3.7% in the lowest fifth. Cases taking over 15 minutes are 33.3% confirmed, but longer handling may reflect clearer fraud, not the reverse."
       }
     ],
     "next_steps": [
-      "Review the thresholds and routing for Round-amount transfer and Night-time login, to see whether alerts can be cut without losing the few confirmed cases.",
-      "Investigate why New device + high amount is rising: check whether the alert mix, amounts or fraud pattern has changed since June.",
-      "Compare analysts after adjusting for rule mix, then check whether the high and low confirmation rates reflect differences in practice."
+      "Review thresholds for Round-amount transfer and Night-time login, testing whether fewer alerts would lose any confirmed fraud.",
+      "Prioritise Mule account inbound, New device + high amount and high-value alerts for earliest analyst attention.",
+      "Investigate why New device + high amount confirmed rates rose each month, and check analyst differences of 6.0% to 13.1% for case mix."
     ]
   },
   "reviews": [
     {
       "id": "F1",
-      "verdict": "confirmed",
-      "note": "Counts and rates match the summary. Rough arithmetic gives about 262 of 313 confirmed cases in these three rules. Severity fair."
+      "verdict": "corrected",
+      "note": "313/3,000 = 10.4% and monthly range 9.7%-11.1% check out. Summary has no effort measure by outcome, so wording now says alerts, not effort."
     },
     {
       "id": "F2",
       "verdict": "corrected",
-      "note": "Monthly rates and the 24.7% versus 18.5% shares are right. Lowered severity to medium: four monthly points, no monthly counts shown. Plainer wording."
+      "note": "Rates and counts match. 'Most' holds by arithmetic: about 77+122+63 = 262 of 313 (84%). Added that to the detail."
     },
     {
       "id": "F3",
       "verdict": "confirmed",
-      "note": "0.6% of 512 is about 3, 1.6% of 485 is about 8. 17.1 + 16.2 = 33.3%. All correct."
+      "note": "Monthly rates 18.1, 22.1, 23.6, 24.3 match the cross table. Monthly groups average about 139 alerts, above 30. Medium severity fair."
     },
     {
       "id": "F4",
-      "verdict": "corrected",
-      "note": "Rates and counts are right, but only eight of 12 analysts appear and rule mix is untested. Changed 'vary widely' to 'differ'."
+      "verdict": "confirmed",
+      "note": "17.1+16.2 = 33.3% of alerts and 12.2+10.1 = 22.3% of handling time. Rates 0.6% and 1.6% match."
     },
     {
       "id": "F5",
-      "verdict": "confirmed",
-      "note": "Monthly range 9.7% to 11.1%, Retail 10.8%, Business 9.4%, no missing cells or duplicates all match the summary."
+      "verdict": "corrected",
+      "note": "19.8% vs 3.7% and 33.3% are correct. Band starts at 34,533 and at 15 minutes, so 'above' changed to 'from'."
     }
   ],
   "findings": [
     {
       "id": "F1",
       "severity": "high",
-      "headline": "Confirmed fraud is concentrated in three alert rules",
-      "detail": "Of 3,000 alerts, 313 (10.4%) were confirmed fraud. The rate is 31.7% for Mule account inbound (243 alerts), 21.9% for New device + high amount (556) and 15.4% for Velocity (408)."
+      "headline": "Nearly 9 in 10 alerts are false positives",
+      "detail": "Only 313 of 3,000 alerts (10.4%) were confirmed fraud, so 89.6% were false positives. The monthly confirmed rate stayed between 9.7% and 11.1%."
     },
     {
       "id": "F2",
-      "severity": "medium",
-      "headline": "New device + high amount confirmed rate goes up each month",
-      "detail": "Its confirmed-fraud rate went 18.1%, 22.1%, 23.6%, 24.3% from June to September. It also takes 24.7% of handling minutes from 18.5% of alerts. Four monthly points are a short run."
+      "severity": "high",
+      "headline": "Three rules carry most of the confirmed fraud",
+      "detail": "Mule account inbound (31.7% of 243 alerts), New device + high amount (21.9% of 556) and Velocity (15.4% of 408) have the highest confirmed rates. Together that is about 262 of 313 confirmed cases (84%, from rate times count). Round-amount transfer (0.6%) and Night-time login (1.6%) rarely find fraud."
     },
     {
       "id": "F3",
       "severity": "medium",
-      "headline": "Two rules produce very little confirmed fraud",
-      "detail": "Round-amount transfer (0.6%) and Night-time login (1.6%) make up 33.3% of alerts (17.1 + 16.2). Their rates imply only about 11 confirmed cases between them, roughly 3 and 8."
+      "headline": "New device + high amount confirmed rate is rising",
+      "detail": "Its monthly confirmed rate went from 18.1% in June to 22.1%, 23.6% and 24.3% in September. Monthly groups average about 139 alerts, so treat the trend with some caution."
     },
     {
       "id": "F4",
       "severity": "medium",
-      "headline": "Analyst confirmation rates differ among those shown",
-      "detail": "Among the eight analysts shown (four are not listed), rates run from 6.0% (Analyst 06) to 13.1% (Analyst 05), each on 244 to 275 alerts. This may reflect which rules each analyst gets, which the data does not show."
+      "headline": "Low-yield rules take much of the queue",
+      "detail": "Round-amount transfer and Night-time login are 33.3% of alerts (17.1% plus 16.2%) and 22.3% of handling time (12.2% plus 10.1%). Their confirmed rates are only 0.6% and 1.6%."
     },
     {
       "id": "F5",
-      "severity": "stable",
-      "headline": "Overall fraud rate steady and the data is clean",
-      "detail": "The monthly rate stays between 9.7% and 11.1%, and Retail (10.8%) and Business (9.4%) are close. There are no missing cells and no duplicate rows."
+      "severity": "medium",
+      "headline": "Larger amounts and longer cases go with more fraud",
+      "detail": "The top fifth of alerts by amount (from 34,533) has a 19.8% confirmed rate, against 3.7% in the lowest fifth. Cases taking 15 minutes or more are 33.3% confirmed, but longer handling may reflect clearer fraud rather than the reverse."
     }
   ],
   "next_steps": [
-    "Review thresholds and routing for Round-amount transfer and Night-time login, checking whether alerts can be cut without losing the few confirmed cases.",
-    "Check whether the rise in New device + high amount confirmed rate since June holds up, using monthly alert counts, amounts and the alert mix.",
-    "Compare analysts after allowing for rule mix before drawing any conclusion about practice or performance."
+    "Test whether raising thresholds on Round-amount transfer and Night-time login would drop alerts without losing any of the roughly 11 confirmed cases they produced.",
+    "Route Mule account inbound, New device + high amount and alerts of 34,533 or more to analysts first.",
+    "Check what changed in New device + high amount alerts since June, and compare all 12 analysts' confirmed rates by rule mix before drawing conclusions."
   ],
-  "conclusion": "The queue is mostly false positives (89.6%), and confirmed fraud sits mainly in Mule account inbound, New device + high amount and Velocity. The overall rate is steady and the data is clean. Do first: review the two low-yield rules, Round-amount transfer and Night-time login, which are 33.3% of alerts but about 11 confirmed cases.",
-  "limits": "This review uses summary statistics only, so it cannot show why rates differ, whether analyst gaps are real once rule mix is considered, or what any change would do to missed fraud.",
+  "conclusion": "The queue is mostly false positives (89.6%), but the fraud is concentrated: three rules hold about 84% of confirmed cases, while two rules take 22.3% of handling time and find very little. First, test tighter thresholds on Round-amount transfer and Night-time login, checking that no confirmed fraud is lost.",
+  "limits": "This review shows patterns in one four-month extract and cannot tell why rules perform differently, whether unflagged fraud was missed, or what any change would cost.",
   "model": "claude-sonnet-5-5",
   "version": "2026-11-02"
 }
