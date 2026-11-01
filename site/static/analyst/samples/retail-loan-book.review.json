@@ -1,114 +1,114 @@
 {
   "sample": "retail-loan-book",
-  "generated": "2026-11-01T21:37:40.389Z",
-  "seconds": 29,
+  "generated": "2026-11-01T21:48:09.733Z",
+  "seconds": 35,
   "summary_chars": 5124,
-  "title": "Retail loan book: early delinquency review",
+  "title": "Retail loan book: 6-month delinquency review",
   "draft": {
     "findings": [
       {
         "id": "F1",
         "severity": "high",
-        "headline": "30-day arrears rate has almost doubled in five quarters",
-        "detail": "The share of loans 30+ days past due at 6 months rose from 7.2% (Q1 25) to 12.8% (Q1 26), after a dip to 6.6% in Q2 25. Volumes were steady at about 1,000 loans a quarter, so this is not a mix-of-volume effect."
+        "headline": "Delinquency has risen for three quarters running",
+        "detail": "The 30-days-past-due rate at 6 months (dpd30) is 8.8% overall (440 of 5,000 loans). It rose from 6.6% in Q2 25 to 12.8% in Q1 26, up 6.2 points. Q1 26 loans may not yet have six months of history, so check how the outcome is measured."
       },
       {
         "id": "F2",
         "severity": "high",
-        "headline": "Personal and Card loans drive the deterioration",
-        "detail": "Personal rose from 9.3% to 21.0% and Card from 11.2% to 20.2% between Q1 25 and Q1 26. Car stayed near 6% and Home near 0.5%."
+        "headline": "Shared phone numbers go with very high default and missed first payments",
+        "detail": "Nine phone values repeat across 42 loans. In that group, 83.3% reached 30 days past due, against 8.8% overall, and 81% missed the first payment, against 2.3% overall. This is a possible fraud signal."
       },
       {
         "id": "F3",
         "severity": "high",
-        "headline": "Shared phone numbers go with very high default and missed first payments",
-        "detail": "9 phone values repeat across 42 loans. 83.3% of those loans reached 30+ days past due (about 35 loans) against 8.8% overall, and 81% missed the first payment against 2.3% overall. This is a possible fraud or duplicate-borrower signal."
+        "headline": "Personal and Card loans are driving the deterioration",
+        "detail": "Personal loan delinquency rose from 9.3% in Q1 25 to 21.0% in Q1 26. Card rose from 11.2% to 20.2%. Car stayed near 6% and Home near 0.5%, so the problem is concentrated in unsecured-style products."
       },
       {
         "id": "F4",
         "severity": "medium",
-        "headline": "Digital and self-employed borrowers show higher arrears",
-        "detail": "Digital is at 13.0% against 5.8% for Branch, and its average bureau score is lower (715.4 against 733.7). Self-employed borrowers are at 12.2% against 6.5% for salaried."
+        "headline": "Digital and self-employed borrowers show higher delinquency",
+        "detail": "Digital loans are at 13.0% against 5.8% for Branch. Self-employed borrowers are at 12.2% against 6.5% for salaried. Digital also has a lower average bureau score, 715.4 against 733.7 for Branch."
       },
       {
         "id": "F5",
         "severity": "medium",
-        "headline": "Income is missing for 39.7% of Partner loans",
-        "detail": "Income is missing in 6.9% of all rows, and 90.8% of the gaps are in the Partner channel. Any income-based analysis or affordability checks on Partner loans may be unreliable."
+        "headline": "Income is missing mainly for Partner-channel loans",
+        "detail": "Income is missing on 6.9% of rows. Of those, 90.8% are Partner loans, and 39.7% of Partner loans have no income. Any affordability analysis would be skewed for that channel."
       }
     ],
     "next_steps": [
-      "Investigate the 42 loans sharing phone numbers: check applications, origination channel and branch, and consider a hold on similar new applications.",
-      "Review Personal and Card underwriting and recent cohorts, including the Digital channel mix, to see what changed from Q3 25. Also check whether the Q1 26 loans have a full 6-month window.",
-      "Ask Partner originators why income is missing, and test whether Digital and self-employed arrears hold when product is held constant."
+      "Review the 42 loans sharing phone numbers for application fraud, and check whether the Partner or Digital channels originated them.",
+      "Break Personal and Card delinquency in Q4 25 and Q1 26 down by channel and employment, and confirm the six-month outcome is mature for Q1 26.",
+      "Ask the Partner channel why income is missing on 39.7% of loans, and decide whether to tighten data capture at origination."
     ]
   },
   "reviews": [
     {
       "id": "F1",
-      "verdict": "corrected",
-      "note": "7.2% to 12.8% is about 1.8 times, not nearly double. Removed the unsupported 'not a mix effect' claim; volumes of 984 to 1,038 are steady."
+      "verdict": "confirmed",
+      "note": "Quarterly rates 6.6, 7.8, 9.7, 12.8 rise three times running; 12.8 minus 6.6 is 6.2 points. Maturity caveat is fair."
     },
     {
       "id": "F2",
       "verdict": "corrected",
-      "note": "Personal 9.3% to 21.0% and Card 11.2% to 20.2% confirmed. Replaced 'drive' with 'goes with'; Car 4.7-6.3% and Home 0-1.1% fit."
+      "note": "Numbers match (83.3%, 81%, 2.3%). Lowered severity to medium as it is 42 of 5,000 rows, and toned down the fraud wording."
     },
     {
       "id": "F3",
       "verdict": "corrected",
-      "note": "42 rows, 83.3% (about 35 loans) and 81% confirmed. Cut the fraud speculation and lowered severity to medium, as 35 is 8% of the 440 positives."
+      "note": "Rates match. Removed 'driving' and 'unsecured-style', which the summary does not support. Car ranged 4.7 to 6.3, Home 0 to 1.1."
     },
     {
       "id": "F4",
-      "verdict": "confirmed",
-      "note": "Digital 13.0% vs Branch 5.8%, bureau 715.4 vs 733.7, self-employed 12.2% vs salaried 6.5% all match. Medium severity is fair."
+      "verdict": "corrected",
+      "note": "Rates and scores are right, but bureau score does not explain the gap: Partner scores lowest (712.9) with 7.2% rate, and salaried and self-employed scores are alike."
     },
     {
       "id": "F5",
       "verdict": "confirmed",
-      "note": "6.9% missing, 90.8% of gaps in Partner and 39.7% missing within Partner all match the summary. Medium severity is fair."
+      "note": "6.9%, 90.8% and 39.7% all appear in the summary and agree: about 313 of 345 missing rows are Partner. Wording softened slightly."
     }
   ],
   "findings": [
     {
       "id": "F1",
       "severity": "high",
-      "headline": "30-day arrears rate rose from 7.2% to 12.8%",
-      "detail": "The share of loans 30 or more days past due at 6 months rose from 7.2% in Q1 25 to 12.8% in Q1 26, about 1.8 times as high. It dipped to 6.6% in Q2 25, and quarterly volumes stayed between 984 and 1,038 loans."
+      "headline": "Delinquency has risen for three quarters running",
+      "detail": "The 30-days-past-due rate at 6 months is 8.8% overall (440 of 5,000 loans). It rose from 6.6% in Q2 25 to 12.8% in Q1 26, up 6.2 points. Q1 26 loans may not yet have six months of history, so check how the outcome is measured."
     },
     {
       "id": "F2",
-      "severity": "high",
-      "headline": "The rise goes with Personal and Card loans",
-      "detail": "Personal went from 9.3% to 21.0% and Card from 11.2% to 20.2% between Q1 25 and Q1 26. Car stayed between 4.7% and 6.3%, and Home stayed at or below 1.1%."
+      "severity": "medium",
+      "headline": "Shared phone numbers go with very high delinquency and missed first payments",
+      "detail": "Nine phone values repeat across 42 loans. In that group 83.3% reached 30 days past due (about 35 loans) against 8.8% overall, and 81% missed the first payment against 2.3% overall. The group is under 1% of the book, and the summary does not show why it behaves this way, so it needs checking."
     },
     {
       "id": "F3",
-      "severity": "medium",
-      "headline": "Shared phone numbers go with very high arrears and missed first payments",
-      "detail": "9 phone values repeat across 42 loans. 83.3% of these loans (about 35) reached 30+ days past due against 8.8% overall, and 81% missed the first payment against 2.3% overall. The group is small but clearly worth checking."
+      "severity": "high",
+      "headline": "Rising delinquency is concentrated in Personal and Card loans",
+      "detail": "Personal loan delinquency went from 9.3% in Q1 25 to 21.0% in Q1 26. Card went from 11.2% to 20.2%. Car stayed between 4.7% and 6.3%, and Home stayed at or below 1.1%."
     },
     {
       "id": "F4",
       "severity": "medium",
-      "headline": "Digital and self-employed borrowers show higher arrears",
-      "detail": "Digital is at 13.0% against 5.8% for Branch, and its average bureau score is lower (715.4 against 733.7). Self-employed borrowers are at 12.2% against 6.5% for salaried. Product mix has not been separated out."
+      "headline": "Digital and self-employed loans show higher delinquency",
+      "detail": "Digital loans are at 13.0% against 5.8% for Branch, and Partner is at 7.2%. Self-employed borrowers are at 12.2% against 6.5% for salaried. Bureau score does not explain this: salaried and self-employed averages are almost the same (723.6 and 723.1)."
     },
     {
       "id": "F5",
       "severity": "medium",
-      "headline": "Income is missing for 39.7% of Partner loans",
-      "detail": "Income is missing in 6.9% of all rows, and 90.8% of those gaps are in the Partner channel. Income-based analysis for Partner loans is less reliable."
+      "headline": "Income is missing mainly for Partner-channel loans",
+      "detail": "Income is missing on 6.9% of rows. Of those, 90.8% are Partner loans, and 39.7% of Partner loans have no income. Any income-based analysis would be weaker for that channel."
     }
   ],
   "next_steps": [
-    "Review the 42 loans that share phone numbers: check their applications and how they were originated, and consider extra checks on new applications with repeated phone numbers.",
-    "Look at Personal and Card lending from Q3 25 onwards, and confirm that Q1 26 loans have had a full 6 months to show the outcome.",
-    "Test whether the Digital and self-employed gaps remain when product is held constant, and ask Partner originators why income is missing."
+    "Review the 42 loans that share phone numbers, and check which channels and products they came from before drawing any conclusion.",
+    "Split Personal and Card delinquency for Q4 25 and Q1 26 by channel and employment, and confirm the six-month outcome is complete for Q1 26 loans.",
+    "Ask the Partner channel why income is missing on 39.7% of its loans, and decide whether data capture at origination needs tightening."
   ],
-  "conclusion": "Early arrears have risen from 7.2% to 12.8% over five quarters, and the rise goes with Personal and Card loans rather than Car or Home. First, check whether the Q1 26 figure is complete and comparable, then review Personal and Card lending since Q3 25. The shared-phone group is small but has very high arrears and deserves a separate look.",
-  "limits": "This review uses summary statistics only, so it cannot show why arrears rose, whether channel or employment gaps survive once product is allowed for, or whether recent quarters have fully matured.",
+  "conclusion": "Delinquency is worsening, from 6.6% in Q2 25 to 12.8% in Q1 26, and the rise sits in Personal and Card loans, while Car and Home are steady. First, confirm that the six-month outcome is complete for recent loans, then split the Personal and Card rise by channel and employment to see where to act.",
+  "limits": "This review uses summary statistics only, so it cannot show causes, confirm fraud, or check how the six-month outcome was measured.",
   "model": "claude-sonnet-5-5",
   "version": "2026-11-02"
 }
