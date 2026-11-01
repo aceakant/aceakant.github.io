@@ -13,7 +13,7 @@ const SHARED_RULES = `Rules that always apply:
 - Plain British English, short sentences, explain any jargon, no hype, no emojis, no markdown.
 - Never repeat personal data. Columns marked "personal" have no values in the summary; keep it that way.`;
 
-// Answers come back through a forced tool call, so they are always well-formed JSON.
+// Answers come back as JSON that must match these schemas (structured outputs), so they are always well-formed.
 const FINDING = {
   type: "object",
   properties: {
@@ -23,12 +23,13 @@ const FINDING = {
     detail: { type: "string", description: "1-2 sentences with the key numbers" },
   },
   required: ["id", "severity", "headline", "detail"],
+  additionalProperties: false,
 };
 const STEPS = { type: "array", items: { type: "string" }, description: "exactly 3 short, specific actions" };
 export const MAKER_TOOL = {
   name: "submit_draft",
   description: "Submit the maker's draft findings.",
-  input_schema: { type: "object", properties: { title: { type: "string" }, findings: { type: "array", items: FINDING }, next_steps: STEPS }, required: ["title", "findings", "next_steps"] },
+  input_schema: { type: "object", properties: { title: { type: "string" }, findings: { type: "array", items: FINDING }, next_steps: STEPS }, required: ["title", "findings", "next_steps"], additionalProperties: false },
 };
 export const CHECKER_TOOL = {
   name: "submit_review",
@@ -37,13 +38,14 @@ export const CHECKER_TOOL = {
     type: "object",
     properties: {
       reviews: { type: "array", items: { type: "object", properties: {
-        id: { type: "string" }, verdict: { type: "string", enum: ["confirmed", "corrected", "removed", "added"] }, note: { type: "string" } }, required: ["id", "verdict", "note"] } },
+        id: { type: "string" }, verdict: { type: "string", enum: ["confirmed", "corrected", "removed", "added"] }, note: { type: "string" } }, required: ["id", "verdict", "note"], additionalProperties: false } },
       findings: { type: "array", items: FINDING },
       next_steps: STEPS,
       conclusion: { type: "string" },
       limits: { type: "string" },
     },
     required: ["reviews", "findings", "next_steps", "conclusion", "limits"],
+    additionalProperties: false,
   },
 };
 
@@ -55,7 +57,7 @@ If there is no obvious risk outcome in the data, give the most useful general fi
 
 ${SHARED_RULES}
 
-Submit your draft with the submit_draft tool: a title of at most 8 words naming what this data is; 3 to 5 findings
+Answer in the required JSON format: a title of at most 8 words naming what this data is; 3 to 5 findings
 (each: id F1, F2…; severity; a headline of at most 10 words; a detail of 1-2 sentences with the key numbers);
 and exactly 3 short, specific next steps of at most 25 words each.`;
 
@@ -69,7 +71,7 @@ Then write the final conclusion a leader can act on, and one sentence on the lim
 
 ${SHARED_RULES}
 
-Submit your review with the submit_review tool: one review per maker finding (plus any you add), each with the
+Answer in the required JSON format: one review per maker finding (plus any you add), each with the
 finding's id, your verdict and a note of at most 25 words on what you checked or changed; the final findings after
 your changes (2 to 5, keeping each finding's id); exactly 3 next steps; a 2-3 sentence conclusion with the overall
 verdict and the one thing to do first; and one sentence on what this review cannot tell you.`;
@@ -100,7 +102,7 @@ function findings(list, min, max) {
   if (!Array.isArray(list)) throw new Error("findings missing");
   const out = list.slice(0, max).map((f, i) => ({
     id: clean(f.id || `F${i + 1}`, 6),
-    severity: SEVERITIES.includes(f.severity) ? f.severity : "medium",
+    severity: SEVERITIES.includes(String(f.severity).toLowerCase()) ? String(f.severity).toLowerCase() : "medium",
     headline: clean(f.headline, 90),
     detail: clean(f.detail, 420),
   })).filter((f) => f.headline && f.detail);
@@ -119,7 +121,7 @@ export function checkMaker(obj) {
 
 export function checkChecker(obj) {
   const reviews = (Array.isArray(obj.reviews) ? obj.reviews : []).slice(0, 7).map((r) => ({
-    id: clean(r.id, 6), verdict: VERDICTS.includes(r.verdict) ? r.verdict : "confirmed", note: clean(r.note, 200),
+    id: clean(r.id, 6), verdict: VERDICTS.includes(String(r.verdict).toLowerCase()) ? String(r.verdict).toLowerCase() : "confirmed", note: clean(r.note, 200),
   }));
   return {
     reviews,
@@ -140,13 +142,12 @@ async function ask(system, user, tool, opts) {
   const res = await (opts.fetch || fetch)(opts.apiUrl || "https://api.anthropic.com/v1/messages", {
     method: "POST", headers,
     body: JSON.stringify({ model: opts.model, max_tokens: opts.maxTokens || 2000, system, messages: [{ role: "user", content: user }],
-      tools: [tool], tool_choice: { type: "tool", name: tool.name } }),
+      output_config: { format: { type: "json_schema", schema: tool.input_schema } } }),
   });
   if (!res.ok) throw new Error(`Claude API ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const data = await res.json();
-  const call = (data.content || []).find((b) => b.type === "tool_use" && b.name === tool.name);
-  if (call && call.input && typeof call.input === "object") return call.input;
-  return extractJSON((data.content || []).filter((b) => b.type === "text").map((b) => b.text).join(""));
+  const text = (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("");
+  try { return JSON.parse(text); } catch (e) { return extractJSON(text); }
 }
 
 // The whole review: maker drafts, checker verifies, final conclusion. Retries each step once if the reply is malformed.
