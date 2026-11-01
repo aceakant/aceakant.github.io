@@ -5,7 +5,7 @@ date: '2026-11-01'
 category: GenAI
 status: draft
 publish_at: null
-review_issue: null
+review_issue: 1
 reminded: false
 summary: An LLM agent can take the repeatable analytics work off a fraud team's plate, but only if its limits are set before its first query. Here is where I think it fits, what it should never touch, and a simple way to count the hours it gives back.
 hook:
