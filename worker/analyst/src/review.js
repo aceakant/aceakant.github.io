@@ -133,18 +133,23 @@ export function checkChecker(obj) {
   };
 }
 
+// Console API keys (sk-ant-api…) go in x-api-key; other token types in a Bearer header. On a 401 we try the other style once.
+function authStyles(key) {
+  key = String(key || "").trim();
+  const xkey = { "x-api-key": key }, bearer = { "Authorization": `Bearer ${key}` };
+  return key.startsWith("sk-ant-api") ? [xkey, bearer] : [bearer, xkey];
+}
+
 async function ask(system, user, tool, opts) {
-  const headers = {
-    "Authorization": `Bearer ${opts.apiKey}`,
-    "anthropic-version": "2023-06-01",
-    "content-type": "application/json",
-  };
-  if (opts.workspace) headers["anthropic-workspace-id"] = opts.workspace;
-  const res = await (opts.fetch || fetch)(opts.apiUrl || "https://api.anthropic.com/v1/messages", {
-    method: "POST", headers,
-    body: JSON.stringify({ model: opts.model, max_tokens: opts.maxTokens || 2000, system, messages: [{ role: "user", content: user }],
-      output_config: { format: { type: "json_schema", schema: tool.input_schema } } }),
-  });
+  const body = JSON.stringify({ model: opts.model, max_tokens: opts.maxTokens || 2000, system, messages: [{ role: "user", content: user }],
+    output_config: { format: { type: "json_schema", schema: tool.input_schema } } });
+  let res;
+  for (const style of authStyles(opts.apiKey)) {
+    const headers = { ...style, "anthropic-version": "2023-06-01", "content-type": "application/json" };
+    if (opts.workspace) headers["anthropic-workspace-id"] = opts.workspace;
+    res = await (opts.fetch || fetch)(opts.apiUrl || "https://api.anthropic.com/v1/messages", { method: "POST", headers, body });
+    if (res.status !== 401) break;
+  }
   if (!res.ok) throw new Error(`Claude API ${res.status}: ${(await res.text()).slice(0, 200)}`);
   const data = await res.json();
   const text = (data.content || []).filter((b) => b.type === "text").map((b) => b.text).join("");

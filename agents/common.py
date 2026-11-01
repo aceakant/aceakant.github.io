@@ -29,6 +29,14 @@ def log(agent, msg):
 LAST_USAGE = {}  # token usage of the most recent ask_claude call (for logs and the API check)
 
 
+def auth_styles(key):
+    """Console API keys (sk-ant-api…) are sent as x-api-key; other token types as a Bearer header.
+    Both styles are returned, preferred first, so a 401 can retry once with the other."""
+    key = (key or "").strip()
+    xkey, bearer = {"x-api-key": key}, {"Authorization": f"Bearer {key}"}
+    return [xkey, bearer] if key.startswith("sk-ant-api") else [bearer, xkey]
+
+
 def ask_claude(system, prompt, web_search=False, max_tokens=12000, cache=None):
     """Call Claude and return (text, sources). Optional live web search for fact-checking.
 
@@ -37,11 +45,8 @@ def ask_claude(system, prompt, web_search=False, max_tokens=12000, cache=None):
     With caching, that repeated part is read from cache at a fraction of the price. One-off calls are not
     cached by default, because a cache write costs a little extra and would never be read back."""
     cfg = config()["agents"]
-    headers = {
-        "Authorization": f"Bearer {os.environ['ANTHROPIC_API_KEY']}",
-        "anthropic-version": "2023-06-01",
-        "content-type": "application/json",
-    }
+    styles = auth_styles(os.environ["ANTHROPIC_API_KEY"])
+    headers = dict(styles[0], **{"anthropic-version": "2023-06-01", "content-type": "application/json"})
     if os.environ.get("ANTHROPIC_WORKSPACE_ID"):  # only needed for keys not tied to a workspace
         headers["anthropic-workspace-id"] = os.environ["ANTHROPIC_WORKSPACE_ID"]
     if cache is None:
@@ -65,6 +70,12 @@ def ask_claude(system, prompt, web_search=False, max_tokens=12000, cache=None):
     used = {"input_tokens": 0, "cache_creation_input_tokens": 0, "cache_read_input_tokens": 0, "output_tokens": 0}
     for _ in range(6):  # long searches can pause; continue up to 6 times
         r = requests.post(API_URL, headers=headers, json=body, timeout=600)
+        if r.status_code == 401 and len(styles) > 1:  # wrong key style: switch once and keep it
+            styles.pop(0)
+            for k in ("x-api-key", "Authorization"):
+                headers.pop(k, None)
+            headers.update(styles[0])
+            r = requests.post(API_URL, headers=headers, json=body, timeout=600)
         if r.status_code != 200:
             raise RuntimeError(f"Claude API error {r.status_code}: {r.text[:500]}")
         data = r.json()
