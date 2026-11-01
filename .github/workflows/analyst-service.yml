@@ -56,7 +56,6 @@ jobs:
           set -euo pipefail
           H=(-H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json")
           # Check the token and find the right account (never prints the token)
-          echo "Token status: $(curl -sS "${H[@]}" https://api.cloudflare.com/client/v4/user/tokens/verify | jq -r '.result.status // (.errors[0].message // "unknown")')"
           ACCS=$(curl -sS "${H[@]}" "https://api.cloudflare.com/client/v4/accounts?per_page=50")
           N=$(echo "$ACCS" | jq '.result | length // 0')
           echo "Accounts this token can use: $N"
@@ -67,6 +66,7 @@ jobs:
             python3 -c "import os,re;v=os.environ['CLOUDFLARE_ACCOUNT_ID'].strip();print('Saved Account ID does NOT match. Its shape: length', len(v), '| 32 letters/numbers (0-9, a-f):', 'yes' if re.fullmatch(r'[0-9a-f]{32}', v) else 'NO')"
             if [ "$N" = "1" ]; then ACC=$(echo "$ACCS" | jq -r '.result[0].id'); echo "Using the token's only account instead."; else echo "Can't pick an account automatically."; exit 1; fi
           fi
+          echo "Token status: $(curl -sS "${H[@]}" "https://api.cloudflare.com/client/v4/accounts/$ACC/tokens/verify" | jq -r '.result.status // (.errors[0].message // "unknown")')"
           echo "account=$ACC" >> "$GITHUB_OUTPUT"
           API="https://api.cloudflare.com/client/v4/accounts/$ACC"
           TITLE="analyst-on-call-limits"
