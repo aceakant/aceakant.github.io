@@ -17,7 +17,8 @@ answer. Prefer primary sources (regulators, central banks, government statistics
 
 Rules:
 - MARKET: the article's market is given. Every statistic, regulation, example and currency must belong
-  to that market (Global = cross-market sources such as BIS, FATF, IMF, World Bank). Replace or remove
+  to that market (Global = cross-market sources such as BIS, FATF, IMF, World Bank; UK and EU are separate
+  markets). Replace or remove
   anything from another market.
 - LATEST DATA: if a newer official figure exists than the one used, update it and its year.
 - NO EMPLOYERS: remove any mention of, or hint at, the author's employers listed below, and any claim of

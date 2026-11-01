@@ -1,7 +1,7 @@
 """Agent 1 — Topic: picks this week's topic from the backlog, or proposes new ones when it runs out."""
 import yaml
 
-from common import DRY_RUN, ROOT, ask_claude, extract_json, load_yaml, log
+from common import DRY_RUN, ROOT, ask_claude, config, extract_json, load_yaml, log
 
 TOPICS_FILE = ROOT / "content" / "topics.yaml"
 HEADER = ("# Topic backlog. The Topic agent picks the first \"pending\" topic each week.\n"
@@ -30,7 +30,9 @@ def pick_topic():
             f"Author profile:\n{yaml.safe_dump(profile)}\n\nAlready covered:\n- " + "\n- ".join(done) +
             "\n\nPropose 5 new OPEN topics (industry problems, not about any employer). Each must be a real "
             "organisational problem in banking/fintech risk, operations or analytics, solvable with analytics, "
-            "automation or AI, with measurable ROI. Give each one market: India, Global, US or UK & EU. "
+            "automation or AI, with measurable ROI. Give each one market: UK, EU, Global, India or US. "
+            f"Weight the mix towards this priority order: {', '.join(config()['topics']['market_focus'])} "
+            "(roughly 2 UK/EU, 2 Global, 1 India). "
             'Return {"topics":[{"title":"...","angle":"...","market":"India"}]}'
         ),
     )

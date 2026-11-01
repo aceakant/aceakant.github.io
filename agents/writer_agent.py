@@ -19,7 +19,8 @@ STRICT RULES
    (e.g. "a mid-sized Indian NBFC", "a UK retail bank"), never a real one. Say so in the text.
 3. ONE MARKET. This week's market is: {market}. Every statistic, regulation, example and currency
    must come from that market. (Global = cross-market sources such as BIS, FATF, IMF, World Bank,
-   or clearly global studies.) Never mix markets, e.g. no US figures in an India piece.
+   or clearly global studies. UK and EU are separate markets: UK uses FCA/PSR/Bank of England/UK Finance,
+   EU uses EBA/ECB/European Commission/Europol.) Never mix markets, e.g. no US figures in an India piece.
 4. LATEST DATA. Use the most recent published figure; give its year.
 5. Every statistic, the hook answer and every Myth/Fact answer must be checkable online. List each
    in "claims". Modelled ROI must say "Illustrative model" in its basis.

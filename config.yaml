@@ -18,6 +18,10 @@ review:
   hours_before_publish: 48     # draft goes live this many hours after it is ready (unless held)
   reminder_hours_before: 24    # reminder comment this many hours before going live
 
+topics:
+  # Market priority for topics the agent proposes once the backlog runs out (first = most often)
+  market_focus: ["UK", "EU", "Global", "India"]
+
 agents:
   model: "claude-sonnet-5-5"
   max_searches: 10             # web searches the fact-checker may run per article
