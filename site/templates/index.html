@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from "_macros.html" import split_bar %}
 {% block content %}
 <section class="hero">
   <div class="wrap hero-grid">
@@ -49,7 +48,6 @@
       </div>
       <h3>{{ c.org }}</h3>
       <p class="muted small">{{ c.role }}</p>
-      {{ split_bar(c) }}
       <ul class="co-projects">{% for p in c.projects %}<li>{{ p.title }}</li>{% endfor %}</ul>
       <span class="more">See the 3 leadership cases →</span>
     </a>

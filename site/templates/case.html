@@ -45,7 +45,6 @@
 
   <section>
     <h2 class="sec">Two halves of the job</h2>
-    {% from "_macros.html" import split_bar %}{{ split_bar(c) }}
     <div class="halves">
       <div class="half a"><span class="mono">Analytics capability built</span>
         <ul>{% for x in d.analytics_built %}<li>{{ x }}</li>{% endfor %}</ul></div>

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% from "_macros.html" import split_bar %}
 {% block title %}Leadership · {{ site.author }}{% include "_talk.html" %}
 {% endblock %}
 {% block content %}
@@ -56,7 +55,6 @@
       <ul class="pills small">{% for m in c.team_mix %}<li>{{ m }}</li>{% endfor %}</ul>
     </div>
   </div>
-  {{ split_bar(c) }}
   <div class="halves">
     <div class="half a"><span class="mono">Analytics team development</span><p>{{ c.analytics_side }}</p></div>
     <div class="half r"><span class="mono">Risk outcomes</span><p>{{ c.risk_side }}</p></div>
