@@ -3,6 +3,8 @@
 
 name: "Ajay Kant"
 headline: "Head of Fraud Risk Analytics · L&T Finance"
+photo: "static/img/ajay-portrait.jpg"     # replace the file to change the photo
+avatar: "static/img/ajay-avatar.jpg"
 subline: "Risk analytics & digital transformation leader · 14+ years across banking, fintech and consulting"
 summary: >
   I build risk analytics teams and the systems they run on. In my last three organisations I

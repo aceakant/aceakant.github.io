@@ -3,7 +3,7 @@
 <section class="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
-      <p class="kicker mono">{{ profile.name }} · {{ profile.headline }}</p>
+      <p class="kicker mono">{{ profile.headline }}</p>
       <h1>{{ profile.hero.headline }}</h1>
       <p class="lede">{{ profile.hero.lede }}</p>
       <ul class="creds" aria-label="Credentials">
@@ -15,18 +15,25 @@
       </div>
     </div>
 
-    <aside class="results" aria-label="Selected results">
-      <p class="mono results-head">Selected results</p>
-      <div class="counters">
-        {% for m in profile.impact %}
-        <div class="counter">
-          <div class="num"><span>{{ m.prefix }}</span><span class="count" data-to="{{ m.value }}">{{ m.value }}</span><span>{{ m.suffix }}</span></div>
-          <p>{{ m.label }}</p>
-          <span class="mono where">{{ m.where }}</span>
-        </div>
-        {% endfor %}
+    <figure class="portrait">
+      <img src="{{ profile.photo }}" alt="{{ profile.name }}" width="960" height="1200" fetchpriority="high">
+      <figcaption><b>{{ profile.name }}</b><span>{{ profile.headline }}</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="results-band" aria-label="Selected results">
+  <div class="wrap">
+    <p class="mono results-head">Selected results</p>
+    <div class="counters">
+      {% for m in profile.impact %}
+      <div class="counter">
+        <div class="num"><span>{{ m.prefix }}</span><span class="count" data-to="{{ m.value }}">{{ m.value }}</span><span>{{ m.suffix }}</span></div>
+        <p>{{ m.label }}</p>
+        <span class="mono where">{{ m.where }}</span>
       </div>
-    </aside>
+      {% endfor %}
+    </div>
   </div>
 </section>
 

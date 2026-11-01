@@ -4,7 +4,7 @@ import pathlib
 
 from PIL import Image, ImageDraw, ImageFont
 
-from common import ROOT, config, log
+from common import ROOT, config, load_yaml, log
 
 W, H = 1080, 1350                     # 4:5 portrait — best size for the LinkedIn feed
 FONTS = pathlib.Path(__file__).parent / "fonts"
@@ -44,8 +44,17 @@ def frame_base(accent, footer=True):
     if footer:
         cfg = config()["site"]
         d.line([72, H - 120, W - 72, H - 120], fill="#E3E8EC", width=2)
-        d.text((72, H - 96), cfg["author"], font=font("SemiBold", 30), fill=INK)
-        d.text((72, H - 58), "Weekly insight · Risk, Data & AI", font=font("Regular", 24), fill=MUTED)
+        x = 72
+        avatar = ROOT / "site" / (load_yaml("content/profile.yaml").get("avatar") or "")
+        if avatar.is_file():
+            size = 76
+            face = Image.open(avatar).convert("RGB").resize((size, size), Image.LANCZOS)
+            mask = Image.new("L", (size, size), 0)
+            ImageDraw.Draw(mask).ellipse([0, 0, size - 1, size - 1], fill=255)
+            img.paste(face, (72, H - 100), mask)
+            x = 72 + size + 20
+        d.text((x, H - 96), cfg["author"], font=font("SemiBold", 30), fill=INK)
+        d.text((x, H - 58), "Weekly insight · Risk, Data & AI", font=font("Regular", 24), fill=MUTED)
     return img, d
 
 
