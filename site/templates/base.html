@@ -16,9 +16,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ root }}static/style.css">
-<script>try{var t=localStorage.getItem('ak-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<script>try{if(localStorage.getItem('ak-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}</script>
 </head>
 <body class="page-{{ page | replace('.html','') }}">
+<canvas id="sky" aria-hidden="true"></canvas>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <div class="wrap top-inner">
@@ -26,9 +27,10 @@
       <span class="mark" aria-hidden="true">AK</span><span class="brand-name">{{ site.author }}</span>
     </a>
     <nav aria-label="Main">
-      <a href="{{ root }}updates.html" {% if page == 'updates.html' %}aria-current="page"{% endif %}>Weekly</a>
-      <a href="{{ root }}profile.html" {% if page == 'profile.html' %}aria-current="page"{% endif %}>Portfolio</a>
-      <button class="theme" type="button" id="theme-toggle" aria-label="Switch light or dark theme">
+      <a href="{{ root }}leadership.html" {% if page in ('leadership.html','case') %}aria-current="page"{% endif %}>Leadership</a>
+      <a href="{{ root }}updates.html" {% if page in ('updates.html','article') %}aria-current="page"{% endif %}>Weekly</a>
+      <a href="{{ root }}lab.html" {% if page == 'lab.html' %}aria-current="page"{% endif %}>Fraud Lab</a>
+      <button class="theme" type="button" id="theme-toggle" aria-label="Switch between night and light reading mode">
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
       </button>
     </nav>
@@ -52,6 +54,7 @@
 </footer>
 
 <a class="dock" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Connect with Ajay</a>
+<script src="{{ root }}static/sky.js" defer></script>
 <script src="{{ root }}static/app.js" defer></script>
 </body>
 </html>

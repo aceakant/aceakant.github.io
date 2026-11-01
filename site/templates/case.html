@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}{{ p.title }} · {{ site.author }}{% endblock %}
+{% block description %}{{ p.summary }}{% endblock %}
+{% block meta %}
+{% if p.status != 'live' %}<meta name="robots" content="noindex, nofollow">{% endif %}
+<meta property="og:title" content="{{ p.title }}">
+<meta property="og:description" content="{{ p.summary }}">
+<meta property="og:image" content="{{ site.base_url }}/static/img/og-card.jpg">
+{% endblock %}
+{% block content %}
+{% set d = p.detail %}
+<article class="case-page wrap">
+  {% if p.status != 'live' %}
+  <div class="draft-banner"><b>Draft for Ajay's review</b><span>Lines marked <em class="confirm">to confirm</em> are drafted from the CV and need his check before this page goes public.</span></div>
+  {% endif %}
+  <a class="back-link" href="{{ root }}leadership.html#{{ c.id }}">← {{ c.org }} · all leadership cases</a>
+
+  <header class="case-hero">
+    <p class="kicker mono">{{ c.org }} · {{ c.role }} · {{ c.period }}</p>
+    <h1>{{ p.title }}</h1>
+    <p class="lede">{{ p.summary }}</p>
+    <div class="case-meta">
+      <div class="team-block inline"><b class="glow">{{ c.team }}</b><span>person team</span></div>
+      <ul class="pills small">{% for m in c.team_mix %}<li>{{ m }}</li>{% endfor %}</ul>
+    </div>
+  </header>
+
+  <section class="block">
+    <span class="mono">THE CHALLENGE</span>
+    <p class="big-text">{{ d.challenge }}{% if d.challenge_confirm %} <em class="confirm">to confirm</em>{% endif %}</p>
+  </section>
+
+  <section>
+    <h2 class="sec">Strategy by phase</h2>
+    <ol class="phases">
+      {% for ph in d.phases %}
+      <li class="phase reveal">
+        <span class="phase-n">{{ loop.index }}</span>
+        <h3>{{ ph.name }}</h3>
+        <p>{{ ph.text }}{% if ph.confirm %} <em class="confirm">to confirm</em>{% endif %}</p>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section>
+    <h2 class="sec">Two halves of the job</h2>
+    {% from "_macros.html" import split_bar %}{{ split_bar(c) }}
+    <div class="halves">
+      <div class="half a"><span class="mono">Analytics capability built</span>
+        <ul>{% for x in d.analytics_built %}<li>{{ x }}</li>{% endfor %}</ul></div>
+      <div class="half r"><span class="mono">Risk problem solved</span>
+        <ul>{% for x in d.risk_solved %}<li>{{ x }}</li>{% endfor %}</ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Who had to come along (tap a team)</h2>
+    <div class="hub-wrap">
+      <div class="hub" id="hub">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {% for s in nodes %}<line x1="50" y1="50" x2="{{ s.x }}" y2="{{ s.y }}"></line>{% endfor %}
+          <circle cx="50" cy="50" r="30" class="ring"></circle><circle cx="50" cy="50" r="42" class="ring r2"></circle>
+        </svg>
+        <div class="hub-core"><span class="mono">Project</span><b>{{ c.team }}-person team</b></div>
+        {% for s in nodes %}
+        <button type="button" class="hub-node" style="left: {{ s.x }}%; top: {{ s.y }}%" data-i="{{ loop.index0 }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ s.name }}</button>
+        {% endfor %}
+      </div>
+      <div class="hub-detail" id="hub-detail" aria-live="polite">
+        {% for s in nodes %}
+        <div class="hub-item" {% if not loop.first %}hidden{% endif %}>
+          <h3>{{ s.name }}</h3>
+          <p><span class="mono">What they needed</span>{{ s.need }}</p>
+          <p><span class="mono">How we aligned</span>{{ s.how }}{% if s.confirm %} <em class="confirm">to confirm</em>{% endif %}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Hard parts and how they were solved</h2>
+    <div class="hard">
+      {% for h in d.hard_parts %}
+      <div class="hard-item reveal">
+        <p class="hard-p"><span class="mono">Problem</span>{{ h.problem }}</p>
+        <p class="hard-s"><span class="mono">Solution</span>{{ h.solved }}{% if h.confirm %} <em class="confirm">to confirm</em>{% endif %}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="results-band inset">
+    <p class="mono results-head">Outcome</p>
+    <div class="counters">
+      {% for o in d.outcomes %}<div class="counter"><div class="num">{{ o.value }}</div><p>{{ o.label }}</p></div>{% endfor %}
+    </div>
+  </section>
+
+  <blockquote class="lesson">
+    <span class="mono">What I'd tell another leader</span>
+    <p>“{{ d.lesson }}”{% if d.lesson_confirm %} <em class="confirm">to confirm</em>{% endif %}</p>
+    <footer><img class="author-photo" src="{{ root }}{{ profile.avatar }}" alt="" width="400" height="400"><span>{{ profile.name }}</span></footer>
+  </blockquote>
+
+  <section>
+    <h2 class="sec">More from {{ c.org }}</h2>
+    <div class="read-next">
+      {% for o in c.projects if o.slug != p.slug %}<a href="{{ root }}leadership.html#{{ c.id }}"><span class="mono">Leadership case</span><b>{{ o.title }}</b></a>{% endfor %}
+    </div>
+  </section>
+</article>
+{% endblock %}

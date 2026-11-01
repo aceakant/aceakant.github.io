@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Fraud Lab · {{ site.author }}{% endblock %}
+{% block content %}
+{% set r = game.rounds[0] %}
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">Fraud Lab · 60 seconds</p>
+      <h1>Try the call my teams make every day.</h1>
+      <p>Fraud teams decide in seconds which application, payment or account to stop. Three quick rounds: pick the one case you would block, and see the signal that gives it away.</p>
+      <ul class="play-points">
+        <li>Real fraud patterns, fictional cases</li>
+        <li>Each answer explains the detection signal</li>
+        <li>No sign-up, nothing stored</li>
+      </ul>
+    </div>
+
+    <div class="game" id="game" aria-live="polite">
+      <div class="game-head">
+        <span class="mono">SPOT THE FRAUD</span>
+        <span class="mono" id="game-round">Round 1 of {{ game.rounds | length }}</span>
+      </div>
+      <h2 class="game-q" id="game-prompt">{{ r.prompt }}</h2>
+      <div class="cases-grid" id="game-cases">
+        {% for c in r.cases %}
+        <button class="case" type="button" data-i="{{ loop.index0 }}">
+          <span class="mono case-id">{{ c.id }}</span>
+          <b>{{ c.title }}</b>
+          <ul>{% for l in c.lines %}<li>{{ l }}</li>{% endfor %}</ul>
+        </button>
+        {% endfor %}
+      </div>
+      <div class="game-foot" id="game-foot"><span class="hint">Tap the case you would stop.</span></div>
+      <script type="application/json" id="game-data">{{ game | tojson }}</script>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">More tools</h2>
+  <div class="tools">
+    <a class="tool reveal" href="updates.html">
+      <span class="mono">ROI CALCULATORS</span>
+      <h3>Try each week's solution on your own numbers</h3>
+      <p>Every weekly piece has a calculator for the time, losses or workload it could save your team.</p>
+      <span class="more">Open the weekly analysis →</span>
+    </a>
+    <div class="tool soon reveal">
+      <span class="mono">COMING SOON</span>
+      <h3>Early-warning signal builder</h3>
+      <p>Pick a few signals and see how many fraud cases they would have caught, and how many good customers they would have stopped.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

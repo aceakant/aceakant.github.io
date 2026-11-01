@@ -10,11 +10,9 @@
   /* ---------- theme toggle ---------- */
   var tbtn = $("#theme-toggle");
   if (tbtn) tbtn.addEventListener("click", function () {
-    var cur = doc.getAttribute("data-theme") ||
-      (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    var next = cur === "dark" ? "light" : "dark";
-    doc.setAttribute("data-theme", next);
-    try { localStorage.setItem("ak-theme", next); } catch (e) {}
+    var light = doc.getAttribute("data-theme") === "light";
+    if (light) doc.removeAttribute("data-theme"); else doc.setAttribute("data-theme", "light");
+    try { localStorage.setItem("ak-theme", light ? "" : "light"); } catch (e) {}
   });
 
   /* ---------- scroll reveal + count-up ---------- */
@@ -99,7 +97,7 @@
         var msg = score === n ? "Flawless. You think like a fraud analyst. Want the job? 😄" : score >= n - 1 ? "Sharp eye! Fraud teams would be glad to have you." : score > 0 ? "Not bad. Fraud is sneaky, that's why it needs patterns, not hunches." : "Fraud won this time. That's exactly why we build detection models!";
         $("#game-prompt").textContent = "Your result";
         casesEl.innerHTML = '<div class="final"><span class="mono">YOU CAUGHT</span><div class="big">' + score + " / " + n + "</div><p>" + msg + "</p></div>";
-        foot.innerHTML = dots() + '<span class="btns"><button class="btn small ghost" type="button" id="game-again">Play again</button><a class="btn small" href="profile.html">See how I do it for real</a></span>';
+        foot.innerHTML = dots() + '<span class="btns"><button class="btn small ghost" type="button" id="game-again">Play again</button><a class="btn small" href="leadership.html">See how I do it for real</a></span>';
         if (score === n) confetti();
       }
       if (ev.target.id === "game-again") { round = 0; results = []; render(); }
@@ -228,6 +226,18 @@
           s.textContent = right + "/" + n + (right === n ? " · You think like a risk head! 🏆" : right >= n - 1 ? " · Sharp! One sneaky one got you." : " · The myths are convincing, that's why they survive!");
           s.hidden = false; if (right === n) confetti();
         }
+      });
+    });
+  }
+
+  /* ---------- Case page: stakeholder hub ---------- */
+  var hub = $("#hub");
+  if (hub) {
+    var nodes = $$(".hub-node", hub), items = $$("#hub-detail .hub-item");
+    nodes.forEach(function (n, i) {
+      n.addEventListener("click", function () {
+        nodes.forEach(function (m, k) { m.setAttribute("aria-pressed", k === i ? "true" : "false"); });
+        items.forEach(function (it, k) { it.hidden = k !== i; });
       });
     });
   }

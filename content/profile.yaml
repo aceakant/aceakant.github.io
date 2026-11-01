@@ -19,7 +19,7 @@ hero:
   lede: "Risk analytics leader with 14+ years across banking, fintech and consulting. I set up analytics functions from zero, put them to work on fraud, credit and portfolio risk, and bring GenAI into day-to-day risk work, with the governance regulators expect."
   credentials:
     - "14+ years in risk analytics"
-    - "3 analytics teams built from zero"
+    - "3 teams built from zero · 40 people led"
     - "Fraud · credit · portfolio risk"
     - "Basel · BCBS 239 · DORA · GDPR · PSD2"
     - "GenAI in production risk analytics"
@@ -29,31 +29,34 @@ impact:
   - { prefix: "$", value: 10, suffix: "M", label: "annual fraud losses cut", where: "TCS · Westpac" }
   - { prefix: "+", value: 20, suffix: "%", label: "fraud early-detection uplift", where: "L&T Finance" }
   - { prefix: "+", value: 25, suffix: "%", label: "acquisition uplift with 20% lower delinquency", where: "Axis Bank" }
-  - { prefix: "", value: 3, suffix: "", label: "analytics teams built from scratch", where: "L&T · Axis · Dhani" }
+  - { prefix: "", value: 40, suffix: "", label: "people hired and led across 3 teams built from zero", where: "L&T 7 · Axis 12 · Dhani 21" }
 
 # Career timeline — tap an employer to open its STAR story
 experience:
   - org: "L&T Finance"
     role: "Head of Fraud Risk Analytics"
+    team: "7 · data scientists, data engineers, analysts"
     star:
       situation: "Fraud risk needed a dedicated analytics function of its own."
       task: "Build the team and catch fraud earlier in the customer journey."
       action: "Built the Fraud Risk Analytics team from scratch, and an LLM-based agent that handles routine data analytics."
       result: "Fraud early-detection up 20%."
   - org: "Axis Bank"
-    role: "Alternate Data team lead"
+    role: "Head of Alternate Data – Data Sciences"
+    team: "12 · 8 data scientists, 4 data engineers"
     star:
       situation: "The bank wanted to lend to more customers without taking on more bad loans."
       task: "Set up an Alternate Data team and use it in underwriting."
       action: "Built the team and ran the Universal Underwriting programme."
       result: "25% more acquisitions with 20% lower delinquency."
   - org: "Dhani Loans"
-    role: "Risk & Policy lead"
+    role: "AGM – Risk Management"
+    team: "21 · 9 risk, 6 policy, 6 data science"
     star:
       situation: "A fast-growing digital lender needed risk foundations."
       task: "Build Risk & Policy across the loan lifecycle."
       action: "Set up origination, underwriting, portfolio monitoring, fraud detection, KRIs/KPIs and governance."
-      result: "A Risk & Policy team built from scratch over ~3 years 8 months (to Dec 2022)."
+      result: "A 21-person Risk, Policy & Data Science team built from scratch (to Dec 2022)."
   - org: "JPMorgan Chase"
     role: "Fraud Risk Strategy"
     star:
@@ -74,7 +77,7 @@ quick_answers:
   - q: "What do you work on?"
     a: "Fraud risk strategy and detection, credit underwriting and policy, portfolio monitoring with KRIs/KPIs, and GenAI agents for analytics."
   - q: "How many teams have you built?"
-    a: "Three, each from zero: Fraud Risk Analytics at L&T Finance, Alternate Data at Axis Bank, and Risk & Policy at Dhani Loans."
+    a: "Three, each from zero: Fraud Risk Analytics at L&T Finance (7), Alternate Data at Axis Bank (12: 8 data scientists, 4 data engineers) and Risk, Policy & Data Science at Dhani Loans (21: 9 risk, 6 policy, 6 data science)."
   - q: "Which regulations do you cover?"
     a: "Basel III/IV, BCBS 239, GDPR, DORA, EBA Guidelines, PSD2, BaFin MaRisk and India's DPDP Act."
   - q: "Do you use GenAI in practice?"

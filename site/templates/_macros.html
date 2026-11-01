@@ -1,3 +1,10 @@
+{% macro split_bar(c) -%}
+<div class="split" aria-label="{{ c.split.analytics }}% analytics team development, {{ c.split.risk }}% risk outcomes">
+  <div class="split-bar"><span class="a" style="width: {{ c.split.analytics }}%"></span><span class="r" style="width: {{ c.split.risk }}%"></span></div>
+  <div class="split-legend"><span><i class="a"></i>{{ c.split.analytics }}% analytics team development</span><span><i class="r"></i>{{ c.split.risk }}% risk outcomes</span></div>
+</div>
+{%- endmacro %}
+
 {% macro update_card(a, root) -%}
 <article class="ucard" data-cat="{{ a.category or 'Other' }}">
   <div class="ucard-inner">

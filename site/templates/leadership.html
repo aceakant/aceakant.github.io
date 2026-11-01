@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% from "_macros.html" import split_bar %}
+{% block title %}Leadership · {{ site.author }}{% endblock %}
+{% block content %}
+<section class="wrap phead">
+  <img class="phead-photo" src="{{ profile.avatar }}" alt="{{ profile.name }}" width="400" height="400">
+  <div>
+    <p class="kicker mono">Leadership</p>
+    <h1>{{ profile.name }}</h1>
+    <p class="role">{{ profile.headline }}</p>
+    <p class="muted">{{ profile.subline }}</p>
+    <div class="btns">
+      <a class="btn" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      <a class="btn ghost" href="updates.html">Read my weekly analysis</a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="lead-stats">
+    <div><b class="glow">{{ leadership.stats.people_led }}</b><span>people hired and led</span></div>
+    <div><b class="glow">{{ leadership.stats.teams_built }}</b><span>teams built from zero</span></div>
+    <div><b class="glow">14+</b><span>years in risk analytics</span></div>
+    <div><b class="glow">50 / 50</b><span>analytics team building and risk outcomes</span></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">Ask me anything (tap a question)</h2>
+  <div class="qa" id="qa">
+    <div class="qa-chips" role="tablist">
+      {% for item in profile.quick_answers %}
+      <button type="button" class="chip" role="tab" aria-selected="{{ 'true' if loop.first else 'false' }}" data-a="{{ item.a }}">{{ item.q }}</button>
+      {% endfor %}
+      {% if site.show_availability %}
+      <button type="button" class="chip" role="tab" aria-selected="false" data-a="{{ profile.availability.a }}">{{ profile.availability.q }}</button>
+      {% endif %}
+    </div>
+    <p class="qa-answer" id="qa-answer" role="tabpanel">{{ profile.quick_answers[0].a }}</p>
+  </div>
+</section>
+
+{% for c in leadership.companies %}
+<section class="wrap company reveal" id="{{ c.id }}">
+  <div class="company-head">
+    <div>
+      <span class="mono">{{ c.period }}</span>
+      <h2>{{ c.org }}</h2>
+      <p class="role">{{ c.role }}</p>
+      <p class="muted small">{{ c.context }}</p>
+    </div>
+    <div class="team-block">
+      <b class="glow">{{ c.team }}</b>
+      <span>person team built from zero</span>
+      <ul class="pills small">{% for m in c.team_mix %}<li>{{ m }}</li>{% endfor %}</ul>
+    </div>
+  </div>
+  {{ split_bar(c) }}
+  <div class="halves">
+    <div class="half a"><span class="mono">Analytics team development</span><p>{{ c.analytics_side }}</p></div>
+    <div class="half r"><span class="mono">Risk outcomes</span><p>{{ c.risk_side }}</p></div>
+  </div>
+  <div class="cases">
+    {% for p in c.projects %}
+    {% if p.detail %}
+    <a class="case-card ready" href="cases/{{ p.slug }}.html">
+    {% else %}
+    <div class="case-card">
+    {% endif %}
+      <span class="mono">Leadership case {{ loop.index }}{% if p.status == 'draft' %} · draft for review{% elif p.status == 'planned' %} · page in progress{% endif %}</span>
+      <h3>{{ p.title }}</h3>
+      <p>{{ p.summary }}</p>
+      <ul class="case-results">{% for r in p.results %}<li>{{ r }}</li>{% endfor %}</ul>
+      {% if p.detail %}<span class="more">Read the full case →</span>{% endif %}
+    {% if p.detail %}</a>{% else %}</div>{% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+
+<section class="wrap">
+  <h2 class="sec">Earlier career</h2>
+  <div class="earlier">
+    {% for e in leadership.earlier %}
+    <div class="earlier-item"><span class="mono">{{ e.period }}</span><h3>{{ e.org }}</h3><p class="role small">{{ e.role }}</p><p class="muted small">{{ e.note }}</p></div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap two">
+  <div>
+    <h2 class="sec">Focus areas</h2>
+    <ul class="pills">{% for s in profile.skills %}<li>{{ s }}</li>{% endfor %}</ul>
+    <h2 class="sec">Regulatory coverage</h2>
+    <ul class="pills">{% for s in profile.regulation %}<li>{{ s }}</li>{% endfor %}</ul>
+  </div>
+  <div>
+    <h2 class="sec">Education, certifications & recognition</h2>
+    <ul class="cred-list">
+      {% for x in leadership.credentials.education %}<li><span class="mono">Education</span>{{ x }}</li>{% endfor %}
+      {% for x in leadership.credentials.certifications %}<li><span class="mono">Certification</span>{{ x }}</li>{% endfor %}
+      {% for x in leadership.credentials.recognition %}<li><span class="mono">Recognition</span>{{ x }}</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

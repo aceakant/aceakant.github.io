@@ -40,6 +40,7 @@ def build():
     config = yaml.safe_load((ROOT / "config.yaml").read_text())
     profile = yaml.safe_load((ROOT / "content" / "profile.yaml").read_text())
     game = yaml.safe_load((ROOT / "content" / "game.yaml").read_text())
+    leadership = yaml.safe_load((ROOT / "content" / "leadership.yaml").read_text())
     topics = yaml.safe_load((ROOT / "content" / "topics.yaml").read_text())["topics"]
     upcoming = next((t["title"] for t in topics if t.get("status") == "pending"), None)
 
@@ -53,7 +54,7 @@ def build():
 
     if OUT.exists():
         shutil.rmtree(OUT)
-    for d in ("articles", "drafts"):
+    for d in ("articles", "drafts", "cases"):
         (OUT / d).mkdir(parents=True)
     shutil.copytree(ROOT / "site" / "static", OUT / "static")
     media = ROOT / "content" / "media"
@@ -61,11 +62,13 @@ def build():
         shutil.copytree(media, OUT / "media", ignore=shutil.ignore_patterns("*.txt", "*.json"))
 
     env = Environment(loader=FileSystemLoader(ROOT / "site" / "templates"), autoescape=True)
-    common = dict(site=config["site"], profile=profile, year=datetime.date.today().year, upcoming=upcoming)
+    common = dict(site=config["site"], profile=profile, leadership=leadership,
+                  year=datetime.date.today().year, upcoming=upcoming)
 
     pages = {
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
-        "profile.html": {},
+        "leadership.html": {},
+        "lab.html": dict(game=game),
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
     }
     for name, ctx in pages.items():
@@ -76,6 +79,23 @@ def build():
         others = [o for o in published if o["slug"] != a["slug"]][:2]
         html = env.get_template("article.html").render(root="../", page="article", a=a, read_next=others, **common)
         (OUT / a["url"]).write_text(html, encoding="utf-8")
+
+    # leadership case pages (only projects that have a written case)
+    for c in leadership["companies"]:
+        for p in c["projects"]:
+            if not p.get("detail"):
+                continue
+            st = p["detail"]["stakeholders"]
+            nodes = []
+            for i, s in enumerate(st):
+                ang = -math.pi / 2 + 2 * math.pi * i / len(st)
+                nodes.append(dict(s, x=round(50 + 40 * math.cos(ang), 2), y=round(50 + 40 * math.sin(ang), 2)))
+            html = env.get_template("case.html").render(root="../", page="case", c=c, p=p, nodes=nodes, **common)
+            (OUT / "cases" / f"{p['slug']}.html").write_text(html, encoding="utf-8")
+
+    # old address keeps working
+    (OUT / "profile.html").write_text('<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=leadership.html">'
+                                      '<link rel="canonical" href="leadership.html"><a href="leadership.html">Leadership</a>')
 
     (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /insights/drafts/\nDisallow: /drafts/\n")
     (OUT / ".nojekyll").write_text("")

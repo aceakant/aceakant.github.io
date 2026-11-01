@@ -1,0 +1,167 @@
+# Leadership showcase: companies, teams and leadership projects.
+# Facts come from the CV (v1.1). Lines marked "confirm: true" are drafted and need Ajay's check
+# before a case page goes public (status: draft shows a review banner; status: live hides it).
+
+stats:
+  people_led: 40            # 7 + 12 + 21
+  teams_built: 3
+
+companies:
+  - id: lt
+    org: "L&T Finance"
+    role: "Head of Fraud Risk Analytics"
+    period: "Dec 2023 – Present"
+    context: "One of India's largest non-bank lenders (~USD 11B retail book)."
+    team: 7
+    team_mix: ["Data scientists", "Data engineers", "Analysts"]
+    split: { analytics: 50, risk: 50 }
+    analytics_side: "Built the Fraud Risk Analytics function from zero: data-mart, BI layer, ML and GenAI capability, governance cadence with the CRO, CIO and business heads."
+    risk_side: "Earlier fraud detection across every retail product, and a single source of truth for fraud, audit and regulators."
+    projects:
+      - slug: lt-fraud-ews
+        title: "Fraud Risk Analytics function and Early-Warning System"
+        summary: "Set up the fraud analytics function and co-designed ML fraud detection and an Early-Warning System with EY and BCG."
+        results: ["+20% early fraud detection", "Covers every retail product"]
+        status: planned
+      - slug: lt-genai-agent
+        title: "GenAI analytics agent for fraud and portfolio data"
+        summary: "An LLM-powered agent that answers plain-English questions with analysis, charts and a written summary, run with DPDP-compliant controls."
+        results: ["Manual ad-hoc queries replaced", "DPDP-compliant GenAI controls"]
+        status: draft
+        detail:
+          challenge: "Business and risk heads relied on the analytics team for every ad-hoc question on portfolio and fraud data. Answers queued behind analyst capacity, and that capacity was spent on repeat queries instead of new fraud patterns."
+          challenge_confirm: true
+          phases:
+            - name: "Diagnose"
+              text: "Mapped the most frequent ad-hoc questions and the data behind them, using the fraud data-mart and BI layer the team had already built."
+              confirm: true
+            - name: "Design"
+              text: "Designed an LLM agent that turns a plain-English question into analysis, a chart and a written summary, with consent-based data use, role-based access, masking of personal data and output validation built in."
+            - name: "Build & deploy"
+              text: "Moved the agent from prototype to production with IT: a release pipeline (CI/CD), separate environments and DevOps ownership for monitoring and access."
+              confirm: true
+            - name: "Scale & govern"
+              text: "Rolled LLM use-cases into fraud and risk analytics under GenAI governance, with human review before any output is used in a decision."
+          analytics_built:
+            - "A production GenAI capability inside a 7-person analytics team"
+            - "Reusable data-mart and BI layer as the agent's trusted source"
+            - "Prompt design and automated output validation"
+            - "Team skills in LLMs alongside ML and classic analytics"
+          risk_solved:
+            - "Faster answers on fraud and portfolio questions for decision-makers"
+            - "Personal data protected: consent, role-based access and masking (DPDP Act 2023)"
+            - "Human review before any AI output feeds a decision"
+            - "Analyst time moved from repeat queries to fraud patterns"
+          stakeholders:
+            - name: "IT / DevOps"
+              need: "A supportable release process, environments and monitoring for a new kind of system."
+              how: "Agreed a CI/CD release pipeline and clear DevOps ownership before go-live."
+              confirm: true
+            - name: "Information Security"
+              need: "No exposure of personal or sensitive data through prompts or answers."
+              how: "Role-based access and masking of personal data built into the agent."
+            - name: "Compliance & Legal"
+              need: "Use of customer data that meets the DPDP Act 2023."
+              how: "Consent-based data use and documented controls for every use-case."
+            - name: "Business & Risk heads"
+              need: "Quick, trustworthy answers without waiting in a queue."
+              how: "Plain-English questions in, analysis, chart and summary out, reviewed by a person before decisions."
+            - name: "Audit"
+              need: "Traceability of how an answer was produced."
+              how: "Output validation and review steps that leave a record."
+              confirm: true
+          hard_parts:
+            - problem: "A GenAI prototype is not a production system."
+              solved: "Treated it like any production release: CI/CD pipeline, environments, access control and monitoring, owned jointly with IT."
+              confirm: true
+            - problem: "Fraud data contains personal data."
+              solved: "Masking, role-based access and consent-based use, aligned to the DPDP Act 2023."
+            - problem: "Leaders need to trust AI-generated answers."
+              solved: "Automated output validation plus human review before any answer is used in a decision."
+          outcomes:
+            - { value: "Replaced", label: "manual ad-hoc queries for routine questions" }
+            - { value: "DPDP", label: "compliant controls on every GenAI use-case" }
+            - { value: "7", label: "person team running ML and GenAI together" }
+          lesson: "Treat GenAI like any production system: a pipeline, access control, monitoring and a person in the loop. That is what earns trust from IT, Compliance and the business."
+          lesson_confirm: true
+      - slug: lt-doc-verification
+        title: "GenAI document verification for Operations"
+        summary: "An LLM-based solution that runs automated checks on customer documents for the operations team."
+        results: ["Processing time: hours → minutes"]
+        status: planned
+
+  - id: axis
+    org: "Axis Bank"
+    role: "Head of Alternate Data – Data Sciences (BIU)"
+    period: "Dec 2022 – Dec 2023"
+    context: "India's third-largest private bank."
+    team: 12
+    team_mix: ["8 Data scientists", "4 Data engineers"]
+    split: { analytics: 50, risk: 50 }
+    analytics_side: "Built the Alternate Data team and a Data Centre of Excellence: 8 production data products and a governance framework."
+    risk_side: "Safer lending to thin-file, new-to-bank, new-to-credit and rural customers through Universal Underwriting."
+    projects:
+      - slug: axis-universal-underwriting
+        title: "Universal Underwriting with alternate data"
+        summary: "The flagship programme feeding alternate data into credit decisioning for customers with little or no bureau history."
+        results: ["+25% acquisition efficiency", "–20% risk exposure"]
+        status: planned
+      - slug: axis-data-products
+        title: "Alternate-data platform and Data CoE"
+        summary: "8 production data products across digital public infrastructure, partnership data and internal assets, run under a Data CoE."
+        results: ["8 data products", "Quarterly reporting to the executive committee"]
+        status: planned
+      - slug: axis-realtime-payments
+        title: "Real-time payments model for 100M+ customers"
+        summary: "A model on UPI and bill-payment data to underwrite and cross-sell, plus satellite farmland and telecom data for rural and BNPL lending."
+        results: ["100M+ customers in scope", "Telecom score live in a BNPL journey"]
+        status: planned
+
+  - id: dhani
+    org: "Dhani Loans & Services"
+    role: "AGM – Risk Management"
+    period: "Apr 2019 – Dec 2022"
+    context: "High-growth digital-lending fintech."
+    team: 21
+    team_mix: ["9 Risk", "6 Policy", "6 Data science"]
+    split: { analytics: 50, risk: 50 }
+    analytics_side: "Built Risk, Policy and Data Science teams from zero, with KRI dashboards for the CEO and CRO and A/B-tested alternate-data scores."
+    risk_side: "A full credit-risk capability that carried the business through the COVID shock: moratorium, restructuring, securitisation and RBI audits."
+    projects:
+      - slug: dhani-risk-function
+        title: "Building Risk & Policy through COVID"
+        summary: "A full credit-risk organisation built from scratch, with weekly KRI dashboards for the CEO and CRO."
+        results: ["21-person team", "Moratorium and restructuring strategy"]
+        status: planned
+      - slug: dhani-stp
+        title: "Straight-through processing upgrade"
+        summary: "A redesigned automated decision flow, supported by an SMS-based alternate-data score refined through A/B tests."
+        results: ["+12% approval rates", "–27% operational workload"]
+        status: planned
+      - slug: dhani-portfolio-sale
+        title: "Portfolio sale and regulatory readiness"
+        summary: "Led a ~€20M portfolio sale, shaped securitisation strategy and prepared RBI audit inputs."
+        results: ["~€20M portfolio sale", "RBI audit readiness"]
+        status: planned
+
+earlier:
+  - org: "JPMorgan Chase"
+    role: "Fraud Risk Strategy – Consumer & Business Banking"
+    period: "May 2016 – Apr 2019"
+    note: "Second line of defence for US consumer banking fraud: –15% digital fraud exposure, $1M a year reporting cost-out, $1–1.5M a year Visa claims recoveries."
+  - org: "Tata Consultancy Services (Westpac, Australia)"
+    role: "Senior Business Analyst"
+    period: "May 2014 – May 2016"
+    note: "$10M annual fraud-loss reduction from analytics on ~8 billion transactions; +30% detection KPIs."
+
+credentials:
+  education: ["Bachelor of Science – University of Delhi, 2009"]
+  certifications:
+    - "Generative AI on Google Cloud (2023)"
+    - "High-Potential Management & Leadership Programme, Axis Bank (2023)"
+    - "Solving Problems with Creative & Critical Thinking – IBM (2024)"
+    - "SAS Base Certified (2013)"
+  recognition:
+    - "Featured in the Axis Bank Analyst Day 2023 investor deck"
+    - "Axis Bank alternate-data publication (2023)"
+    - "Speaker, Monnai (2024)"
