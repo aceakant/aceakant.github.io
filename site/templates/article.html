@@ -22,10 +22,14 @@
   <h1>{{ a.title }}</h1>
   <p class="lede">{{ a.summary }}</p>
 
+  {% if a.status == 'published' and a.factcheck.status != 'dry-run' %}
+  <div class="check verified"><b>✓ Fact-checked</b><span>Every claim checked against {{ a.sources | length }} cited source{{ '' if a.sources | length == 1 else 's' }}, listed at the end.</span></div>
+  {% else %}
   <div class="check {{ a.factcheck.status }}">
-    <b>{% if a.factcheck.status == 'verified' %}✓ Fact-checked{% elif a.factcheck.status == 'dry-run' %}Sample content (dry run, not fact-checked){% else %}Fact-check notes{% endif %}</b>
+    <b>{% if a.factcheck.status == 'verified' %}✓ Fact-checked{% elif a.factcheck.status == 'dry-run' %}Sample content (dry run, not fact-checked){% else %}Fact-check notes (only you see these){% endif %}</b>
     <span>{{ a.factcheck.summary }}</span>
   </div>
+  {% endif %}
 
   {% if a.hook %}
   <section class="block hook" data-answer="{{ a.hook.answer }}" data-unit="{{ a.hook.unit }}">
