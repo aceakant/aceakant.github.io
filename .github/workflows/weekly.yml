@@ -1,0 +1,55 @@
+# STEP 1 — Every Monday 09:00 IST: the agents write, fact-check and illustrate this week's piece.
+# It is saved as an unlisted DRAFT and a review issue (with the preview link) is opened for you.
+name: 1 · Weekly article
+
+on:
+  schedule:
+    - cron: "30 3 * * 1"   # Monday 03:30 UTC = 09:00 IST
+  workflow_dispatch:       # "Run workflow" button for a manual run
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: content
+  cancel-in-progress: false
+
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+
+      - name: Run the agents
+        id: run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python agents/pipeline.py
+
+      - name: Save the draft
+        run: |
+          git config user.name "insights-bot"
+          git config user.email "insights-bot@users.noreply.github.com"
+          git add -A content
+          git commit -m "Draft: ${{ steps.run.outputs.title }}"
+          git push
+
+      - name: Open the review issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/open_review.py "${{ steps.run.outputs.file }}"
+          git add -A content
+          git commit -m "Link review issue [skip ci]"
+          git push
+
+      - name: Build the preview page
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml

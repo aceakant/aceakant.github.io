@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% from "_macros.html" import update_card %}
+{% block title %}Weekly Updates · {{ site.author }}{% endblock %}
+{% block content %}
+<section class="wrap uhead">
+  <div>
+    <p class="kicker mono">Weekly Updates</p>
+    <h1>One real problem. Solved in public, every week.</h1>
+    <p class="lede">Each piece has a quick guessing game, a STAR breakdown, an ROI calculator you can play with, and a 3-question Myth or Fact.</p>
+  </div>
+  <div class="weekmeter" aria-label="{{ week_count }} of 52 weeks published">
+    <span class="mono">WEEK</span>
+    <b>{{ week_count }}</b>
+    <span class="mono">OF 52</span>
+    <div class="bar"><span style="width: {{ (week_count / 52 * 100) | round(1) }}%"></span></div>
+  </div>
+</section>
+
+{% if articles %}
+<section class="wrap">
+  <div class="filters" role="toolbar" aria-label="Filter by topic">
+    <button type="button" class="chip" aria-pressed="true" data-filter="all">All</button>
+    {% for c in categories %}<button type="button" class="chip" aria-pressed="false" data-filter="{{ c }}">{{ c }}</button>{% endfor %}
+    <button type="button" class="chip surprise" id="surprise">🎲 Surprise me</button>
+  </div>
+  <div class="ugrid" id="ugrid">{% for a in articles %}{{ update_card(a, '') }}{% endfor %}</div>
+</section>
+{% endif %}
+
+<section class="wrap">
+  <div class="next-up reveal">
+    <span class="mono">COMING NEXT WEEK</span>
+    <h3>{{ upcoming or "A new problem, a new fix" }}</h3>
+    <p>Got a problem you'd like me to break down? Tell me in the comments of my latest LinkedIn post.</p>
+    <a class="btn ghost" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Suggest a topic on LinkedIn</a>
+  </div>
+</section>
+{% endblock %}

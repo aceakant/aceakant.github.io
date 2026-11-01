@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="kicker mono">Risk · Data · AI</p>
+      <h1>Fraud hides in patterns. I find them early.</h1>
+      <p class="lede">{{ site.tagline }}</p>
+      <div class="who">
+        <span class="mark lg" aria-hidden="true">AK</span>
+        <div><b>{{ profile.name }}</b><span>{{ profile.headline }}</span></div>
+      </div>
+      <div class="btns">
+        <a class="btn" href="profile.html">See my work</a>
+        <a class="btn ghost" href="updates.html">Weekly updates{% if week_count %} · {{ week_count }}{% endif %}</a>
+      </div>
+    </div>
+
+    {% set r = game.rounds[0] %}
+    <div class="game" id="game" aria-live="polite">
+      <div class="game-head">
+        <span class="mono">SPOT THE FRAUD</span>
+        <span class="mono" id="game-round">Round 1 of {{ game.rounds | length }}</span>
+      </div>
+      <h2 class="game-q" id="game-prompt">{{ r.prompt }}</h2>
+      <div class="cases" id="game-cases">
+        {% for c in r.cases %}
+        <button class="case" type="button" data-i="{{ loop.index0 }}">
+          <span class="mono case-id">{{ c.id }}</span>
+          <b>{{ c.title }}</b>
+          <ul>{% for l in c.lines %}<li>{{ l }}</li>{% endfor %}</ul>
+        </button>
+        {% endfor %}
+      </div>
+      <div class="game-foot" id="game-foot"><span class="hint">Tap the case you would stop.</span></div>
+      <script type="application/json" id="game-data">{{ game | tojson }}</script>
+    </div>
+  </div>
+</section>
+
+<section class="impact">
+  <div class="wrap">
+    <h2 class="sec">The numbers behind the work</h2>
+    <div class="counters">
+      {% for m in profile.impact %}
+      <div class="counter reveal">
+        <div class="num"><span>{{ m.prefix }}</span><span class="count" data-to="{{ m.value }}">{{ m.value }}</span><span>{{ m.suffix }}</span></div>
+        <p>{{ m.label }}</p>
+        <span class="mono where">{{ m.where }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">This week</h2>
+  {% if latest %}
+  <a class="feature reveal" href="{{ latest.url }}">
+    {% if latest.image %}<img src="{{ latest.image }}" alt="STAR summary of {{ latest.title }}" width="1080" height="1350">{% endif %}
+    <div class="feature-body">
+      <div class="tagline"><span class="mono">Week {{ latest.week_no }}</span><span>{{ latest.category }}</span><span>{{ latest.read_min }} min read</span></div>
+      <h3>{{ latest.title }}</h3>
+      <p>{{ latest.summary }}</p>
+      <ul class="mini-star">
+        <li><b>S</b>{{ latest.star.situation }}</li>
+        <li><b>R</b>{{ latest.star.result }}</li>
+      </ul>
+      <span class="btn">Play &amp; read this week's piece</span>
+    </div>
+  </a>
+  {% else %}
+  <div class="empty-week reveal">
+    <span class="mono">WEEK 1 · COMING SOON</span>
+    <h3>{{ upcoming or "The first weekly piece is on its way" }}</h3>
+    <p>Each week: one real problem, a STAR breakdown, an ROI calculator and a quick quiz.</p>
+  </div>
+  {% endif %}
+</section>
+
+<section class="wrap teaser reveal">
+  <div>
+    <span class="mono">HOW I WORK</span>
+    <h2>Built three analytics teams from zero.</h2>
+    <p>Tap through the career timeline to see the Situation, Task, Action and Result at each stop.</p>
+  </div>
+  <a class="btn" href="profile.html">Open the portfolio</a>
+</section>
+{% endblock %}

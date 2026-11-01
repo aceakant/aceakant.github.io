@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}{{ a.title }} · {{ site.author }}{% endblock %}
+{% block description %}{{ a.summary }}{% endblock %}
+{% block meta %}
+{% if a.status != 'published' %}<meta name="robots" content="noindex, nofollow">{% endif %}
+<meta property="og:title" content="{{ a.title }}">
+<meta property="og:description" content="{{ a.summary }}">
+<meta property="og:type" content="article">
+{% if a.image %}<meta property="og:image" content="{{ site.base_url }}/{{ a.image }}">{% endif %}
+{% endblock %}
+{% block content %}
+<article class="article wrap">
+  {% if a.status != 'published' %}
+  <div class="draft-banner">
+    <b>{% if a.status == 'hold' %}On hold{% else %}Draft preview{% endif %}</b>
+    <span>{% if a.status == 'hold' %}This piece will not publish until it is released.{% elif a.factcheck.status == 'needs-review' %}Needs your review before it can go live.{% else %}Goes live automatically on {{ a.publish_label }} unless put on hold.{% endif %} This page is unlisted.</span>
+  </div>
+  {% endif %}
+
+  <a class="back-link" href="{{ root }}updates.html">← All weekly updates</a>
+  <div class="tagline"><span class="mono">{% if a.week_no %}Week {{ a.week_no }}{% else %}Draft{% endif %}</span><span>{{ a.category }}</span><span>{{ a.date_label }}</span><span>{{ a.read_min }} min read</span></div>
+  <h1>{{ a.title }}</h1>
+  <p class="lede">{{ a.summary }}</p>
+
+  <div class="check {{ a.factcheck.status }}">
+    <b>{% if a.factcheck.status == 'verified' %}✓ Fact-checked{% elif a.factcheck.status == 'dry-run' %}Sample content (dry run, not fact-checked){% else %}Fact-check notes{% endif %}</b>
+    <span>{{ a.factcheck.summary }}</span>
+  </div>
+
+  {% if a.hook %}
+  <section class="block hook" data-answer="{{ a.hook.answer }}" data-unit="{{ a.hook.unit }}">
+    <span class="mono">WARM-UP · GUESS THE NUMBER</span>
+    <h2>{{ a.hook.question }}</h2>
+    <label class="slider-label" for="hook-range">Your guess: <output id="hook-out">{{ a.hook.start }}</output> {{ a.hook.unit }}</label>
+    <input type="range" id="hook-range" min="{{ a.hook.min }}" max="{{ a.hook.max }}" step="{{ a.hook.step }}" value="{{ a.hook.start }}">
+    <button type="button" class="btn" id="hook-go">Lock in my guess</button>
+    <div class="hook-result" id="hook-result" hidden>
+      <p class="big"><span id="hook-verdict"></span> The answer is <b>{{ a.hook.answer_label }}</b>.</p>
+      <p>{{ a.hook.explain }}{% if a.hook.source_url %} <a href="{{ a.hook.source_url }}" target="_blank" rel="noopener">Source</a>{% endif %}</p>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="block star-steps" id="star">
+    <span class="mono">THE STAR BREAKDOWN · TAP THROUGH</span>
+    <div class="star-tabs" role="tablist">
+      {% for k, label in [('situation','Situation'),('task','Task'),('action','Action'),('result','Result')] %}
+      <button type="button" role="tab" class="star-tab" aria-selected="{{ 'true' if loop.first else 'false' }}" data-i="{{ loop.index0 }}"><b>{{ label[0] }}</b><span>{{ label }}</span></button>
+      {% endfor %}
+    </div>
+    <div class="star-panels">
+      {% for k in ['situation','task','action','result'] %}
+      <p class="star-panel{% if k == 'result' %} win{% endif %}" {% if not loop.first %}hidden{% endif %}>{{ a.star[k] }}</p>
+      {% endfor %}
+    </div>
+    <button type="button" class="btn ghost small" id="star-next">Next →</button>
+  </section>
+
+  <div class="prose">{{ a.body_html | safe }}</div>
+
+  {% if a.process %}
+  <section class="block process">
+    <span class="mono">HOW IT RUNS AS A PROCESS</span>
+    <ol class="steps">
+      {% for s in a.process %}
+      <li><button type="button" class="step" aria-expanded="{{ 'true' if loop.first else 'false' }}"><span class="n">{{ loop.index }}</span><b>{{ s.title }}</b></button><p {% if not loop.first %}hidden{% endif %}>{{ s.detail }}</p></li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endif %}
+
+  {% if a.calculator %}
+  <section class="block calc" data-formula="{{ a.calculator.formula }}">
+    <span class="mono">TRY IT ON YOUR NUMBERS</span>
+    <h2>{{ a.calculator.title }}</h2>
+    <div class="calc-grid">
+      {% for i in a.calculator.inputs %}
+      <label class="calc-in">
+        <span>{{ i.label }}</span>
+        <input type="range" data-var="{{ i.id }}" min="{{ i.min }}" max="{{ i.max }}" step="{{ i.step }}" value="{{ i.value }}" id="calc-{{ i.id }}">
+        <output>{{ i.value }}</output> <small>{{ i.unit }}</small>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="calc-out"><span>{{ a.calculator.result_label }}</span><b id="calc-result">…</b><small>{{ a.calculator.result_unit }}</small></div>
+    <p class="muted small">{{ a.calculator.basis }}</p>
+  </section>
+  {% endif %}
+
+  {% if a.roi %}
+  <section class="block">
+    <span class="mono">BENEFIT EVALUATION</span>
+    <div class="table-scroll">
+      <table class="roi">
+        <thead><tr><th>Measure</th><th>Value</th><th>Basis</th></tr></thead>
+        <tbody>{% for r in a.roi %}<tr><td>{{ r.metric }}</td><td><b>{{ r.value }}</b></td><td>{{ r.basis }}</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </section>
+  {% endif %}
+
+  {% if a.myth_fact %}
+  <section class="block quiz" id="quiz">
+    <span class="mono">MYTH OR FACT? · 3 QUICK TAPS</span>
+    {% for q in a.myth_fact %}
+    <div class="quiz-q" data-fact="{{ 'true' if q.fact else 'false' }}">
+      <p class="q">{{ q.statement }}</p>
+      <div class="quiz-btns"><button type="button" data-pick="false">Myth</button><button type="button" data-pick="true">Fact</button></div>
+      <p class="quiz-why" hidden>{{ q.explain }}</p>
+    </div>
+    {% endfor %}
+    <p class="quiz-score" id="quiz-score" hidden></p>
+  </section>
+  {% endif %}
+
+  {% if a.sources %}
+  <section class="sources">
+    <h2 class="sec">Sources</h2>
+    <ol>{% for s in a.sources %}<li><a href="{{ s.url }}" target="_blank" rel="noopener">{{ s.title }}</a></li>{% endfor %}</ol>
+  </section>
+  {% endif %}
+
+  <div class="author-box">
+    <span class="mark" aria-hidden="true">AK</span>
+    <div><b>{{ profile.name }}</b><span>{{ profile.headline }}</span></div>
+    <a class="btn small" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Discuss on LinkedIn</a>
+  </div>
+
+  {% if read_next %}
+  <section>
+    <h2 class="sec">Read next</h2>
+    <div class="read-next">
+      {% for r in read_next %}<a href="{{ root }}{{ r.url }}"><span class="mono">Week {{ r.week_no }} · {{ r.category }}</span><b>{{ r.title }}</b></a>{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+</article>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% macro update_card(a, root) -%}
+<article class="ucard" data-cat="{{ a.category or 'Other' }}">
+  <div class="ucard-inner">
+    <div class="ucard-face front">
+      {% if a.image %}<img src="{{ root }}{{ a.image }}" alt="" loading="lazy" width="1080" height="1350">{% endif %}
+      <div class="ucard-body">
+        <div class="tagline"><span class="mono">Week {{ a.week_no }}</span><span>{{ a.category }}</span><span>{{ a.read_min }} min</span></div>
+        <h3><a href="{{ root }}{{ a.url }}">{{ a.title }}</a></h3>
+        <p>{{ a.summary }}</p>
+      </div>
+    </div>
+    <div class="ucard-face back" aria-hidden="true">
+      <span class="mono">THE RESULT</span>
+      <p class="big">{{ a.star.result }}</p>
+      {% if a.roi %}<span class="mono">{{ a.roi[0].metric }}</span><p class="kpi">{{ a.roi[0].value }}</p>{% endif %}
+      <a class="btn" href="{{ root }}{{ a.url }}" tabindex="-1">Read how</a>
+    </div>
+  </div>
+  <button class="flip" type="button" aria-label="Flip card to see the result">Flip for the result ↻</button>
+</article>
+{%- endmacro %}

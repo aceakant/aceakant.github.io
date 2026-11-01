@@ -1,0 +1,43 @@
+# ============================================================
+#  Ajay Kant — Weekly Insights: main settings
+#  Edit values here only. No coding needed.
+# ============================================================
+
+site:
+  title: "Ajay Kant · Risk, Data & AI"
+  author: "Ajay Kant"
+  tagline: "I find fraud early, lend more safely, and put AI to work inside risk teams. Every week I break down one real problem and how it was solved."
+  base_url: "https://aceakant.github.io/insights"
+  linkedin_url: "https://www.linkedin.com/in/ajuhack"
+  email: "aceakant@gmail.com"
+  show_email: false            # true = show email on the Profile page
+  show_availability: false     # true = show "Open to relocation / roles" on the Profile page
+  accent: "#0E6F6E"            # used in the STAR image
+
+review:
+  hours_before_publish: 48     # draft goes live this many hours after it is ready (unless held)
+  reminder_hours_before: 24    # reminder comment this many hours before going live
+
+agents:
+  model: "claude-sonnet-5-5"
+  max_searches: 10             # web searches the fact-checker may run per article
+  article_words: "900-1300"
+
+linkedin:
+  enabled: true
+  api_version: "202510"        # LinkedIn API version (YYYYMM); update yearly
+  hashtags: ["RiskAnalytics", "FraudPrevention", "GenAI", "DataAnalytics", "BankingInnovation"]
+
+writing_rules:
+  voice: "First person, as Ajay. Warm, direct, a little playful. Practitioner tone, no hype."
+  banned_phrases:
+    - "proven track record"
+    - "deep expertise"
+    - "well-versed in"
+    - "game-changer"
+    - "in today's fast-paced world"
+    - "delve"
+    - "unlock the power"
+    - "revolutionize"
+    - "seamless"
+    - "cutting-edge"
