@@ -1,0 +1,16 @@
+# Filled in by the "8 · Analyst on Call service" workflow; do not edit the placeholders by hand.
+name = "analyst-on-call"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+ALLOWED_ORIGINS = "https://aceakant.github.io"
+FREE_PER_VISITOR = "__FREE__"
+VISITOR_WINDOW_DAYS = "30"
+DAILY_CAP = "__DAILY__"
+MODEL = "__MODEL__"
+
+[[kv_namespaces]]
+binding = "LIMITS"
+id = "__KV_ID__"

@@ -126,6 +126,8 @@ def build():
         **{f"{l['slug']}.html": dict(lab=l, game=game, template="lab.html") for l in labs["labs"]},
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
         "pulse.html": dict(pulse=pulse_view(config, labs, published)),
+        "analyst.html": dict(analyst=config.get("analyst") or {},
+                             samples=json.loads((ROOT / "site" / "static" / "analyst" / "samples" / "samples.json").read_text())),
     }
     for name, ctx in pages.items():
         html = env.get_template(ctx.pop("template", name)).render(root="", page=name, **common, **ctx)

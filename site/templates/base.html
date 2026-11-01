@@ -57,6 +57,7 @@
 <script src="{{ root }}static/sky.js?v={{ asset_v }}" defer></script>
 <script src="{{ root }}static/app.js?v={{ asset_v }}" defer></script>
 {% if page.endswith('-lab.html') %}<script src="{{ root }}static/labs.js?v={{ asset_v }}" defer></script>{% endif %}
+{% if page == 'analyst.html' %}<script src="{{ root }}static/analyst/profile.js?v={{ asset_v }}" defer></script><script src="{{ root }}static/analyst/analyst.js?v={{ asset_v }}" defer></script>{% endif %}
 {% if analytics.goatcounter and not (a is defined and a.status != 'published') %}<script data-goatcounter="https://{{ analytics.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{% endif %}
 </body>
 </html>

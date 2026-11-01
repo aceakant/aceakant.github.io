@@ -69,7 +69,7 @@
       <h3>{{ p.title }}</h3>
       <p>{{ p.summary }}</p>
       <ul class="case-results">{% for r in p.results %}<li>{{ r }}</li>{% endfor %}</ul>
-      {% if p.published %}<span class="more">Read the full case →</span>{% endif %}
+      {% if p.published %}<span class="more">Read the full case →</span>{% elif p.demo %}<a class="more demo-link" href="{{ p.demo.url }}">{{ p.demo.label }} →</a>{% endif %}
     {% if p.published %}</a>{% else %}</div>{% endif %}
     {% endfor %}
   </div>

@@ -1,0 +1,124 @@
+# Switches on (or updates) the live "Analyst on Call" service on Cloudflare, then tells the website where it is.
+# Needs GitHub secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID (and uses ANALYST_ANTHROPIC_KEY, or
+# ANTHROPIC_API_KEY if that isn't set). Does nothing until Cloudflare is set up.
+# Run it any time: edit content/analyst-service.txt, or use "Run workflow".
+name: 8 · Analyst on Call service
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["worker/analyst/**", "content/analyst-service.txt"]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: analyst-service
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Is Cloudflare set up?
+        id: ready
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CF_TOKEN" ] || [ -z "$CF_ACCOUNT" ]; then
+            echo "Cloudflare is not set up yet (secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID). Nothing to do."
+            echo "go=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/setup-node@v4
+        if: steps.ready.outputs.go == 'true'
+        with:
+          node-version: "20"
+      - uses: actions/setup-python@v5
+        if: steps.ready.outputs.go == 'true'
+        with:
+          python-version: "3.12"
+      - if: steps.ready.outputs.go == 'true'
+        run: pip install -r requirements.txt
+
+      - name: Prepare storage, address and settings
+        id: prep
+        if: steps.ready.outputs.go == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          API="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID"
+          H=(-H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H "Content-Type: application/json")
+          TITLE="analyst-on-call-limits"
+          ID=$(curl -fsS "${H[@]}" "$API/storage/kv/namespaces?per_page=100" | jq -r --arg t "$TITLE" '.result[] | select(.title==$t) | .id' | head -1)
+          if [ -z "$ID" ]; then
+            ID=$(curl -fsS "${H[@]}" -X POST "$API/storage/kv/namespaces" -d "{\"title\":\"$TITLE\"}" | jq -r '.result.id')
+            echo "Created the usage-limits store."
+          fi
+          SUB=$(curl -sS "${H[@]}" "$API/workers/subdomain" | jq -r '.result.subdomain // empty')
+          if [ -z "$SUB" ]; then
+            for c in vertexnode vertexnode-ajay ajaykant-analyst; do
+              SUB=$(curl -sS "${H[@]}" -X PUT "$API/workers/subdomain" -d "{\"subdomain\":\"$c\"}" | jq -r '.result.subdomain // empty')
+              [ -n "$SUB" ] && break
+            done
+          fi
+          [ -n "$SUB" ] || { echo "Could not find or create a workers.dev address on this Cloudflare account."; exit 1; }
+          read FREE DAILY MODEL < <(python3 -c "import yaml;c=yaml.safe_load(open('config.yaml'));a=c.get('analyst') or {};print(a.get('free_per_visitor',5),a.get('daily_cap',60),c['agents']['model'])")
+          sed -e "s/__KV_ID__/$ID/" -e "s/__FREE__/$FREE/" -e "s/__DAILY__/$DAILY/" -e "s/__MODEL__/$MODEL/" \
+            worker/analyst/wrangler.template.toml > worker/analyst/wrangler.toml
+          echo "url=https://analyst-on-call.$SUB.workers.dev" >> "$GITHUB_OUTPUT"
+          echo "Service address: https://analyst-on-call.$SUB.workers.dev (free per visitor $FREE, daily cap $DAILY, model $MODEL)"
+
+      - name: Deploy the service
+        if: steps.ready.outputs.go == 'true'
+        working-directory: worker/analyst
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx --yes wrangler@4 deploy
+
+      - name: Give the service its Claude key (kept inside Cloudflare, never in the website)
+        if: steps.ready.outputs.go == 'true'
+        working-directory: worker/analyst
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          KEY: ${{ secrets.ANALYST_ANTHROPIC_KEY || secrets.ANTHROPIC_API_KEY }}
+          WS: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+        run: |
+          python3 -c "import json,os; d={'ANTHROPIC_API_KEY': os.environ['KEY']}; ws=os.environ.get('WS'); d.update({'ANTHROPIC_WORKSPACE_ID': ws} if ws else {}); print(json.dumps(d))" | npx --yes wrangler@4 secret bulk
+
+      - name: Check it answers
+        if: steps.ready.outputs.go == 'true'
+        run: |
+          for i in $(seq 1 12); do
+            if curl -fsS "${{ steps.prep.outputs.url }}/" ; then echo; echo "The service is up."; exit 0; fi
+            sleep 10
+          done
+          echo "::warning::The service didn't answer yet; a brand-new workers.dev address can take a few minutes."
+
+      - name: Tell the website where the service is
+        if: steps.ready.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ steps.prep.outputs.url }}
+        run: |
+          python3 - <<'PY'
+          import os, re, pathlib
+          p = pathlib.Path("config.yaml"); s = p.read_text()
+          new = re.sub(r'^(\s*worker_url:\s*)"[^"]*"', lambda m: f'{m.group(1)}"{os.environ["URL"]}"', s, count=1, flags=re.M)
+          p.write_text(new)
+          PY
+          if git diff --quiet config.yaml; then echo "The website already points at the service."; exit 0; fi
+          git config user.name "insights-bot"
+          git config user.email "insights-bot@users.noreply.github.com"
+          git commit -m "Analyst on Call: connect the website to the live service" config.yaml
+          git pull --rebase && git push
+          gh workflow run deploy.yml

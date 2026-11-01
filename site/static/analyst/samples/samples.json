@@ -1,0 +1,5 @@
+[
+  {"id": "retail-loan-book", "file": "retail-loan-book.csv", "name": "Retail loan book", "blurb": "5,000 made-up loans across four products, made between Jan 2025 and Mar 2026."},
+  {"id": "card-transactions", "file": "card-transactions.csv", "name": "Card transactions", "blurb": "10,260 made-up card payments from September, with a hidden fraud pattern to find."},
+  {"id": "fraud-alert-queue", "file": "fraud-alert-queue.csv", "name": "Fraud alert queue", "blurb": "3,000 made-up fraud alerts: which rules earn the analysts' time?"}
+]

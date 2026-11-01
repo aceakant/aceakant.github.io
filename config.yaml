@@ -33,6 +33,13 @@ agents:
 analytics:
   goatcounter: "vertexnode"           # your GoatCounter code, e.g. "vertexnode" (from vertexnode.goatcounter.com). Empty = nothing is counted.
 
+analyst:
+  worker_url: ""               # the live service's address; filled in automatically by the "8 · Analyst on Call service" job
+  free_per_visitor: 5          # free reviews of their own data per visitor (every 30 days); after that: "contact Ajay"
+  daily_cap: 60                # most live reviews per day across all visitors (protects the Claude budget)
+  max_rows: 20000              # largest file a visitor can check
+  max_mb: 5
+
 pulse:
   start: "2026-11-01"          # count from this date
   min_visitors: 200            # the Pulse page shows numbers once the site has had this many visits; before that it says "warming up"

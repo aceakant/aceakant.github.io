@@ -70,6 +70,7 @@
     counted[name] = 1;
     try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {}
   }
+  window.akTrack = akTrack;
   window.akDone = function (id, pct) {
     var band = Math.max(0, Math.min(100, Math.round((pct || 0) / 10) * 10));
     akTrack("game-" + id + "-finish"); akTrack("game-" + id + "-score-" + band);

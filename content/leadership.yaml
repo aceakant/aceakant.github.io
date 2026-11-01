@@ -27,6 +27,7 @@ companies:
         title: "GenAI analytics agent for fraud and portfolio data"
         summary: "An LLM-powered agent that answers plain-English questions with analysis, charts and a written summary, run with DPDP-compliant controls."
         results: ["Manual ad-hoc queries replaced", "DPDP-compliant GenAI controls"]
+        demo: {label: "Try a public demo of this approach: Analyst on Call", url: "analyst.html"}
         status: draft
         detail:
           challenge: "Business and risk heads relied on the analytics team for every ad-hoc question on portfolio and fraud data. Answers queued behind analyst capacity, and that capacity was spent on repeat queries instead of new fraud patterns."

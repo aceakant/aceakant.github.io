@@ -1,0 +1,47 @@
+# Prepares the maker-checker reviews of the three sample files with Claude (same instructions as the live service),
+# then rebuilds the website. Runs when the samples, the data check or the instructions change.
+# Run it any time: edit content/analyst-refresh.txt, or use "Run workflow".
+name: 9 · Analyst on Call sample reviews
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "site/static/analyst/samples/*.csv"
+      - "site/static/analyst/profile.js"
+      - "worker/analyst/src/review.js"
+      - "content/analyst-refresh.txt"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: content
+  cancel-in-progress: false
+
+jobs:
+  reviews:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Maker, checker, conclusion for each sample
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
+        run: node scripts/analyst/make_reviews.mjs
+      - name: Save and rebuild the site
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git add site/static/analyst/samples/*.review.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo "No new reviews."; exit 0; fi
+          git config user.name "insights-bot"
+          git config user.email "insights-bot@users.noreply.github.com"
+          git commit -m "Analyst on Call: sample reviews"
+          git pull --rebase && git push
+          gh workflow run deploy.yml

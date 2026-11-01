@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Analyst on Call · {{ site.author }}{% endblock %}
+{% block description %}Drop in a loan book, transactions or fraud-alert file and get a maker-checker AI review: findings, charts and a final conclusion. Your data stays in your browser.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono">Tools · Analyst on Call</p>
+  <h1>Your data, read like a risk analyst would.</h1>
+  <p class="lede">Pick a sample or drop in your own file. One AI drafts the findings, a second AI checks every number against the data, and you get a final conclusion, the same maker-checker discipline banks use for important work.</p>
+</section>
+
+<section class="wrap" id="an-pick">
+  <div class="an-samples">
+    {% for s in samples %}
+    <button type="button" class="an-sample" data-id="{{ s.id }}" aria-pressed="false">
+      <span class="mono">Sample · made-up data</span><b>{{ s.name }}</b><span>{{ s.blurb }}</span>
+    </button>
+    {% endfor %}
+  </div>
+  <label class="an-drop" id="an-drop" for="an-file" tabindex="0">
+    <input type="file" id="an-file" accept=".csv,.txt,text/csv" hidden>
+    <b>…or drop your own CSV here, or tap to choose one</b>
+    <span>Up to {{ "{:,}".format(analyst.max_rows or 20000) }} rows · {{ analyst.free_per_visitor or 5 }} free AI reviews · please don't upload personal or confidential data</span>
+    <span class="an-shield">🔒 Your file never leaves your browser. Only summary statistics go to the AI.</span>
+    <span class="an-quota" id="an-quota"></span>
+  </label>
+  <p class="an-msg" id="an-msg" hidden></p>
+</section>
+
+<section class="wrap an-out" id="an-out" hidden>
+  <div class="an-step" id="an-check"></div>
+  <div class="an-step" id="an-ai" hidden></div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">How this works</h2>
+  <div class="an-how">
+    <div class="an-flow">
+      <div><b>Your browser</b><span>Reads the file and works out the statistics</span></div>
+      <i aria-hidden="true">→</i>
+      <div><b>Summary only</b><span>Counts, rates and ranges. Never your rows</span></div>
+      <i aria-hidden="true">→</i>
+      <div><b>Maker AI</b><span>Drafts the findings from the numbers</span></div>
+      <i aria-hidden="true">→</i>
+      <div><b>Checker AI</b><span>Confirms, corrects or removes each one</span></div>
+    </div>
+    <ul class="an-guard">
+      <li>Your file never leaves your device</li>
+      <li>Columns that look personal send no values at all</li>
+      <li>Fixed instructions that the data can't override</li>
+      <li>Every number must come from the statistics</li>
+      <li>Nothing is stored; visitors are counted by a scrambled code, not their address</li>
+      <li>Daily limits and a budget cap keep it fair</li>
+    </ul>
+    <p class="an-sub">Built by {{ site.author }} to show how GenAI can be put to work in risk analytics under proper governance. The AI is Claude, by Anthropic. Treat the output as a first read, not advice.</p>
+  </div>
+</section>
+
+<div class="an-contact-tpl" hidden>
+  {% include "_whatsapp.html" %}
+  <a class="btn ghost an-li" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Message Ajay on LinkedIn</a>
+</div>
+<script type="application/json" id="an-config" data-base="static/analyst/">{{ dict(worker_url=analyst.worker_url or "", free=analyst.free_per_visitor or 5, max_rows=analyst.max_rows or 20000, max_mb=analyst.max_mb or 5, v=asset_v, samples=samples) | tojson }}</script>
+{% endblock %}
