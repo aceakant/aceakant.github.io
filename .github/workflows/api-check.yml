@@ -20,16 +20,18 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: "Main key (weekly articles): two small calls, the second should hit the cache"
+      - name: Test each saved Claude key by name (keys are never printed)
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
-        run: python scripts/api_check.py
-      - name: "Analyst on Call key (if saved): same check"
-        if: always()
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANALYST_ANTHROPIC_KEY }}
+          VERTAX_ANTHROPIC_API_KEY: ${{ secrets.VERTAX_ANTHROPIC_API_KEY }}
+          VERTEX_ANTHROPIC_API_KEY: ${{ secrets.VERTEX_ANTHROPIC_API_KEY }}
+          ANALYST_ANATHROPIC_KEY: ${{ secrets.ANALYST_ANATHROPIC_KEY }}
+          ANALYST_ANTHROPIC_KEY: ${{ secrets.ANALYST_ANTHROPIC_KEY }}
+          OLD_ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ANTHROPIC_WORKSPACE_ID: ${{ secrets.ANTHROPIC_WORKSPACE_ID }}
         run: |
-          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "No ANALYST_ANTHROPIC_KEY saved: the analyst will use the main key."; exit 0; fi
-          python scripts/api_check.py
+          [ -n "$ANTHROPIC_WORKSPACE_ID" ] && echo "Note: ANTHROPIC_WORKSPACE_ID is set; delete it if your keys belong to a workspace."
+          for name in VERTAX_ANTHROPIC_API_KEY VERTEX_ANTHROPIC_API_KEY ANALYST_ANATHROPIC_KEY ANALYST_ANTHROPIC_KEY OLD_ANTHROPIC_API_KEY; do
+            if [ -z "${!name}" ]; then echo "--- $name: not saved"; continue; fi
+            echo "--- $name: found, testing…"
+            if ANTHROPIC_API_KEY="${!name}" python scripts/api_check.py; then echo "RESULT $name: CONNECTED"; else echo "RESULT $name: FAILED"; fi
+          done
