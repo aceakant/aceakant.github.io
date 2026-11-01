@@ -57,7 +57,7 @@ If there is no obvious risk outcome in the data, give the most useful general fi
 
 ${SHARED_RULES}
 
-Answer in the required JSON format: a title of at most 8 words naming what this data is; 3 to 5 findings
+Answer in the required JSON format: a title of at most 8 words, in sentence case, naming what this data is; 3 to 5 findings
 (each: id F1, F2…; severity; a headline of at most 10 words; a detail of 1-2 sentences with the key numbers);
 and exactly 3 short, specific next steps of at most 25 words each.`;
 
@@ -74,7 +74,8 @@ ${SHARED_RULES}
 Answer in the required JSON format: one review per maker finding (plus any you add), each with the
 finding's id, your verdict and a note of at most 25 words on what you checked or changed; the final findings after
 your changes (2 to 5, keeping each finding's id); exactly 3 next steps; a 2-3 sentence conclusion with the overall
-verdict and the one thing to do first; and one sentence on what this review cannot tell you.`;
+verdict and the one thing to do first (about the data and what to do, not about the maker's draft); and one sentence
+on what this review cannot tell you.`;
 
 const SEVERITIES = ["high", "medium", "stable"];
 const VERDICTS = ["confirmed", "corrected", "removed", "added"];
