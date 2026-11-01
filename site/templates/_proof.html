@@ -1,0 +1,29 @@
+{# Speaking & recognition, boardroom exposure and partners — used on Home and Leadership #}
+<section class="wrap proof">
+  <h2 class="sec">Speaking & recognition</h2>
+  <div class="rec-grid">
+    {% for r in leadership.recognition %}
+    <div class="rec reveal">
+      <span class="rec-kind mono">{{ r.kind }}</span>
+      <h3>{{ r.title }}</h3>
+      <p>{{ r.text }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="table-band reveal">
+    <div class="tb-head">
+      <span class="mono">At the top table</span>
+      <h3>Who I report and present to</h3>
+    </div>
+    <ul class="tb-list">
+      {% for t in leadership.top_table %}<li><b>{{ t.who }}</b><span>{{ t.how }}</span></li>{% endfor %}
+    </ul>
+  </div>
+
+  <div class="partners reveal">
+    <span class="mono">Worked alongside</span>
+    <ul>{% for x in leadership.partners %}<li>{{ x }}</li>{% endfor %}</ul>
+    <p class="muted small">{{ leadership.partners_note }}</p>
+  </div>
+</section>

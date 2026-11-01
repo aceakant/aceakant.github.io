@@ -154,6 +154,32 @@ earlier:
     period: "May 2014 – May 2016"
     note: "$10M annual fraud-loss reduction from analytics on ~8 billion transactions; +30% detection KPIs."
 
+# Speaking, recognition and who Ajay works with (all from the CV)
+recognition:
+  - kind: "Investor stage"
+    title: "Axis Bank Analyst Day 2023"
+    text: "Work featured in the bank's Analyst Day 2023 investor deck."
+  - kind: "Publication"
+    title: "Axis Bank alternate-data publication (2023)"
+    text: "Alternate-data publication by Axis Bank."
+  - kind: "Speaker"
+    title: "Monnai (2024)"
+    text: "Invited speaker."
+  - kind: "Leadership programme"
+    title: "High-Potential Management & Leadership Programme"
+    text: "Selected by Axis Bank in 2023."
+top_table:
+  - who: "Executive committee"
+    how: "Quarterly reporting on the alternate-data programme (Axis Bank)"
+  - who: "CEO & CRO"
+    how: "Weekly KRI dashboards (Dhani) and steering forums with the CRO and CIO (L&T Finance)"
+  - who: "CRO risk forum"
+    how: "Monthly fraud KRIs and root-cause analysis (JPMorgan Chase)"
+  - who: "Regulators & audit"
+    how: "RBI audit inputs and BCBS 239-aligned reporting"
+partners: ["EY", "BCG", "Visa", "Westpac"]
+partners_note: "Co-designed fraud detection and the Early-Warning System with EY and BCG; redesigned merchant-claims strategy with Visa; delivered fraud analytics for Westpac."
+
 credentials:
   education: ["Bachelor of Science – University of Delhi, 2009"]
   certifications:
@@ -161,7 +187,3 @@ credentials:
     - "High-Potential Management & Leadership Programme, Axis Bank (2023)"
     - "Solving Problems with Creative & Critical Thinking – IBM (2024)"
     - "SAS Base Certified (2013)"
-  recognition:
-    - "Featured in the Axis Bank Analyst Day 2023 investor deck"
-    - "Axis Bank alternate-data publication (2023)"
-    - "Speaker, Monnai (2024)"

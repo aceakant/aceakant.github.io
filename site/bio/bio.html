@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>{{ profile.name }} · One-page bio</title>
+<style>
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+body{margin:0;font:9.3pt/1.4 "Inter","Segoe UI",Arial,sans-serif;color:#0B1B26;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;overflow:hidden;display:grid;grid-template-columns:62mm 1fr}
+.side{background:#071426;color:#E9F1F7;padding:12mm 7mm 10mm 9mm;display:flex;flex-direction:column;gap:4.5mm}
+.side img{width:34mm;height:34mm;border-radius:50%;object-fit:cover;border:2px solid #2FD3C8}
+.side h1{font-size:17pt;line-height:1.1;margin:0}
+.side .role{color:#2FD3C8;font-weight:600;margin:1mm 0 0}
+.side h3{font-size:8pt;letter-spacing:.12em;text-transform:uppercase;color:#F5C04E;margin:0 0 1.5mm}
+.side ul{list-style:none;margin:0;padding:0;display:grid;gap:.8mm;font-size:8pt;color:#C9D6DC}
+.stat b{display:block;font-size:17pt;line-height:1;color:#2FD3C8}
+.stat span{font-size:7.4pt;color:#97AABC}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:4mm}
+.main{padding:12mm 11mm 10mm 9mm;display:flex;flex-direction:column;gap:4mm}
+.lead{font-size:10.4pt;line-height:1.5;margin:0}
+h2{font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#0B7470;margin:0 0 2mm;border-bottom:1px solid #D5DFE6;padding-bottom:1.2mm}
+.co{display:grid;grid-template-columns:1fr auto;gap:0 4mm;padding:1.3mm 0;border-bottom:1px solid #EEF2F5}
+.co:last-child{border-bottom:0}
+.co b{font-size:9.6pt}
+.co .team{font-weight:700;color:#0B7470;white-space:nowrap}
+.co p{grid-column:1/-1;margin:.3mm 0 0;color:#435561;font-size:8.4pt}
+.cases{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.6mm 4mm;margin:0;padding:0;list-style:none}
+.cases li{font-size:8.2pt;padding-left:3.5mm;position:relative}
+.cases li::before{content:"";position:absolute;left:0;top:1.6mm;width:1.6mm;height:1.6mm;border-radius:50%;background:#2FD3C8}
+.cases b{display:block;font-size:8.6pt;line-height:1.25}
+.cases span{color:#56666F}
+.foot{margin-top:auto;font-size:8.6pt;color:#56666F;border-top:1px solid #D5DFE6;padding-top:2mm;display:flex;justify-content:space-between;gap:4mm}
+</style></head>
+<body><div class="page">
+<aside class="side">
+  <img src="{{ avatar_uri }}" alt="">
+  <div><h1>{{ profile.name }}</h1><p class="role">{{ profile.headline }}</p></div>
+  <div class="stats">
+    {% for m in profile.impact %}<div class="stat"><b>{{ m.prefix }}{{ m.value }}{{ m.suffix }}</b><span>{{ m.label }}</span></div>{% endfor %}
+  </div>
+  <div><h3>Focus</h3><ul>{% for s in profile.skills %}<li>{{ s }}</li>{% endfor %}</ul></div>
+  <div><h3>Regulation</h3><ul><li>{{ profile.regulation | join(" · ") }}</li></ul></div>
+  <div><h3>Education & certifications</h3><ul>{% for x in leadership.credentials.education + leadership.credentials.certifications[:3] %}<li>{{ x }}</li>{% endfor %}</ul></div>
+</aside>
+<main class="main">
+  <p class="lead">{{ profile.hero.lede }}</p>
+  <section>
+    <h2>Teams built from zero</h2>
+    {% for c in leadership.companies %}
+    <div class="co"><b>{{ c.org }} · {{ c.role }}</b><span class="team">{{ c.team }} people</span>
+      <p>{{ c.period }} · {{ c.team_mix | join(", ") }}</p></div>
+    {% endfor %}
+    {% for e in leadership.earlier %}
+    <div class="co"><b>{{ e.org }} · {{ e.role }}</b><span class="team"></span><p>{{ e.period }} · {{ e.note }}</p></div>
+    {% endfor %}
+  </section>
+  <section>
+    <h2>Selected leadership work</h2>
+    <ul class="cases">
+      {% for c in leadership.companies %}{% for p in c.projects %}
+      <li><b>{{ p.title }}</b><span>{{ c.org }} · {{ p.results | join(" · ") }}</span></li>
+      {% endfor %}{% endfor %}
+    </ul>
+  </section>
+  <section>
+    <h2>Speaking, recognition & partners</h2>
+    <ul class="cases">
+      {% for r in leadership.recognition %}<li><b>{{ r.title }}</b><span>{{ r.kind }}</span></li>{% endfor %}
+      <li><b>Worked alongside {{ leadership.partners | join(", ") }}</b><span>Consulting, payments and banking partners</span></li>
+      <li><b>Reports to CEO, CRO and executive committee</b><span>Weekly, monthly and quarterly forums</span></li>
+    </ul>
+  </section>
+  <div class="foot"><span>{{ site.linkedin_url | replace("https://www.","") }}</span><span>{{ site.base_url | replace("https://","") }}</span></div>
+</main>
+</div></body></html>
