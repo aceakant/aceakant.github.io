@@ -42,7 +42,8 @@ jobs:
       - name: Test or real run?
         if: steps.guard.outputs.skip != 'true'
         run: |
-          if [ "${{ github.event_name }}" = "push" ] && grep -qi "test" content/run-now.txt; then
+          # test run only when the file STARTS with the word TEST
+          if [ "${{ github.event_name }}" = "push" ] && head -c 4 content/run-now.txt | grep -qi "^test"; then
             echo "RUN_MODE=test" >> "$GITHUB_ENV"; echo "Test run: the draft will be held and never auto-publish."
           fi
 

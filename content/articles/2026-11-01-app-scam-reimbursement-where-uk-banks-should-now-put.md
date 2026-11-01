@@ -3,8 +3,8 @@ title: 'APP scam reimbursement: where UK banks should now put detection money'
 slug: app-scam-reimbursement-where-uk-banks-should-now-put
 date: '2026-11-01'
 category: Fraud Risk
-status: hold
-test_run: true
+status: draft
+test_run: false
 market: UK
 scenario: a mid-sized UK retail bank (an illustrative composite, not a real institution)
 publish_at: null
@@ -132,6 +132,7 @@ linkedin_post: 'UK Finance members reported £576.4 million of APP scam losses i
 
   If you run fraud analytics: which has moved up your roadmap most since October 2024, outbound scoring, inbound mule detection or claims automation?'
 linkedin_shared: false
+linkedin_hold: true
 ---
 
 ## The problem

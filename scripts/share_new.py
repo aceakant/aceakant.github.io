@@ -1,5 +1,6 @@
 """Runs after each website deploy: shares any published article not yet on LinkedIn,
-then marks it as shared so it is never posted twice."""
+then marks it as shared so it is never posted twice.
+Articles marked `linkedin_hold: true` stay off LinkedIn until the owner replies `share` on the review issue."""
 import pathlib
 import sys
 
@@ -21,6 +22,9 @@ def main():
         _, front, body = raw.split("---", 2)
         meta = yaml.safe_load(front)
         if meta.get("linkedin_shared") or meta.get("status", "published") != "published":
+            continue
+        if meta.get("linkedin_hold"):
+            log("share", f"Held off LinkedIn for now: {meta['slug']}")
             continue
         url = f"{base}/articles/{meta['slug']}.html"
         result = linkedin_agent.share(meta, url)

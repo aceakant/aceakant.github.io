@@ -23,7 +23,9 @@ def main():
             changed = True
             print(f"Published {meta['slug']}")
             if issue:
-                gh("issue", "comment", str(issue), "--body", f"✅ Published: {live}\n\nThe LinkedIn post follows in a few minutes.")
+                note = ("LinkedIn is on hold for this one. Reply `share` when you want it posted." if meta.get("linkedin_hold")
+                        else "The LinkedIn post follows in a few minutes.")
+                gh("issue", "comment", str(issue), "--body", f"✅ Published: {live}\n\n{note}")
                 gh("issue", "close", str(issue))
         elif not meta.get("reminded") and now >= when - datetime.timedelta(hours=cfg["reminder_hours_before"]):
             meta["reminded"] = True
