@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-01T19:55:24Z",
+  "updated": "2026-11-01T22:13:52Z",
   "since": "2026-11-02",
-  "visitors": 0,
-  "players": 0,
-  "article_reads": 0,
-  "countries": 0,
+  "visitors": 17,
+  "players": 5,
+  "article_reads": 9,
+  "countries": 3,
   "weekly": [
     {
       "week": "2026-09-07",
@@ -54,9 +54,66 @@
     },
     {
       "name": "Other sites",
-      "count": 0
+      "count": 18
     }
   ],
-  "games": {},
-  "articles": []
+  "games": {
+    "correlation": {
+      "players": 1,
+      "finished": 1,
+      "scores": {
+        "60": 1
+      },
+      "scored": 1,
+      "avg_score": 60
+    },
+    "cut-off": {
+      "players": 1,
+      "finished": 1,
+      "scores": {
+        "100": 1
+      },
+      "scored": 1,
+      "avg_score": 100
+    },
+    "chart-tricks": {
+      "players": 1,
+      "finished": 1,
+      "scores": {
+        "100": 1
+      },
+      "scored": 1,
+      "avg_score": 100
+    },
+    "in-order": {
+      "players": 1,
+      "finished": 0,
+      "scores": {},
+      "scored": 0,
+      "avg_score": null
+    },
+    "survive-recession": {
+      "players": 1,
+      "finished": 1,
+      "scores": {
+        "0": 1
+      },
+      "scored": 1,
+      "avg_score": 0
+    }
+  },
+  "articles": [
+    {
+      "slug": "fraud-model-roi-look-past-the-detection-rate",
+      "reads": 3
+    },
+    {
+      "slug": "eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist",
+      "reads": 3
+    },
+    {
+      "slug": "ten-seconds-to-decide-fraud-controls-for-eu-instant-payments",
+      "reads": 3
+    }
+  ]
 }
