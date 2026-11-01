@@ -1,0 +1,120 @@
+{
+  "status": "needs-review",
+  "summary": "11 verified, 8 corrected · Needs review: Article numbers 11, 13, 14, 15, 72 and 73 were not re-checked one by one against the EUR-Lex text in this review. Articles 11, 12, 14 and 27 were supported indirectly. A human should confirm that the Omnibus did not renumber or reword Articles 72, 73 and 15.; The sole-trader point is a legal inference (sole traders are natural persons), not a quoted rule. A human should confirm the wording is acceptable.; Under Article 99(6), SMEs and small mid-caps pay the lower of the two ceilings, and the Omnibus widened this to small mid-caps. The hook and penalty text assume a larger firm. A human may want to note this for smaller readers.; CCD2 applies from 20 November 2026, about three weeks after this review (1 November 2026). National transposition varies by Member State, so confirm the status in the target jurisdiction before publishing.",
+  "checks": [
+    {
+      "claim": "Hook: maximum fine for breaching high-risk obligations is 3% of worldwide annual turnover (or €15m, whichever is higher); 7% is for prohibited practices.",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+      "note": "Regulation (EU) 2024/1689, Article 99; consistent with secondary summaries (simpleact.eu, vdf.ai)"
+    },
+    {
+      "claim": "High-risk requirements for Annex III apply from 2 August 2026; the Digital Omnibus delay is only a proposal (November 2025) with a long-stop of December 2027.",
+      "status": "corrected",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng",
+      "note": "Regulation (EU) 2026/1744 was adopted (8 July 2026, OJ 24 July 2026, in force 27 July 2026). Annex III date is now 2 December 2027. Article, takeaways, myth/fact and claims updated."
+    },
+    {
+      "claim": "Article 10(5) permits limited use of special-category data for bias detection.",
+      "status": "corrected",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ%3AL_202601744",
+      "note": "Regulation (EU) 2026/1744: Article 10(5) deleted and replaced by new Article 4a; a permission only, no obligation"
+    },
+    {
+      "claim": "AI literacy has been an obligation since February 2025.",
+      "status": "corrected",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=OJ%3AL_202601744",
+      "note": "Applied from 2 Feb 2025; Article 4 replaced in July 2026 by a duty to take measures to support AI literacy (no guaranteed level)"
+    },
+    {
+      "claim": "Annex III 5(b) lists creditworthiness/credit scoring of natural persons as high-risk, with a fraud-detection exception.",
+      "status": "verified",
+      "source_url": "https://www.regulatoryai.eu/ai-creditworthiness/",
+      "note": "Annex III point 5(b) summary; also vdf.ai and complylayer.com"
+    },
+    {
+      "claim": "AI Act entered into force on 1 August 2024.",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+      "note": "Regulation (EU) 2024/1689, Article 113; confirmed by regulations.ai entry on the Omnibus"
+    },
+    {
+      "claim": "Article 27 FRIA applies to deployers of credit-scoring systems (5(b)).",
+      "status": "verified",
+      "source_url": "https://www.regulatoryai.eu/ai-creditworthiness/",
+      "note": "Article 27 applies to deployers of Annex III 5(b) and 5(c) systems, also confirmed by vdf.ai"
+    },
+    {
+      "claim": "Deployers keep logs for at least six months; financial institutions can fold this into existing record-keeping.",
+      "status": "verified",
+      "source_url": "https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-26",
+      "note": "AI Act Service Desk, Article 26(6)"
+    },
+    {
+      "claim": "Commission's February 2025 guidelines exclude some simple prediction systems; logistic regression can fall outside.",
+      "status": "verified",
+      "source_url": "https://www.insideprivacy.com/artificial-intelligence/european-commission-guidelines-on-the-definition-of-an-ai-system/",
+      "note": "Covington summary of Commission guidelines on the AI system definition; also dataprotectionreport.com on logistic regression"
+    },
+    {
+      "claim": "CJEU C-634/21 SCHUFA (7 December 2023): a credit score can be an automated decision under Article 22 GDPR where a lender draws strongly on it.",
+      "status": "verified",
+      "source_url": "https://www.loc.gov/item/global-legal-monitor/2024-01-10/european-union-court-of-justice-rules-credit-scoring-constitutes-automated-individual-decision-making-under-gdpr/",
+      "note": "Library of Congress; also A&O Shearman case note"
+    },
+    {
+      "claim": "Directive (EU) 2023/2225 (CCD2) applies from 20 November 2026 with creditworthiness, explanation and human-intervention provisions.",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=LEGISSUM:4707402",
+      "note": "EUR-Lex summary of Directive (EU) 2023/2225; provisions on algorithmic decisions per dudkowiak.com and goalcube.eu"
+    },
+    {
+      "claim": "EBA Guidelines on loan origination and monitoring (EBA/GL/2020/06) apply from 30 June 2021.",
+      "status": "verified",
+      "source_url": "https://www.eba.europa.eu/activities/single-rulebook/regulatory-activities/credit-risk/guidelines-loan-origination-and-monitoring",
+      "note": "EBA: Guidelines on loan origination and monitoring, application date 30/06/2021"
+    },
+    {
+      "claim": "Personal-result claim: 'A rule of thumb that has saved me grief'.",
+      "status": "corrected",
+      "source_url": "",
+      "note": "Rewritten as a neutral recommendation so no personal result is implied"
+    },
+    {
+      "claim": "Your BCBS 239 lineage work pays off here.",
+      "status": "corrected",
+      "source_url": "",
+      "note": "Softened to 'if you already have data-lineage documentation, for example from BCBS 239-style work', as BCBS 239 may not formally apply to a mid-sized bank. Process step reworded to match."
+    },
+    {
+      "claim": "Annex IV covers instructions for deployers.",
+      "status": "corrected",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1689/oj",
+      "note": "Instructions for use belong to Article 13; wording separated from the Annex IV technical file"
+    },
+    {
+      "claim": "Documentation saving of 432 hours 'a year'.",
+      "status": "corrected",
+      "source_url": "",
+      "note": "Changed to 'per documentation cycle' to match the calculator. 12 x 120 x 30% = 432 h; x €70 = €30,240, about €30k"
+    },
+    {
+      "claim": "Speed-of-evidence claim ('most of that time is spent hunting for a PDF').",
+      "status": "corrected",
+      "source_url": "",
+      "note": "Softened and labelled as illustrative"
+    },
+    {
+      "claim": "€2bn turnover x 3% = €60m penalty ceiling.",
+      "status": "verified",
+      "source_url": "https://vdf.ai/blog/eu-ai-act-fines-penalties/",
+      "note": "Arithmetic correct; vdf.ai uses the same €2bn/€60m example for the 3% tier"
+    },
+    {
+      "claim": "Employer names and personal results.",
+      "status": "verified",
+      "source_url": "",
+      "note": "No listed employer appears anywhere in the draft. The STAR story is framed as an illustrative scenario."
+    }
+  ]
+}
