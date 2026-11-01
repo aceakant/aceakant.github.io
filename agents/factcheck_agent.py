@@ -37,7 +37,9 @@ DRAFT (JSON):
 {draft}
 
 Return the full corrected draft as JSON with the same keys as the DRAFT, plus:
-  "checks": [{{"claim": "...", "status": "verified|corrected|removed", "source_url": "...", "note": "short source title"}}],
+  "checks": [{{"claim": "...", "status": "verified|corrected|removed", "source_url": "...",
+              "source_title": "publisher and document name only, under 80 characters, e.g. 'UK Finance, Annual Fraud Report 2026'",
+              "note": "what you checked or changed"}}],
   "unresolved": ["anything a human must look at; empty list if none"]"""
 
 REQUIRED = ["title", "category", "summary", "scenario", "hook", "star", "article_markdown", "process",
@@ -126,7 +128,7 @@ def check(draft):
     for c in fc.get("checks", []):
         counts[c["status"]] = counts.get(c["status"], 0) + 1
         if c.get("source_url") and c["source_url"] not in [s["url"] for s in sources]:
-            sources.append({"title": c.get("note") or c["source_url"], "url": c["source_url"]})
+            sources.append({"title": c.get("source_title") or c.get("note") or c["source_url"], "url": c["source_url"]})
 
     status = "needs-review" if unresolved else "verified"
     summary = ", ".join(f"{v} {k}" for k, v in counts.items()) or "No external claims"
