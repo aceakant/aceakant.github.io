@@ -8,7 +8,7 @@ test_run: false
 market: EU
 scenario: a composite mid-sized euro-area retail bank (illustrative, not a real institution)
 publish_at: null
-review_issue: null
+review_issue: 7
 reminded: false
 summary: Instant payments leave one decision point and no overnight safety net, so only checks that run in-session still work. Here is how a practitioner layers Verification of Payee with payee risk and session signals, and how to weigh friction against fraud prevented in euros.
 hook:
