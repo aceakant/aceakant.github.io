@@ -30,6 +30,7 @@
       <a href="{{ root }}portfolio.html" {% if page in ('portfolio.html','case') %}aria-current="page"{% endif %}>Portfolio</a>
       <a href="{{ root }}updates.html" {% if page in ('updates.html','article') %}aria-current="page"{% endif %}>{{ site.weekly_name }}</a>
       <a href="{{ root }}index.html#playground" {% if page.endswith('-lab.html') %}aria-current="page"{% endif %}>Playground</a>
+      <a href="{{ root }}pulse.html" {% if page == 'pulse.html' %}aria-current="page"{% endif %}>Pulse</a>
       <button class="theme" type="button" id="theme-toggle" aria-label="Switch between night and light reading mode">
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9z"/></svg>
       </button>
@@ -57,5 +58,6 @@
 <script src="{{ root }}static/sky.js?v={{ asset_v }}" defer></script>
 <script src="{{ root }}static/app.js?v={{ asset_v }}" defer></script>
 {% if page.endswith('-lab.html') %}<script src="{{ root }}static/labs.js?v={{ asset_v }}" defer></script>{% endif %}
+{% if analytics.goatcounter and not (a is defined and a.status != 'published') %}<script data-goatcounter="https://{{ analytics.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{% endif %}
 </body>
 </html>

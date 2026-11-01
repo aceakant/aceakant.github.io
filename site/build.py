@@ -5,6 +5,7 @@ Drafts and held ones -> unlisted preview pages under drafts/ (for the 48-hour re
 Run:  python site/build.py
 """
 import datetime
+import json
 import math
 import os
 import pathlib
@@ -37,6 +38,50 @@ def read_article(path):
     return a
 
 
+IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
+
+
+def nice_date(iso):
+    d = datetime.date.fromisoformat(str(iso)[:10])
+    return f"{d.day} {d.strftime('%b %Y')}"
+
+
+def pulse_view(config, labs, published):
+    """Numbers for the Pulse page, from content/pulse.json (written each morning by scripts/pulse_fetch.py)."""
+    pcfg = config.get("pulse") or {}
+    path = ROOT / "content" / "pulse.json"
+    data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+    v = dict(on=bool((config.get("analytics") or {}).get("goatcounter")), ready=False,
+             min_visitors=pcfg.get("min_visitors", 200),
+             since=nice_date(data["since"]) if data else None)
+    if not data or data.get("visitors", 0) < v["min_visitors"]:
+        return v
+    updated = datetime.datetime.fromisoformat(data["updated"].replace("Z", "+00:00")).astimezone(IST)
+    top = max([w["players"] for w in data["weekly"]] + [1])
+    weekly = [dict(w, label=nice_date(w["week"])[:-5], h=round(w["players"] / top * 110, 1)) for w in data["weekly"]]
+    total_src = sum(s["count"] for s in data["sources"]) or 1
+    sources = [dict(s, pct=round(s["count"] / total_src * 100)) for s in data["sources"]]
+    rows = []
+    for lab in labs["labs"]:
+        stats = [(g, data["games"].get(g["id"], {})) for g in lab["games"]]
+        players = sum(s.get("players", 0) for _, s in stats)
+        finished = sum(s.get("finished", 0) for _, s in stats)
+        scored = sum(s.get("scored", 0) for _, s in stats)
+        avg = (sum((s.get("avg_score") or 0) * s.get("scored", 0) for _, s in stats) / scored) if scored else None
+        best = max(stats, key=lambda gs: gs[1].get("players", 0))
+        rows.append(dict(lab=lab, players=players, finish=round(min(finished, players) / players * 100) if players else None,
+                         avg=round(avg) if avg is not None else None,
+                         most=best[0]["name"] if best[1].get("players") else lab["games"][0]["name"]))
+    rows.sort(key=lambda r: -r["players"])
+    titles = {a["slug"]: a for a in published}
+    reads = [r for r in data["articles"] if r["slug"] in titles][:5]
+    most = max([r["reads"] for r in reads] + [1])
+    articles = [dict(r, a=titles[r["slug"]], pct=round(r["reads"] / most * 100)) for r in reads]
+    v.update(ready=True, d=data, weekly=weekly, sources=sources, rows=rows, articles=articles,
+             updated=updated.strftime("%d %b %Y, %I:%M %p IST"))
+    return v
+
+
 def build():
     config = yaml.safe_load((ROOT / "config.yaml").read_text())
     profile = yaml.safe_load((ROOT / "content" / "profile.yaml").read_text())
@@ -64,9 +109,10 @@ def build():
         shutil.copytree(media, OUT / "media", ignore=shutil.ignore_patterns("*.txt", "*.json"))
 
     env = Environment(loader=FileSystemLoader(ROOT / "site" / "templates"), autoescape=True)
+    env.filters["num"] = lambda n: f"{int(n):,}"
     # new version tag on every build, so browsers fetch fresh styles and scripts
     asset_v = (os.environ.get("GITHUB_SHA") or datetime.datetime.now().strftime("%Y%m%d%H%M%S"))[:10]
-    common = dict(site=config["site"], profile=profile, leadership=leadership, labs=labs,
+    common = dict(site=config["site"], profile=profile, leadership=leadership, labs=labs, analytics=config.get("analytics") or {},
                   year=datetime.date.today().year, upcoming=upcoming, asset_v=asset_v)
 
     show_drafts = os.environ.get("PREVIEW_DRAFTS") == "1"
@@ -79,6 +125,7 @@ def build():
         "portfolio.html": {},
         **{f"{l['slug']}.html": dict(lab=l, game=game, template="lab.html") for l in labs["labs"]},
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
+        "pulse.html": dict(pulse=pulse_view(config, labs, published)),
     }
     for name, ctx in pages.items():
         html = env.get_template(ctx.pop("template", name)).render(root="", page=name, **common, **ctx)

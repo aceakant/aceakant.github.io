@@ -6,6 +6,7 @@
   function svgEl(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
   function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
   function party() { if (window.akConfetti) window.akConfetti(); }
+  function done(id, pct) { if (window.akDone) window.akDone(id, pct); }  // counted for the Pulse page
 
   // seeded random so each round looks the same for everyone
   function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
@@ -56,7 +57,7 @@
         if (pts >= 90) party();
       } else if (e.target.id === "corr-next") {
         if (ci < cdata.length - 1) { ci++; round(); return; }
-        var max = cdata.length * 100, msg = total >= max * 0.85 ? "You read data like an analytics lead." : total >= max * 0.6 ? "Solid instincts. A little more practice and you're there." : "Correlation is slippery. That's why we measure instead of eyeballing.";
+        var max = cdata.length * 100; done("correlation", total / max * 100); var msg = total >= max * 0.85 ? "You read data like an analytics lead." : total >= max * 0.6 ? "Solid instincts. A little more practice and you're there." : "Correlation is slippery. That's why we measure instead of eyeballing.";
         while (plot.firstChild) plot.removeChild(plot.firstChild);
         $("#corr-x").textContent = ""; $("#corr-y").textContent = "";
         foot.innerHTML = '<div class="final"><span class="mono">YOUR SCORE</span><div class="big">' + total + " / " + max + "</div><p>" + msg + '</p></div><span class="btns"><button class="btn small ghost" type="button" id="corr-again">Play again</button></span>';
@@ -114,6 +115,7 @@
     rfoot.addEventListener("click", function (e) {
       if (e.target.id !== "risk-go") return;
       var c = Number(cut.value), m = model(c), b = best(), pct = Math.max(0, Math.round(m.profit / b.profit * 100));
+      done("cut-off", pct);
       var tip = c < b.cut - 10 ? "A bit generous: defaults are eating into profit. Try moving the cut-off up." :
                 c > b.cut + 10 ? "A bit strict: you're turning away good customers. Try moving it down." :
                 "Right on the sweet spot.";
@@ -163,7 +165,7 @@
     sfoot.addEventListener("click", function (e) {
       if (e.target.id === "sort-next") {
         if (ri < rounds.length - 1) { ri++; showRound(); sg.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
-        var pct = right / total, msg = pct === 1 ? "Perfect. You could run the risk committee. 🏆" : pct >= 0.8 ? "Strong grasp of who owns what." : pct >= 0.5 ? "Getting there. The lines blur in real life too." : "Tricky stuff. That's exactly why frameworks exist.";
+        var pct = right / total; done("sort-it-out", pct * 100); var msg = pct === 1 ? "Perfect. You could run the risk committee. 🏆" : pct >= 0.8 ? "Strong grasp of who owns what." : pct >= 0.5 ? "Getting there. The lines blur in real life too." : "Tricky stuff. That's exactly why frameworks exist.";
         $("#sort-title").textContent = "Your result"; $("#sort-intro").textContent = "";
         items.innerHTML = '<div class="final"><span class="mono">YOU SORTED</span><div class="big">' + right + " / " + total + "</div><p>" + msg + "</p></div>";
         sfoot.innerHTML = '<span class="btns"><button class="btn small ghost" type="button" id="sort-again">Play again</button></span>';
@@ -278,7 +280,7 @@
       if (e.target.id === "chart-next") {
         copts.dataset.locked = "";
         if (chi < crounds.length - 1) { chi++; chartRound(); return; }
-        clear(cplot); copts.innerHTML = "";
+        clear(cplot); copts.innerHTML = ""; done("chart-tricks", chs / crounds.length * 100);
         $("#chart-title").textContent = "Your result";
         var msg = chs === crounds.length ? "No chart will ever fool you. Board packs beware. 🏆" : chs >= 3 ? "Sharp eyes. Always check the axis first." : chs >= 2 ? "Not bad. Most people miss the sneaky averages." : "Charts are persuasive. That's why analysts check the numbers behind them.";
         cfoot.innerHTML = '<div class="final"><span class="mono">TRICKS SPOTTED</span><div class="big">' + chs + " / " + crounds.length + "</div><p>" + msg + '</p></div><span class="btns"><button class="btn small ghost" type="button" id="chart-again">Play again</button></span>';
@@ -330,6 +332,7 @@
         setTimeout(function () { cell.className = "pop " + (res[sc] >= 0 ? "up" : "down"); cell.querySelector("b").textContent = pctTxt(res[sc]); cell.querySelector("b").title = crTxt(res[sc]); }, k * 350);
       });
       var survive = res.recession >= BK.appetite - 1e-9, hits = res.normal >= BK.target - 1e-9, pct = Math.max(0, Math.round(res.normal / BEST * 100));
+      done("survive-recession", survive && hits ? pct : 0);
       var head, tip;
       if (survive && hits) { head = pct >= 97 ? "Chief Risk Officer material! 🏆" : "You survived the recession! 🎉"; tip = "Normal year: " + crTxt(res.normal) + " profit, " + pct + "% of the best safe mix (" + pctTxt(BEST) + "). " + (pct >= 97 ? "That is the sweet spot." : "There's a little more profit to find without breaking the recession rule."); }
       else if (!survive) { head = "The recession wiped out your profit. 😬"; tip = "You'd lose " + crTxt(res.recession).replace("−", "") + " in a bad year. Credit cards and personal loans pay the most but blow up first. Trim them and try again."; }
@@ -370,7 +373,7 @@
     pfoot.addEventListener("click", function (e) {
       if (e.target.id === "phish-next") {
         if (pi < msgs.length - 1) { pi++; showMsg(); return; }
-        pbtns.hidden = true; $("#phish-from").textContent = "Your result"; bubble.className = "bubble";
+        pbtns.hidden = true; $("#phish-from").textContent = "Your result"; bubble.className = "bubble"; done("scam-or-legit", ps / msgs.length * 100);
         bubble.textContent = ps === msgs.length ? "Perfect score. Scammers would hate you. 🛡️" : ps >= 4 ? "Good instincts. The UPI 'PIN to receive' trick catches a lot of people." : "Scams are designed to feel urgent. Slow down, and never click links in messages.";
         pfoot.innerHTML = '<div class="final"><span class="mono">YOU SPOTTED</span><div class="big">' + ps + " / " + msgs.length + '</div><p>Golden rule: you never need a PIN or OTP to receive money.</p></div><span class="btns"><button class="btn small ghost" type="button" id="phish-again">Play again</button></span>';
         if (ps === msgs.length) party();
@@ -421,7 +424,7 @@
       } else if (id === "order-next") {
         if (oi < orounds.length - 1) { oi++; orderRound(); og.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
         $("#order-title").textContent = "Your result"; $("#order-intro").textContent = ""; plist.innerHTML = ""; pool.innerHTML = "";
-        var pct = oscore / omax, msg = pct === 1 ? "Flawless. You'd breeze through an audit. 🏆" : pct >= 0.75 ? "Strong sense of process." : pct >= 0.5 ? "Getting there. Most mix up validation and approval." : "Order is hard. That's why frameworks write it down.";
+        var pct = oscore / omax; done("in-order", pct * 100); var msg = pct === 1 ? "Flawless. You'd breeze through an audit. 🏆" : pct >= 0.75 ? "Strong sense of process." : pct >= 0.5 ? "Getting there. Most mix up validation and approval." : "Order is hard. That's why frameworks write it down.";
         ofoot.innerHTML = '<div class="final"><span class="mono">STEPS IN PLACE</span><div class="big">' + oscore + " / " + omax + "</div><p>" + msg + '</p></div><span class="btns"><button class="btn small ghost" type="button" id="order-again">Play again</button></span>';
         if (pct === 1) party();
       } else if (id === "order-again") { oi = 0; oscore = 0; orderRound(); }

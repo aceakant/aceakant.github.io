@@ -1,7 +1,7 @@
 {# Home page Playground: the four labs #}
 <section class="wrap" id="playground">
   <h2 class="sec">Playground</h2>
-  <p class="pg-intro">Four labs, new games added over time. Made-up data, real lessons from risk and analytics work. No sign-up, nothing stored.</p>
+  <p class="pg-intro">Four labs, new games added over time. Made-up data, real lessons from risk and analytics work. No sign-up{% if analytics.goatcounter %}; plays are counted anonymously, with no cookies, for the <a href="pulse.html">Pulse</a> page{% else %}, nothing stored{% endif %}.</p>
   <div class="pg-grid">
     {% for l in labs.labs %}
     <a class="pg-card {{ l.color }} reveal" href="{{ l.slug }}.html">

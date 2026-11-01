@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Pulse · {{ site.author }}{% endblock %}
+{% block description %}How people are using this site, live: visitors, games played across the Playground labs, and the most-read {{ site.weekly_name }} pieces.{% endblock %}
+{% block content %}
+{% set p = pulse %}
+<section class="wrap pl-head">
+  <p class="kicker mono"><span class="pl-live{% if not p.ready %} off{% endif %}"></span>Pulse · {% if p.ready %}updated {{ p.updated }}{% else %}warming up{% endif %}</p>
+  <h1>How people are using this site, live.</h1>
+  <p class="lede">Visitors, games played in the <a href="index.html#playground">Playground</a>, and the most-read {{ site.weekly_name }} pieces. Counted anonymously, with no cookies, and refreshed every morning.</p>
+</section>
+
+{% if not p.ready %}
+<section class="wrap">
+  <div class="pl-warm">
+    <div class="pl-pulse" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div>
+      <h2>Pulse is warming up</h2>
+      <p>{% if p.on and p.since %}Counting started on {{ p.since }}.{% elif p.on %}Counting has started.{% else %}Counting starts soon.{% endif %}
+        The numbers appear here once the site has had {{ p.min_visitors | num }} visits, so they actually mean something.</p>
+      <ul class="pl-soon">
+        <li>Visitors, games played and article reads since launch</li>
+        <li>Games played each week, across all four labs</li>
+        <li>Where visitors come from: LinkedIn, search or a direct link</li>
+        <li>Each lab's finish rate and average score</li>
+        <li>The most-read {{ site.weekly_name }} pieces</li>
+      </ul>
+      <a class="btn" href="index.html#playground">Play a game while you wait</a>
+    </div>
+  </div>
+</section>
+{% else %}
+{% set d = p.d %}
+<section class="wrap">
+  <div class="pl-tiles">
+    <div class="pl-tile"><b>{{ d.visitors | num }}</b><span>visits since {{ p.since }}</span></div>
+    <div class="pl-tile"><b>{{ d.players | num }}</b><span>games played in the labs</span></div>
+    <div class="pl-tile"><b>{{ d.article_reads | num }}</b><span>{{ site.weekly_name }} article reads</span></div>
+    <div class="pl-tile"><b>{{ d.countries | num }}</b><span>countries visitors came from</span></div>
+  </div>
+
+  <div class="pl-two">
+    <div class="pl-panel">
+      <h2>Games played per week</h2><p class="pl-sub">All four labs, last 8 weeks</p>
+      <svg class="pl-bars" viewBox="0 0 320 160" role="img" aria-label="Games played per week, last 8 weeks">
+        <line class="grid" x1="0" y1="130" x2="320" y2="130"/>
+        {% for w in p.weekly %}{% set x = loop.index0 * 40 + 7 %}
+        <rect class="bar{% if not loop.last %} prev{% endif %}" x="{{ x }}" y="{{ 130 - w.h }}" width="26" height="{{ w.h }}" rx="4"><title>Week of {{ w.label }}: {{ w.players | num }} games</title></rect>
+        {% if loop.last or loop.first %}<text class="v" x="{{ x + 13 }}" y="{{ 130 - w.h - 6 }}" text-anchor="middle">{{ w.players | num }}</text>{% endif %}
+        <text x="{{ x + 13 }}" y="148" text-anchor="middle">{{ w.label }}</text>
+        {% endfor %}
+      </svg>
+    </div>
+    <div class="pl-panel">
+      <h2>Where visitors come from</h2><p class="pl-sub">Share of visits since {{ p.since }}</p>
+      {% for s in p.sources %}
+      <div class="pl-hb"><p>{{ s.name }}</p><div class="track"><div class="fill" style="width:{{ s.pct }}%"></div></div><b>{{ s.pct }}%</b></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="pl-panel">
+    <h2>Labs at a glance</h2><p class="pl-sub">Since {{ p.since }}</p>
+    <div class="pl-table-wrap">
+    <table class="pl-table">
+      <thead><tr><th>Lab</th><th>Most played</th><th class="n">Games played</th><th class="n">Finish rate</th><th class="n">Average score</th></tr></thead>
+      <tbody>
+      {% for r in p.rows %}
+      <tr class="{{ r.lab.color }}"><td><a href="{{ r.lab.slug }}.html"><i class="pl-dot"></i>{{ r.lab.name }}</a></td><td>{{ r.most }}</td>
+        <td class="n">{{ r.players | num }}</td><td class="n">{% if r.finish is not none %}{{ r.finish }}%{% else %}–{% endif %}</td><td class="n">{% if r.avg is not none %}{{ r.avg }}%{% else %}–{% endif %}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  {% if p.articles %}
+  <div class="pl-panel">
+    <h2>Most-read {{ site.weekly_name }} pieces</h2><p class="pl-sub">Reads since {{ p.since }}</p>
+    {% for r in p.articles %}
+    <div class="pl-hb"><p><a href="{{ r.a.url }}">{{ r.a.title }}</a></p><div class="track"><div class="fill" style="width:{{ r.pct }}%"></div></div><b>{{ r.reads | num }}</b></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+{% endif %}
+
+<section class="wrap">
+  <p class="pl-fine">How it's counted: GoatCounter, a privacy-friendly counter with no cookies and nothing personal stored. A replay of the same game in one visit counts once. Average score is the share of the best possible result. Ad blockers hide some visits, so the real numbers are a little higher.</p>
+</section>
+{% endblock %}

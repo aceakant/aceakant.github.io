@@ -63,6 +63,24 @@
 
   window.akConfetti = confetti;
 
+  /* Anonymous play counting for the Pulse page (GoatCounter, no cookies). Silent if counting is off. */
+  var counted = {};
+  function akTrack(name) {
+    if (counted[name]) return;
+    counted[name] = 1;
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {}
+  }
+  window.akDone = function (id, pct) {
+    var band = Math.max(0, Math.min(100, Math.round((pct || 0) / 10) * 10));
+    akTrack("game-" + id + "-finish"); akTrack("game-" + id + "-score-" + band);
+  };
+  function playStarted(e) {
+    var g = e.target.closest && e.target.closest(".game"), st = g && g.closest(".game-stage[data-game]");
+    if (st) akTrack("game-" + st.dataset.game + "-start");
+  }
+  document.addEventListener("click", playStarted, true);
+  document.addEventListener("input", playStarted, true);
+
   /* ---------- Spot the fraud ---------- */
   var game = $("#game");
   if (game) {
@@ -96,6 +114,7 @@
       if (ev.target.id === "game-next") {
         if (round < data.rounds.length - 1) { round++; render(); return; }
         var score = results.filter(Boolean).length, n = data.rounds.length;
+        if (window.akDone) window.akDone("spot-the-fraud", score / n * 100);
         var msg = score === n ? "Flawless. You think like a fraud analyst. Want the job? 😄" : score >= n - 1 ? "Sharp eye! Fraud teams would be glad to have you." : score > 0 ? "Not bad. Fraud is sneaky, that's why it needs patterns, not hunches." : "Fraud won this time. That's exactly why we build detection models!";
         $("#game-prompt").textContent = "Your result";
         casesEl.innerHTML = '<div class="final"><span class="mono">YOU CAUGHT</span><div class="big">' + score + " / " + n + "</div><p>" + msg + "</p></div>";
