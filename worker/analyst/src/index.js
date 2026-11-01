@@ -61,7 +61,8 @@ export default {
     try {
       result = await runReview(summary, { apiKey: env.ANTHROPIC_API_KEY, backupKey: env.ANTHROPIC_API_KEY_BACKUP, workspace: env.ANTHROPIC_WORKSPACE_ID, model: env.MODEL || "claude-sonnet-5-5" });
     } catch (e) {
-      return json({ error: "upstream", message: "The analyst couldn't finish this one. Please try again in a minute." }, 502, cors);
+      // reason = the error type only (e.g. "Claude API 529"), never keys or data; helps the deploy check explain failures
+      return json({ error: "upstream", message: "The analyst couldn't finish this one. Please try again in a minute.", reason: String(e && e.message || e).slice(0, 160) }, 502, cors);
     }
     await env.LIMITS.put(vKey, String(used + 1), { expirationTtl: windowDays * 86400 });
     await env.LIMITS.put(dKey, String(today + 1), { expirationTtl: 2 * 86400 });
