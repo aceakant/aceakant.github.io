@@ -6,6 +6,7 @@ Run:  python site/build.py
 """
 import datetime
 import math
+import os
 import pathlib
 import re
 import shutil
@@ -65,6 +66,11 @@ def build():
     common = dict(site=config["site"], profile=profile, leadership=leadership,
                   year=datetime.date.today().year, upcoming=upcoming)
 
+    show_drafts = os.environ.get("PREVIEW_DRAFTS") == "1"
+    for c in leadership["companies"]:
+        for p in c["projects"]:
+            p["published"] = bool(p.get("detail")) and (p.get("status") == "live" or show_drafts)
+
     pages = {
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
         "leadership.html": {},
@@ -80,10 +86,13 @@ def build():
         html = env.get_template("article.html").render(root="../", page="article", a=a, read_next=others, **common)
         (OUT / a["url"]).write_text(html, encoding="utf-8")
 
-    # leadership case pages (only projects that have a written case)
+    # leadership case pages: only cases marked "live" are published.
+    # Set PREVIEW_DRAFTS=1 to also build draft cases for a private preview.
+    show_drafts = os.environ.get("PREVIEW_DRAFTS") == "1"
     for c in leadership["companies"]:
         for p in c["projects"]:
-            if not p.get("detail"):
+            p["published"] = bool(p.get("detail")) and (p.get("status") == "live" or show_drafts)
+            if not p["published"]:
                 continue
             st = p["detail"]["stakeholders"]
             nodes = []
