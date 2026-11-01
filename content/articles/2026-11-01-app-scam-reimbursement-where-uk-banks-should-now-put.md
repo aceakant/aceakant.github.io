@@ -8,7 +8,7 @@ test_run: true
 market: UK
 scenario: a mid-sized UK retail bank (an illustrative composite, not a real institution)
 publish_at: null
-review_issue: null
+review_issue: 4
 reminded: false
 summary: Since October 2024, UK banks must reimburse most APP scam victims, which turns fraud losses into a cost you can model line by line. Here is how the rules shift detection investment toward both sides of the payment, and how to size the impact.
 hook:
