@@ -1,114 +1,114 @@
 {
   "sample": "card-transactions",
-  "generated": "2026-11-01T21:48:32.128Z",
-  "seconds": 22,
+  "generated": "2026-11-01T22:25:30.172Z",
+  "seconds": 21,
   "summary_chars": 4468,
-  "title": "Card transactions with fraud flags, September",
+  "title": "Card transactions with fraud flags, September 2026",
   "draft": {
     "findings": [
       {
         "id": "F1",
         "severity": "high",
-        "headline": "Fraud is concentrated in night-time transactions",
-        "detail": "Night (0–5) transactions have a fraud rate of 30.8% against 0.3% to 0.7% in other periods. They are only 7% of rows (718), but 0.308 × 718 gives about 221 of the 272 fraud cases."
+        "headline": "Night-time transactions have a very high fraud rate",
+        "detail": "Fraud is flagged on 30.8% of the 718 transactions made between midnight and 5am, against 0.3% to 0.7% in other periods. Night is only 7% of volume."
       },
       {
         "id": "F2",
         "severity": "high",
-        "headline": "Digital goods and online channel carry the fraud",
-        "detail": "Digital goods has a 20.4% fraud rate against 0.3% to 0.7% for other categories. Online is 6.3% against 0.3% for Contactless and 0.5% for Chip. These patterns go together and may overlap."
+        "headline": "Fraud rate rose sharply in mid-September",
+        "detail": "The weekly fraud rate went from 0.6% (week of 31 Aug) to 4.0% (14 Sep) and 4.1% (21 Sep), before easing to 1.8% in the last week. The last week is partial, with 727 rows, so treat it with care."
       },
       {
         "id": "F3",
         "severity": "high",
-        "headline": "Fraud rate is very high in AE and SG",
-        "detail": "AE is at 28.6% (206 rows) and SG at 31% (187 rows), against 1.6% for IN. Together they are only 3.8% of rows, so a small share of volume drives a large share of risk."
+        "headline": "Digital goods, online and AE/SG are concentrated risk pockets",
+        "detail": "Fraud is 20.4% in Digital goods, 6.3% online, 28.6% in AE (206 rows) and 31.0% in SG (187 rows). Other categories are at 0.7% or below, and contactless and chip are at 0.5% or below. These patterns may overlap, so they may not be separate problems."
       },
       {
         "id": "F4",
         "severity": "medium",
-        "headline": "Fraud rate rose sharply in mid-September",
-        "detail": "Weekly fraud rate went from 0.6% (week of 31 Aug) to 1.7%, then 4.0% and 4.1% in the following two weeks. The last week is partial (727 rows), so its 1.8% is less reliable."
+        "headline": "Small-value transactions are far more likely to be fraud",
+        "detail": "The lowest amount band (1.71 to 535.9, 2,052 rows) has an 11.4% fraud rate. The four higher bands range from 0.3% to 0.6%, which suggests small test-style purchases deserve a look."
       },
       {
         "id": "F5",
-        "severity": "medium",
-        "headline": "Smallest transactions have the highest fraud rate",
-        "detail": "The lowest amount band (1.71 to 535.9) has an 11.4% fraud rate. Every higher band is between 0.3% and 0.6%. Small test-style payments may be worth checking."
+        "severity": "stable",
+        "headline": "Data is complete, and the main market looks calm",
+        "detail": "There are no missing cells or duplicate rows across 10,260 transactions. India is 93.5% of rows with a 1.6% fraud rate, and the overall rate is 2.7% (272 cases)."
       }
     ],
     "next_steps": [
-      "Check how far night-time, online, digital goods, AE and SG overlap, to see whether one pattern explains most of the 272 fraud cases.",
-      "Review recent card IDs with small online digital-goods payments at night or abroad, and test tighter rules or step-up checks.",
-      "Find out what changed in the weeks of 14 and 21 September, and confirm whether the fraud labels are complete for the latest days."
+      "Check whether the night, online, digital goods, AE/SG and low-value fraud cases are the same transactions, using a cross-tab of those flags.",
+      "Review the 272 fraud cases from the weeks of 14 and 21 September to see what changed, such as merchants, cards or channels.",
+      "Test tighter rules or step-up checks for night-time online digital goods and AE/SG purchases, and measure the effect on genuine customers."
     ]
   },
   "reviews": [
     {
       "id": "F1",
       "verdict": "confirmed",
-      "note": "30.8% of 718 night rows is about 221 of 272 cases, roughly 81%. Other periods at 0.3% to 0.7% match the summary."
+      "note": "718 rows, 30.8% rate, 7% share and 0.3% to 0.7% elsewhere all match the hours table."
     },
     {
       "id": "F2",
       "verdict": "confirmed",
-      "note": "Digital goods 20.4% and Online 6.3% match the summary. Other categories 0.3% to 0.7%, Contactless 0.3%, Chip 0.5% all correct. Overlap caveat is fair."
+      "note": "Weekly rates 0.6, 1.7, 4.0, 4.1 and 1.8 match. Partial last week (727 rows) is flagged correctly."
     },
     {
       "id": "F3",
-      "verdict": "corrected",
-      "note": "Numbers right; 206+187=393 rows is 3.8%. Added that they hold about 117 of 272 cases (59+58). Changed 'drives' to 'goes with'."
+      "verdict": "confirmed",
+      "note": "Rates and row counts for Digital goods, Online, AE (206) and SG (187) match. Both countries are over 30 rows. Overlap caveat is fair."
     },
     {
       "id": "F4",
       "verdict": "corrected",
-      "note": "Rates match. Added that the first week starts on 1 Sep and the last week is short, so the rise is not a steady trend."
+      "note": "Numbers match. Removed the 'test-style purchases' guess, which the summary cannot support. Kept as a pattern only."
     },
     {
       "id": "F5",
       "verdict": "corrected",
-      "note": "11.4% against 0.3% to 0.6% is correct. Removed the 'test-style payments' guess, which the summary does not support. Added overlap caveat."
+      "note": "Completeness figures match. 'Calm' overstated: India's 1.6% rate on 9,591 rows is roughly 150 of the 272 cases."
     }
   ],
   "findings": [
     {
       "id": "F1",
       "severity": "high",
-      "headline": "Fraud is concentrated in night-time transactions",
-      "detail": "Night (0–5) transactions have a fraud rate of 30.8% against 0.3% to 0.7% in other periods. They are only 7% of rows (718), but 0.308 × 718 gives about 221 of the 272 fraud cases, roughly 81%."
+      "headline": "Night-time transactions have a very high fraud rate",
+      "detail": "Fraud is flagged on 30.8% of the 718 transactions made between midnight and 5am, against 0.3% to 0.7% in other periods. Night is only 7% of volume."
     },
     {
       "id": "F2",
       "severity": "high",
-      "headline": "Digital goods and online channel carry the fraud",
-      "detail": "Digital goods has a 20.4% fraud rate against 0.3% to 0.7% for other categories. Online is 6.3% against 0.3% for Contactless and 0.5% for Chip. These patterns go together and may overlap."
+      "headline": "Fraud rate rose sharply in mid-September",
+      "detail": "The weekly fraud rate went from 0.6% (week of 31 Aug) to 4.0% (14 Sep) and 4.1% (21 Sep), then eased to 1.8% in the last week. That last week is partial, with 727 rows, so treat it with care."
     },
     {
       "id": "F3",
       "severity": "high",
-      "headline": "Fraud rate is very high in AE and SG",
-      "detail": "AE is at 28.6% (206 rows) and SG at 31% (187 rows), against 1.6% for IN. Together they are 3.8% of rows but about 117 of the 272 fraud cases (0.286×206 plus 0.31×187), about 43%."
+      "headline": "Digital goods, online and AE/SG are concentrated risk pockets",
+      "detail": "Fraud is 20.4% in Digital goods, 6.3% online, 28.6% in AE (206 rows) and 31.0% in SG (187 rows). Other categories are at 0.7% or below, and contactless and chip are at 0.5% or below. These groups may overlap, so they may not be separate problems."
     },
     {
       "id": "F4",
       "severity": "medium",
-      "headline": "Fraud rate was higher in the middle two weeks",
-      "detail": "Weekly fraud rate went from 0.6% (week of 31 Aug) to 1.7%, then 4.0% and 4.1%, and back to 1.8% in the last week. The first and last weeks are partial, so read the pattern with care."
+      "headline": "Low-value transactions have a much higher fraud rate",
+      "detail": "The lowest amount band (1.71 to 535.9, 2,052 rows) has an 11.4% fraud rate. The four higher bands range from 0.3% to 0.6%. This goes with small amounts, but the summary does not show why."
     },
     {
       "id": "F5",
-      "severity": "medium",
-      "headline": "Smallest transactions have the highest fraud rate",
-      "detail": "The lowest amount band (1.71 to 535.9, 2,052 rows) has an 11.4% fraud rate. Every higher band is between 0.3% and 0.6%. This may overlap with digital goods, which have a lower average amount."
+      "severity": "stable",
+      "headline": "Data is complete, but India still holds many fraud cases",
+      "detail": "There are no missing cells or duplicate rows across 10,260 transactions. India is 93.5% of rows with a 1.6% fraud rate, which is below the overall 2.7% (272 cases) but is roughly 150 cases, about half of the total (9,591 × 1.6%)."
     }
   ],
   "next_steps": [
-    "Cross-tabulate night, online, digital goods, AE, SG and low amounts to see how much they overlap and whether one pattern explains most of the 272 cases.",
-    "Review card IDs with small online digital-goods payments at night or abroad, and test tighter rules or extra checks on that combination.",
-    "Find out what changed in the weeks of 14 and 21 September, and confirm the fraud labels are complete for the latest days."
+    "Cross-tabulate night, online, digital goods, AE/SG and low-value flags to see whether the 272 fraud cases are mostly the same transactions.",
+    "Review the fraud cases from the weeks of 14 and 21 September to see what changed, such as merchants, cards or channels.",
+    "Trial step-up checks for night-time online digital goods and AE/SG purchases, and measure the effect on genuine customers."
   ],
-  "conclusion": "Fraud in this file is highly concentrated: night-time, digital goods, online, AE and SG, and small amounts all go with fraud rates far above the 2.7% overall. These groups probably overlap heavily, so treat them as one risk picture rather than five separate problems. First, work out how much they overlap, so any new rule targets the right combination.",
-  "limits": "This review uses summary statistics only, so it cannot show overlap between groups, why fraud is higher in them, or whether the fraud labels are complete.",
+  "conclusion": "The data is complete and shows fraud is heavily concentrated: at night, in Digital goods, online, in AE and SG, in low-value purchases, and in the weeks of 14 and 21 September. These groups probably overlap, so treat them as one pattern until shown otherwise. First, cross-tabulate these flags to find the smallest set of transactions that holds most of the 272 cases.",
+  "limits": "This review uses summary figures only, so it cannot show how the groups overlap, what changed in September, or why any pattern exists.",
   "model": "claude-sonnet-5-5",
   "version": "2026-11-02"
 }
