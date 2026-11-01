@@ -30,7 +30,7 @@ agents:
   article_words: "900-1300"
 
 analytics:
-  goatcounter: ""              # your GoatCounter code, e.g. "vertexnode" (from vertexnode.goatcounter.com). Empty = nothing is counted.
+  goatcounter: "vertexnode"           # your GoatCounter code, e.g. "vertexnode" (from vertexnode.goatcounter.com). Empty = nothing is counted.
 
 pulse:
   start: "2026-11-01"          # count from this date
