@@ -18,6 +18,7 @@ import yaml
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "content" / "pulse.json"
 
+IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
 GAME_EVENT = re.compile(r"^game-(.+)-(start|finish)$")
 SCORE_EVENT = re.compile(r"^game-(.+)-score-(\d+)$")
 ARTICLE_PATH = re.compile(r"/articles/([a-z0-9-]+?)(?:\.html)?/?$")
@@ -45,6 +46,8 @@ class GoatCounter:
             if r.status_code == 429:  # rate limit: 4 requests a second
                 time.sleep(1.5 * (attempt + 1))
                 continue
+            if r.status_code == 404 and "not found" in r.text:
+                return {}  # GoatCounter says "not found" when nothing has been counted yet
             if r.status_code >= 400:
                 raise RuntimeError(f"GoatCounter {path} → {r.status_code}: {r.text[:300]}")
             time.sleep(0.3)
@@ -137,7 +140,7 @@ def main():
     weeks = [(this_monday - datetime.timedelta(weeks=i)).isoformat() for i in range(7, -1, -1)]
     data = {
         "updated": datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "since": first_day[:10] if first_day else start,
+        "since": first_day[:10] if first_day else datetime.datetime.now(IST).date().isoformat(),
         "visitors": visitors,
         "players": sum(g["players"] for g in games.values()),
         "article_reads": sum(articles.values()),
