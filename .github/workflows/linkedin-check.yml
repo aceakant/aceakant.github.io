@@ -4,7 +4,7 @@ name: 5 · LinkedIn connection check
 
 on:
   schedule:
-    - cron: "0 3 * * 1"    # Monday 08:30 IST
+    - cron: "7 3 * * 1"    # Monday 08:37 IST (the hourly publish job starts it if GitHub drops this)
   workflow_dispatch:
   push:
     branches: [main]

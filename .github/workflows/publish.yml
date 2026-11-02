@@ -1,5 +1,6 @@
 # STEP 2 — Every hour: send the 24-hour reminder, and publish drafts whose 48-hour window has passed.
 # Held drafts and drafts that need review are never published here.
+# It also starts anything GitHub's scheduler dropped today (Monday article, LinkedIn check, Pulse numbers).
 name: 2 · Publish on schedule
 
 on:
@@ -25,6 +26,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -44,3 +47,7 @@ jobs:
           git add -A content
           git diff --cached --quiet || (git commit -m "Scheduled publish/reminder" && git push)
           gh workflow run deploy.yml
+      - name: Start anything the scheduler dropped today
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/catch_up.py

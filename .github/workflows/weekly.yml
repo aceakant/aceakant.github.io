@@ -4,8 +4,11 @@ name: 1 · Weekly article
 
 on:
   schedule:
-    - cron: "30 3 * * 1"   # Monday 03:30 UTC = 09:00 IST
-    - cron: "30 5 * * 1"   # backup at 11:00 IST; a scheduled run skips itself if today's draft already exists
+    - cron: "23 3 * * 1"   # Monday 08:53 IST (off the busy :00/:30 marks)
+    - cron: "47 4 * * 1"   # backups at 10:17, 11:43 and 14:07 IST; a scheduled run skips itself if today's draft exists
+    - cron: "13 6 * * 1"
+    - cron: "37 8 * * 1"
+    # and the hourly publish job starts it if all of these are dropped (scripts/catch_up.py)
   workflow_dispatch:       # "Run workflow" button for a manual run
   push:                    # or: edit content/run-now.txt (any text) to run immediately
     branches: [main]

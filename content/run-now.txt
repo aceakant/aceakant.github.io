@@ -1,1 +1,1 @@
-Real run requested 2026-11-01T18:15:05Z (article 4 of 4). Start this file with the word TEST for a held test run; anything else is a real run.
+Real run requested 2026-11-02T06:02:09Z (Monday article; the scheduled run was dropped by GitHub). Start this file with the word TEST for a held test run; anything else is a real run.
