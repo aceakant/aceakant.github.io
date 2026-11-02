@@ -1,15 +1,11 @@
 {
-  "updated": "2026-11-01T22:27:00Z",
+  "updated": "2026-11-02T06:03:58Z",
   "since": "2026-11-02",
-  "visitors": 17,
+  "visitors": 22,
   "players": 5,
-  "article_reads": 9,
+  "article_reads": 10,
   "countries": 3,
   "weekly": [
-    {
-      "week": "2026-09-07",
-      "players": 0
-    },
     {
       "week": "2026-09-14",
       "players": 0
@@ -37,6 +33,10 @@
     {
       "week": "2026-10-26",
       "players": 0
+    },
+    {
+      "week": "2026-11-02",
+      "players": 5
     }
   ],
   "sources": [
@@ -46,7 +46,7 @@
     },
     {
       "name": "Direct link or bookmark",
-      "count": 0
+      "count": 2
     },
     {
       "name": "Google and other search",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 18
+      "count": 20
     }
   ],
   "games": {
@@ -114,6 +114,10 @@
     {
       "slug": "ten-seconds-to-decide-fraud-controls-for-eu-instant-payments",
       "reads": 3
+    },
+    {
+      "slug": "app-scam-reimbursement-where-uk-banks-should-now-put",
+      "reads": 1
     }
   ],
   "tools": {
