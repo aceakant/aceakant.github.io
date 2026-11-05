@@ -275,3 +275,129 @@
     hideFor.forEach(function (el) { dio.observe(el); });
   }
 })();
+
+/* ---------- Playground Hall of Fame: monthly top scores (nickname, game, score, country) ---------- */
+(function () {
+  "use strict";
+  var cfgEl = document.getElementById("ak-hof");
+  if (!cfgEl) return;
+  var CFG; try { CFG = JSON.parse(cfgEl.textContent); } catch (e) { return; }
+  if (!CFG.api) return;
+  var API = CFG.api, GAMES = CFG.games || {}, tokens = {}, asked = {};
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+  function flag(cc) { return /^[A-Z]{2}$/.test(cc || "") ? String.fromCodePoint(0x1F1E6 + cc.charCodeAt(0) - 65, 0x1F1E6 + cc.charCodeAt(1) - 65) : ""; }
+  function monthName(m) { var p = String(m || "").split("-"); return p.length === 2 ? new Date(+p[0], +p[1] - 1, 1).toLocaleString("en-GB", { month: "long", year: "numeric" }) : ""; }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  function post(path, body) {
+    return fetch(API + path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { j._status = r.status; return j; }); });
+  }
+  function list(entries, opts) {
+    var ol = el("ol", "hof-list");
+    entries.forEach(function (x, i) {
+      var g = GAMES[x.g] || {}, li = el("li", opts && opts.mine === i + 1 ? "mine" : null);
+      li.appendChild(el("span", "hof-rank", String(i + 1)));
+      var who = el("span", "hof-who"); who.appendChild(el("b", null, x.n));
+      if (opts && opts.games && g.name) who.appendChild(el("small", null, g.name + (g.lab ? " · " + g.lab : "")));
+      li.appendChild(who);
+      li.appendChild(el("span", "hof-flag", flag(x.c)));
+      li.appendChild(el("b", "hof-score", x.p + "%"));
+      ol.appendChild(li);
+    });
+    return ol;
+  }
+
+  /* a signed start token the first time each game is played on this page (also counts players to date) */
+  function started(e) {
+    var st = e.target.closest && e.target.closest(".game-stage[data-game]");
+    if (!st || !(e.target.closest(".game"))) return;
+    var id = st.dataset.game;
+    if (tokens[id] !== undefined) return;
+    tokens[id] = null;
+    post("/hof/start", { game: id }).then(function (j) { if (j.token) tokens[id] = j.token; }).catch(function () {});
+  }
+  document.addEventListener("click", started, true);
+  document.addEventListener("input", started, true);
+
+  /* the offer at the end of a game */
+  function offer(id, pct) {
+    var stage = document.querySelector('.game-stage[data-game="' + id + '"]');
+    if (!stage || !(pct > 0) || !tokens[id]) return;
+    var old = stage.querySelector(".hof-offer"); if (old) old.remove();
+    var box = el("div", "hof-offer"), g = GAMES[id] || {};
+    box.appendChild(el("span", "mono hof-k", "🏆 Hall of Fame · " + monthName(new Date().toISOString().slice(0, 7))));
+    box.appendChild(el("h3", null, "You scored " + pct + "%. Add it to this month's Hall of Fame?"));
+    var form = el("form", "hof-form"), input = el("input");
+    input.type = "text"; input.maxLength = 14; input.placeholder = "Your nickname"; input.autocomplete = "nickname";
+    input.setAttribute("aria-label", "Nickname"); input.value = store("ak-hof-name") || "";
+    var go = el("button", "btn small", "Add my score"), no = el("button", "btn small ghost", "No thanks");
+    go.type = "submit"; no.type = "button";
+    form.appendChild(input); form.appendChild(go); form.appendChild(no);
+    var note = el("p", "hof-note", "A nickname, not your real name: 2 to 14 letters or numbers. Shown with your score, the game and your country's flag.");
+    box.appendChild(form); box.appendChild(note);
+    no.addEventListener("click", function () { box.remove(); });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = input.value.trim();
+      if (name.length < 2) { note.textContent = "Please type a nickname of at least 2 characters."; note.className = "hof-note err"; return; }
+      go.disabled = true; go.textContent = "Adding…";
+      post("/hof", { game: id, pct: pct, name: name, token: tokens[id] }).then(function (j) {
+        if (!j.ok) { go.disabled = false; go.textContent = "Add my score"; note.textContent = j.message || "That didn't work. Please try again."; note.className = "hof-note err"; return; }
+        store("ak-hof-name", name);
+        box.innerHTML = "";
+        box.appendChild(el("span", "mono hof-k", "🏆 Hall of Fame · " + monthName(j.month)));
+        box.appendChild(el("h3", null, j.rank_game ? "You're #" + j.rank_game + " in " + (g.name || "this game") + " this month!" : "Score added. Beat the top 5 to get on the board!"));
+        if (j.rank_all) box.appendChild(el("p", "hof-note", "And #" + j.rank_all + " across the whole Playground."));
+        if (j.top && j.top.length) box.appendChild(list(j.top, { mine: j.rank_game }));
+        var a = el("a", "hof-link", "See the full Hall of Fame on Pulse →"); a.href = "pulse.html#hall-of-fame"; box.appendChild(a);
+        if (window.akConfetti && j.rank_game === 1) window.akConfetti();
+        if (window.akTrack) window.akTrack("hof-submit");
+        var strip = stage.querySelector(".hof-strip"); if (strip) fillStrip(strip, j.top || []);
+      }).catch(function () { go.disabled = false; go.textContent = "Add my score"; note.textContent = "Couldn't reach the Hall of Fame. Please try again."; note.className = "hof-note err"; });
+    });
+    var strip = stage.querySelector(".hof-strip");
+    (strip ? strip.parentNode : stage).insertAdjacentElement(strip ? "beforebegin" : "beforeend", box);
+    box.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+  var prev = window.akDone;
+  window.akDone = function (id, pct) {
+    if (prev) prev(id, pct);
+    var key = id + ":" + Math.round(pct);
+    if (asked[key]) return; asked[key] = 1;
+    setTimeout(function () { offer(id, Math.round(pct || 0)); }, 1200);
+  };
+
+  /* each game's top 5, under the game */
+  function fillStrip(strip, top) {
+    strip.innerHTML = ""; strip.hidden = false;
+    var head = el("div", "hof-strip-head");
+    head.appendChild(el("span", "mono hof-k", "🏆 This month's top 5"));
+    var a = el("a", null, "Hall of Fame →"); a.href = "pulse.html#hall-of-fame"; head.appendChild(a);
+    strip.appendChild(head);
+    if (top.length) strip.appendChild(list(top)); else strip.appendChild(el("p", "hof-note", "No scores yet this month. Finish a game to take the top spot."));
+  }
+  Array.prototype.forEach.call(document.querySelectorAll(".hof-strip[data-hof-game]"), function (strip) {
+    fetch(API + "/hof?game=" + encodeURIComponent(strip.dataset.hofGame)).then(function (r) { return r.json(); })
+      .then(function (j) { fillStrip(strip, j.top || []); }).catch(function () {});
+  });
+
+  /* the Pulse page section */
+  var pulse = document.getElementById("hall-of-fame");
+  if (pulse) {
+    var q = function (k) { return pulse.querySelector('[data-hof="' + k + '"]'); };
+    fetch(API + "/hof").then(function (r) { return r.json(); }).then(function (j) {
+      pulse.hidden = false;
+      q("players").textContent = Number(j.players || 0).toLocaleString("en-GB");
+      q("month").textContent = monthName(j.month) + " · top 5";
+      var top = j.top || [];
+      if (top.length) {
+        q("leader").textContent = top[0].p + "%"; q("leader-l").textContent = "top score this month, by " + top[0].n;
+        q("top").replaceWith(list(top, { games: true }));
+      } else { q("empty").hidden = false; q("top").remove(); q("leader").textContent = "–"; }
+      if (j.last && j.last.top && j.last.top.length) {
+        q("last-wrap").hidden = false; q("last-title").textContent = monthName(j.last.month) + " · champions";
+        q("last").replaceWith(list(j.last.top, { games: true }));
+      }
+    }).catch(function () {});
+  }
+})();

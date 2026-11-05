@@ -4,6 +4,7 @@
 // per tool that protects the budget. Visitors are counted by a salted hash of their IP address; the IP is never stored.
 import { runReview, VERSION } from "./review.js";
 import { MR_VERSION, parseRequest, runModelRisk } from "./modelrisk.js";
+import { hofRead, hofStart, hofSubmit } from "./hof.js";
 
 const json = (body, status, headers) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", ...headers } });
 
@@ -36,8 +37,21 @@ export default {
       const mr = env.LIMITS ? JSON.parse((await env.LIMITS.get("stats_mr")) || "null") : null;
       return json({ ...(st || { reviews: 0 }), model_risk: mr || { checks: 0 } }, 200, { ...cors, "Access-Control-Allow-Origin": "*" });
     }
+    // Playground Hall of Fame: public read; scores only from Ajay's website.
+    if (request.method === "GET" && url.pathname === "/hof" && env.LIMITS) return hofRead(request, env, url, json, cors);
     if (!allowed.includes(origin)) return json({ error: "origin", message: "This service only answers Ajay Kant's website." }, 403, cors);
     if (!env.LIMITS || !env.ANTHROPIC_API_KEY) return json({ error: "not_ready", message: "The live service is not switched on yet." }, 503, cors);
+    if (request.method === "POST" && (url.pathname === "/hof" || url.pathname === "/hof/start")) {
+      const raw = await request.text();
+      if (raw.length > 2000) return json({ error: "too_big" }, 413, cors);
+      let body; try { body = JSON.parse(raw); } catch { body = null; }
+      const salt = (await sha256("salt:" + env.ANTHROPIC_API_KEY)).slice(0, 24);
+      const visitor = await sha256(salt + (request.headers.get("CF-Connecting-IP") || "unknown"));
+      const secret = await sha256("hof:" + env.ANTHROPIC_API_KEY);
+      const r = url.pathname === "/hof/start" ? await hofStart(body, env, visitor, secret, request.headers.get("X-Analyst-Test") === "1")
+        : await hofSubmit(body, env, visitor, secret, (request.cf && request.cf.country) || request.headers.get("CF-IPCountry") || "");
+      return json(r.body, r.status, cors);
+    }
 
     const toolName = url.pathname === "/model-risk" || url.searchParams.get("tool") === "model-risk" ? "model-risk" : "review";
     const tool = TOOLS[toolName];

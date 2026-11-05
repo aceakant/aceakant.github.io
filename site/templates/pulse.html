@@ -69,6 +69,29 @@
   {% endif %}
 </section>
 
+{% if api_url %}
+<section class="wrap" id="hall-of-fame" hidden>
+  <h2 class="sec">Playground Hall of Fame</h2>
+  <div class="pl-tiles hof-tiles">
+    <div class="pl-tile"><b data-hof="players">–</b><span>players to date</span></div>
+    {% if p.games_played %}<div class="pl-tile"><b>{{ p.games_played | num }}</b><span>games played to date</span></div>{% endif %}
+    <div class="pl-tile"><b data-hof="leader">–</b><span data-hof="leader-l">top score this month</span></div>
+  </div>
+  <div class="hof-two">
+    <div class="pl-panel">
+      <h2 data-hof="month">This month · top 5</h2><p class="pl-sub">Best score per player in each game, across all four labs</p>
+      <ol class="hof-list" data-hof="top"></ol>
+      <p class="hof-note" data-hof="empty" hidden>No scores yet this month. <a href="index.html#playground">Be the first →</a></p>
+    </div>
+    <div class="pl-panel" data-hof="last-wrap" hidden>
+      <h2 data-hof="last-title">Last month · champions</h2><p class="pl-sub">The top 3 when the month closed</p>
+      <ol class="hof-list" data-hof="last"></ol>
+    </div>
+  </div>
+  <p class="pl-fine">Nicknames are chosen by players and filtered. Scores are percentages so different games compare fairly; ties go to the quicker player. One score per game per player each day. The board starts fresh on the 1st of every month, with the new games.</p>
+</section>
+{% endif %}
+
 <section class="wrap"><h2 class="sec">Visitors and games</h2></section>
 {% if not p.ready %}
 <section class="wrap">

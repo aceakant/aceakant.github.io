@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["worker/analyst/**", "site/static/modelrisk/mr-core.js", "content/analyst-service.txt"]
+    paths: ["worker/analyst/**", "site/static/modelrisk/mr-core.js", "content/analyst-service.txt", "content/hof-remove.txt"]
 
 permissions:
   contents: write
@@ -109,6 +109,16 @@ jobs:
         run: |
           python3 -c "import json,os; d={'ANTHROPIC_API_KEY': os.environ['KEY']}; b=os.environ.get('BACKUP'); d.update({'ANTHROPIC_API_KEY_BACKUP': b} if b else {}); ws=os.environ.get('WS'); d.update({'ANTHROPIC_WORKSPACE_ID': ws} if ws else {}); print(json.dumps(d))" | npx --yes wrangler@4 secret bulk
 
+      - name: Hall of Fame removals (nicknames listed in content/hof-remove.txt are hidden and blocked)
+        if: steps.ready.outputs.go == 'true'
+        working-directory: worker/analyst
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ steps.prep.outputs.account }}
+        run: |
+          python3 -c "import json,pathlib;p=pathlib.Path('../../content/hof-remove.txt');names=[l.strip().lower() for l in (p.read_text().splitlines() if p.exists() else []) if l.strip() and not l.strip().startswith('#')];json.dump(names,open('/tmp/ban.json','w'));print(len(names),'nickname(s) removed')"
+          npx --yes wrangler@4 kv key put "hof:ban" --path /tmp/ban.json --binding LIMITS --remote
+
       - name: Check it answers
         if: steps.ready.outputs.go == 'true'
         run: |
@@ -164,6 +174,14 @@ jobs:
           else:
               print("MODEL RISK TEST: NOT OK |", d)
           PY
+
+      - name: Check the Hall of Fame answers
+        if: steps.ready.outputs.go == 'true'
+        env:
+          URL: ${{ steps.prep.outputs.url }}
+        run: |
+          echo "Board: $(curl -sS "$URL/hof")"
+          echo "Start: $(curl -sS -X POST -H "Origin: https://aceakant.github.io" -H "X-Analyst-Test: 1" -H "Content-Type: application/json" -d '{"game":"deploy-check"}' "$URL/hof/start" | python3 -c "import json,sys;d=json.load(sys.stdin);print('token OK' if d.get('token') else d)")"
 
       - name: Tell the website where the service is
         if: steps.ready.outputs.go == 'true'

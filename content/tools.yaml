@@ -1,0 +1,53 @@
+# The Workbench: every tool on the site. Add a new tool by adding an entry; the Workbench page and the home
+# page's Tools row are built from this list (featured tools also appear on the home page, in this order).
+#   status: live = has its own page (url); next = shown as "Coming soon", no link
+#   style:  ai = maker-checker AI tool (teal); lite = free tool with no AI (amber)
+tools:
+  - id: analyst
+    name: Analyst on Call
+    badge: AI
+    style: ai
+    kind: Maker-checker AI
+    status: live
+    url: analyst.html
+    cta: Try it
+    featured: true
+    blurb: Drop in a loan book, transactions or fraud-alert file. One AI drafts the findings, a second checks every number, and you get a final conclusion.
+    facts: ["3 samples or your own CSV", "Your file stays in your browser", "5 free reviews"]
+    tags: [Credit, Fraud, Data quality]
+
+  - id: model-risk
+    name: Model Risk Check
+    badge: MR
+    style: ai
+    kind: Maker-checker AI
+    status: live
+    url: model-risk.html
+    cta: Check a model
+    featured: true
+    blurb: Answer 10 quick questions about a credit, fraud or AI model. See how ready it is for the regulator, the gaps to fix first and the evidence to keep.
+    facts: ["UK, EU, US and Canada rulebooks", "Score from your answers, no AI", "5 free checks"]
+    tags: [Model risk, AI governance, Regulation]
+
+  - id: fraud-roi
+    name: Fraud ROI Calculator
+    badge: ROI
+    style: lite
+    kind: Free calculator · no AI
+    status: live
+    url: fraud-roi.html
+    cta: Calculate
+    featured: true
+    blurb: Move the sliders and see what a fraud model really saves once false alarms, review costs and blocked customers are counted.
+    facts: ["£ € $ C$", "Runs in your browser", "Unlimited and free"]
+    tags: [Fraud, Business case]
+
+  - id: cut-off-studio
+    name: Cut-off Studio
+    badge: CUT
+    style: lite
+    kind: Free simulator · no AI
+    status: next
+    blurb: Move a credit-score cut-off on a sample loan book and watch approval rate, bad rate, expected loss and profit change together.
+    facts: ["Sample loan book", "Runs in your browser"]
+    tags: [Credit, Strategy]

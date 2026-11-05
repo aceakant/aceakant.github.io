@@ -114,7 +114,8 @@ def pulse_view(config, labs, published):
     v = dict(on=bool((config.get("analytics") or {}).get("goatcounter")), ready=False,
              min_visitors=pcfg.get("min_visitors", 200),
              since=nice_date(data["since"]) if data else None,
-             acc=accountability_view(config, published, data))
+             acc=accountability_view(config, published, data),
+             games_played=int(data.get("players", 0)) if data else 0)
     if not data or data.get("visitors", 0) < v["min_visitors"]:
         return v
     updated = datetime.datetime.fromisoformat(data["updated"].replace("Z", "+00:00")).astimezone(IST)
@@ -173,8 +174,12 @@ def build():
     env.filters["num"] = lambda n: f"{int(n):,}"
     # new version tag on every build, so browsers fetch fresh styles and scripts
     asset_v = (os.environ.get("GITHUB_SHA") or datetime.datetime.now().strftime("%Y%m%d%H%M%S"))[:10]
+    tools = yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"]
+    game_map = {g["id"]: dict(name=g["name"], lab=l["name"], url=f"{l['slug']}.html#{g['id']}", color=l.get("color", ""))
+                for l in labs["labs"] for g in l["games"]}
     common = dict(site=config["site"], profile=profile, leadership=leadership, labs=labs, analytics=config.get("analytics") or {},
-                  year=datetime.date.today().year, upcoming=upcoming, asset_v=asset_v)
+                  year=datetime.date.today().year, upcoming=upcoming, asset_v=asset_v, tools=tools, game_map=game_map,
+                  api_url=((config.get("analyst") or {}).get("worker_url") or "").rstrip("/"))
 
     show_drafts = os.environ.get("PREVIEW_DRAFTS") == "1"
     for c in leadership["companies"]:
@@ -190,6 +195,7 @@ def build():
         "analyst.html": dict(analyst=config.get("analyst") or {},
                              samples=json.loads((ROOT / "site" / "static" / "analyst" / "samples" / "samples.json").read_text())),
         "model-risk.html": dict(mr=model_risk_view(config)),
+        "workbench.html": {},
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
             (dict(url=a["url"], short="fraud model ROI") for a in published if "fraud-model-roi" in a["slug"]), None))),
     }

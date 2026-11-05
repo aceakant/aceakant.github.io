@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Workbench · {{ site.author }}{% endblock %}
+{% block description %}Hands-on tools for risk, fraud and model work by {{ site.author }}: maker-checker AI tools and free calculators. New tools are added over time.{% endblock %}
+{% block content %}
+{% set live = tools | selectattr("status", "equalto", "live") | list %}
+{% set ai = live | selectattr("style", "equalto", "ai") | list %}
+<section class="wrap an-head">
+  <p class="kicker mono">Workbench</p>
+  <h1>Tools for risk, fraud and model work.</h1>
+  <p class="lede">The Playground is for fun; the Workbench is for work. Each tool tackles a real problem from banking risk and analytics. The AI tools run under maker-checker governance, and the calculators run in your browser. New tools are added over time.</p>
+  <div class="wb-facts">
+    <span><b>{{ live | length }}</b> live tools</span>
+    <span><b>{{ ai | length }}</b> with maker-checker AI</span>
+    <span><b>0</b> files or answers stored</span>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="wb-grid">
+    {% for t in tools %}
+    {% if t.status == 'live' %}<a class="wb-card {{ t.style }} reveal" href="{{ t.url }}">{% else %}<div class="wb-card {{ t.style }} soon reveal">{% endif %}
+      <div class="wb-top">
+        <span class="tool-badge" aria-hidden="true">{{ t.badge }}</span>
+        <span class="mono wb-kind">{% if t.status == 'live' %}{{ t.kind }}{% else %}Coming soon{% endif %}</span>
+      </div>
+      <h2>{{ t.name }}</h2>
+      <p>{{ t.blurb }}</p>
+      <ul class="wb-facts-list">{% for f in t.facts %}<li>{{ f }}</li>{% endfor %}</ul>
+      <div class="wb-tags">{% for g in t.tags %}<span>{{ g }}</span>{% endfor %}</div>
+      {% if t.status == 'live' %}<span class="btn small{% if t.style == 'lite' %} ghost{% endif %}">{{ t.cta }} →</span>{% else %}<span class="wb-next mono">In the works</span>{% endif %}
+    {% if t.status == 'live' %}</a>{% else %}</div>{% endif %}
+    {% endfor %}
+    <div class="wb-card idea">
+      <div class="wb-top"><span class="tool-badge" aria-hidden="true">+</span><span class="mono wb-kind">Your idea</span></div>
+      <h2>Got a problem a tool could solve?</h2>
+      <p>Tell Ajay what slows your risk, fraud or analytics team down. The best ideas become the next Workbench tool.</p>
+      <div class="an-actions">{% set wa_class = 'btn small' %}{% include "_whatsapp.html" %}<a class="btn small ghost" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Message on LinkedIn</a></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">How the AI tools are governed</h2>
+  <div class="an-how">
+    <ul class="an-guard">
+      <li>Maker-checker: one AI drafts, a second checks every number or rule before you see it</li>
+      <li>No raw data reaches the AI: only statistics, or your answers to fixed questions</li>
+      <li>Fixed instructions that the data or a typed name can't override</li>
+      <li>Nothing is stored; visitors are counted by a scrambled code, not their address</li>
+      <li>Free-use limits and a budget cap keep it fair and affordable</li>
+      <li><span>Every check and verdict is published on the <a href="pulse.html">Pulse</a> page</span></li>
+    </ul>
+    <p class="an-sub">Built by {{ site.author }}. The AI is Claude, by Anthropic. Treat every output as a first read, not advice.</p>
+  </div>
+</section>
+{% endblock %}

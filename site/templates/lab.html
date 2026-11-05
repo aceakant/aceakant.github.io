@@ -11,6 +11,7 @@
 {% for g in lab.games %}
 <div class="game-stage {{ lab.color }}" data-game="{{ g.id }}" id="{{ g.id }}" {% if not loop.first %}hidden{% endif %}>
   {% include "games/_" ~ g.part ~ ".html" %}
+  {% if api_url %}<div class="wrap"><div class="hof-strip" data-hof-game="{{ g.id }}" hidden></div></div>{% endif %}
 </div>
 {% endfor %}
 

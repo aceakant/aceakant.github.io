@@ -1,31 +1,16 @@
-{# Home page: the Tools row under the Playground #}
+{# Home page: the Tools row under the Playground, built from content/tools.yaml (featured, live tools) #}
 <section class="wrap" id="tools">
-  <h2 class="sec">Tools</h2>
-  <a class="tool-feature reveal" href="analyst.html">
-    <span class="tool-badge" aria-hidden="true">AI</span>
+  <h2 class="sec">Workbench</h2>
+  {% for t in tools if t.featured and t.status == 'live' %}
+  <a class="tool-feature{% if t.style == 'lite' %} tool-lite{% endif %} reveal" href="{{ t.url }}">
+    <span class="tool-badge" aria-hidden="true">{{ t.badge }}</span>
     <span class="tool-copy">
-      <span class="mono">New tool <em class="new-badge teal-bg">Maker-checker AI</em></span>
-      <b>Analyst on Call</b>
-      <span>Drop in a loan book, transactions or fraud-alert file. One AI drafts the findings, a second checks every number, and you get a final conclusion. Your data stays in your browser.</span>
+      <span class="mono">{{ t.kind }}</span>
+      <b>{{ t.name }}</b>
+      <span>{{ t.blurb }}</span>
     </span>
-    <span class="btn small">Try it →</span>
+    <span class="btn small{% if t.style == 'lite' %} ghost{% endif %}">{{ t.cta }} →</span>
   </a>
-  <a class="tool-feature reveal" href="model-risk.html">
-    <span class="tool-badge" aria-hidden="true">MR</span>
-    <span class="tool-copy">
-      <span class="mono">New tool <em class="new-badge teal-bg">UK · EU · US · Canada</em></span>
-      <b>Model Risk Check</b>
-      <span>Answer 10 quick questions about a credit, fraud or AI model. See how ready it is for the regulator, the gaps to fix first and the evidence to keep, checked by a second AI.</span>
-    </span>
-    <span class="btn small">Check a model →</span>
-  </a>
-  <a class="tool-feature tool-lite reveal" href="fraud-roi.html">
-    <span class="tool-badge" aria-hidden="true">ROI</span>
-    <span class="tool-copy">
-      <span class="mono">Free calculator <em class="new-badge amber-lite">No AI</em></span>
-      <b>Fraud ROI Calculator</b>
-      <span>Move the sliders and see what a fraud model really saves once false alarms, review costs and blocked customers are counted.</span>
-    </span>
-    <span class="btn small ghost">Calculate →</span>
-  </a>
+  {% endfor %}
+  <p class="tools-more"><a href="workbench.html">All tools in the Workbench →</a></p>
 </section>

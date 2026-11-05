@@ -29,6 +29,7 @@
       <a href="{{ root }}portfolio.html" {% if page in ('portfolio.html','case') %}aria-current="page"{% endif %}>Portfolio</a>
       <a href="{{ root }}updates.html" {% if page in ('updates.html','article') %}aria-current="page"{% endif %}>{{ site.weekly_name }}</a>
       <a href="{{ root }}index.html#playground" {% if page.endswith('-lab.html') %}aria-current="page"{% endif %}>Playground</a>
+      <a href="{{ root }}workbench.html" {% if page in ('workbench.html','analyst.html','model-risk.html','fraud-roi.html') %}aria-current="page"{% endif %}>Workbench</a>
       <a href="{{ root }}pulse.html" {% if page == 'pulse.html' %}aria-current="page"{% endif %}>Pulse</a>
     </nav>
   </div>
@@ -57,6 +58,7 @@
 <script src="{{ root }}static/sky.js?v={{ asset_v }}" defer></script>
 <script src="{{ root }}static/app.js?v={{ asset_v }}" defer></script>
 {% if page.endswith('-lab.html') %}<script src="{{ root }}static/labs.js?v={{ asset_v }}" defer></script>{% endif %}
+{% if api_url and (page == 'pulse.html' or page.endswith('-lab.html')) %}<script type="application/json" id="ak-hof">{{ dict(api=api_url, games=game_map) | tojson }}</script>{% endif %}
 {% if page == 'model-risk.html' %}<script type="module" src="{{ root }}static/modelrisk/modelrisk.js?v={{ asset_v }}"></script>{% endif %}
 {% if page == 'fraud-roi.html' %}<script src="{{ root }}static/roi/roi.js?v={{ asset_v }}" defer></script>{% endif %}
 {% if page == 'analyst.html' %}<script src="{{ root }}static/analyst/profile.js?v={{ asset_v }}" defer></script><script src="{{ root }}static/analyst/analyst.js?v={{ asset_v }}" defer></script>{% endif %}

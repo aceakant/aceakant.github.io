@@ -974,3 +974,60 @@ em.confirm{font-style:normal;font-size:11px;font-family:var(--mono);text-transfo
 @media (max-width:480px){.mr-models{grid-template-columns:1fr}}
 @media print{#mr-form,.mr-noprint{display:none!important} .mr-area,.mr-trail div,.mr-ev li{background:#fff!important}}
 .mr-name[hidden]{display:none}
+
+/* Workbench */
+.tools-more{margin:14px 0 0;text-align:right} .tools-more a{color:var(--accent);font-weight:600;text-decoration:none}
+.tools-more a:hover{text-decoration:underline}
+.kicker a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
+.wb-facts{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;color:var(--muted);font-size:14px}
+.wb-facts b{font:800 20px var(--display);color:var(--ink);margin-right:4px}
+.wb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.wb-card{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px;min-width:0;transition:transform .2s,border-color .2s,box-shadow .2s;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+a.wb-card:hover{transform:translateY(-3px)}
+.wb-card.ai{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));box-shadow:0 0 40px color-mix(in srgb,var(--accent) 10%,transparent)}
+a.wb-card.ai:hover{box-shadow:0 0 50px color-mix(in srgb,var(--accent) 22%,transparent)}
+.wb-card.lite .tool-badge,.wb-card.idea .tool-badge{color:var(--amber);border-color:var(--amber);background:color-mix(in srgb,var(--amber) 14%,transparent)}
+a.wb-card.lite:hover{border-color:var(--amber)}
+.wb-card.soon,.wb-card.idea{border-style:dashed}
+.wb-card.soon{opacity:.8}
+.wb-top{display:flex;align-items:center;gap:14px}
+.wb-top .tool-badge{width:52px;height:52px;font-size:17px}
+.wb-kind{color:var(--accent);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+.wb-card.lite .wb-kind,.wb-card.idea .wb-kind,.wb-card.soon .wb-kind{color:var(--amber)}
+.wb-card h2{margin:4px 0 0;font:700 23px/1.2 var(--display)}
+.wb-card p{margin:0;color:var(--muted)}
+.wb-facts-list{list-style:none;margin:0;padding:0;display:grid;gap:4px;font-size:14px}
+.wb-facts-list li::before{content:"✓ ";color:#4ADE9A;font-weight:700}
+.wb-tags{display:flex;flex-wrap:wrap;gap:6px}
+.wb-tags span{font:600 11px var(--mono);letter-spacing:.04em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+.wb-card .btn,.wb-next{margin-top:auto;align-self:flex-start}
+.wb-next{color:var(--amber);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+@media (max-width:760px){.wb-grid{grid-template-columns:1fr}}
+
+/* Hall of Fame */
+.hof-offer{margin:16px auto 0;max-width:720px;background:color-mix(in srgb,var(--amber) 8%,var(--surface));border:1px solid color-mix(in srgb,var(--amber) 55%,var(--line));border-radius:20px;padding:18px 20px}
+.hof-k{color:var(--amber);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+.hof-offer h3{margin:6px 0 12px;font:700 20px/1.3 var(--display)}
+.hof-form{display:flex;flex-wrap:wrap;gap:8px}
+.hof-form input{flex:1 1 180px;min-width:0;font:inherit;color:var(--ink);background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:9px 12px}
+.hof-form input:focus{outline:2px solid var(--amber);outline-offset:1px}
+.hof-note{margin:8px 0 0;color:var(--muted);font-size:13px} .hof-note.err{color:var(--amber);font-weight:600}
+.hof-link{display:inline-block;margin-top:10px;color:var(--accent);font-weight:600;text-decoration:none}
+.hof-list{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.hof-list li{display:grid;grid-template-columns:30px minmax(0,1fr) auto auto;gap:10px;align-items:center;background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:8px 12px}
+.hof-list li:first-child{border-color:color-mix(in srgb,var(--amber) 60%,var(--line))}
+.hof-list li.mine{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--sunk))}
+.hof-rank{font:800 16px var(--display);color:var(--muted);text-align:center} .hof-list li:first-child .hof-rank{color:var(--amber)}
+.hof-who{display:flex;flex-direction:column;min-width:0} .hof-who b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap} .hof-who small{color:var(--muted);font-size:12px}
+.hof-flag{font-size:18px;line-height:1} .hof-score{font:800 16px var(--mono);color:var(--ink)}
+.hof-strip{margin:14px auto 0;max-width:720px;border:1px dashed var(--line);border-radius:18px;padding:14px 16px}
+.hof-strip-head{display:flex;justify-content:space-between;align-items:center;gap:10px} .hof-strip-head a{color:var(--accent);font-size:14px;font-weight:600;text-decoration:none}
+.hof-tiles{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.hof-two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:16px}
+.hof-two>[hidden]{display:none}
+
+/* five menu items on phones */
+@media (max-width:480px){nav a{font-size:13px;padding:6px 5px}}
+@media (max-width:400px){nav a{font-size:12px;padding:6px 3px}.top-inner{gap:6px}}
+@media (max-width:350px){nav{overflow-x:auto;scrollbar-width:none}nav::-webkit-scrollbar{display:none}}
+@media (max-width:370px){nav a{font-size:11.5px;padding:6px 2px}}

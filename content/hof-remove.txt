@@ -1,0 +1,2 @@
+# Playground Hall of Fame: nicknames to remove. One nickname per line (any capitals), then save.
+# The board hides them within a few minutes and they can't be used again. Delete a line to allow it back.
