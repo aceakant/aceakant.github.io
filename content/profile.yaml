@@ -27,7 +27,7 @@ hero:
 # Big numbers on the Home page (count up on scroll)
 impact:
   - { prefix: "$", value: 10, suffix: "M", label: "annual fraud losses cut", where: "TCS · Westpac" }
-  - { prefix: "+", value: 20, suffix: "%", label: "fraud early-detection uplift", where: "L&T Finance" }
+  - { prefix: "+", value: 20, suffix: "%", label: "fraud early-detection uplift", where: "JPMorgan Chase" }
   - { prefix: "+", value: 25, suffix: "%", label: "acquisition uplift with 20% lower delinquency", where: "Axis Bank" }
   - { prefix: "", value: 40, suffix: "", label: "people hired and led across 3 teams built from zero", where: "L&T 7 · Axis 12 · Dhani 21" }
 
