@@ -1,0 +1,83 @@
+{
+  "status": "needs-review",
+  "summary": "6 verified, 5 corrected · Needs review: Secondary sources (PwC, Asset Servicing Times) say only 2 of 31 G-SIBs were fully compliant with all principles in the 2023 report. I did not use this figure because I could not open the primary BCBS report (d559). Check it there if you want to add the number.; The 'end-2022' data date for the 2023 report is supported by secondary sources only (the 2019 to 2022 comparison). Confirm it against the BIS report PDF (bis.org/bcbs/publ/d559.pdf) before publishing.",
+  "checks": [
+    {
+      "claim": "BCBS 239 published January 2013 by the Basel Committee",
+      "status": "verified",
+      "source_url": "https://www.bis.org/publ/bcbs239.htm",
+      "source_title": "BIS (BCBS), Principles for effective risk data aggregation",
+      "note": "BIS page gives publication date 9 January 2013."
+    },
+    {
+      "claim": "Hook: BCBS 239 has 14 principles (11 for banks, 3 for supervisors)",
+      "status": "verified",
+      "source_url": "https://www.bis.org/publ/bcbs239.pdf",
+      "source_title": "BIS (BCBS), BCBS 239 Principles, January 2013",
+      "note": "Principles 1-11 address banks and 12-14 address supervisors (Principle 12 refers to 'the eleven Principles above'). The 11/3 split is also stated in secondary sources. Hook answer kept."
+    },
+    {
+      "claim": "G-SIBs expected to comply from January 2016",
+      "status": "corrected",
+      "source_url": "https://www.bis.org/media-releases/20170328-progress-report-banks-implementation-principles-effective-risk-data-aggregation-and-reporting",
+      "source_title": "BIS (BCBS), Progress report press release, March 2017",
+      "note": "Made precise: the January 2016 date applies to G-SIBs identified in 2011 and 2012. Later designations get three years from designation."
+    },
+    {
+      "claim": "2023 progress report (data as of end-2022): full set of principles still not met across the whole G-SIB sample",
+      "status": "corrected",
+      "source_url": "https://www.bis.org/press/p231128.htm",
+      "source_title": "BIS (BCBS), Press release 28 November 2023",
+      "note": "Report was published 28 Nov 2023 and covers 31 G-SIBs. The BIS release says banks are at different stages and additional work is needed at all banks to attain or sustain full compliance. Reworded to match this primary source. Newer BCBS output is Newsletter 36 (6 Jan 2026), which is thematic rather than a new compliance assessment, so the 2023 report remains the latest progress report found."
+    },
+    {
+      "claim": "Core attributes: accuracy and integrity, completeness, timeliness, adaptability",
+      "status": "verified",
+      "source_url": "https://www.bis.org/publ/bcbs239.pdf",
+      "source_title": "BIS (BCBS), BCBS 239 Principles, January 2013",
+      "note": "These are the headings of Principles 3-6 (risk data aggregation capabilities)."
+    },
+    {
+      "claim": "Manual processes and desktop tools need effective mitigants such as end-user computing policies and consistently applied controls; BCBS 239 does not ban spreadsheets",
+      "status": "verified",
+      "source_url": "https://www.bis.org/publ/bcbs239.pdf",
+      "source_title": "BIS (BCBS), BCBS 239 Principles, January 2013",
+      "note": "Paragraph on Principle 3 says banks relying on manual processes and desktop applications (e.g. spreadsheets, databases) should have effective mitigants (e.g. end-user computing) and controls applied across processes. It does not prohibit them."
+    },
+    {
+      "claim": "Principle 3: data aggregated on a largely automated basis to minimise errors",
+      "status": "verified",
+      "source_url": "https://www.bis.org/publ/bcbs239.pdf",
+      "source_title": "BIS (BCBS), BCBS 239 Principles, January 2013",
+      "note": "Text of Principle 3 confirmed. Myth/Fact item 3 (true) is supported."
+    },
+    {
+      "claim": "Basel Committee recommends national supervisors apply BCBS 239 to D-SIBs",
+      "status": "corrected",
+      "source_url": "https://www.bis.org/publ/bcbs239.pdf",
+      "source_title": "BIS (BCBS), BCBS 239 Principles, January 2013",
+      "note": "The standard says it is 'strongly suggested' that supervisors apply the principles to D-SIBs three years after designation. Wording aligned. Myth/Fact item 2 (false) is supported."
+    },
+    {
+      "claim": "'ten years on' in LinkedIn post",
+      "status": "corrected",
+      "source_url": "https://www.bis.org/media-releases/20231128-basel-committee-report-implementing-principles-effective-risk-data-aggregation-and-reporting",
+      "source_title": "BIS (BCBS), Media release 28 November 2023",
+      "note": "BIS says 'nearly 10 years' after publication. Changed to 'nearly ten years on' and aligned the finding with the BIS wording."
+    },
+    {
+      "claim": "ROI arithmetic: 2,268 hours, USD 90.7k per year, USD 272k vs USD 195k, ~40% ROI, payback under 2 years",
+      "status": "verified",
+      "source_url": "",
+      "source_title": "Illustrative model (author's assumptions)",
+      "note": "Recomputed: 45×7×12×0.6 = 2,268 h; ×USD 40 = USD 90,720; 3 years = USD 272k; cost = 120k + 75k = 195k; net 77k = ~39.5%; payback = 120/65.7 = 1.8 years. All labelled 'Illustrative model'. LinkedIn rounding changed from 'about 2,200' to 'about 2,270' hours."
+    },
+    {
+      "claim": "Personal-practice and employer hints ('the simple model I use'; '90+ DPD')",
+      "status": "corrected",
+      "source_url": "",
+      "source_title": "Editorial check, no external source",
+      "note": "'The simple model I use' changed to 'a simple model' so it does not imply a personal result. 'DPD' spelled out as days past due. No listed employer names appear anywhere in the draft. The LinkedIn line 'In my illustrative model' became 'In an illustrative model'."
+    }
+  ]
+}
