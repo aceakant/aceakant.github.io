@@ -8,7 +8,7 @@ test_run: false
 market: Global
 scenario: a composite, internationally active bank (illustrative, not a real institution)
 publish_at: null
-review_issue: null
+review_issue: 8
 reminded: false
 summary: Management reporting built on chained spreadsheets is slow, fragile and hard to evidence. This piece shows how a governed pipeline with BCBS 239-style lineage returns analyst time, and gives a simple ROI model you can rerun with your own numbers.
 hook:
