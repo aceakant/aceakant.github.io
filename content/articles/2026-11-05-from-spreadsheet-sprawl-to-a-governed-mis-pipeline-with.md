@@ -121,7 +121,8 @@ linkedin_post: 'Every reporting team has a file called MIS_final_v7_REALfinal.xl
 
 
   What is the one report in your organisation you would automate first, and why that one?'
-linkedin_shared: false
+linkedin_shared: true
+linkedin_post_id: urn:li:share:7524054963606732801
 ---
 
 ## The problem
