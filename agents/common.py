@@ -22,6 +22,20 @@ def config():
     return load_yaml("config.yaml")
 
 
+def market_rule(market):
+    """The ONE-MARKET rule for an article, from config.yaml (international markets only)."""
+    t = config().get("topics") or {}
+    markets = t.get("markets") or {}
+    if market in (t.get("excluded_markets") or []) or (markets and market not in markets):
+        raise RuntimeError(f"Market '{market}' is not covered by VertexNode (allowed: {', '.join(markets)})")
+    member = market in ("Netherlands", "Ireland", "Denmark", "Luxembourg")
+    return (f"This article's market is {market}. Every statistic, regulation, example and currency must come from {market}"
+            f" (sources: {markets.get(market, 'that market')})"
+            + (". As an EU member state, EU-wide rules and EU sources that apply there are allowed too" if member else "")
+            + ". Global = cross-market sources only. UK, EU, US and Canada are separate markets. Never mix markets,"
+              " e.g. no US figures in a UK piece.")
+
+
 def log(agent, msg):
     print(f"[{agent}] {msg}", flush=True)
 

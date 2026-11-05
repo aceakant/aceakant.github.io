@@ -21,8 +21,21 @@ review:
   reminder_hours_before: 24    # reminder comment this many hours before going live
 
 topics:
-  # Market priority for topics the agent proposes once the backlog runs out (first = most often)
-  market_focus: ["UK", "EU", "Global", "India"]
+  # VertexNode is international only. Each article covers ONE of these markets, using that market's own sources.
+  # Netherlands, Ireland, Denmark and Luxembourg are EU members, so EU-wide rules that apply there count too.
+  markets:
+    Global: "cross-market bodies and studies: BIS, FSB, FATF, IMF, World Bank, IOSCO, global industry surveys; currency US$"
+    UK: "FCA, PRA, PSR, Bank of England, HM Treasury, UK Finance, ONS; currency £"
+    EU: "EBA, ECB, ESMA, EIOPA, European Commission, AMLA, Europol; currency €"
+    US: "Federal Reserve, OCC, FDIC, CFPB, FinCEN, FTC, SEC, Treasury; currency US$"
+    Canada: "OSFI, FCAC, FINTRAC, Bank of Canada, Department of Finance Canada, Canadian Anti-Fraud Centre, Payments Canada; currency C$"
+    Netherlands: "De Nederlandsche Bank (DNB), AFM, Dutch Banking Association (NVB), CBS, Dutch government; currency €"
+    Ireland: "Central Bank of Ireland, Banking & Payments Federation Ireland (BPFI), CSO, Irish government; currency €"
+    Denmark: "Danmarks Nationalbank, Finanstilsynet (Danish FSA), Finance Denmark, Statistics Denmark, Danish government; currency DKK"
+    Luxembourg: "CSSF, Banque centrale du Luxembourg, ABBL, STATEC, Luxembourg government; currency €"
+  excluded_markets: ["India"]   # never written about
+  # Mix for topics the agent proposes once the backlog runs out (first = most often)
+  market_focus: ["UK", "EU", "US", "Global", "Canada", "Netherlands", "Ireland", "Denmark", "Luxembourg"]
 
 agents:
   model: "claude-sonnet-5-5"

@@ -2,7 +2,7 @@
 Guess-the-number hook → STAR → article → process steps → ROI calculator → Myth or Fact → takeaways."""
 import yaml
 
-from common import DRY_RUN, ROOT, ask_claude, config, extract_json, load_yaml, log, slugify
+from common import DRY_RUN, ROOT, ask_claude, config, extract_json, load_yaml, log, slugify, market_rule
 
 SYSTEM = """You are the ghost-writer for {author}, a senior risk-analytics leader. You write his weekly piece for his series "{series}"
 on an OPEN industry subject: the problem, how a practitioner would solve it, and what it is worth.
@@ -16,11 +16,8 @@ STRICT RULES
 1. NO EMPLOYERS. Never name or hint at the author's current or past employers or clients,
    and never claim a personal result. Write as an experienced practitioner explaining an approach.
 2. STAR = ILLUSTRATIVE SCENARIO. The STAR story describes a realistic, composite organisation
-   (e.g. "a mid-sized Indian NBFC", "a UK retail bank"), never a real one. Say so in the text.
-3. ONE MARKET. This week's market is: {market}. Every statistic, regulation, example and currency
-   must come from that market. (Global = cross-market sources such as BIS, FATF, IMF, World Bank,
-   or clearly global studies. UK and EU are separate markets: UK uses FCA/PSR/Bank of England/UK Finance,
-   EU uses EBA/ECB/European Commission/Europol.) Never mix markets, e.g. no US figures in an India piece.
+   (e.g. "a mid-sized Dutch retail bank", "a UK card issuer"), never a real one. Say so in the text.
+3. ONE MARKET. {market_rule}
 4. LATEST DATA. Use the most recent published figure; give its year.
 5. Every statistic, the hook answer and every Myth/Fact answer must be checkable online. List each
    in "claims". Modelled ROI must say "Illustrative model" in its basis.
@@ -47,7 +44,7 @@ Return ONLY a JSON object with exactly these keys:
   "title": "headline in sentence case (capital only on the first word, proper nouns and acronyms), max 12 words",
   "category": "one of: Fraud Risk | Credit Risk | Automation | Data Analytics | GenAI | Team & Process",
   "summary": "2 sentences for the Weekly Updates page",
-  "scenario": "who the illustrative STAR organisation is, e.g. 'a mid-sized Indian NBFC'",
+  "scenario": "who the illustrative STAR organisation is, e.g. 'a mid-sized Dutch retail bank'",
   "hook": {{"question": "a surprising 'guess the number' question about the problem, in this market",
             "min": 0, "max": 100, "step": 1, "start": 50, "unit": "% or a short unit",
             "answer": 42, "answer_label": "42%", "explain": "1-2 sentences, names the source and year", "source_url": "https://..."}},
@@ -84,6 +81,7 @@ def write(topic):
         author=cfg["site"]["author"], voice=cfg["writing_rules"]["voice"],
         banned=", ".join(f'"{p}"' for p in cfg["writing_rules"]["banned_phrases"]),
         words=cfg["agents"]["article_words"], market=topic.get("market", "Global"),
+        market_rule=market_rule(topic.get("market", "Global")),
         series=cfg["site"].get("weekly_name", "Weekly"),
     )
     profile = load_yaml("content/profile.yaml")

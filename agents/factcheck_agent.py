@@ -9,17 +9,15 @@ Outcome:
 import json
 import re
 
-from common import DRY_RUN, ask_claude, config, extract_json, load_yaml, log
+from common import DRY_RUN, ask_claude, config, extract_json, load_yaml, log, market_rule
 
 SYSTEM = """You are a strict fact-checker for a professional article published under a real person's name.
 Use web search to verify every external factual claim, the hook question's answer and every Myth/Fact
 answer. Prefer primary sources (regulators, central banks, government statistics, company filings).
 
 Rules:
-- MARKET: the article's market is given. Every statistic, regulation, example and currency must belong
-  to that market (Global = cross-market sources such as BIS, FATF, IMF, World Bank; UK and EU are separate
-  markets). Replace or remove
-  anything from another market.
+- MARKET: the market rule is given with the draft. Every statistic, regulation, example and currency must
+  belong to that market. Replace or remove anything from another market.
 - LATEST DATA: if a newer official figure exists than the one used, update it and its year.
 - NO EMPLOYERS: remove any mention of, or hint at, the author's employers listed below, and any claim of
   a personal result. The STAR story must read as an illustrative scenario.
@@ -31,6 +29,7 @@ Rules:
 Reply with JSON only."""
 
 PROMPT = """MARKET: {market}
+MARKET RULE: {market_rule}
 EMPLOYERS THAT MUST NOT APPEAR: {employers}
 
 DRAFT (JSON):
@@ -104,7 +103,7 @@ def check(draft):
         return result
 
     log("fact-check", "Verifying claims with live web search…")
-    text, sources = ask_claude(SYSTEM, PROMPT.format(market=draft.get("market", "Global"), employers=", ".join(employers()),
+    text, sources = ask_claude(SYSTEM, PROMPT.format(market=draft.get("market", "Global"), market_rule=market_rule(draft.get("market", "Global")), employers=", ".join(employers()),
                                                      draft=json.dumps(draft, ensure_ascii=False)),
                                web_search=True, max_tokens=16000)
     fc = extract_json(text)
