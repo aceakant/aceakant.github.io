@@ -6,6 +6,7 @@ Run:  python site/build.py
 """
 import datetime
 import json
+import subprocess
 import math
 import os
 import pathlib
@@ -46,6 +47,31 @@ def nice_date(iso):
     return f"{d.day} {d.strftime('%b %Y')}"
 
 
+ROI_SLIDERS = [  # Fraud ROI Calculator: each slider moves through these values (default must be in the list)
+    dict(id="payments", label="Payments a month", kind="count", default=2000000,
+         values=[10000, 25000, 50000, 100000, 250000, 500000, 1000000, 2000000, 5000000, 10000000, 25000000, 50000000, 100000000]),
+    dict(id="fraud", label="Share that are fraud", kind="pct", default=0.08, values=[0.01, 0.02, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2, 0.3, 0.5, 0.75, 1]),
+    dict(id="loss", label="Average loss per fraud", kind="money", default=420, values=[25, 50, 75, 100, 150, 200, 300, 420, 500, 750, 1000, 1500, 2500, 5000]),
+    dict(id="catch", label="Fraud the model catches", kind="pct", default=72, values=list(range(5, 100))),
+    dict(id="alarms", label="False alarms per fraud caught", kind="x", default=8, values=[0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 30, 50]),
+    dict(id="review", label="Cost to review one alert", kind="money", default=4.5, values=[0.5, 1, 2, 3, 4.5, 6, 8, 10, 15, 20, 30]),
+    dict(id="cost", label="Model build and run, a year", kind="money", default=350000,
+         values=[0, 25000, 50000, 100000, 150000, 250000, 350000, 500000, 750000, 1000000, 2000000, 5000000]),
+]
+
+
+def model_risk_view(config):
+    """Model Risk Check: the questions, markets and samples come from the shared core file (also used by the live
+    service), read here so the page renders them without waiting for any script."""
+    src = (ROOT / "site" / "static" / "modelrisk" / "mr-core.js").read_text()
+    js = subprocess.run(["node", "--input-type=module", "-e",
+                         "const m = await import(process.argv[1]); console.log(JSON.stringify({markets: m.MARKETS, questions: m.QUESTIONS, samples: m.SAMPLES, as_of: m.RULES_AS_OF}))",
+                         str(ROOT / "site" / "static" / "modelrisk" / "mr-core.js")], capture_output=True, text=True, check=True).stdout
+    data = json.loads(js)
+    an = config.get("analyst") or {}
+    return dict(data, worker_url=an.get("worker_url") or "", free=an.get("free_per_visitor", 5))
+
+
 def accountability_view(config, published, data):
     """How the site's AI is held to account: fact-checks behind each published article, and the
     Analyst on Call checker's verdicts (prepared samples + live reviews), plus tool use."""
@@ -65,8 +91,9 @@ def accountability_view(config, published, data):
             if rv.get("verdict") in verdicts:
                 verdicts[rv["verdict"]] += 1
     live = (data or {}).get("analyst_live") or {}
+    mr = live.get("model_risk") or {}
     for k in verdicts:
-        verdicts[k] += int((live.get("verdicts") or {}).get(k, 0))
+        verdicts[k] += int((live.get("verdicts") or {}).get(k, 0)) + int((mr.get("verdicts") or {}).get(k, 0))
     checked = sum(verdicts.values())
     tools = (data or {}).get("tools") or {}
     an = config.get("analyst") or {}
@@ -75,7 +102,7 @@ def accountability_view(config, published, data):
                 pct_verified=round(verified / claims * 100) if claims else 0, pct_corrected=round(corrected / claims * 100) if claims else 0),
         mc=dict(checked=checked, verdicts=[dict(name=k, count=v, pct=round(v / checked * 100) if checked else 0) for k, v in verdicts.items()],
                 live_reviews=int(live.get("reviews", 0)), live_avg=round(live["seconds"] / live["reviews"]) if live.get("reviews") else None,
-                samples_opened=sum((tools.get("samples") or {}).values()), uploads=int(tools.get("uploads", 0)),
+                samples_opened=sum((tools.get("samples") or {}).values()), uploads=int(tools.get("uploads", 0)), model_checks=int(mr.get("checks", 0)),
                 free=an.get("free_per_visitor", 5), cap=an.get("daily_cap", 20), live_on=bool(an.get("worker_url"))))
 
 
@@ -162,6 +189,9 @@ def build():
         "pulse.html": dict(pulse=pulse_view(config, labs, published)),
         "analyst.html": dict(analyst=config.get("analyst") or {},
                              samples=json.loads((ROOT / "site" / "static" / "analyst" / "samples" / "samples.json").read_text())),
+        "model-risk.html": dict(mr=model_risk_view(config)),
+        "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
+            (dict(url=a["url"], short="fraud model ROI") for a in published if "fraud-model-roi" in a["slug"]), None))),
     }
     for name, ctx in pages.items():
         html = env.get_template(ctx.pop("template", name)).render(root="", page=name, **common, **ctx)

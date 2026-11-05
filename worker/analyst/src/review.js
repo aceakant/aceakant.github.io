@@ -80,7 +80,7 @@ on what this review cannot tell you.`;
 const SEVERITIES = ["high", "medium", "stable"];
 const VERDICTS = ["confirmed", "corrected", "removed", "added"];
 
-function clean(s, max) {
+export function clean(s, max) {
   return String(s == null ? "" : s).replace(/<[^>]*>/g, "").replace(/[\u0000-\u001f<>]/g, " ").replace(/\s+/g, " ").trim().slice(0, max);
 }
 
@@ -140,7 +140,7 @@ function authStyles(key) {
   return key.startsWith("sk-ant-api") ? [xkey, bearer] : [bearer, xkey];
 }
 
-async function ask(system, user, tool, opts) {
+export async function ask(system, user, tool, opts) {
   const body = JSON.stringify({ model: opts.model, max_tokens: opts.maxTokens || 2000, system, messages: [{ role: "user", content: user }],
     output_config: { format: { type: "json_schema", schema: tool.input_schema } } });
   let res;

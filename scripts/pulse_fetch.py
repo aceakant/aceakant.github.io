@@ -111,7 +111,7 @@ def main():
     places = gc.get("/stats/locations", limit=100, **rng).get("stats") or []
 
     games, articles, weekly, first_day = {}, {}, {}, None
-    tools = {"samples": {}, "uploads": 0, "reviews": 0}
+    tools = {"samples": {}, "uploads": 0, "reviews": 0, "model_risk": 0, "model_risk_samples": 0, "roi": 0}
     for h in hits:
         path, count, days = h.get("path") or "", int(h.get("count") or 0), day_counts(h)
         if days:
@@ -138,6 +138,13 @@ def main():
                 tools["uploads"] += count
             elif path == "tool-analyst-review":
                 tools["reviews"] += count
+        elif h.get("event") and path.startswith("tool-modelrisk-"):
+            if path == "tool-modelrisk-check":
+                tools["model_risk"] += count
+            elif path.startswith("tool-modelrisk-sample-"):
+                tools["model_risk_samples"] += count
+        elif h.get("event") and path == "tool-roi-use":
+            tools["roi"] += count
         elif not h.get("event"):
             a = ARTICLE_PATH.search(path)
             if a:

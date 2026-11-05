@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Model Risk Check · {{ site.author }}{% endblock %}
+{% block description %}Answer 10 quick questions about a credit, fraud or AI model and see how ready it is for the regulator in the UK, EU, US or Canada: a readiness score, the gaps to fix first and the evidence to keep, checked by a second AI.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono">Tools · Model Risk Check</p>
+  <h1>Is your model ready for the regulator?</h1>
+  <p class="lede">Ten quick questions about one credit, fraud or AI model. Your score comes straight from your answers. Then one AI drafts the gaps against your market's rulebook, a second AI checks every one, and you get the fixes to make first and the evidence to keep.</p>
+</section>
+
+<section class="wrap" id="mr-form">
+  <p class="mr-step mono">Step 1 · Which market?</p>
+  <div class="mr-markets" role="radiogroup" aria-label="Market">
+    {% for m in mr.markets %}
+    <button type="button" class="mr-market" role="radio" aria-checked="false" data-id="{{ m.id }}"><b>{{ m.name }}</b><span>{{ m.tag }}</span></button>
+    {% endfor %}
+  </div>
+
+  <p class="mr-step mono">Step 2 · Which model?</p>
+  <div class="an-samples mr-models">
+    {% for s in mr.samples %}
+    <button type="button" class="an-sample mr-model" data-id="{{ s.id }}" aria-pressed="false"><span class="mono">Sample · fills in the answers</span><b>{{ s.name }}</b><span>{{ s.blurb }}</span></button>
+    {% endfor %}
+    <button type="button" class="an-sample mr-model mr-own" data-id="own" aria-pressed="false"><span class="mono">Your own</span><b>Describe your model</b><span>Answer the same 10 questions about a model you run</span></button>
+  </div>
+  <label class="mr-name" id="mr-name-wrap" hidden>Model name (optional, no customer or company names please)
+    <input type="text" id="mr-name" maxlength="80" placeholder="e.g. Mortgage affordability model" autocomplete="off">
+  </label>
+
+  <div class="an-step mr-qs" id="mr-qs" hidden>
+    <p class="mr-step mono" style="margin-top:0">Step 3 · Ten questions, about 2 minutes</p>
+    {% for q in mr.questions %}
+    <fieldset class="mr-q" data-q="{{ q.id }}">
+      <legend><span class="mono">{{ "%02d" | format(loop.index) }}</span>{{ q.q }}</legend>
+      <div class="mr-opts">
+        {% for o in q.options %}<button type="button" class="mr-opt" data-q="{{ q.id }}" data-v="{{ o.id }}" aria-pressed="false">{{ o.label }}</button>{% endfor %}
+      </div>
+    </fieldset>
+    {% endfor %}
+    <div class="mr-go">
+      <button type="button" class="btn" id="mr-run" disabled>Check my model →</button>
+      <span class="mr-left mono" id="mr-left"></span>
+    </div>
+    <p class="an-shield mr-shield">🔒 Answers about the model only. No customer data, no file upload. Only the answers go to the AI.</p>
+  </div>
+  <p class="an-msg" id="mr-msg" hidden></p>
+</section>
+
+<section class="wrap an-out" id="mr-out" hidden>
+  <div class="an-step" id="mr-score"></div>
+  <div class="an-step" id="mr-ai" hidden></div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">How this works</h2>
+  <div class="an-how">
+    <div class="an-flow">
+      <div><b>Your answers</b><span>10 taps about the model. No data</span></div>
+      <i aria-hidden="true">→</i>
+      <div><b>Your score</b><span>Worked out from the answers alone, no AI</span></div>
+      <i aria-hidden="true">→</i>
+      <div><b>Maker AI</b><span>Drafts the gaps against your market's rulebook</span></div>
+      <i aria-hidden="true">→</i>
+      <div><b>Checker AI</b><span>Confirms, corrects or removes each one</span></div>
+    </div>
+    <div class="mr-rulebooks">
+      <div><b>UK</b><span>PRA model risk principles (SS1/23), FCA Consumer Duty, UK GDPR, Equality Act</span></div>
+      <div><b>EU</b><span>AI Act, GDPR, Consumer Credit Directive, EBA loan origination guidelines, DORA</span></div>
+      <div><b>US</b><span>SR 11-7 model risk guidance, ECOA and Regulation B, third-party guidance</span></div>
+      <div><b>Canada</b><span>OSFI E-23 and B-10, Quebec Law 25, fair treatment rules</span></div>
+    </div>
+    <ul class="an-guard">
+      <li>The AI can only cite rules from a fixed, dated rulebook (as of {{ mr.as_of }})</li>
+      <li>The checker removes anything the answers or the rules don't support</li>
+      <li>Fixed instructions that a typed model name can't override</li>
+      <li>Nothing is stored; visitors are counted by a scrambled code, not their address</li>
+      <li>{{ mr.free }} free checks per visitor; daily limits keep it fair</li>
+      <li>Every check is counted on the Pulse page</li>
+    </ul>
+    <p class="an-sub">Built by {{ site.author }} to show how model risk governance and GenAI fit together. The AI is Claude, by Anthropic. A readiness guide, not legal or compliance advice and not an audit.</p>
+  </div>
+</section>
+
+<div class="an-contact-tpl" hidden>
+  {% include "_whatsapp.html" %}
+  <a class="btn ghost an-li" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Message Ajay on LinkedIn</a>
+</div>
+<script type="application/json" id="mr-config">{{ dict(worker_url=mr.worker_url, free=mr.free) | tojson }}</script>
+{% endblock %}

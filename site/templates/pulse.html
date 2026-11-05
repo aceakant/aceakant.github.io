@@ -32,13 +32,13 @@
       <p class="acc-note">"Corrected" means the fact-checking agent found a claim that didn't match its source, or a newer figure, and fixed it before a person reviewed the piece. The notes behind every check are kept.</p>
     </div>
     <div class="pl-panel acc-card">
-      <span class="mono acc-k">Analyst on Call · maker-checker</span>
+      <span class="mono acc-k">Analyst on Call and Model Risk Check · maker-checker</span>
       <h3>A second AI checks the first</h3>
       <div class="acc-tiles">
-        <div><b>{{ acc.mc.checked | num }}</b><span>findings put through the checker</span></div>
+        <div><b>{{ acc.mc.checked | num }}</b><span>findings and gaps put through the checker</span></div>
         <div><b>{{ acc.mc.live_reviews | num }}</b><span>live reviews of visitors' files{% if acc.mc.live_avg %} · about {{ acc.mc.live_avg }}s each{% endif %}</span></div>
         <div><b>{{ acc.mc.uploads | num }}</b><span>files checked privately in the browser</span></div>
-        <div><b>{{ acc.mc.samples_opened | num }}</b><span>sample reviews opened</span></div>
+        <div><b>{{ acc.mc.model_checks | num }}</b><span>models checked against the rulebook</span></div>
       </div>
       {% for v in acc.mc.verdicts %}
       <div class="pl-hb acc-v {{ v.name }}"><p>{{ {'confirmed': 'Confirmed as written', 'corrected': 'Corrected by the checker', 'removed': 'Removed as unsupported', 'added': 'Added by the checker'}[v.name] }}</p><div class="track"><div class="fill" style="width:{{ v.pct }}%"></div></div><b>{{ v.count }}</b></div>

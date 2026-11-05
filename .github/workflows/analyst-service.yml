@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["worker/analyst/**", "content/analyst-service.txt"]
+    paths: ["worker/analyst/**", "site/static/modelrisk/mr-core.js", "content/analyst-service.txt"]
 
 permissions:
   contents: write
@@ -137,6 +137,32 @@ jobs:
               print("CONCLUSION:", d["conclusion"])
           else:
               print("LIVE TEST: NOT OK |", d)
+          PY
+
+      - name: Live test Model Risk Check (one sample, sent the way a visitor's browser sends it)
+        if: steps.ready.outputs.go == 'true'
+        env:
+          URL: ${{ steps.prep.outputs.url }}
+        run: |
+          node --input-type=module -e "const m=await import(process.cwd()+'/site/static/modelrisk/mr-core.js');const s=m.SAMPLES[0];(await import('fs')).writeFileSync('/tmp/mr.json',JSON.stringify({market:'EU',answers:s.answers,name:s.name}))"
+          code=$(curl -sS -o /tmp/mr-out.json -w "%{http_code}" -X POST -H "Origin: https://aceakant.github.io" -H "X-Analyst-Test: 1" -H "Content-Type: application/json" --data @/tmp/mr.json --max-time 170 "$URL/model-risk" || true)
+          echo "HTTP $code"
+          python3 - <<'PY'
+          import json
+          try:
+              d = json.load(open("/tmp/mr-out.json"))
+          except Exception as e:
+              print("No readable answer:", e); raise SystemExit(0)
+          if d.get("conclusion"):
+              print("MODEL RISK TEST: OK |", d.get("score"), d.get("verdict"), "|", len(d.get("draft", {}).get("gaps", [])), "drafted ->", len(d.get("gaps", [])), "final | verdicts", "/".join(r["verdict"] for r in d.get("reviews", [])))
+              print("CLASSIFICATION:", d.get("classification"))
+              for g in d.get("gaps", []):
+                  print(f"  - [{g['severity']}] {g['title']} | {g['rule']} | {', '.join(g['evidence'])}")
+              for r in d.get("reviews", []):
+                  print(f"  * {r['id']} {r['verdict']}: {r['note']}")
+              print("CONCLUSION:", d["conclusion"])
+          else:
+              print("MODEL RISK TEST: NOT OK |", d)
           PY
 
       - name: Tell the website where the service is

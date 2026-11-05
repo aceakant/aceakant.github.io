@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Fraud ROI Calculator · {{ site.author }}{% endblock %}
+{% block description %}What does a fraud model really save once false alarms, review costs and blocked customers are counted? Move the sliders and see net saving, return and payback.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono">Tools · Fraud ROI Calculator</p>
+  <h1>What does your fraud model really save?</h1>
+  <p class="lede">Detection rate is only half the story. Move the sliders to see the net saving once false alarms and review costs are counted, and how many genuine customers pay for it in friction. Nothing leaves your browser.</p>
+</section>
+
+<section class="wrap">
+  <div class="an-step roi">
+    <div class="roi-in">
+      <div class="roi-cur" role="radiogroup" aria-label="Currency">
+        {% for c in ["£", "€", "$", "C$"] %}<button type="button" class="roi-c" role="radio" aria-checked="{{ 'true' if loop.first else 'false' }}" data-c="{{ c }}">{{ c }} {{ ["UK", "EU", "US", "Canada"][loop.index0] }}</button>{% endfor %}
+      </div>
+      {% for s in roi.sliders %}
+      <label class="roi-sl">
+        <span class="roi-top"><span>{{ s.label }}</span><b id="roi-v-{{ s.id }}"></b></span>
+        <input type="range" id="roi-{{ s.id }}" min="0" max="{{ s["values"] | length - 1 }}" step="1" value="{{ s["values"].index(s.default) }}" data-values="{{ s["values"] | join(',') }}" data-kind="{{ s.kind }}">
+      </label>
+      {% endfor %}
+    </div>
+    <div class="roi-outbox" aria-live="polite">
+      <div class="roi-kpis">
+        <div class="good"><b id="roi-net"></b><span>net saving a year</span></div>
+        <div><b id="roi-x"></b><span>return on total cost</span></div>
+        <div><b id="roi-pay"></b><span>to pay back the model</span></div>
+        <div><b id="roi-stop"></b><span>fraud losses stopped a year</span></div>
+      </div>
+      <div id="roi-chart"></div>
+      <p class="roi-note" id="roi-friction"></p>
+      <p class="roi-note" id="roi-miss"></p>
+      <div class="an-actions">
+        {% if roi.article %}<a class="btn small ghost" href="{{ roi.article.url }}">Read the article: {{ roi.article.short }} →</a>{% endif %}
+        <a class="btn small ghost" href="model-risk.html">Next: check the model's governance →</a>
+      </div>
+    </div>
+  </div>
+  <p class="an-sub roi-how">How it's worked out: fraud a month = payments × fraud share; caught = fraud × catch rate; losses stopped = caught × average loss; alerts = caught × (1 + false alarms per fraud caught); review cost = alerts × cost per alert. Net saving = losses stopped − review cost − model cost. Illustrative, a starting point for a proper business case. Built by {{ site.author }}.</p>
+</section>
+{% endblock %}
