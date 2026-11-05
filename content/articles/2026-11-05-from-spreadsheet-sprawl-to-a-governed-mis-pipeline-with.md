@@ -3,7 +3,7 @@ title: From spreadsheet sprawl to a governed MIS pipeline with lineage
 slug: from-spreadsheet-sprawl-to-a-governed-mis-pipeline-with
 date: '2026-11-05'
 category: Automation
-status: draft
+status: published
 test_run: false
 market: Global
 scenario: a composite, internationally active bank (illustrative, not a real institution)
@@ -88,8 +88,9 @@ myth_fact:
   explain: Principle 3, on accuracy and integrity, says risk data should be aggregated on a largely automated basis to minimise the probability of errors.
 image: media/from-spreadsheet-sprawl-to-a-governed-mis-pipeline-with/star-card.png
 factcheck:
-  status: needs-review
-  summary: '6 verified, 5 corrected · Needs review: Secondary sources (PwC, Asset Servicing Times) say only 2 of 31 G-SIBs were fully compliant with all principles in the 2023 report. I did not use this figure because I could not open the primary BCBS report (d559). Check it there if you want to add the number.; The ''end-2022'' data date for the 2023 report is supported by secondary sources only (the 2019 to 2022 comparison). Confirm it against the BIS report PDF (bis.org/bcbs/publ/d559.pdf) before publishing.'
+  status: verified
+  summary: 'Agent fact-check plus human review on 5 Nov 2026: BCBS 239 (14 principles, January 2013, 2016 deadline) and the November 2023 progress report (31 G-SIBs, all needing more work) confirmed against BIS sources; an unconfirmed ''end-2022'' detail was removed. ROI figures are a labelled illustrative model.'
+  agent_summary: '6 verified, 5 corrected · Needs review: Secondary sources (PwC, Asset Servicing Times) say only 2 of 31 G-SIBs were fully compliant with all principles in the 2023 report. I did not use this figure because I could not open the primary BCBS report (d559). Check it there if you want to add the number.; The ''end-2022'' data date for the 2023 report is supported by secondary sources only (the 2019 to 2022 comparison). Confirm it against the BIS report PDF (bis.org/bcbs/publ/d559.pdf) before publishing.'
 sources:
 - title: BIS (BCBS), Principles for effective risk data aggregation
   url: https://www.bis.org/publ/bcbs239.htm
@@ -129,7 +130,7 @@ Every reporting team has a file with a name like `MIS_final_v7_REALfinal_use-thi
 
 Spreadsheet sprawl is rarely a decision. It is what happens when reporting demand grows faster than data engineering capacity. One analyst builds a clever workbook, a second links to it, a third copies the values into a deck. Within a few years the monthly MIS is a chain of manual hand-offs, and nobody can say which step is the weakest.
 
-The regulatory benchmark for this problem is old but still the reference point. In January 2013 the Basel Committee published BCBS 239, *Principles for effective risk data aggregation and risk reporting*. It has 14 principles covering governance and infrastructure, aggregation capability, reporting practices and supervisory review. Its core attributes are accuracy and integrity, completeness, timeliness and adaptability. Global systemically important banks (G-SIBs) designated in 2011 and 2012 were expected to comply from January 2016, and later designations get three years. The Committee's progress report, published in November 2023 and covering 31 G-SIBs (assessment as of end-2022), found banks still at different stages of alignment, with additional work needed at all of them. If the largest banks, with the largest budgets, are still working on it, a spreadsheet-heavy MIS function is in good company. That is not an excuse, though.
+The regulatory benchmark for this problem is old but still the reference point. In January 2013 the Basel Committee published BCBS 239, *Principles for effective risk data aggregation and risk reporting*. It has 14 principles covering governance and infrastructure, aggregation capability, reporting practices and supervisory review. Its core attributes are accuracy and integrity, completeness, timeliness and adaptability. Global systemically important banks (G-SIBs) designated in 2011 and 2012 were expected to comply from January 2016, and later designations get three years. The Committee's progress report, published in November 2023 and covering 31 G-SIBs, found banks still at different stages of alignment, with additional work needed at all of them. If the largest banks, with the largest budgets, are still working on it, a spreadsheet-heavy MIS function is in good company. That is not an excuse, though.
 
 Two misconceptions make the problem harder than it needs to be. The first is that BCBS 239 bans spreadsheets. It does not. It asks that where manual processes and desktop tools are used, there are effective mitigants such as end-user computing policies and consistently applied controls. It also expects risk data to be aggregated on a largely automated basis to reduce the chance of error. The second is that the standard is only for the biggest banks. The Committee strongly suggests that national supervisors also apply it to domestic systemically important banks, and the discipline is useful to any institution that wants numbers it can defend.
 
