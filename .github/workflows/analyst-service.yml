@@ -147,6 +147,10 @@ jobs:
               print("CONCLUSION:", d["conclusion"])
               import os, urllib.request
               payload = {k: v for k, v in d.items() if k not in ("sig", "remaining", "free")}
+              import hashlib, hmac
+              sec = hashlib.sha256(("share:" + os.environ.get("KEY", "").strip()).encode()).hexdigest()
+              mine = hmac.new(sec.encode(), ("model-risk|" + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))).encode(), hashlib.sha256).hexdigest()[:40]
+              print("SIG CHECK: present", bool(d.get("sig")), "| matches a re-made signature:", mine == d.get("sig"))
               req = urllib.request.Request(os.environ["URL"] + "/share", data=json.dumps({"tool": "model-risk", "payload": payload, "sig": d.get("sig")}).encode(),
                                            headers={"Origin": "https://aceakant.github.io", "Content-Type": "application/json", "User-Agent": "insights-deploy-check"}, method="POST")
               try:
@@ -163,6 +167,7 @@ jobs:
         if: steps.ready.outputs.go == 'true'
         env:
           URL: ${{ steps.prep.outputs.url }}
+          KEY: ${{ secrets.ANALYST_ANTHROPIC_API_KEY || secrets.ANALYST_ANATHROPIC_KEY || secrets.ANALYST_ANTHROPIC_KEY || secrets.ANTHROPIC_API_KEY }}
         run: |
           node --input-type=module -e "const m=await import(process.cwd()+'/site/static/modelrisk/mr-core.js');const s=m.SAMPLES[0];(await import('fs')).writeFileSync('/tmp/mr.json',JSON.stringify({market:'EU',answers:s.answers,name:s.name}))"
           code=$(curl -sS -o /tmp/mr-out.json -w "%{http_code}" -X POST -H "Origin: https://aceakant.github.io" -H "X-Analyst-Test: 1" -H "Content-Type: application/json" --data @/tmp/mr.json --max-time 170 "$URL/model-risk" || true)
