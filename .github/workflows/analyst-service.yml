@@ -148,13 +148,13 @@ jobs:
               import os, urllib.request
               payload = {k: v for k, v in d.items() if k not in ("sig", "remaining", "free")}
               req = urllib.request.Request(os.environ["URL"] + "/share", data=json.dumps({"tool": "model-risk", "payload": payload, "sig": d.get("sig")}).encode(),
-                                           headers={"Origin": "https://aceakant.github.io", "Content-Type": "application/json"}, method="POST")
+                                           headers={"Origin": "https://aceakant.github.io", "Content-Type": "application/json", "User-Agent": "insights-deploy-check"}, method="POST")
               try:
                   sid = json.load(urllib.request.urlopen(req, timeout=30))["id"]
-                  back = json.load(urllib.request.urlopen(os.environ["URL"] + "/share?id=" + sid, timeout=30))
+                  back = json.load(urllib.request.urlopen(urllib.request.Request(os.environ["URL"] + "/share?id=" + sid, headers={"User-Agent": "insights-deploy-check"}), timeout=30))
                   print("SHARE TEST: OK | link id", sid, "| reads back score", back["payload"]["score"], "| expires", back["expires"])
               except Exception as e:
-                  print("SHARE TEST: NOT OK |", e)
+                  print("SHARE TEST: NOT OK |", e, getattr(e, "read", lambda: b"")()[:200])
           else:
               print("LIVE TEST: NOT OK |", d)
           PY
