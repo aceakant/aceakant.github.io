@@ -145,29 +145,16 @@ jobs:
           if d.get("conclusion"):
               print("LIVE TEST: OK |", d.get("title"), "|", len(d.get("findings", [])), "findings | verdicts", "/".join(r["verdict"] for r in d.get("reviews", [])), "| remaining", d.get("remaining"))
               print("CONCLUSION:", d["conclusion"])
-              import os, urllib.request
-              payload = {k: v for k, v in d.items() if k not in ("sig", "remaining", "free")}
-              import hashlib, hmac
-              sec = hashlib.sha256(("share:" + os.environ.get("KEY", "")).encode()).hexdigest()
-              mine = hmac.new(sec.encode(), ("model-risk|" + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))).encode(), hashlib.sha256).hexdigest()[:40]
-              print("SIG CHECK: present", bool(d.get("sig")), "| matches a re-made signature:", mine == d.get("sig"))
-              req = urllib.request.Request(os.environ["URL"] + "/share", data=json.dumps({"tool": "model-risk", "payload": payload, "sig": d.get("sig")}).encode(),
-                                           headers={"Origin": "https://aceakant.github.io", "Content-Type": "application/json", "User-Agent": "insights-deploy-check"}, method="POST")
-              try:
-                  sid = json.load(urllib.request.urlopen(req, timeout=30))["id"]
-                  back = json.load(urllib.request.urlopen(urllib.request.Request(os.environ["URL"] + "/share?id=" + sid, headers={"User-Agent": "insights-deploy-check"}), timeout=30))
-                  print("SHARE TEST: OK | link id", sid, "| reads back score", back["payload"]["score"], "| expires", back["expires"])
-              except Exception as e:
-                  print("SHARE TEST: NOT OK |", e, getattr(e, "read", lambda: b"")()[:200])
           else:
               print("LIVE TEST: NOT OK |", d)
           PY
+          # share the result the way a visitor's browser does, then read it back (the link Ajay would open)
+          node -e "const fs=require('fs');const d=JSON.parse(fs.readFileSync('/tmp/out.json','utf8'));const {sig,remaining,free,...review}=d;const summary=JSON.parse(fs.readFileSync('/tmp/body.json','utf8')).summary;fetch(process.env.URL+'/share',{method:'POST',headers:{Origin:'https://aceakant.github.io','Content-Type':'application/json'},body:JSON.stringify({tool:'review',payload:{review,summary},sig})}).then(r=>r.json()).then(j=>j.id?fetch(process.env.URL+'/share?id='+j.id).then(r=>r.json()).then(b=>console.log('SHARE TEST (review): OK | link',j.id,'| reads back',b.payload.review.findings.length,'findings | expires',b.expires)):console.log('SHARE TEST (review): NOT OK |',j)).catch(e=>console.log('SHARE TEST (review): NOT OK |',e.message))"
 
       - name: Live test Model Risk Check (one sample, sent the way a visitor's browser sends it)
         if: steps.ready.outputs.go == 'true'
         env:
           URL: ${{ steps.prep.outputs.url }}
-          KEY: ${{ secrets.ANALYST_ANTHROPIC_API_KEY || secrets.ANALYST_ANATHROPIC_KEY || secrets.ANALYST_ANTHROPIC_KEY || secrets.ANTHROPIC_API_KEY }}
         run: |
           node --input-type=module -e "const m=await import(process.cwd()+'/site/static/modelrisk/mr-core.js');const s=m.SAMPLES[0];(await import('fs')).writeFileSync('/tmp/mr.json',JSON.stringify({market:'EU',answers:s.answers,name:s.name}))"
           code=$(curl -sS -o /tmp/mr-out.json -w "%{http_code}" -X POST -H "Origin: https://aceakant.github.io" -H "X-Analyst-Test: 1" -H "Content-Type: application/json" --data @/tmp/mr.json --max-time 170 "$URL/model-risk" || true)
@@ -189,7 +176,7 @@ jobs:
           else:
               print("MODEL RISK TEST: NOT OK |", d)
           PY
-          node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/mr-out.json','utf8'));const {sig,remaining,free,...payload}=d;fetch(process.env.URL+'/share',{method:'POST',headers:{Origin:'https://aceakant.github.io','Content-Type':'application/json'},body:JSON.stringify({tool:'model-risk',payload,sig})}).then(r=>r.text()).then(t=>console.log('NODE SHARE TEST:',t))"
+          node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/mr-out.json','utf8'));const {sig,remaining,free,...payload}=d;fetch(process.env.URL+'/share',{method:'POST',headers:{Origin:'https://aceakant.github.io','Content-Type':'application/json'},body:JSON.stringify({tool:'model-risk',payload,sig})}).then(r=>r.json()).then(j=>j.id?fetch(process.env.URL+'/share?id='+j.id).then(r=>r.json()).then(b=>console.log('SHARE TEST (model risk): OK | link',j.id,'| reads back score',b.payload.score,'| expires',b.expires)):console.log('SHARE TEST (model risk): NOT OK |',j)).catch(e=>console.log('SHARE TEST (model risk): NOT OK |',e.message))"
 
       - name: Check the Hall of Fame answers
         if: steps.ready.outputs.go == 'true'
