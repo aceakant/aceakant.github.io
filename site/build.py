@@ -196,6 +196,7 @@ def build():
                              samples=json.loads((ROOT / "site" / "static" / "analyst" / "samples" / "samples.json").read_text())),
         "model-risk.html": dict(mr=model_risk_view(config)),
         "workbench.html": {},
+        "cut-off-studio.html": {},
         "result.html": {},
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
             (dict(url=a["url"], short="fraud model ROI") for a in published if "fraud-model-roi" in a["slug"]), None))),

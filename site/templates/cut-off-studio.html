@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Cut-off Studio · {{ site.author }}{% endblock %}
+{% block description %}Move a credit-score cut-off on a sample loan book and watch approval rate, bad rate, expected loss and profit change together, in a normal year and a downturn.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono"><a href="workbench.html">Workbench</a> · Cut-off Studio</p>
+  <h1>Where should the credit-score cut-off sit?</h1>
+  <p class="lede">Every lender has one number that decides who gets credit. Move it on a sample loan book and watch approvals, bad rate, losses and profit move together. Then switch on a downturn and see where it should sit next year. Runs in your browser; nothing is sent.</p>
+</section>
+
+<section class="wrap">
+  <div class="an-step cs">
+    <div class="cs-controls">
+      <div class="cs-row">
+        <span class="mono cs-k">Loan book</span>
+        <div class="roi-cur" role="radiogroup" aria-label="Loan book" id="cs-products"></div>
+      </div>
+      <div class="cs-row">
+        <span class="mono cs-k">Economy</span>
+        <div class="roi-cur" role="radiogroup" aria-label="Economy" id="cs-economy">
+          <button type="button" class="roi-c" role="radio" data-e="normal" aria-checked="true">Normal year</button>
+          <button type="button" class="roi-c" role="radio" data-e="downturn" aria-checked="false">Downturn</button>
+        </div>
+      </div>
+      <div class="cs-row">
+        <span class="mono cs-k">Currency</span>
+        <div class="roi-cur" role="radiogroup" aria-label="Currency" id="cs-cur">
+          {% for c in ["$", "£", "€", "C$"] %}<button type="button" class="roi-c" role="radio" data-c="{{ c }}" aria-checked="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+        </div>
+      </div>
+      <label class="roi-sl cs-cut">
+        <span class="roi-top"><span>Approve everyone scoring at least</span><b id="cs-cut-v">580</b></span>
+        <input type="range" id="cs-cut" min="450" max="750" step="5" value="580">
+      </label>
+      <div class="cs-jumps">
+        <button type="button" class="btn small ghost" id="cs-best">Jump to the most profitable cut-off</button>
+        <button type="button" class="btn small ghost" id="cs-today">Back to today's policy</button>
+      </div>
+    </div>
+
+    <div class="roi-kpis cs-kpis" aria-live="polite">
+      <div><b id="cs-appr"></b><span>of applicants approved</span><em id="cs-appr-d"></em></div>
+      <div><b id="cs-bad"></b><span>bad rate among approved</span><em id="cs-bad-d"></em></div>
+      <div><b id="cs-loss"></b><span>expected credit losses a year</span><em id="cs-loss-d"></em></div>
+      <div class="good"><b id="cs-profit"></b><span>profit a year after losses</span><em id="cs-profit-d"></em></div>
+    </div>
+    <p class="cs-story" id="cs-story"></p>
+
+    <div class="cs-charts">
+      <figure class="cs-fig">
+        <figcaption><b>Who applies, by score</b><span>Bars show applicants in each 5-point band; the red part goes bad. Shaded bands are declined.</span></figcaption>
+        <div id="cs-dist"></div>
+      </figure>
+      <figure class="cs-fig">
+        <figcaption><b>Profit at every cut-off</b><span>The dot is your cut-off; the ring is the most profitable one; the dashed line is today's policy.</span></figcaption>
+        <div id="cs-curve"></div>
+      </figure>
+    </div>
+
+    <div class="cs-side">
+      <div><b id="cs-turned"></b><span>good customers turned away</span></div>
+      <div><b id="cs-avoided"></b><span>of all bad loans avoided</span></div>
+      <div><b id="cs-breakeven"></b><span>break-even chance of going bad</span></div>
+    </div>
+  </div>
+
+  <div id="cs-talk"></div>
+
+  <details class="an-more cs-how">
+    <summary>How the sample book works</summary>
+    <div class="cs-how-body">
+      <p>Each applicant has a score built the way credit scorecards usually are: <b>every 20 points doubles the odds of a customer staying good</b>. The odds at a score of 600 are set for each book below, and applicant scores follow a bell curve. A good loan earns its lifetime margin; a bad one loses what's owed after recoveries.</p>
+      <p>The most profitable rule is to approve everyone whose chance of going bad is below <b>profit per good ÷ (profit per good + loss per bad)</b>. The studio shows that break-even and the cut-off it implies. A downturn makes every score 1.8 times as likely to go bad, which is why the best cut-off moves up.</p>
+      <div class="cs-table-wrap"><table class="cs-table" id="cs-table"></table></div>
+      <p class="an-sub">An illustrative sample, not any lender's real data. Real cut-off decisions also weigh affordability rules, fairness across customer groups, capital and the lender's risk appetite. Built by {{ site.author }}.</p>
+    </div>
+  </details>
+</section>
+{% endblock %}
