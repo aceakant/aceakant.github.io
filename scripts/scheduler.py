@@ -1,5 +1,7 @@
 """Runs every hour: sends the 24-hour reminder and publishes drafts whose 48-hour window has passed.
-Drafts on hold, or marked needs-review without approval, are never published here."""
+Drafts on hold, or marked needs-review without approval, are never published here.
+Also releases published articles held off LinkedIn once their `linkedin_release` time arrives
+(e.g. linkedin_release: 2026-11-07T13:30:00+05:30); the website deploy then posts them."""
 import datetime
 
 from articles import config, gh, ist_label, load_all, now_utc, parse_time, save, set_output, urls
@@ -9,6 +11,16 @@ def main():
     cfg = config()["review"]
     now, changed = now_utc(), False
     for path, meta, body in load_all():
+        release = parse_time(meta.get("linkedin_release"))
+        if meta.get("status") == "published" and meta.get("linkedin_hold") and not meta.get("linkedin_shared") and release and now >= release:
+            meta["linkedin_hold"] = False
+            save(path, meta, body)
+            changed = True
+            print(f"LinkedIn release: {meta['slug']}")
+            if meta.get("review_issue"):
+                gh("issue", "comment", str(meta["review_issue"]), "--body",
+                   f"📣 Scheduled LinkedIn post: this goes out now ({ist_label(release)}).")
+            continue
         if meta.get("status") != "draft":
             continue
         when = parse_time(meta.get("publish_at"))

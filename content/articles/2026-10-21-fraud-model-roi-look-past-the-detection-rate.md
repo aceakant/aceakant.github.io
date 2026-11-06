@@ -131,6 +131,7 @@ linkedin_post: 'Your fraud model catches 95% of fraud. Great. What did it cost t
   Which cost is hardest to measure in your world: customer friction, analyst time or something else?'
 linkedin_shared: false
 linkedin_hold: true
+linkedin_release: '2026-11-21T13:30:00+05:30'
 ---
 
 ## The problem

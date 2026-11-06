@@ -128,6 +128,7 @@ linkedin_post: 'Ten seconds. That is how long a euro-area bank now has to make a
   How does your team measure the cost of a challenge today: in euros, or in gut feel?'
 linkedin_shared: false
 linkedin_hold: true
+linkedin_release: '2026-11-28T13:30:00+05:30'
 ---
 
 ## The problem

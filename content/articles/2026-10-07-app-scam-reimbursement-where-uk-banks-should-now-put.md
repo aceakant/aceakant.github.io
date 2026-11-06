@@ -134,6 +134,7 @@ linkedin_post: 'UK Finance members reported £576.4 million of APP scam losses i
   If you run fraud analytics: which has moved up your roadmap most since October 2024, outbound scoring, inbound mule detection or claims automation?'
 linkedin_shared: false
 linkedin_hold: true
+linkedin_release: '2026-11-07T13:30:00+05:30'
 ---
 
 ## The problem
