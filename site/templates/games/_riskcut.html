@@ -3,7 +3,7 @@
     <div class="play-copy">
       <p class="kicker mono">Risk Lab · Run the bank for a day · 2 minutes</p>
       <h2 class="game-title">Set the cut-off. Make the most profit.</h2>
-      <p>{{ "{:,}".format(labs.risk.customers) }} people applied for a loan today, and {{ (labs.risk.bad_rate * 100) | round | int }}% of them won't pay you back. Everyone has a credit score. Approve everyone above your cut-off. Each good loan earns ₹{{ labs.risk.earn_good }}k, each bad loan loses ₹{{ labs.risk.lose_bad }}k.</p>
+      <p>{{ "{:,}".format(labs.risk.customers) }} people applied for a loan today, and {{ (labs.risk.bad_rate * 100) | round | int }}% of them won't pay you back. Everyone has a credit score. Approve everyone above your cut-off. Each good loan earns ${{ "{:,}".format(labs.risk.earn_good * 100) }}, each bad loan loses ${{ "{:,}".format(labs.risk.lose_bad * 100) }}.</p>
       <ul class="play-points">
         <li>Too strict: you turn away good customers</li>
         <li>Too generous: defaults eat your profit</li>
@@ -21,7 +21,7 @@
         <div><b id="rs-approved">0</b><span>approved</span></div>
         <div><b id="rs-turned">0</b><span>good customers turned away</span></div>
         <div><b id="rs-bad">0</b><span>bad loans approved</span></div>
-        <div class="profit"><b id="rs-profit">₹0</b><span>profit today</span></div>
+        <div class="profit"><b id="rs-profit">$0</b><span>profit today</span></div>
       </div>
       <div class="game-foot" id="risk-foot"><button class="btn small" type="button" id="risk-go">Lock in my cut-off</button></div>
       <script type="application/json" id="risk-data">{{ labs.risk | tojson }}</script>

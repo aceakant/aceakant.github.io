@@ -16,12 +16,12 @@ companies:
     team_mix: ["Data scientists", "Data engineers", "Analysts"]
     split: { analytics: 50, risk: 50 }
     analytics_side: "Built the Fraud Risk Analytics function from zero: data-mart, BI layer, ML and GenAI capability, governance cadence with the CRO, CIO and business heads."
-    risk_side: "Earlier fraud detection across every retail product, and a single source of truth for fraud, audit and regulators."
+    risk_side: "Fraud detection across every retail product, and a single source of truth for fraud, audit and regulators."
     projects:
       - slug: lt-fraud-ews
         title: "Fraud Risk Analytics function and Early-Warning System"
         summary: "Set up the fraud analytics function and co-designed ML fraud detection and an Early-Warning System with EY and BCG."
-        results: ["+20% early fraud detection", "Covers every retail product"]
+        results: ["Covers every retail product", "Early-Warning System with EY and BCG"]
         status: planned
       - slug: lt-genai-agent
         title: "GenAI analytics agent for fraud and portfolio data"
@@ -93,7 +93,7 @@ companies:
 
   - id: axis
     org: "Axis Bank"
-    role: "Head of Alternate Data – Data Sciences (BIU)"
+    role: "Head of Alternate Data – Data Sciences"
     period: "Dec 2022 – Dec 2023"
     context: "India's third-largest private bank."
     team: 12
@@ -114,7 +114,7 @@ companies:
         status: planned
       - slug: axis-realtime-payments
         title: "Real-time payments model for 100M+ customers"
-        summary: "A model on UPI and bill-payment data to underwrite and cross-sell, plus satellite farmland and telecom data for rural and BNPL lending."
+        summary: "A model on UPI (India's instant-payment system) and bill-payment data to underwrite and cross-sell, plus satellite farmland and telecom data for rural and BNPL lending."
         results: ["100M+ customers in scope", "Telecom score live in a BNPL journey"]
         status: planned
 
@@ -127,7 +127,7 @@ companies:
     team_mix: ["9 Risk", "6 Policy", "6 Data science"]
     split: { analytics: 50, risk: 50 }
     analytics_side: "Built Risk, Policy and Data Science teams from zero, with KRI dashboards for the CEO and CRO and A/B-tested alternate-data scores."
-    risk_side: "A full credit-risk capability that carried the business through the COVID shock: moratorium, restructuring, securitisation and RBI audits."
+    risk_side: "A full credit-risk capability that carried the business through the COVID shock: moratorium, restructuring, securitisation and audits by the RBI (India's central bank)."
     projects:
       - slug: dhani-risk-function
         title: "Building Risk & Policy through COVID"
@@ -141,15 +141,15 @@ companies:
         status: planned
       - slug: dhani-portfolio-sale
         title: "Portfolio sale and regulatory readiness"
-        summary: "Led a ~€20M portfolio sale, shaped securitisation strategy and prepared RBI audit inputs."
-        results: ["~€20M portfolio sale", "RBI audit readiness"]
+        summary: "Led a ~€20M portfolio sale, shaped securitisation strategy and prepared inputs for central-bank (RBI) audits."
+        results: ["~€20M portfolio sale", "Central-bank audit readiness"]
         status: planned
 
 earlier:
   - org: "JPMorgan Chase"
     role: "Fraud Risk Strategy – Consumer & Business Banking"
     period: "May 2016 – Apr 2019"
-    note: "Second line of defence for US consumer banking fraud: –15% digital fraud exposure, $1M a year reporting cost-out, $1–1.5M a year Visa claims recoveries."
+    note: "Second line of defence for US consumer banking fraud: +20% fraud early-detection, –15% digital fraud exposure, $1M a year reporting cost-out, $1–1.5M a year Visa claims recoveries."
   - org: "Tata Consultancy Services (Westpac, Australia)"
     role: "Senior Business Analyst"
     period: "May 2014 – May 2016"

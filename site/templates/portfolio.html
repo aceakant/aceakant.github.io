@@ -65,7 +65,7 @@
     {% else %}
     <div class="case-card">
     {% endif %}
-      <span class="mono">Case {{ loop.index }}{% if not p.published %} · full case coming soon{% endif %}</span>
+      <span class="mono">Case {{ loop.index }}</span>
       <h3>{{ p.title }}</h3>
       <p>{{ p.summary }}</p>
       <ul class="case-results">{% for r in p.results %}<li>{{ r }}</li>{% endfor %}</ul>

@@ -13,7 +13,7 @@ site:
   whatsapp: "91 97699 84956"     # WhatsApp button on the site (country code first). Empty = no WhatsApp button.
   email: "aceakant@gmail.com"
   show_email: false            # true = show email on the Profile page
-  show_availability: false     # true = show "Open to relocation / roles" on the Profile page
+  show_availability: true      # true = show the "Can you help with our problem?" chip on the Profile page
   accent: "#0E6F6E"            # used in the STAR image
 
 review:

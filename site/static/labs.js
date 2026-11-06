@@ -83,10 +83,10 @@
       return { approved: g + b, turned: nGood - g, bad: b, profit: g * P.earn_good - b * P.lose_bad, badMean: badMean };
     }
     function best() { var bc = 450, bp = -Infinity; for (var c = 450; c <= 800; c += 5) { var m = model(c); if (m.profit > bp) { bp = m.profit; bc = c; } } return { cut: bc, profit: bp }; }
-    // amounts are in ₹ thousand: 100k = ₹1 lakh, 10,000k = ₹1 crore
-    function money(k) { var v = Math.round(k), sign = v < 0 ? "−" : ""; v = Math.abs(v);
-      return sign + "₹" + (v >= 10000 ? (v / 10000).toFixed(2) + " cr" : v >= 100 ? (v / 100).toFixed(1) + " lakh" : v + "k"); }
-    function fmt(n) { return Math.round(n).toLocaleString("en-IN"); }
+    // amounts in the settings are in units of $100 (earn_good 12 = $1,200 per good loan)
+    function money(k) { var v = Math.round(k * 100), sign = v < 0 ? "−" : ""; v = Math.abs(v);
+      return sign + "$" + (v >= 1e6 ? (v / 1e6).toFixed(2) + "m" : v >= 1e3 ? Math.round(v / 1e3) + "k" : v); }
+    function fmt(n) { return Math.round(n).toLocaleString("en-GB"); }
     function drawRisk() {
       var c = Number(cut.value), m = model(c);
       while (rplot.firstChild) rplot.removeChild(rplot.firstChild);
@@ -247,13 +247,13 @@
         var mean = d.values.reduce(function (a, b) { return a + b; }, 0) / d.values.length;
         var sorted = d.values.slice().sort(function (a, b) { return a - b; }), med = (sorted[4] + sorted[5]) / 2;
         d.values.forEach(function (v, i) {
-          var x = 24 + i * 30, y = 92, big = v > 100;
+          var x = 24 + i * 30, y = 92, big = v >= 1000;
           cplot.appendChild(svgEl("circle", { cx: x, cy: y - 16, r: 7, "class": big ? "head big" : "head" }));
           cplot.appendChild(svgEl("path", { d: "M" + (x - 10) + " " + (y + 8) + " Q" + x + " " + (y - 14) + " " + (x + 10) + " " + (y + 8) + " Z", "class": big ? "head big" : "head" }));
-          txt(x, y + 24, "₹" + v + d.unit, big ? "val" : "tick");
+          txt(x, y + 24, v >= 1000 ? "$" + (v / 1000).toFixed(2) + "m" : "$" + v + "k", big ? "val" : "tick");
         });
-        txt(W / 2, 30, "Average salary: ₹" + Math.round(mean) + " lakh", honest ? "lbl" : "val");
-        if (honest) txt(W / 2, 162, "Typical person (median): ₹" + med + " lakh", "val ok");
+        txt(W / 2, 30, "Average salary: $" + Math.round(mean) + "k", honest ? "lbl" : "val");
+        if (honest) txt(W / 2, 162, "Typical person (median): $" + med + "k", "val ok");
       }
     }
     function chartRound() {
@@ -312,11 +312,11 @@
     }
     var BEST = bestMix();
     function pctTxt(v) { return (v >= 0 ? "+" : "−") + Math.abs(v).toFixed(1) + "%"; }
-    function crTxt(v) { return (v >= 0 ? "+" : "−") + "₹" + Math.abs(v).toFixed(1) + " cr"; }
+    function crTxt(v) { return (v >= 0 ? "+" : "−") + "$" + Math.abs(v).toFixed(1) + "m"; }
     function drawBook(reset) {
       var w = shares();
       bar.innerHTML = BK.products.map(function (p, i) { return '<span style="width:' + (w[p.id] * 100).toFixed(1) + "%;background:" + colors[i] + '" title="' + esc(p.name) + '"></span>'; }).join("");
-      Array.prototype.forEach.call(sliders, function (s) { $("#bk-" + s.dataset.id + "-out").textContent = "₹" + Math.round(w[s.dataset.id] * 100) + " cr"; });
+      Array.prototype.forEach.call(sliders, function (s) { $("#bk-" + s.dataset.id + "-out").textContent = "$" + Math.round(w[s.dataset.id] * 100) + "m"; });
       if (reset) {
         Array.prototype.forEach.call(econ.children, function (c) { c.className = ""; c.querySelector("b").textContent = "–"; });
         bfoot.innerHTML = '<span class="hint">Goal: at least +' + BK.target.toFixed(1) + '% in a normal year, and no loss in a recession.</span><button class="btn small" type="button" id="book-go">Run the economy</button>';
@@ -374,8 +374,8 @@
       if (e.target.id === "phish-next") {
         if (pi < msgs.length - 1) { pi++; showMsg(); return; }
         pbtns.hidden = true; $("#phish-from").textContent = "Your result"; bubble.className = "bubble"; done("scam-or-legit", ps / msgs.length * 100);
-        bubble.textContent = ps === msgs.length ? "Perfect score. Scammers would hate you. 🛡️" : ps >= 4 ? "Good instincts. The UPI 'PIN to receive' trick catches a lot of people." : "Scams are designed to feel urgent. Slow down, and never click links in messages.";
-        pfoot.innerHTML = '<div class="final"><span class="mono">YOU SPOTTED</span><div class="big">' + ps + " / " + msgs.length + '</div><p>Golden rule: you never need a PIN or OTP to receive money.</p></div><span class="btns"><button class="btn small ghost" type="button" id="phish-again">Play again</button></span>';
+        bubble.textContent = ps === msgs.length ? "Perfect score. Scammers would hate you. 🛡️" : ps >= 4 ? "Good instincts. The 'PIN to receive' trick catches a lot of people." : "Scams are designed to feel urgent. Slow down, and never click links in messages.";
+        pfoot.innerHTML = '<div class="final"><span class="mono">YOU SPOTTED</span><div class="big">' + ps + " / " + msgs.length + '</div><p>Golden rule: you never need a PIN or one-time code to receive money.</p></div><span class="btns"><button class="btn small ghost" type="button" id="phish-again">Play again</button></span>';
         if (ps === msgs.length) party();
       } else if (e.target.id === "phish-again") { pi = 0; ps = 0; showMsg(); }
     });

@@ -3,15 +3,15 @@
     <div class="play-copy">
       <p class="kicker mono">Risk Lab · Survive the recession · 2 minutes</p>
       <h2 class="game-title">Build a loan book that survives a recession.</h2>
-      <p>You have ₹100 crore to lend across four products. Riskier loans pay more, until a recession hits. Your goal: earn at least {{ "%.0f" | format(labs.book.target) }}% profit in a normal year, without making a loss when the recession hits.</p>
+      <p>You have $100 million to lend across four products. Riskier loans pay more, until a recession hits. Your goal: earn at least {{ "%.0f" | format(labs.book.target) }}% profit in a normal year, without making a loss when the recession hits.</p>
       <ul class="play-points">
-        <li>Move the sliders to split your ₹100 crore across four kinds of loan</li>
+        <li>Move the sliders to split your $100 million across four kinds of loan</li>
         <li>Press "Run the economy" to test boom, normal and recession years</li>
         <li>Illustrative numbers, real trade-off</li>
       </ul>
     </div>
     <div class="game" id="book-game" aria-live="polite">
-      <div class="game-head"><span class="mono">SURVIVE THE RECESSION</span><span class="mono">₹100 CRORE TO LEND</span></div>
+      <div class="game-head"><span class="mono">SURVIVE THE RECESSION</span><span class="mono">$100 MILLION TO LEND</span></div>
       <div class="book-rows" id="book-rows">
         {% for pr in labs.book.products %}
         <label class="book-row" for="bk-{{ pr.id }}">

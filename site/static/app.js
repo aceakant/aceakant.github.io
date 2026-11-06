@@ -218,13 +218,13 @@
     var compute = function () {
       var expr = formula;
       $$("input[data-var]", calc).forEach(function (inp) {
-        inp.nextElementSibling.textContent = Number(inp.value).toLocaleString("en-IN");
+        inp.nextElementSibling.textContent = Number(inp.value).toLocaleString("en-GB");
         expr = expr.replace(new RegExp("\\b" + inp.getAttribute("data-var") + "\\b", "g"), "(" + parseFloat(inp.value) + ")");
       });
       if (!/^[\d\s+\-*/().]+$/.test(expr)) { res.textContent = "—"; return; }
       try {
         var v = Function('"use strict";return (' + expr + ")")();
-        res.textContent = isFinite(v) ? Math.round(v).toLocaleString("en-IN") : "—";
+        res.textContent = isFinite(v) ? Math.round(v).toLocaleString("en-GB") : "—";
       } catch (e) { res.textContent = "—"; }
     };
     $$("input[data-var]", calc).forEach(function (inp) { inp.addEventListener("input", compute); });

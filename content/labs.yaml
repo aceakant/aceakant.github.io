@@ -27,7 +27,7 @@ labs:
     part: book
     added: November 2026
     new: true
-    hook: Build a ₹100 crore loan book. Earn the most, but don't lose money when the recession hits.
+    hook: Build a $100 million loan book. Earn the most, but don't lose money when the recession hits.
   - id: cut-off
     name: Run the bank for a day
     part: riskcut
@@ -205,26 +205,26 @@ charts:
     - The slices add up to 130%, so people could pick more than one
     answer: 2
     explain: 45 + 40 + 30 + 15 = 130%. A pie only works when every answer is exclusive and the parts add up to 100%.
-  - title: '"Average salary at our 10-person startup: ₹42 lakh"'
+  - title: '"Average salary at our 10-person startup: $420k"'
     kind: people
     values:
-    - 8
-    - 8
-    - 8
-    - 8
-    - 8
-    - 8
-    - 8
-    - 8
-    - 8
-    - 348
-    unit: L
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+    - 80
+    - 3480
+    unit: k
     options:
-    - One founder's pay drags the average up; the typical person earns ₹8 lakh
+    - One founder's pay drags the average up; the typical person earns $80k
     - Startups always pay well
     - The chart needs a legend
     answer: 0
-    explain: Nine people earn ₹8 lakh and one earns ₹3.48 crore. The average is ₹42 lakh, but the median, the honest number here, is ₹8 lakh.
+    explain: Nine people earn $80k and one earns $3.48m. The average is $420k, but the median, the honest number here, is $80k.
 book:
   funding_cost: 6.5
   appetite: 0.0
@@ -265,48 +265,48 @@ book:
     card: 25
 phish:
   messages:
-  - from: VM-YRBANK
-    text: 'Dear customer, your KYC expires today. Update now or your account will be BLOCKED: http://yourbank-kyc-update.xyz'
+  - from: YourBank
+    text: 'Dear customer, your account details expire today. Verify now or your account will be BLOCKED: http://yourbank-verify-update.xyz'
     scam: true
     flags:
     - Urgent threat ("BLOCKED", "today")
     - A strange web address that isn't the bank's site
-    - Banks don't ask for KYC via SMS links
-  - from: VM-YRBANK
-    text: ₹2,450 debited from A/c XX4417 at CITY GROCERS on 01-Nov. Not you? Call the number on the back of your card.
+    - Banks don't ask you to verify your details through text-message links
+  - from: YourBank
+    text: $24.50 spent on your card ending 4417 at CITY GROCERS on 01-Nov. Not you? Call the number on the back of your card.
     scam: false
     flags:
     - No link to click
     - Doesn't ask for any details
     - Points you to the number you already have
-  - from: +91 98xxx xx210
-    text: 'Your parcel is on hold due to unpaid customs fee of ₹49. Pay here to release: bit.ly/parcel-fee'
+  - from: +44 7xxx xxx210
+    text: 'Your parcel is on hold due to an unpaid customs fee of £1.99. Pay here to release: bit.ly/parcel-fee'
     scam: true
     flags:
     - A tiny fee to make you lower your guard
     - Shortened link hides the real address
     - Sent from a personal mobile number
   - from: HR Team
-    text: Congratulations! Work from home, earn ₹8,000/day liking videos. Pay ₹500 registration to start.
+    text: Congratulations! Work from home, earn $300 a day liking videos. Pay a $25 registration fee to start.
     scam: true
     flags:
     - Too good to be true
     - You pay them to get a job
     - No company name, no interview
-  - from: VM-YRBANK
-    text: Your OTP for login is 482910. Valid for 5 minutes. Never share your OTP with anyone, including bank staff.
+  - from: YourBank
+    text: Your one-time code for login is 482910. Valid for 5 minutes. Never share this code with anyone, including bank staff.
     scam: false
     flags:
     - Expected if you just tried to log in
     - Warns you not to share it
     - No link, no request
-  - from: UPI Request
-    text: Rohit has sent you a request of ₹4,999. Enter your UPI PIN to RECEIVE the money.
+  - from: Payment request
+    text: Sam has sent you a payment request of $49.99. Enter your PIN to RECEIVE the money.
     scam: true
     flags:
     - You never need a PIN to receive money
     - A PIN means money is leaving your account
-    - Pressure to act fast on a "collect" request
+    - Pressure to act fast on a payment request
 order:
   rounds:
   - title: Chai, the governance way

@@ -40,7 +40,7 @@ experience:
       situation: "Fraud risk needed a dedicated analytics function of its own."
       task: "Build the team and catch fraud earlier in the customer journey."
       action: "Built the Fraud Risk Analytics team from scratch, and an LLM-based agent that handles routine data analytics."
-      result: "Fraud early-detection up 20%."
+      result: "Fraud detection now covers every retail product, with routine analytics handled by an LLM agent."
   - org: "Axis Bank"
     role: "Head of Alternate Data – Data Sciences"
     team: "12 · 8 data scientists, 4 data engineers"
@@ -63,7 +63,7 @@ experience:
       situation: "Digital channels carried growing fraud exposure."
       task: "Tighten fraud strategy and recover more losses."
       action: "Shaped fraud strategy and the Visa partnership recovery process."
-      result: "$1–1.5M a year in Visa partnership recoveries; digital fraud exposure down 15%."
+      result: "Fraud early-detection up 20%; $1–1.5M a year in Visa partnership recoveries; digital fraud exposure down 15%."
   - org: "TCS (Westpac engagement)"
     role: "Fraud Analytics"
     star:
@@ -86,8 +86,8 @@ quick_answers:
     a: "LinkedIn is quickest: linkedin.com/in/ajuhack"
 
 availability:
-  q: "Open to relocation?"
-  a: "Yes, for senior and director-level roles in risk analytics, credit strategy, embedded finance and analytics leadership: London, Dublin, Copenhagen, Amsterdam, Luxembourg and other international postings."
+  q: "Can you help with our problem?"
+  a: "Happy to try. If your team is wrestling with fraud losses, credit decisions, model governance or putting GenAI to work safely, send me a note. I enjoy working through these problems with teams anywhere in the world."
 
 skills:
   - "Fraud risk strategy & detection"

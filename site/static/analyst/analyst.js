@@ -13,7 +13,7 @@
   /* ---------- tiny DOM helpers (text only, never HTML from data) ---------- */
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function add(parent) { for (var i = 1; i < arguments.length; i++) if (arguments[i]) parent.appendChild(arguments[i]); return parent; }
-  function fmt(n) { return n == null ? "–" : Number(n).toLocaleString("en-IN", { maximumFractionDigits: 2 }); }
+  function fmt(n) { return n == null ? "–" : Number(n).toLocaleString("en-GB", { maximumFractionDigits: 2 }); }
   function note(text, kind) { msg.textContent = text || ""; msg.className = "an-msg" + (kind ? " " + kind : ""); msg.hidden = !text; }
   var TYPES = { number: "Number", category: "Category", date: "Date", yesno: "Yes / No", id: "ID", text: "Text" };
 
