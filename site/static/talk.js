@@ -6,7 +6,6 @@
   var TOPICS = ["A full review", "A project or role with Ajay", "Just a question"];
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function waDigits() { var a = document.querySelector("a[data-wa]"); return a ? a.getAttribute("data-wa").split("|").join("") : ""; }
-  function emailAddr() { var a = document.querySelector("a[data-em]"); return a ? a.getAttribute("data-em").split("|").join("@") : ""; }
   function linkedIn() { var a = document.querySelector('a[href*="linkedin.com/in/"]'); return a ? a.href : ""; }
   function track(n) { if (window.akTrack) window.akTrack(n); }
 
@@ -48,9 +47,7 @@
     var row = el("div", "an-actions"), digits = waDigits(), li = linkedIn();
     var wa = el("button", "btn small", "Send on WhatsApp"); wa.type = "button";
     var cp = el("button", "btn small ghost", "Copy for LinkedIn"); cp.type = "button";
-    var em = emailAddr(), mb = el("button", "btn small ghost", "Send by email"); mb.type = "button";
     if (digits) row.appendChild(wa);
-    if (em) row.appendChild(mb);
     row.appendChild(cp);
     box.appendChild(row);
     var note = el("p", "talk-note"); note.setAttribute("aria-live", "polite"); box.appendChild(note);
@@ -78,16 +75,6 @@
         wa.disabled = false; wa.textContent = "Send on WhatsApp";
         if (!note.textContent) note.textContent = "WhatsApp is open with your message. Check it, then press send.";
         track("tool-talk-" + opts.tool + "-whatsapp");
-      });
-    });
-    mb.addEventListener("click", function () {
-      mb.disabled = true; mb.textContent = "Preparing…";
-      ready().then(function () {
-        draw();
-        window.location.href = "mailto:" + em + "?subject=" + encodeURIComponent("About my " + opts.toolName.replace(/^the /, "") + " result") + "&body=" + encodeURIComponent(text(true));
-        mb.disabled = false; mb.textContent = "Send by email";
-        if (!note.textContent) note.textContent = "Your email app should open with the message ready. Check it, then send.";
-        track("tool-talk-" + opts.tool + "-email");
       });
     });
     cp.addEventListener("click", function () {
