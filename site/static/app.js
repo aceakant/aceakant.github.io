@@ -8,6 +8,9 @@
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 
   /* WhatsApp buttons: join the number in the browser */
+  $$("a[data-em]").forEach(function (a) {
+    a.href = "mailto:" + a.getAttribute("data-em").split("|").join("@") + "?subject=" + encodeURIComponent(a.getAttribute("data-subject") || "");
+  });
   $$("a[data-wa]").forEach(function (a) {
     a.href = "https://wa.me/" + a.getAttribute("data-wa").split("|").join("") + "?text=" + encodeURIComponent(a.getAttribute("data-msg") || "");
   });

@@ -1,0 +1,2 @@
+{# "Book a call" button, shown once site.booking_url is set in config.yaml #}
+{% if site.booking_url %}<a class="{{ bk_class | default('btn small') }}" href="{{ site.booking_url }}" target="_blank" rel="noopener">Book a 20-minute call</a>{% endif %}

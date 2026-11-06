@@ -1,0 +1,2 @@
+{# "Email" button. The address is put together in the browser, so simple spam bots don't find it. Optional: em_class, em_label #}
+{% if site.email %}{% set em = site.email.split("@") %}<a class="{{ em_class | default('btn small ghost') }}" href="#" data-em="{{ em[0] }}|{{ em[1] }}" data-subject="Hello from your website">{{ em_label | default('Email') }}</a>{% endif %}

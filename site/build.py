@@ -197,6 +197,7 @@ def build():
         "model-risk.html": dict(mr=model_risk_view(config)),
         "workbench.html": {},
         "result.html": {},
+        "privacy.html": dict(privacy_updated="6 November 2026"),
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
             (dict(url=a["url"], short="fraud model ROI") for a in published if "fraud-model-roi" in a["slug"]), None))),
     }

@@ -1053,3 +1053,14 @@ a.wb-card.lite:hover{border-color:var(--amber)}
 .rs-meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:13.5px;color:var(--muted)}
 .rs-meta span:first-child{color:var(--accent);font-weight:600} .rs-meta a{color:var(--accent);font-weight:600;text-decoration:none}
 .acc-talk{margin:-4px 0 12px}
+
+/* Privacy and AI page */
+.pv-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pv-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px 22px;min-width:0}
+.pv-card h2{margin:0 0 8px;font:700 21px/1.25 var(--display)}
+.pv-card p,.pv-card li{color:var(--muted);font-size:15.5px;line-height:1.6}
+.pv-card p{margin:0 0 10px} .pv-card p:last-child{margin-bottom:0} .pv-card b{color:var(--ink)}
+.pv-card ul{margin:0 0 10px;padding-left:18px} .pv-card a{color:var(--accent)}
+.pv-ask{margin-top:16px;border-style:dashed}
+.fine a{color:inherit}
+@media (max-width:760px){.pv-grid{grid-template-columns:1fr}}
