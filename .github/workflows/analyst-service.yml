@@ -148,7 +148,7 @@ jobs:
               import os, urllib.request
               payload = {k: v for k, v in d.items() if k not in ("sig", "remaining", "free")}
               import hashlib, hmac
-              sec = hashlib.sha256(("share:" + os.environ.get("KEY", "").strip()).encode()).hexdigest()
+              sec = hashlib.sha256(("share:" + os.environ.get("KEY", "")).encode()).hexdigest()
               mine = hmac.new(sec.encode(), ("model-risk|" + json.dumps(payload, ensure_ascii=False, separators=(",", ":"))).encode(), hashlib.sha256).hexdigest()[:40]
               print("SIG CHECK: present", bool(d.get("sig")), "| matches a re-made signature:", mine == d.get("sig"))
               req = urllib.request.Request(os.environ["URL"] + "/share", data=json.dumps({"tool": "model-risk", "payload": payload, "sig": d.get("sig")}).encode(),
@@ -189,6 +189,7 @@ jobs:
           else:
               print("MODEL RISK TEST: NOT OK |", d)
           PY
+          node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/mr-out.json','utf8'));const {sig,remaining,free,...payload}=d;fetch(process.env.URL+'/share',{method:'POST',headers:{Origin:'https://aceakant.github.io','Content-Type':'application/json'},body:JSON.stringify({tool:'model-risk',payload,sig})}).then(r=>r.text()).then(t=>console.log('NODE SHARE TEST:',t))"
 
       - name: Check the Hall of Fame answers
         if: steps.ready.outputs.go == 'true'
