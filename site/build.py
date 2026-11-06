@@ -174,7 +174,18 @@ def build():
     env.filters["num"] = lambda n: f"{int(n):,}"
     # new version tag on every build, so browsers fetch fresh styles and scripts
     asset_v = (os.environ.get("GITHUB_SHA") or datetime.datetime.now().strftime("%Y%m%d%H%M%S"))[:10]
-    tools = yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"]
+    # A tool shows on the Workbench once it is launched: status "preview" = built and waiting for approval
+    # (its page exists at its URL but isn't listed); launch: "2026-11-15T09:00:00+05:30" = listed from then on.
+    ist = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
+    def launched(t):
+        if t.get("status") == "preview":
+            return False
+        when = t.get("launch")
+        if not when:
+            return True
+        when = when if isinstance(when, datetime.datetime) else datetime.datetime.fromisoformat(str(when))
+        return (when if when.tzinfo else when.replace(tzinfo=ist)) <= datetime.datetime.now(ist)
+    tools = [t for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"] if launched(t)]
     # Workbench roadmap: the next two tools not yet live appear as "Coming <date>" cards
     live_ids = {t["id"] for t in tools}
     roadmap = yaml.safe_load((ROOT / "content" / "tool-roadmap.yaml").read_text())["tools"] if (ROOT / "content" / "tool-roadmap.yaml").exists() else []

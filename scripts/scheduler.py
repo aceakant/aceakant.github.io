@@ -4,12 +4,27 @@ Also releases published articles held off LinkedIn once their `linkedin_release`
 (e.g. linkedin_release: 2026-11-07T13:30:00+05:30); the website deploy then posts them."""
 import datetime
 
-from articles import config, gh, ist_label, load_all, now_utc, parse_time, save, set_output, urls
+from articles import ROOT, config, gh, ist_label, load_all, now_utc, parse_time, save, set_output, urls
 
 
 def main():
     cfg = config()["review"]
     now, changed = now_utc(), False
+    # Workbench tools approved for a launch time: rebuild the site once when that time arrives
+    try:
+        import yaml
+        done_file = ROOT / "content" / "launched.txt"
+        done = set(done_file.read_text().split()) if done_file.exists() else set()
+        for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"]:
+            when = parse_time(t.get("launch"))
+            if t.get("status") != "preview" and when and now >= when and t["id"] not in done:
+                with done_file.open("a") as f:
+                    f.write(t["id"] + "\n")
+                changed = True
+                print(f"Workbench launch: {t['id']}")
+    except Exception as e:  # a launch problem must never stop article publishing
+        print(f"Workbench launch check skipped: {e}")
+
     for path, meta, body in load_all():
         release = parse_time(meta.get("linkedin_release"))
         if meta.get("status") == "published" and meta.get("linkedin_hold") and not meta.get("linkedin_shared") and release and now >= release:
