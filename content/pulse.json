@@ -1,10 +1,10 @@
 {
-  "updated": "2026-11-05T07:57:44Z",
+  "updated": "2026-11-06T06:43:12Z",
   "since": "2026-11-02",
-  "visitors": 0,
-  "players": 5,
-  "article_reads": 10,
-  "countries": 3,
+  "visitors": 37,
+  "players": 6,
+  "article_reads": 14,
+  "countries": 4,
   "weekly": [
     {
       "week": "2026-09-14",
@@ -36,28 +36,37 @@
     },
     {
       "week": "2026-11-02",
-      "players": 5
+      "players": 6
     }
   ],
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 0
+      "count": 1
     },
     {
       "name": "Direct link or bookmark",
-      "count": 0
+      "count": 5
     },
     {
       "name": "Google and other search",
-      "count": 0
+      "count": 1
     },
     {
       "name": "Other sites",
-      "count": 21
+      "count": 30
     }
   ],
   "games": {
+    "scam-or-legit": {
+      "players": 1,
+      "finished": 1,
+      "scores": {
+        "100": 1
+      },
+      "scored": 1,
+      "avg_score": 100
+    },
     "correlation": {
       "players": 1,
       "finished": 1,
@@ -104,6 +113,10 @@
   },
   "articles": [
     {
+      "slug": "from-spreadsheet-sprawl-to-a-governed-mis-pipeline-with",
+      "reads": 4
+    },
+    {
       "slug": "fraud-model-roi-look-past-the-detection-rate",
       "reads": 3
     },
@@ -126,9 +139,31 @@
       "retail-loan-book": 1
     },
     "uploads": 0,
-    "reviews": 0
+    "reviews": 0,
+    "model_risk": 0,
+    "model_risk_samples": 0,
+    "roi": 0,
+    "talks": 0
   },
   "analyst_live": {
-    "reviews": 0
+    "reviews": 0,
+    "model_risk": {
+      "since": "2026-11-05",
+      "checks": 3,
+      "gaps": 18,
+      "markets": {
+        "Ireland": 1,
+        "EU": 1,
+        "US": 1
+      },
+      "seconds": 88,
+      "verdicts": {
+        "confirmed": 12,
+        "corrected": 6,
+        "removed": 2,
+        "added": 0
+      },
+      "last": "2026-11-06"
+    }
   }
 }
