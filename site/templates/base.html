@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+{% if page == 'result.html' %}<meta name="robots" content="noindex">{% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{% block title %}{{ site.title }}{% endblock %}</title>
 <meta name="description" content="{% block description %}{{ site.tagline }}{% endblock %}">
@@ -59,6 +60,8 @@
 <script src="{{ root }}static/app.js?v={{ asset_v }}" defer></script>
 {% if page.endswith('-lab.html') %}<script src="{{ root }}static/labs.js?v={{ asset_v }}" defer></script>{% endif %}
 {% if api_url and (page == 'pulse.html' or page.endswith('-lab.html')) %}<script type="application/json" id="ak-hof">{{ dict(api=api_url, games=game_map) | tojson }}</script>{% endif %}
+{% if page in ('analyst.html','model-risk.html','fraud-roi.html') %}<script src="{{ root }}static/talk.js?v={{ asset_v }}" defer></script>{% endif %}
+{% if page == 'result.html' %}<script type="module" src="{{ root }}static/result.js?v={{ asset_v }}"></script>{% endif %}
 {% if page == 'model-risk.html' %}<script type="module" src="{{ root }}static/modelrisk/modelrisk.js?v={{ asset_v }}"></script>{% endif %}
 {% if page == 'fraud-roi.html' %}<script src="{{ root }}static/roi/roi.js?v={{ asset_v }}" defer></script>{% endif %}
 {% if page == 'analyst.html' %}<script src="{{ root }}static/analyst/profile.js?v={{ asset_v }}" defer></script><script src="{{ root }}static/analyst/analyst.js?v={{ asset_v }}" defer></script>{% endif %}

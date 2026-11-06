@@ -145,6 +145,16 @@ jobs:
           if d.get("conclusion"):
               print("LIVE TEST: OK |", d.get("title"), "|", len(d.get("findings", [])), "findings | verdicts", "/".join(r["verdict"] for r in d.get("reviews", [])), "| remaining", d.get("remaining"))
               print("CONCLUSION:", d["conclusion"])
+              import os, urllib.request
+              payload = {k: v for k, v in d.items() if k not in ("sig", "remaining", "free")}
+              req = urllib.request.Request(os.environ["URL"] + "/share", data=json.dumps({"tool": "model-risk", "payload": payload, "sig": d.get("sig")}).encode(),
+                                           headers={"Origin": "https://aceakant.github.io", "Content-Type": "application/json"}, method="POST")
+              try:
+                  sid = json.load(urllib.request.urlopen(req, timeout=30))["id"]
+                  back = json.load(urllib.request.urlopen(os.environ["URL"] + "/share?id=" + sid, timeout=30))
+                  print("SHARE TEST: OK | link id", sid, "| reads back score", back["payload"]["score"], "| expires", back["expires"])
+              except Exception as e:
+                  print("SHARE TEST: NOT OK |", e)
           else:
               print("LIVE TEST: NOT OK |", d)
           PY

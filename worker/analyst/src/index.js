@@ -5,6 +5,7 @@
 import { runReview, VERSION } from "./review.js";
 import { MR_VERSION, parseRequest, runModelRisk } from "./modelrisk.js";
 import { hofRead, hofStart, hofSubmit } from "./hof.js";
+import { shareCreate, shareRead, sign } from "./share.js";
 
 const json = (body, status, headers) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", ...headers } });
 
@@ -39,14 +40,17 @@ export default {
     }
     // Playground Hall of Fame: public read; scores only from Ajay's website.
     if (request.method === "GET" && url.pathname === "/hof" && env.LIMITS) return hofRead(request, env, url, json, cors);
+    // A result a visitor chose to share with Ajay: readable by anyone with the private link.
+    if (request.method === "GET" && url.pathname === "/share" && env.LIMITS) { const r = await shareRead(url, env); return json(r.body, r.status, { ...cors, "Access-Control-Allow-Origin": "*" }); }
     if (!allowed.includes(origin)) return json({ error: "origin", message: "This service only answers Ajay Kant's website." }, 403, cors);
     if (!env.LIMITS || !env.ANTHROPIC_API_KEY) return json({ error: "not_ready", message: "The live service is not switched on yet." }, 503, cors);
-    if (request.method === "POST" && (url.pathname === "/hof" || url.pathname === "/hof/start")) {
+    if (request.method === "POST" && ["/hof", "/hof/start", "/share"].includes(url.pathname)) {
       const raw = await request.text();
-      if (raw.length > 2000) return json({ error: "too_big" }, 413, cors);
+      if (raw.length > (url.pathname === "/share" ? 60000 : 2000)) return json({ error: "too_big" }, 413, cors);
       let body; try { body = JSON.parse(raw); } catch { body = null; }
       const salt = (await sha256("salt:" + env.ANTHROPIC_API_KEY)).slice(0, 24);
       const visitor = await sha256(salt + (request.headers.get("CF-Connecting-IP") || "unknown"));
+      if (url.pathname === "/share") { const r = await shareCreate(body, env, visitor, await sha256("share:" + env.ANTHROPIC_API_KEY)); return json(r.body, r.status, cors); }
       const secret = await sha256("hof:" + env.ANTHROPIC_API_KEY);
       const r = url.pathname === "/hof/start" ? await hofStart(body, env, visitor, secret, request.headers.get("X-Analyst-Test") === "1")
         : await hofSubmit(body, env, visitor, secret, (request.cf && request.cf.country) || request.headers.get("CF-IPCountry") || "");
@@ -77,16 +81,18 @@ export default {
     let body;
     try { body = JSON.parse(raw); } catch { body = null; }
 
-    let job;
+    let job, signed;
     if (toolName === "review") {
       const summary = body && body.summary;
       if (!summary || typeof summary !== "object" || !summary.file || !Array.isArray(summary.columns))
         return json({ error: "bad_request", message: "Expected a statistics summary." }, 400, cors);
       job = (opts) => runReview(summary, opts);
+      signed = (result) => ({ review: result, summary });
     } else {
       const req = parseRequest(body);
       if (!req) return json({ error: "bad_request", message: "Please answer all 10 questions and pick a market." }, 400, cors);
       job = (opts) => runModelRisk(req, opts);
+      signed = (result) => result;
     }
 
     let result;
@@ -110,6 +116,8 @@ export default {
       st.last = day;
       await env.LIMITS.put(tool.stats, JSON.stringify(st));
     }
-    return json({ ...result, remaining: Math.max(0, perVisitor - used - 1), free: perVisitor }, 200, cors);
+    // signed, so the visitor can later choose to share this exact result with Ajay (see share.js)
+    const sig = await sign(await sha256("share:" + env.ANTHROPIC_API_KEY), toolName, signed(result));
+    return json({ ...result, sig, remaining: Math.max(0, perVisitor - used - 1), free: perVisitor }, 200, cors);
   },
 };

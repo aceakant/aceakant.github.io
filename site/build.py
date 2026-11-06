@@ -102,7 +102,7 @@ def accountability_view(config, published, data):
                 pct_verified=round(verified / claims * 100) if claims else 0, pct_corrected=round(corrected / claims * 100) if claims else 0),
         mc=dict(checked=checked, verdicts=[dict(name=k, count=v, pct=round(v / checked * 100) if checked else 0) for k, v in verdicts.items()],
                 live_reviews=int(live.get("reviews", 0)), live_avg=round(live["seconds"] / live["reviews"]) if live.get("reviews") else None,
-                samples_opened=sum((tools.get("samples") or {}).values()), uploads=int(tools.get("uploads", 0)), model_checks=int(mr.get("checks", 0)),
+                samples_opened=sum((tools.get("samples") or {}).values()), uploads=int(tools.get("uploads", 0)), model_checks=int(mr.get("checks", 0)), talks=int(tools.get("talks", 0)),
                 free=an.get("free_per_visitor", 5), cap=an.get("daily_cap", 20), live_on=bool(an.get("worker_url"))))
 
 
@@ -196,6 +196,7 @@ def build():
                              samples=json.loads((ROOT / "site" / "static" / "analyst" / "samples" / "samples.json").read_text())),
         "model-risk.html": dict(mr=model_risk_view(config)),
         "workbench.html": {},
+        "result.html": {},
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
             (dict(url=a["url"], short="fraud model ROI") for a in published if "fraud-model-roi" in a["slug"]), None))),
     }

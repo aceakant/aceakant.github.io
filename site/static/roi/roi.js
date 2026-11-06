@@ -2,7 +2,8 @@
 (function () {
   "use strict";
   var $ = function (s) { return document.querySelector(s); };
-  var cur = "£", used = false;
+  var cur = "£", used = false, talkBox = null, last = null;
+  var CODES = { "£": "GBP", "€": "EUR", "$": "USD", "C$": "CAD" };
   var ids = ["payments", "fraud", "loss", "catch", "alarms", "review", "cost"];
 
   function val(id) { var i = $("#roi-" + id); return Number(i.dataset.values.split(",")[i.value]); }
@@ -56,7 +57,28 @@
     $("#roi-friction").append("The hidden cost: ", b, " are stopped as false alarms" + (blocked >= 1 ? " (about 1 in " + count(p / blocked) + " payments)" : "") + ". Push the catch rate up and watch this climb.");
     $("#roi-miss").textContent = "Still missed: " + count(frauds - caught) + " frauds a month, about " + money((frauds - caught) * loss * 12, 1) + " a year.";
     chart(stopped, reviews, mc, net);
+    last = { p: p, f: f, loss: loss, c: c, fa: fa, rc: rc, mc: mc, net: net, cost: cost, monthly: monthly, blocked: blocked };
+    if (talkBox) talkBox.akRefresh();
   }
+
+  // the link in the message reopens the calculator with these exact settings (nothing is stored)
+  function link() {
+    var q = ids.map(function (id) { return $("#roi-" + id).value; }).join(".");
+    return location.origin + location.pathname + "?s=" + q + "&c=" + CODES[cur];
+  }
+  function lines() {
+    var L = last;
+    return ["Inputs: " + count(L.p) + " payments a month · fraud share " + val("fraud") + "% · average loss " + money(L.loss, 1) + " · catch rate " + Math.round(L.c * 100) +
+      "% · " + L.fa + " false alarms per fraud caught · " + money(L.rc, 1) + " per review · model " + money(L.mc, 1) + " a year",
+      "Result: " + money(L.net, 1) + " net a year · " + $("#roi-x").textContent + " return · payback " + $("#roi-pay").textContent + " · " + count(L.blocked) + " genuine payments stopped a month"];
+  }
+  // settings from a shared link (?s=…&c=…)
+  (function () {
+    var q = new URLSearchParams(location.search), s = (q.get("s") || "").split("."), c = q.get("c");
+    if (s.length === ids.length) ids.forEach(function (id, i) { var inp = $("#roi-" + id), v = parseInt(s[i], 10); if (v >= 0 && v <= Number(inp.max)) inp.value = v; });
+    Object.keys(CODES).forEach(function (k) { if (CODES[k] === c) cur = k; });
+    Array.prototype.forEach.call(document.querySelectorAll(".roi-c"), function (x) { x.setAttribute("aria-checked", String(x.dataset.c === cur)); });
+  })();
 
   ids.forEach(function (id) {
     $("#roi-" + id).addEventListener("input", function () { calc(); if (!used) { used = true; if (window.akTrack) window.akTrack("tool-roi-use"); } });
@@ -69,4 +91,9 @@
     });
   });
   calc();
+  var holder = document.getElementById("roi-talk");
+  if (holder && window.AkTalk) {
+    talkBox = window.AkTalk.mount(holder, { tool: "fraud-roi", toolName: "the Fraud ROI Calculator", lines: lines, link: link,
+      linkNote: "The link in your message reopens the calculator with your exact settings. Nothing is stored." });
+  }
 })();

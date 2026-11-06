@@ -125,6 +125,27 @@
     again.addEventListener("click", function () { $("#an-pick").scrollIntoView({ behavior: "smooth", block: "start" }); });
     add(ai, add(actions, pdf, again));
     if (opts.remaining != null) add(ai, el("p", "an-sub", opts.remaining + " of " + CFG.free + " free reviews left on this connection."));
+    talk(r, prof, opts);
+  }
+
+  // "Talk to Ajay about this result": the message carries the file, title and top findings. A sample's link reopens
+  // that sample; a review of the visitor's own file goes as a private link only if they keep "Include" ticked.
+  function talk(r, prof, opts) {
+    if (!window.AkTalk) return;
+    var f = (prof && prof.file) || {};
+    var lines = [opts.sample ? "Data: " + opts.sample.name + " (sample)" : "Data: my own file, " + fmt(f.rows) + " rows, " + fmt(f.columns) + " columns"];
+    if (r.title) lines.push("Review: " + r.title);
+    var top = (r.findings || []).slice(0, 3).map(function (x, i) { return (i + 1) + ") " + x.headline; });
+    if (top.length) lines.push("Top findings: " + top.join(" "));
+    var o = { tool: "analyst", toolName: "Analyst on Call", lines: function () { return lines; } };
+    if (opts.sample) { o.link = new URL("analyst.html?sample=" + encodeURIComponent(opts.sample.id), document.baseURI).href; o.linkNote = "The link in your message opens this sample review. Nothing is stored."; }
+    else if (r.sig && opts.sent && CFG.worker_url) {
+      var review = {};
+      Object.keys(r).forEach(function (k) { if (k !== "sig" && k !== "remaining" && k !== "free") review[k] = r[k]; });
+      o.share = function () { return window.AkTalk.share(CFG.worker_url, "review", { review: review, summary: opts.sent }, r.sig); };
+      o.shareNote = "A private link to the findings and the statistics summary (never your rows). Deleted after 30 days. No names or contact details.";
+    }
+    window.AkTalk.mount(ai, o);
   }
 
   function trendChart(c) {
@@ -180,7 +201,7 @@
     ]).then(function (res) {
       var prof = runProfile(res[0], s.file);
       current = prof;
-      if (res[1]) renderReview(res[1], prof, { prepared: true });
+      if (res[1]) renderReview(res[1], prof, { prepared: true, sample: s });
       else { ai.hidden = false; ai.innerHTML = ""; add(ai, aiHead("The prepared review for this sample is on its way. The data check above is ready now.")); }
     }).catch(function () { note("Sorry, that sample didn't load. Please refresh and try again.", "err"); });
   }
@@ -218,11 +239,12 @@
 
   function requestReview(prof) {
     renderWorking();
-    fetch(CFG.worker_url.replace(/\/$/, "") + "/review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ summary: P.summaryForAI(prof) }) })
+    var sent = P.summaryForAI(prof);
+    fetch(CFG.worker_url.replace(/\/$/, "") + "/review", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ summary: sent }) })
       .then(function (r) { return r.json().then(function (j) { return { status: r.status, body: j }; }); })
       .then(function (res) {
         timers.forEach(clearTimeout); timers = [];
-        if (res.status === 200) { left = res.body.remaining; showQuota(); track("tool-analyst-review"); renderReview(res.body, prof, { remaining: res.body.remaining }); return; }
+        if (res.status === 200) { left = res.body.remaining; showQuota(); track("tool-analyst-review"); renderReview(res.body, prof, { remaining: res.body.remaining, sent: sent }); return; }
         if (res.body && res.body.error === "visitor_limit") { left = 0; showQuota(); return limitReached(); }
         ai.innerHTML = ""; add(ai, aiHead((res.body && res.body.message) || "Something went wrong. Please try again in a minute."));
       })
@@ -251,6 +273,8 @@
   Array.prototype.forEach.call(document.querySelectorAll(".an-sample"), function (b) {
     b.addEventListener("click", function () { var s = CFG.samples.filter(function (x) { return x.id === b.dataset.id; })[0]; if (s) loadSample(s, b); });
   });
+  var wanted = new URLSearchParams(location.search).get("sample"), wb = wanted && document.querySelector('.an-sample[data-id="' + wanted.replace(/[^a-z0-9-]/gi, "") + '"]');
+  if (wb) wb.click();
   var input = $("#an-file"), drop = $("#an-drop");
   input.addEventListener("change", function () { loadFile(input.files[0]); input.value = ""; });
   ["dragenter", "dragover"].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add("over"); }); });
