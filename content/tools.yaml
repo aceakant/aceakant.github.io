@@ -54,13 +54,3 @@ tools:
     blurb: Move a credit-score cut-off on a sample loan book and watch approval rate, bad rate, expected loss and profit change together, in a normal year and a downturn.
     facts: ["Personal loans, cards and buy now, pay later", "Finds the most profitable cut-off", "Runs in your browser"]
     tags: [Credit, Strategy, Stress testing]
-
-  - id: early-warning-studio
-    name: Early-Warning Studio
-    badge: EWS
-    style: lite
-    kind: Free simulator · no AI
-    status: next
-    blurb: Watch loan vintages go bad month by month, set your own warning triggers, and see how many months earlier each one would have raised the alarm.
-    facts: ["Vintage curves and roll rates", "Your own early-warning triggers", "Runs in your browser"]
-    tags: [Credit, Portfolio monitoring, KRIs]

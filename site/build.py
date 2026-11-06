@@ -175,6 +175,14 @@ def build():
     # new version tag on every build, so browsers fetch fresh styles and scripts
     asset_v = (os.environ.get("GITHUB_SHA") or datetime.datetime.now().strftime("%Y%m%d%H%M%S"))[:10]
     tools = yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"]
+    # Workbench roadmap: the next two tools not yet live appear as "Coming <date>" cards
+    live_ids = {t["id"] for t in tools}
+    roadmap = yaml.safe_load((ROOT / "content" / "tool-roadmap.yaml").read_text())["tools"] if (ROOT / "content" / "tool-roadmap.yaml").exists() else []
+    today_d = datetime.date.today()
+    for r in [r for r in roadmap if r["id"] not in live_ids][:2]:
+        d = r["date"] if isinstance(r["date"], datetime.date) else datetime.date.fromisoformat(str(r["date"]))
+        tools.append(dict(r, status="next", style="ai" if r.get("ai") else "lite",
+                          due=f"Coming {d.day} {d.strftime('%b')}" if d >= today_d else "Coming soon"))
     game_map = {g["id"]: dict(name=g["name"], lab=l["name"], url=f"{l['slug']}.html#{g['id']}", color=l.get("color", ""))
                 for l in labs["labs"] for g in l["games"]}
     common = dict(site=config["site"], profile=profile, leadership=leadership, labs=labs, analytics=config.get("analytics") or {},

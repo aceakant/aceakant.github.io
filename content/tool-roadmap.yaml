@@ -1,0 +1,121 @@
+# Workbench roadmap: one new analytical tool every other Sunday, from 15 Nov 2026 to 18 Apr 2027.
+# The Workbench page shows the next two not-yet-live tools as "Coming <date>" cards (no need to edit cards by hand).
+# When a tool goes live, add it to content/tools.yaml with the same id; it then drops off this list automatically.
+# ai: true = uses the maker-checker AI service (costs a little per use); false = runs free in the browser.
+tools:
+  - id: early-warning-studio
+    date: 2026-11-15
+    name: Early-Warning Studio
+    badge: EWS
+    area: Credit monitoring
+    ai: false
+    blurb: "Watch loan vintages go bad month by month, set your own warning triggers, and see how many months earlier each one would have raised the alarm."
+    facts: ["Vintage curves and roll rates", "Your own early-warning triggers", "Runs in your browser"]
+    tags: [Credit, Portfolio monitoring, KRIs]
+  - id: fraud-alert-tuner
+    date: 2026-11-29
+    name: Fraud Alert Tuner
+    badge: FAT
+    area: Fraud operations
+    ai: false
+    tie_in: "Synthetic identity fraud in US lending (VertexNode, 18 Nov)"
+    blurb: "Set fraud-rule thresholds and see fraud caught, false alarms and the review queue against your team's daily capacity, including a synthetic-identity scenario."
+    facts: ["Detection vs false alarms vs capacity", "Value and count detection rates", "Runs in your browser"]
+    tags: [Fraud, Operations, Rules]
+  - id: cash-flow-underwriting
+    date: 2026-12-13
+    name: Cash-Flow Underwriting Lab
+    badge: CFU
+    area: Credit decisions
+    ai: false
+    tie_in: "Canada's consumer-driven banking (2 Dec) and US open banking (17 Feb)"
+    blurb: "Compare credit decisions made on the bureau file alone with decisions that also read bank-account cash flow, and see who gets approved fairly that the bureau would miss."
+    facts: ["Income stability and essential spend", "Thin-file approvals vs losses", "Runs in your browser"]
+    tags: [Credit, Open banking, Alternate data]
+  - id: model-drift-monitor
+    date: 2026-12-27
+    name: Model Drift Monitor
+    badge: PSI
+    area: Model risk
+    ai: false
+    tie_in: "Model risk under OSFI E-23 (13 Jan)"
+    blurb: "See a model's score mix and power drift over time, with a stability index, Gini and traffic lights for when to recalibrate or rebuild."
+    facts: ["Population stability (PSI) and Gini", "Green, amber, red thresholds", "Runs in your browser"]
+    tags: [Model risk, Monitoring, Validation]
+  - id: fair-outcomes-monitor
+    date: 2027-01-10
+    name: Fair Outcomes Monitor
+    badge: FOM
+    area: Conduct and fairness
+    ai: false
+    tie_in: "Ireland's Consumer Protection Code (16 Dec) and UK Consumer Duty (20 Jan)"
+    blurb: "Track approval, pricing, arrears and complaint outcomes across customer groups, and flag the gaps a conduct regulator would ask about."
+    facts: ["Outcome gaps by customer group", "Vulnerable-customer view", "Runs in your browser"]
+    tags: [Conduct, Fairness, Consumer Duty]
+  - id: llm-answer-checker
+    date: 2027-01-24
+    name: LLM Answer Checker
+    badge: LLM
+    area: AI governance
+    ai: true
+    tie_in: "Validating an LLM agent before it touches risk data (27 Jan)"
+    blurb: "Give a question, an AI answer and the source text. A maker AI and a checker AI test the answer for grounding, invented facts and missing caveats."
+    facts: ["Maker-checker AI", "Grounding and hallucination checks", "5 free checks"]
+    tags: [GenAI, Validation, AI governance]
+  - id: mule-network-explorer
+    date: 2027-02-07
+    name: Mule Network Explorer
+    badge: NET
+    area: Fraud and financial crime
+    ai: false
+    tie_in: "Finding the ring: graph analytics for money-mule networks (10 Feb)"
+    blurb: "A visual map of money moving between accounts. Follow the flows, find the ring behind one suspicious account, and see what the network view catches."
+    facts: ["Interactive network map", "Rings, hubs and pass-through accounts", "Runs in your browser"]
+    tags: [Fraud, AML, Graph analytics]
+  - id: payment-friction-planner
+    date: 2027-02-21
+    name: Payment Friction Planner
+    badge: PFP
+    area: Scam prevention
+    ai: false
+    tie_in: "Mobile payment fraud in Denmark (24 Feb) and APP scams"
+    blurb: "Decide where to add warnings, delays and payee checks, and see scams stopped against genuine payments slowed or abandoned."
+    facts: ["Scams stopped vs customer friction", "Warnings, delays, payee checks", "Runs in your browser"]
+    tags: [Fraud, Payments, Customer experience]
+  - id: aml-scenario-tuner
+    date: 2027-03-07
+    name: AML Scenario Tuner
+    badge: AML
+    area: Anti-money laundering
+    ai: false
+    tie_in: "Getting transaction monitoring ready for AMLA (3 Mar)"
+    blurb: "Tune transaction-monitoring scenarios by customer segment with above- and below-the-line testing, and see alert volumes and suspicious-activity conversion."
+    facts: ["Above and below-the-line testing", "Alert-to-report conversion", "Runs in your browser"]
+    tags: [AML, Transaction monitoring, AMLA]
+  - id: stress-test-sandbox
+    date: 2027-03-21
+    name: Stress Test Sandbox
+    badge: ST
+    area: Credit risk and capital
+    ai: false
+    blurb: "Pick an economic scenario and watch defaults, recoveries, expected credit losses and the capital buffer move across a sample loan book."
+    facts: ["Baseline, adverse and severe scenarios", "Expected credit loss and capital", "Runs in your browser"]
+    tags: [Credit, Stress testing, IFRS 9]
+  - id: data-quality-scorecard
+    date: 2027-04-04
+    name: Data Quality Scorecard
+    badge: DQ
+    area: Data and reporting
+    ai: false
+    blurb: "Drop in a CSV and get a data-quality score for completeness, validity, consistency and freshness, with the fixes that matter most for risk reporting. Your file never leaves your browser."
+    facts: ["Completeness, validity, consistency", "Risk-reporting readiness", "File stays in your browser"]
+    tags: [Data quality, Reporting, BCBS 239]
+  - id: risk-appetite-builder
+    date: 2027-04-18
+    name: Risk Appetite Builder
+    badge: RAB
+    area: Risk leadership
+    ai: false
+    blurb: "Set risk-appetite metrics and limits for a lender, then see the board pack: what's green, amber or red, and which actions each breach triggers."
+    facts: ["Metrics, limits and triggers", "Board-ready RAG view", "Runs in your browser"]
+    tags: [Risk appetite, Governance, Board reporting]

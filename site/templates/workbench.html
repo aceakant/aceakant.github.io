@@ -21,7 +21,7 @@
     {% if t.status == 'live' %}<a class="wb-card {{ t.style }} reveal" href="{{ t.url }}">{% else %}<div class="wb-card {{ t.style }} soon reveal">{% endif %}
       <div class="wb-top">
         <span class="tool-badge" aria-hidden="true">{{ t.badge }}</span>
-        <span class="mono wb-kind">{% if t.status == 'live' %}{{ t.kind }}{% else %}Coming soon{% endif %}</span>
+        <span class="mono wb-kind">{% if t.status == 'live' %}{{ t.kind }}{% else %}{{ t.due or "Coming soon" }}{% endif %}</span>
       </div>
       <h2>{{ t.name }}</h2>
       <p>{{ t.blurb }}</p>
