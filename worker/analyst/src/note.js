@@ -76,12 +76,12 @@ export async function runNote(req, opts) {
   const facts = `TOOL: ${NOTE_TOOLS[req.tool]}\n\nRESULT (JSON):\n${JSON.stringify(req.facts)}`;
   let draft;
   for (let i = 0; i < 2 && !draft; i++) {
-    try { draft = noteOut(await ask(MAKER_SYSTEM, facts, MAKER, { ...opts, maxTokens: 1500 })); } catch (e) { if (i === 1) throw e; }
+    try { draft = noteOut(await ask(MAKER_SYSTEM, facts, MAKER, { ...opts, maxTokens: 3500 })); } catch (e) { if (i === 1) throw e; }
   }
   let checked;
   for (let i = 0; i < 2 && !checked; i++) {
     try {
-      const c = await ask(CHECKER_SYSTEM, `${facts}\n\nMAKER'S NOTE (JSON):\n${JSON.stringify(draft)}`, CHECKER, { ...opts, maxTokens: 2200 });
+      const c = await ask(CHECKER_SYSTEM, `${facts}\n\nMAKER'S NOTE (JSON):\n${JSON.stringify(draft)}`, CHECKER, { ...opts, maxTokens: 6000 });
       checked = { note: noteOut(c), numbers_checked: Math.max(0, Math.min(99, Number(c.numbers_checked) || 0)),
         reviews: (Array.isArray(c.reviews) ? c.reviews : []).slice(0, 14).map((r) => ({ part: clean(r.part, 40),
           verdict: ["confirmed", "corrected", "removed"].includes(String(r.verdict).toLowerCase()) ? String(r.verdict).toLowerCase() : "confirmed", note: clean(r.note, 200) })) };
