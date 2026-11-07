@@ -112,7 +112,7 @@
     if (econ === "downturn") story += " Today's policy (" + book.today + ") " + (book.today < bc ? "is too loose for a downturn." : "holds up in a downturn.");
     $("#cs-story").textContent = story;
     distChart(B, cut); curveChart(B, book, cut, bc);
-    last = { cut: cut, r: r, bc: bc };
+    last = { cut: cut, r: r, bc: bc, t: t, best: bestR };
     if (talkBox) talkBox.akRefresh();
   }
 
@@ -156,6 +156,21 @@
       "My cut-off: " + L.cut + " · approval " + pct(L.r.apprRate, 0) + " · bad rate " + pct(L.r.badRate) + " · profit " + money(L.r.profit, 1) + " a year (most profitable: " + L.bc + ")"];
   }
   table(); calc();
+  // the AI note: only these settings and results are sent
+  function facts() {
+    var L = last, r2 = function (v) { return Math.round(v); }, p1 = function (v) { return Math.round(v * 1000) / 10; };
+    return { data: "illustrative sample loan book", currency: CODES[cur], loan_book: book.name, economy: econ === "downturn" ? "downturn (every score 1.8x as likely to go bad)" : "normal year",
+      applications_per_year: book.apps, profit_per_good_loan: book.good, loss_per_bad_loan: book.bad,
+      todays_cutoff: book.today, chosen_cutoff: L.cut, most_profitable_cutoff: L.bc,
+      approval_rate_pct: p1(L.r.apprRate), approval_rate_today_pct: p1(L.t.apprRate),
+      bad_rate_pct: p1(L.r.badRate), bad_rate_today_pct: p1(L.t.badRate),
+      expected_losses_per_year: r2(L.r.loss), expected_losses_today: r2(L.t.loss),
+      profit_per_year: r2(L.r.profit), profit_today: r2(L.t.profit), profit_at_most_profitable_cutoff: r2(L.best.profit),
+      good_customers_turned_away: r2(L.r.turned), share_of_all_bad_loans_avoided_pct: p1(L.r.allBad ? L.r.avoided / L.r.allBad : 0),
+      break_even_chance_of_going_bad_pct: p1(book.good / (book.good + book.bad)) };
+  }
+  var noteHolder = $("#cs-note");
+  if (noteHolder && window.AkNote) window.AkNote.mount(noteHolder, { tool: "cutoff", facts: facts });
   var holder = $("#cs-talk");
   if (holder && window.AkTalk) talkBox = window.AkTalk.mount(holder, { tool: "cutoff", toolName: "Cut-off Studio", lines: lines, link: link,
     linkNote: "The link in your message reopens the studio with your exact settings. Nothing is stored." });

@@ -91,9 +91,9 @@ def accountability_view(config, published, data):
             if rv.get("verdict") in verdicts:
                 verdicts[rv["verdict"]] += 1
     live = (data or {}).get("analyst_live") or {}
-    mr = live.get("model_risk") or {}
+    mr, nt = live.get("model_risk") or {}, live.get("notes") or {}
     for k in verdicts:
-        verdicts[k] += int((live.get("verdicts") or {}).get(k, 0)) + int((mr.get("verdicts") or {}).get(k, 0))
+        verdicts[k] += int((live.get("verdicts") or {}).get(k, 0)) + int((mr.get("verdicts") or {}).get(k, 0)) + int((nt.get("verdicts") or {}).get(k, 0))
     checked = sum(verdicts.values())
     tools = (data or {}).get("tools") or {}
     an = config.get("analyst") or {}
@@ -102,7 +102,7 @@ def accountability_view(config, published, data):
                 pct_verified=round(verified / claims * 100) if claims else 0, pct_corrected=round(corrected / claims * 100) if claims else 0),
         mc=dict(checked=checked, verdicts=[dict(name=k, count=v, pct=round(v / checked * 100) if checked else 0) for k, v in verdicts.items()],
                 live_reviews=int(live.get("reviews", 0)), live_avg=round(live["seconds"] / live["reviews"]) if live.get("reviews") else None,
-                samples_opened=sum((tools.get("samples") or {}).values()), uploads=int(tools.get("uploads", 0)), model_checks=int(mr.get("checks", 0)), talks=int(tools.get("talks", 0)),
+                samples_opened=sum((tools.get("samples") or {}).values()), uploads=int(tools.get("uploads", 0)), model_checks=int(mr.get("checks", 0)), notes=int(nt.get("notes", 0)), note_numbers=int(nt.get("numbers", 0)), talks=int(tools.get("talks", 0)),
                 free=an.get("free_per_visitor", 5), cap=an.get("daily_cap", 20), live_on=bool(an.get("worker_url"))))
 
 

@@ -40,6 +40,7 @@
         <div><b>{{ acc.mc.uploads | num }}</b><span>files checked privately in the browser</span></div>
         <div><b>{{ acc.mc.model_checks | num }}</b><span>models checked against the rulebook</span></div>
       </div>
+      {% if acc.mc.notes %}<p class="acc-note acc-talk">📝 <b>{{ acc.mc.notes | num }}</b> AI notes for a CRO drafted from Workbench results, with <b>{{ acc.mc.note_numbers | num }}</b> numbers checked by the second AI</p>{% endif %}
       {% if acc.mc.talks %}<p class="acc-note acc-talk">💬 <b>{{ acc.mc.talks | num }}</b> conversations with Ajay started from a Workbench result</p>{% endif %}
       {% for v in acc.mc.verdicts %}
       <div class="pl-hb acc-v {{ v.name }}"><p>{{ {'confirmed': 'Confirmed as written', 'corrected': 'Corrected by the checker', 'removed': 'Removed as unsupported', 'added': 'Added by the checker'}[v.name] }}</p><div class="track"><div class="fill" style="width:{{ v.pct }}%"></div></div><b>{{ v.count }}</b></div>

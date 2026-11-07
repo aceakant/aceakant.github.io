@@ -178,6 +178,15 @@ jobs:
           PY
           node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/mr-out.json','utf8'));const {sig,remaining,free,...payload}=d;fetch(process.env.URL+'/share',{method:'POST',headers:{Origin:'https://aceakant.github.io','Content-Type':'application/json'},body:JSON.stringify({tool:'model-risk',payload,sig})}).then(r=>r.json()).then(j=>j.id?fetch(process.env.URL+'/share?id='+j.id).then(r=>r.json()).then(b=>console.log('SHARE TEST (model risk): OK | link',j.id,'| reads back score',b.payload.score,'| expires',b.expires)):console.log('SHARE TEST (model risk): NOT OK |',j)).catch(e=>console.log('SHARE TEST (model risk): NOT OK |',e.message))"
 
+      - name: Live test the AI note (one Cut-off Studio result)
+        if: steps.ready.outputs.go == 'true'
+        env:
+          URL: ${{ steps.prep.outputs.url }}
+        run: |
+          body='{"tool":"cutoff","facts":{"data":"illustrative sample loan book","currency":"USD","loan_book":"Personal loans","economy":"normal year","applications_per_year":20000,"todays_cutoff":580,"chosen_cutoff":565,"most_profitable_cutoff":565,"approval_rate_pct":81,"approval_rate_today_pct":72,"bad_rate_pct":3.0,"bad_rate_today_pct":2.2,"profit_per_year":8900000,"profit_today":8700000,"good_customers_turned_away":2700}}'
+          curl -sS -o /tmp/note.json -X POST -H "Origin: https://aceakant.github.io" -H "X-Analyst-Test: 1" -H "Content-Type: application/json" --data "$body" --max-time 150 "$URL/note" || true
+          python3 -c "import json;d=json.load(open('/tmp/note.json'));n=d.get('note');print('NOTE TEST: OK |',n['title'],'|',d.get('numbers_checked'),'numbers checked |','/'.join(r['verdict'] for r in d.get('reviews',[]))) if n else print('NOTE TEST: NOT OK |',d)"
+
       - name: Check the Hall of Fame answers
         if: steps.ready.outputs.go == 'true'
         env:

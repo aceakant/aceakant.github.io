@@ -1,7 +1,9 @@
 # Workbench roadmap: one new analytical tool every other Sunday, from 15 Nov 2026 to 18 Apr 2027.
 # The Workbench page shows the next two not-yet-live tools as "Coming <date>" cards (no need to edit cards by hand).
 # When a tool goes live, add it to content/tools.yaml with the same id; it then drops off this list automatically.
-# ai: true = uses the maker-checker AI service (costs a little per use); false = runs free in the browser.
+# ai: true = an AI-powered tool (maker-checker AI service, costs a little per use); false = the core runs free in the browser.
+# Every tool, AI or not, also gets the "Draft a note for your CRO" AI button (site/static/ainote.js + /note in the Worker;
+# add the tool's id to NOTE_TOOLS in worker/analyst/src/note.js).
 tools:
   - id: early-warning-studio
     date: 2026-11-15
@@ -17,10 +19,10 @@ tools:
     name: Fraud Alert Tuner
     badge: FAT
     area: Fraud operations
-    ai: false
+    ai: true
     tie_in: "Synthetic identity fraud in US lending (VertexNode, 18 Nov)"
-    blurb: "Set fraud-rule thresholds and see fraud caught, false alarms and the review queue against your team's daily capacity, including a synthetic-identity scenario."
-    facts: ["Detection vs false alarms vs capacity", "Value and count detection rates", "Runs in your browser"]
+    blurb: "Describe a fraud pattern in plain English: one AI writes it as a detection rule, a second tests it on sample transactions. Then tune thresholds against false alarms and your team's daily review capacity."
+    facts: ["AI writes the rule, a second AI tests it", "Detection vs false alarms vs capacity", "Includes a synthetic-identity scenario"]
     tags: [Fraud, Operations, Rules]
   - id: cash-flow-underwriting
     date: 2026-12-13
@@ -47,10 +49,10 @@ tools:
     name: Fair Outcomes Monitor
     badge: FOM
     area: Conduct and fairness
-    ai: false
+    ai: true
     tie_in: "Ireland's Consumer Protection Code (16 Dec) and UK Consumer Duty (20 Jan)"
-    blurb: "Track approval, pricing, arrears and complaint outcomes across customer groups, and flag the gaps a conduct regulator would ask about."
-    facts: ["Outcome gaps by customer group", "Vulnerable-customer view", "Runs in your browser"]
+    blurb: "Track approval, pricing, arrears and complaint outcomes across customer groups. One AI drafts the outcomes summary a conduct regulator expects; a second checks every gap it reports."
+    facts: ["Outcome gaps by customer group", "AI-drafted outcomes summary, checked", "Vulnerable-customer view"]
     tags: [Conduct, Fairness, Consumer Duty]
   - id: llm-answer-checker
     date: 2027-01-24
@@ -115,7 +117,7 @@ tools:
     name: Risk Appetite Builder
     badge: RAB
     area: Risk leadership
-    ai: false
-    blurb: "Set risk-appetite metrics and limits for a lender, then see the board pack: what's green, amber or red, and which actions each breach triggers."
-    facts: ["Metrics, limits and triggers", "Board-ready RAG view", "Runs in your browser"]
+    ai: true
+    blurb: "Set risk-appetite metrics, limits and triggers for a lender. One AI drafts the board's risk appetite statement from your choices; a second checks it matches every limit you set."
+    facts: ["Metrics, limits and triggers", "AI-drafted risk appetite statement, checked", "Board-ready red/amber/green view"]
     tags: [Risk appetite, Governance, Board reporting]

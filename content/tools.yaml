@@ -33,24 +33,24 @@ tools:
     name: Fraud ROI Calculator
     badge: ROI
     style: lite
-    kind: Free calculator · no AI
+    kind: Free calculator · optional AI note
     status: live
     url: fraud-roi.html
     cta: Calculate
     featured: true
     blurb: Move the sliders and see what a fraud model really saves once false alarms, review costs and blocked customers are counted.
-    facts: ["£ € $ C$", "Runs in your browser", "Unlimited and free"]
+    facts: ["£ € $ C$", "Runs in your browser", "AI note for your CRO, checked by a second AI"]
     tags: [Fraud, Business case]
 
   - id: cut-off-studio
     name: Cut-off Studio
     badge: CUT
     style: lite
-    kind: Free simulator · no AI
+    kind: Free simulator · optional AI note
     status: live
     url: cut-off-studio.html
     cta: Set a cut-off
     featured: true
     blurb: Move a credit-score cut-off on a sample loan book and watch approval rate, bad rate, expected loss and profit change together, in a normal year and a downturn.
-    facts: ["Personal loans, cards and buy now, pay later", "Finds the most profitable cut-off", "Runs in your browser"]
+    facts: ["Personal loans, cards and buy now, pay later", "Finds the most profitable cut-off", "AI note for your CRO, checked by a second AI"]
     tags: [Credit, Strategy, Stress testing]

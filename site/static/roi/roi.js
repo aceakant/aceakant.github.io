@@ -57,7 +57,7 @@
     $("#roi-friction").append("The hidden cost: ", b, " are stopped as false alarms" + (blocked >= 1 ? " (about 1 in " + count(p / blocked) + " payments)" : "") + ". Push the catch rate up and watch this climb.");
     $("#roi-miss").textContent = "Still missed: " + count(frauds - caught) + " frauds a month, about " + money((frauds - caught) * loss * 12, 1) + " a year.";
     chart(stopped, reviews, mc, net);
-    last = { p: p, f: f, loss: loss, c: c, fa: fa, rc: rc, mc: mc, net: net, cost: cost, monthly: monthly, blocked: blocked };
+    last = { p: p, f: f, loss: loss, c: c, fa: fa, rc: rc, mc: mc, net: net, cost: cost, monthly: monthly, blocked: blocked, stopped: stopped, reviews: reviews, missed: frauds - caught };
     if (talkBox) talkBox.akRefresh();
   }
 
@@ -91,6 +91,17 @@
     });
   });
   calc();
+  // the AI note: only these settings and results are sent
+  function facts() {
+    var L = last, r = Math.round;
+    return { data: "the visitor's own illustrative assumptions", currency: CODES[cur], payments_per_month: L.p, fraud_share_pct: val("fraud"),
+      average_loss_per_fraud: L.loss, catch_rate_pct: r(L.c * 100), false_alarms_per_fraud_caught: L.fa, review_cost_per_alert: L.rc,
+      model_build_and_run_cost_per_year: L.mc, fraud_losses_stopped_per_year: r(L.stopped), review_cost_per_year: r(L.reviews),
+      net_saving_per_year: r(L.net), return_on_total_cost: $("#roi-x").textContent, payback: $("#roi-pay").textContent,
+      genuine_payments_stopped_per_month: r(L.blocked), frauds_missed_per_month: r(L.missed) };
+  }
+  var noteHolder = document.getElementById("roi-note");
+  if (noteHolder && window.AkNote) window.AkNote.mount(noteHolder, { tool: "fraud-roi", facts: facts });
   var holder = document.getElementById("roi-talk");
   if (holder && window.AkTalk) {
     talkBox = window.AkTalk.mount(holder, { tool: "fraud-roi", toolName: "the Fraud ROI Calculator", lines: lines, link: link,
