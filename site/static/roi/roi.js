@@ -14,6 +14,7 @@
     if (a >= 1e3) return s + cur + Math.round(a / 1e3) + "k";
     return s + cur + (a < 10 && a % 1 ? a.toFixed(2) : Math.round(a));
   }
+  function exact(v) { var a = Math.abs(v); return (v < 0 ? "−" : "") + cur + (a < 10 && a % 1 ? a.toFixed(2) : a < 100000 ? Math.round(a).toLocaleString("en-GB") : (a / 1e6).toFixed(2) + "m"); }
   function count(n) { return Math.round(n).toLocaleString("en-GB"); }
   function show(id, kind, v) {
     $("#roi-v-" + id).textContent = kind === "money" ? money(v, 1) : kind === "pct" ? v + "%" : kind === "x" ? String(v) : count(v);
@@ -44,20 +45,35 @@
   function calc() {
     var p = val("payments"), f = val("fraud") / 100, loss = val("loss"), c = val("catch") / 100, fa = val("alarms"), rc = val("review"), mc = val("cost");
     ids.forEach(function (id) { var i = $("#roi-" + id); show(id, i.dataset.kind, val(id)); });
-    var frauds = p * f, caught = frauds * c, stoppedM = caught * loss, alerts = caught * (1 + fa), reviewM = alerts * rc;
+    // false alarms depend on the model's threshold and the number of genuine payments, not on how much fraud there is
+    var frauds = p * f, caught = frauds * c, stoppedM = caught * loss, falseM = (p - frauds) * fa / 10000, alerts = caught + falseM, reviewM = alerts * rc;
     var stopped = stoppedM * 12, reviews = reviewM * 12, net = stopped - reviews - mc, cost = reviews + mc, monthly = stoppedM - reviewM;
     $("#roi-net").textContent = money(net, 1);
     $("#roi-net").parentNode.className = net >= 0 ? "good" : "bad";
-    $("#roi-x").textContent = cost > 0 ? (net / cost).toFixed(1) + "×" : "—";
+    $("#roi-x").textContent = cost > 0 ? (net / cost).toFixed(1).replace("-", "−") + "×" : "—";
     $("#roi-pay").textContent = mc === 0 ? "Straight away" : monthly <= 0 ? "Never" : mc / monthly < 1 ? "< 1 month" : Math.ceil(mc / monthly) + " months";
     $("#roi-stop").textContent = money(stopped, 1);
-    var blocked = caught * fa;
+    var blocked = falseM, perCatch = caught ? falseM / caught : 0;
     $("#roi-friction").innerHTML = "";
     var b = document.createElement("b"); b.textContent = count(blocked) + " genuine payments a month";
-    $("#roi-friction").append("The hidden cost: ", b, " are stopped as false alarms" + (blocked >= 1 ? " (about 1 in " + count(p / blocked) + " payments)" : "") + ". Push the catch rate up and watch this climb.");
+    $("#roi-friction").append("The hidden cost: ", b, " are stopped as false alarms: about 1 in " + count(10000 / fa) + " genuine payments, or " +
+      (perCatch >= 10 ? Math.round(perCatch) : perCatch.toFixed(1)) + " for every fraud caught. Lower the threshold to catch more and watch this climb.");
     $("#roi-miss").textContent = "Still missed: " + count(frauds - caught) + " frauds a month, about " + money((frauds - caught) * loss * 12, 1) + " a year.";
+    // why the result is what it is: the economics of one fraud caught, and what break-even needs
+    var costPerCatch = caught ? rc * alerts / caught : 0, why = $("#roi-why");
+    if (why) {
+      why.className = "roi-note roi-why" + (net < 0 ? " neg" : "");
+      var head = "Each fraud caught saves " + exact(loss) + " and costs about " + exact(costPerCatch) + " to review (the real alert plus " +
+        (perCatch >= 10 ? Math.round(perCatch) : perCatch.toFixed(1)) + " false alarms at " + exact(rc) + " each).";
+      if (net >= 0) why.textContent = head;
+      else {
+        var maxFalseM = (stoppedM - caught * rc - mc / 12) / rc, maxRate = maxFalseM > 0 ? maxFalseM / (p - frauds) * 10000 : 0, needLoss = costPerCatch + (caught ? mc / 12 / caught : 0);
+        why.textContent = head + " So this model costs more than it saves. To break even, the average loss per fraud would need to be above " + exact(needLoss) +
+          (maxRate >= 0.1 ? ", or false alarms below " + (maxRate >= 10 ? Math.round(maxRate) : maxRate.toFixed(1)) + " per 10,000 genuine payments." : ". Even with no false alarms, reviewing the real frauds plus the model's cost is more than the fraud stopped.");
+      }
+    }
     chart(stopped, reviews, mc, net);
-    last = { p: p, f: f, loss: loss, c: c, fa: fa, rc: rc, mc: mc, net: net, cost: cost, monthly: monthly, blocked: blocked, stopped: stopped, reviews: reviews, missed: frauds - caught };
+    last = { perCatch: perCatch, p: p, f: f, loss: loss, c: c, fa: fa, rc: rc, mc: mc, net: net, cost: cost, monthly: monthly, blocked: blocked, stopped: stopped, reviews: reviews, missed: frauds - caught };
     if (talkBox) talkBox.akRefresh();
   }
 
@@ -69,7 +85,7 @@
   function lines() {
     var L = last;
     return ["Inputs: " + count(L.p) + " payments a month · fraud share " + val("fraud") + "% · average loss " + money(L.loss, 1) + " · catch rate " + Math.round(L.c * 100) +
-      "% · " + L.fa + " false alarms per fraud caught · " + money(L.rc, 1) + " per review · model " + money(L.mc, 1) + " a year",
+      "% · " + L.fa + " false alarms per 10,000 genuine payments · " + money(L.rc, 1) + " per review · model " + money(L.mc, 1) + " a year",
       "Result: " + money(L.net, 1) + " net a year · " + $("#roi-x").textContent + " return · payback " + $("#roi-pay").textContent + " · " + count(L.blocked) + " genuine payments stopped a month"];
   }
   // settings from a shared link (?s=…&c=…)
@@ -95,7 +111,7 @@
   function facts() {
     var L = last, r = Math.round;
     return { data: "the visitor's own illustrative assumptions", currency: CODES[cur], payments_per_month: L.p, fraud_share_pct: val("fraud"),
-      average_loss_per_fraud: L.loss, catch_rate_pct: r(L.c * 100), false_alarms_per_fraud_caught: L.fa, review_cost_per_alert: L.rc,
+      average_loss_per_fraud: L.loss, catch_rate_pct: r(L.c * 100), false_alarms_per_10000_genuine_payments: L.fa, false_alarms_per_fraud_caught: Math.round(L.perCatch * 10) / 10, review_cost_per_alert: L.rc,
       model_build_and_run_cost_per_year: L.mc, fraud_losses_stopped_per_year: r(L.stopped), review_cost_per_year: r(L.reviews),
       net_saving_per_year: r(L.net), return_on_total_cost: $("#roi-x").textContent, payback: $("#roi-pay").textContent,
       genuine_payments_stopped_per_month: r(L.blocked), frauds_missed_per_month: r(L.missed) };

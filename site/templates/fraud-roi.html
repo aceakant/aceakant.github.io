@@ -29,6 +29,7 @@
         <div><b id="roi-stop"></b><span>fraud losses stopped a year</span></div>
       </div>
       <div id="roi-chart"></div>
+      <p class="roi-note roi-why" id="roi-why"></p>
       <p class="roi-note" id="roi-friction"></p>
       <p class="roi-note" id="roi-miss"></p>
       <div class="an-actions">
@@ -39,6 +40,6 @@
   </div>
   <div id="roi-note"></div>
   <div id="roi-talk"></div>
-  <p class="an-sub roi-how">How it's worked out: fraud a month = payments × fraud share; caught = fraud × catch rate; losses stopped = caught × average loss; alerts = caught × (1 + false alarms per fraud caught); review cost = alerts × cost per alert. Net saving = losses stopped − review cost − model cost. Illustrative, a starting point for a proper business case. Built by {{ site.author }}.</p>
+  <p class="an-sub roi-how">How it's worked out: fraud a month = payments × fraud share; caught = fraud × catch rate; losses stopped = caught × average loss; false alarms = genuine payments × the false-alarm rate (set by the model's threshold, so it doesn't rise just because fraud does); alerts = caught + false alarms; review cost = alerts × cost per alert. Net saving = losses stopped − review cost − model cost. Illustrative, a starting point for a proper business case. Built by {{ site.author }}.</p>
 </section>
 {% endblock %}

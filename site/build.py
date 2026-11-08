@@ -53,7 +53,7 @@ ROI_SLIDERS = [  # Fraud ROI Calculator: each slider moves through these values 
     dict(id="fraud", label="Share that are fraud", kind="pct", default=0.08, values=[0.01, 0.02, 0.03, 0.05, 0.08, 0.1, 0.15, 0.2, 0.3, 0.5, 0.75, 1]),
     dict(id="loss", label="Average loss per fraud", kind="money", default=420, values=[25, 50, 75, 100, 150, 200, 300, 420, 500, 750, 1000, 1500, 2500, 5000]),
     dict(id="catch", label="Fraud the model catches", kind="pct", default=72, values=list(range(5, 100))),
-    dict(id="alarms", label="False alarms per fraud caught", kind="x", default=8, values=[0.5, 1, 2, 3, 4, 5, 6, 8, 10, 12, 15, 20, 30, 50]),
+    dict(id="alarms", label="False alarms per 10,000 genuine payments", kind="x", default=50, values=[1, 2, 5, 10, 20, 30, 50, 75, 100, 150, 200, 300]),
     dict(id="review", label="Cost to review one alert", kind="money", default=4.5, values=[0.5, 1, 2, 3, 4.5, 6, 8, 10, 15, 20, 30]),
     dict(id="cost", label="Model build and run, a year", kind="money", default=350000,
          values=[0, 25000, 50000, 100000, 150000, 250000, 350000, 500000, 750000, 1000000, 2000000, 5000000]),

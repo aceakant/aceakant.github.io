@@ -1104,3 +1104,6 @@ a.wb-card.lite:hover{border-color:var(--amber)}
 .ainote-h{font-weight:700;margin-bottom:2px!important} .ainote-cav{color:var(--muted);font-size:13.5px!important;margin:4px 0 0!important}
 .ainote-chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 6px}
 .ainote-fix{margin:4px 0;color:var(--muted);font-size:13.5px} .ainote-fix b{color:var(--ink)}
+
+.roi-why{color:var(--ink)!important;border-top:0!important;padding:10px 12px!important;background:var(--sunk);border-radius:12px;border-left:3px solid var(--safe)!important}
+.roi-why.neg{border-left-color:var(--risk)!important}
