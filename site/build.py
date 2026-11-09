@@ -254,7 +254,7 @@ def build():
     # including links already posted on LinkedIn and shared results (?id=…), forwards to the same page at the new one.
     for page in sorted(OUT.rglob("*.html")):
         rel = page.relative_to(OUT).as_posix()
-        if rel.startswith(("insights/", "drafts/")):
+        if rel.startswith("insights/"):
             continue
         stub = OUT / "insights" / rel
         stub.parent.mkdir(parents=True, exist_ok=True)
