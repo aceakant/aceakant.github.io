@@ -8,7 +8,7 @@ test_run: false
 market: UK
 scenario: a mid-sized UK consumer-finance group with around 2,000 staff and a network of broker introducers (illustrative composite, not a real firm)
 publish_at: null
-review_issue: null
+review_issue: 9
 reminded: false
 summary: Since 1 September 2025, large UK organisations can be criminally liable when an associated person commits fraud to benefit them, unless they can show reasonable prevention procedures. Here is what that evidence looks like and how fraud analytics and monitoring can produce it.
 hook:
