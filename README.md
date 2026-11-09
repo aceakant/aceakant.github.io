@@ -4,7 +4,7 @@ An interactive personal website plus a team of AI agents that writes one fact-ch
 playful article every week, waits 48 hours for your review, then publishes it to the website
 and LinkedIn.
 
-**Website:** https://aceakant.github.io/insights
+**Website:** https://aceakant.github.io
 
 ## The weekly rhythm
 

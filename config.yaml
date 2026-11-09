@@ -8,7 +8,7 @@ site:
   author: "Ajay Kant"
   weekly_name: "VertexNode"   # name of the weekly analysis series
   tagline: "I find fraud early, lend more safely, and put AI to work inside risk teams. Every week I break down one real problem and how it was solved."
-  base_url: "https://aceakant.github.io/insights"
+  base_url: "https://aceakant.github.io"
   linkedin_url: "https://www.linkedin.com/in/ajuhack"
   whatsapp: "91 97699 84956"     # WhatsApp button on the site (country code first). Empty = no WhatsApp button.
   email: "aceakant@gmail.com"

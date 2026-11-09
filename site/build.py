@@ -250,7 +250,26 @@ def build():
         (OUT / old).write_text(f'<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={new}">'
                                f'<link rel="canonical" href="{new}"><a href="{new}">Continue</a>')
 
-    (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /insights/drafts/\nDisallow: /drafts/\n")
+    # The site moved from aceakant.github.io/insights/ to aceakant.github.io/ (10 Nov 2026). Every old address,
+    # including links already posted on LinkedIn and shared results (?id=…), forwards to the same page at the new one.
+    for page in sorted(OUT.rglob("*.html")):
+        rel = page.relative_to(OUT).as_posix()
+        if rel.startswith(("insights/", "drafts/")):
+            continue
+        stub = OUT / "insights" / rel
+        stub.parent.mkdir(parents=True, exist_ok=True)
+        target = "/" + ("" if rel == "index.html" else rel)
+        stub.write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex">'
+                        f'<link rel="canonical" href="https://aceakant.github.io{target}"><title>Moved</title>'
+                        f'<script>location.replace("{target}" + location.search + location.hash)</script>'
+                        f'<meta http-equiv="refresh" content="0; url={target}"><a href="{target}">This page has moved</a>', encoding="utf-8")
+
+    # the downloadable bio was shared as a file link too
+    bio = OUT / "static" / "bio" / "Ajay-Kant-bio.pdf"
+    if bio.exists():
+        (OUT / "insights" / "static" / "bio").mkdir(parents=True, exist_ok=True)
+        shutil.copy2(bio, OUT / "insights" / "static" / "bio" / bio.name)
+    (OUT / "robots.txt").write_text("User-agent: *\nDisallow: /insights/\nDisallow: /drafts/\n")
     (OUT / ".nojekyll").write_text("")
     print(f"Built {len(published)} published and {len(drafts)} draft article(s) into {OUT}")
 

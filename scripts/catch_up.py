@@ -11,7 +11,7 @@ import subprocess
 
 from articles import gh
 
-REPO = os.environ.get("GITHUB_REPOSITORY", "aceakant/insights")
+REPO = os.environ.get("GITHUB_REPOSITORY", "aceakant/aceakant.github.io")
 ACTIVE = {"queued", "in_progress", "waiting", "pending", "requested"}
 
 
