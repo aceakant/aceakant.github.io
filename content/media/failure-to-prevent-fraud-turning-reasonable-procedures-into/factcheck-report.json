@@ -1,0 +1,83 @@
+{
+  "status": "needs-review",
+  "summary": "2 corrected, 9 verified · Needs review: The s.201 size thresholds (250 employees, £36m, £18m) can be amended by regulations. Confirm on legislation.gov.uk that they are unchanged at publication.; One law-firm source says the Home Office guidance was updated on 10 October 2025. Have legal counsel confirm that the six-principle summary matches the current gov.uk version.; The UK Finance £1.28bn figure covers member-reported payment fraud, not all UK fraud. Check the wording against the full Annual Fraud Report 2026 PDF.",
+  "checks": [
+    {
+      "claim": "Hook: UK Finance figure for money stolen through authorised and unauthorised fraud (draft used £1.17bn for 2024)",
+      "status": "corrected",
+      "source_url": "https://www.ukfinance.org.uk/policy-and-guidance/reports/annual-fraud-report-2026",
+      "source_title": "UK Finance, Annual Fraud Report 2026",
+      "note": "£1.17bn for 2024 was correct (Annual Fraud Report 2025), but a newer report exists. The Annual Fraud Report 2026 (15 June 2026) gives £1.28bn for 2025, up 4%. Hook question, answer (1280), label, explanation and source URL are updated to 2025 data. It is the UK Finance member-reported payment-fraud total, not all UK fraud."
+    },
+    {
+      "claim": "Offence created by ECCTA 2023, section 199",
+      "status": "verified",
+      "source_url": "https://www.legislation.gov.uk/ukpga/2023/56/section/199",
+      "source_title": "legislation.gov.uk, Economic Crime and Corporate Transparency Act 2023 s.199",
+      "note": "Sections 199-206 and Schedule 13 ECCTA set out the offence. Confirmed by multiple law-firm summaries."
+    },
+    {
+      "claim": "In force 1 September 2025",
+      "status": "verified",
+      "source_url": "https://www.lawsociety.org.uk/topics/anti-money-laundering/economic-crime-and-corporate-transparency-act",
+      "source_title": "The Law Society, Economic Crime and Corporate Transparency Act",
+      "note": "Several sources, including the Law Society, confirm the 1 September 2025 commencement."
+    },
+    {
+      "claim": "Home Office guidance published November 2024",
+      "status": "verified",
+      "source_url": "https://www.gov.uk/government/publications/offence-of-failure-to-prevent-fraud-introduced-by-eccta",
+      "source_title": "Home Office, Guidance on failure to prevent fraud (ECCTA)",
+      "note": "First published 6 November 2024. One law-firm source says it was updated on 10 October 2025. The wording 'published in November 2024' is still accurate."
+    },
+    {
+      "claim": "Large organisation = 2 of 3: >250 employees, >£36m turnover, >£18m total assets",
+      "status": "verified",
+      "source_url": "https://www.legislation.gov.uk/ukpga/2023/56/section/201",
+      "source_title": "legislation.gov.uk, ECCTA 2023 s.201 (large organisation)",
+      "note": "Thresholds confirmed by several 2025-26 sources. They apply to the financial year before the year of the fraud. The 'clearly meets the size test' sentence in the scenario was reworded because 2,000 staff satisfies only one of the three tests on its own."
+    },
+    {
+      "claim": "Liability where an associated person commits a specified fraud intending to benefit the organisation or its clients; senior managers need not know",
+      "status": "verified",
+      "source_url": "https://www.gov.uk/government/publications/offence-of-failure-to-prevent-fraud-introduced-by-eccta",
+      "source_title": "Home Office, Guidance on failure to prevent fraud (ECCTA)",
+      "note": "Consistent with Home Office guidance as quoted by law firms. No need to show that senior managers ordered or knew about the fraud."
+    },
+    {
+      "claim": "Defence: reasonable prevention procedures, or unreasonable to expect any",
+      "status": "verified",
+      "source_url": "https://www.legislation.gov.uk/ukpga/2023/56/section/199",
+      "source_title": "legislation.gov.uk, ECCTA 2023 s.199(4)",
+      "note": "Both limbs are in s.199(4). The burden is on the organisation, on the balance of probabilities."
+    },
+    {
+      "claim": "Six principles of Home Office guidance",
+      "status": "verified",
+      "source_url": "https://www.gov.uk/government/publications/offence-of-failure-to-prevent-fraud-introduced-by-eccta",
+      "source_title": "Home Office, Guidance on failure to prevent fraud (ECCTA)",
+      "note": "The six principles match the draft. The guidance is non-prescriptive and principles-based."
+    },
+    {
+      "claim": "Penalty on conviction is an unlimited fine (s.199(12))",
+      "status": "verified",
+      "source_url": "https://www.legislation.gov.uk/ukpga/2023/56/section/199",
+      "source_title": "legislation.gov.uk, ECCTA 2023 s.199(12)",
+      "note": "The ROI basis citation was made more precise (s.199(12)). Unlimited fine is confirmed by multiple sources."
+    },
+    {
+      "claim": "Myth/Fact items 1-3",
+      "status": "verified",
+      "source_url": "https://www.gov.uk/government/publications/offence-of-failure-to-prevent-fraud-introduced-by-eccta",
+      "source_title": "Home Office, Guidance on failure to prevent fraud (ECCTA)",
+      "note": "1: the offence applies to large organisations across all sectors, so false. 2: a policy alone is not a defence, so false. 3: liability does not depend on senior-manager knowledge, so true."
+    },
+    {
+      "claim": "Author-voice and unsupported assertions",
+      "status": "corrected",
+      "source_url": "https://www.gov.uk/government/publications/offence-of-failure-to-prevent-fraud-introduced-by-eccta",
+      "source_title": "Home Office, Guidance on failure to prevent fraud (ECCTA)",
+      "note": "No employer names or personal results were found. 'Teams I know' became 'many'. 'A caution from experience' became 'a practical caution'. 'Tends to surface outliers earlier' became 'can surface'. The 0.4 FTE figure now states its 1,650-hour assumption. Calculator and ROI rows are labelled illustrative or sourced."
+    }
+  ]
+}
