@@ -29,12 +29,15 @@ def window(gc, days):
         seen += [h["path_id"] for h in batch if "path_id" in h]
         if not page.get("more") or not batch or len(seen) >= 2000:
             break
-    out = {"share_links": {}, "tool_pages": {}, "game_starts": {}, "game_finishes": {}, "share_clicks": 0, "pages": 0}
+    out = {"posts": {}, "share_links": {}, "tool_pages": {}, "game_starts": {}, "game_finishes": {}, "share_clicks": 0, "pages": 0}
     tools = {t["url"]: t["id"] for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"] if t.get("url")}
     for h in hits:
         p, n = h.get("path") or "", int(h.get("count") or 0)
         if h.get("event"):
-            if p.startswith("game-") and p.endswith("-start"):
+            if p.startswith("li-"):  # li-<post number>-<visit|start|finish|use|share|read|talk|halloffame>
+                _, num, step = p.split("-", 2)
+                out["posts"].setdefault(num, {})[step] = n
+            elif p.startswith("game-") and p.endswith("-start"):
                 out["game_starts"][p[5:-6]] = n
             elif p.startswith("game-") and p.endswith("-finish"):
                 out["game_finishes"][p[5:-7]] = n
@@ -58,7 +61,9 @@ def main():
         print("GoatCounter not set up; nothing to fetch.")
         return
     gc = GoatCounter(f"https://{code}.goatcounter.com/api/v0", token)
-    data = {"updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="minutes"), "last_7_days": window(gc, 7), "last_30_days": window(gc, 30)}
+    log = [l.split() for l in (ROOT / "content" / "game-posts-log.txt").read_text().splitlines() if l.strip()] if (ROOT / "content" / "game-posts-log.txt").exists() else []
+    all_time = window(gc, 120)["posts"]
+    data = {"per_post_all_time": all_time, "posts_log": [dict(n=r[0], date=r[1], item=r[2], style=r[3], post=r[4]) for r in log if len(r) >= 5], "updated": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="minutes"), "last_7_days": window(gc, 7), "last_30_days": window(gc, 30)}
     (ROOT / "content" / "audience.json").write_text(json.dumps(data, indent=1) + "\n")
     print(json.dumps(data["last_7_days"], indent=1))
 

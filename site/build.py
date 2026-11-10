@@ -270,7 +270,7 @@ def build():
             f'<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">'
             # count the visit (path /play/<game>, with where it came from) without slowing the jump into the game
             + (f'<script>try{{fetch("https://{gc}.goatcounter.com/count?p=/play/{slug}&t="+encodeURIComponent(document.title)+"&r="+encodeURIComponent(document.referrer)+"&rnd="+Math.random(),{{mode:"no-cors",keepalive:true}})}}catch(e){{}}</script>' if gc else "")
-            + f'<script>location.replace("{target}")</script></head>'
+            + f'<script>location.replace("/{lab}.html" + location.search + "#{slug}")</script></head>'
             f'<body style="background:#09121e;color:#f0f6f9;font-family:system-ui;padding:40px"><a style="color:#3ccfc4" href="{target}">Play the game →</a></body></html>',
             encoding="utf-8")
 

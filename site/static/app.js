@@ -65,10 +65,33 @@
 
   /* Anonymous play counting for the Pulse page (GoatCounter, no cookies). Silent if counting is off. */
   var counted = {};
+  // Links in LinkedIn posts carry ?ln=<post number>. That number is kept for the visit, so every step after the
+  // click (game started, finished, tool used, shared, article read) is also counted against that post: li-<n>-<step>.
+  var lnPost = null, gcQueue = [];
+  try {
+    var q = new URLSearchParams(location.search).get("ln");
+    if (q && /^\d{1,3}$/.test(q)) { lnPost = q; sessionStorage.setItem("ak-ln", q); } else lnPost = sessionStorage.getItem("ak-ln");
+  } catch (e) {}
+  function gcSend(name) {
+    if (window.goatcounter && window.goatcounter.count) { try { window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {} return; }
+    gcQueue.push(name); // counter script still loading
+  }
+  var gcWait = setInterval(function () { if (window.goatcounter && window.goatcounter.count) { clearInterval(gcWait); gcQueue.splice(0).forEach(gcSend); } }, 400);
+  setTimeout(function () { clearInterval(gcWait); }, 15000);
   function akTrack(name) {
     if (counted[name]) return;
     counted[name] = 1;
-    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {}
+    gcSend(name);
+    if (lnPost && name.indexOf("li-") !== 0) {
+      var step = /-start$/.test(name) ? "start" : /-finish$/.test(name) ? "finish" : /^share-/.test(name) ? "share" : /^tool-.*-use$/.test(name) ? "use" : /^tool-talk-/.test(name) ? "talk" : /^hof-submit$/.test(name) ? "halloffame" : null;
+      if (step) akTrack("li-" + lnPost + "-" + step);
+    }
+  }
+  if (lnPost && /[?&]ln=/.test(location.search)) akTrack("li-" + lnPost + "-visit");
+  if (lnPost && document.querySelector(".prose, article")) { // an article read to the end
+    window.addEventListener("scroll", function onScroll() {
+      if ((window.scrollY + window.innerHeight) / document.documentElement.scrollHeight > 0.75) { akTrack("li-" + lnPost + "-read"); window.removeEventListener("scroll", onScroll); }
+    }, { passive: true });
   }
   window.akTrack = akTrack;
   window.akDone = function (id, pct) {

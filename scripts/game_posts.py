@@ -203,6 +203,8 @@ def main():
     if os.environ.get("DRY_RUN") == "1" or not os.environ.get("LINKEDIN_ACCESS_TOKEN"):
         print(f"DRY RUN, not posted ({item['id']}, {style}):\n{body}")
         return
+    item = dict(item, url=item["url"] + f"?ln={n}")  # the link carries the post number, so the website can count each post's clicks and plays
+    body = body.replace(item["url"].split("?")[0], item["url"])
     pid = post_item(item, body)
     with LOG.open("a") as f:
         f.write(f"{n} {w:%Y-%m-%d} {item['id']} {style} {pid}\n")
