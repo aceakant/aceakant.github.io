@@ -94,7 +94,7 @@ companies:
   - id: axis
     org: "Axis Bank"
     role: "Head of Alternate Data – Data Sciences"
-    period: "Dec 2022 – Dec 2023"
+    period: "20 Dec 2022 – 27 Dec 2023"
     context: "India's third-largest private bank."
     team: 12
     team_mix: ["8 Data scientists", "4 Data engineers"]
