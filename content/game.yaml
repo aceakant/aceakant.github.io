@@ -6,40 +6,40 @@ rounds:
     prompt: "Four personal-loan applications landed this morning. One is a fraud ring. Which?"
     cases:
       - id: "APP-2041"
-        title: "₹6.5L personal loan"
+        title: "$25,000 personal loan"
         lines: ["Salaried, 7 yrs at same employer", "Mobile number active 9 yrs", "Address matches bureau record"]
         fraud: false
       - id: "APP-2042"
-        title: "₹2L personal loan"
-        lines: ["Self-employed, 3 yrs ITR filed", "Applied at 2:14 AM", "Bank statement shows steady inflows"]
+        title: "$8,000 personal loan"
+        lines: ["Self-employed, 3 yrs of tax returns filed", "Applied at 2:14 AM", "Bank statement shows steady inflows"]
         fraud: false
       - id: "APP-2043"
-        title: "₹4.9L personal loan"
+        title: "$19,500 personal loan"
         lines: ["Salaried, new job (2 months)", "Mobile number active for 3 days", "Device used by 14 other applications this week"]
         fraud: true
         why: "One phone filing 14 applications in a week, plus a 3-day-old number, is a classic fraud-ring signal. Device velocity checks catch this at the door."
       - id: "APP-2044"
-        title: "₹9L personal loan"
+        title: "$35,000 personal loan"
         lines: ["Higher amount than usual", "Long credit history, no defaults", "Existing customer for 6 yrs"]
         fraud: false
   - name: "Card transactions"
     prompt: "Same card, four transactions today. One should be blocked. Which?"
     cases:
       - id: "TXN-8810"
-        title: "₹1,240 · grocery store"
+        title: "$42 · grocery store"
         lines: ["Usual neighbourhood", "Chip + PIN", "Matches weekly pattern"]
         fraud: false
       - id: "TXN-8811"
-        title: "₹38,500 · airline tickets"
-        lines: ["Large, but booked on the bank's app", "Customer travels quarterly", "OTP confirmed"]
+        title: "$860 · airline tickets"
+        lines: ["Large, but booked on the bank's app", "Customer travels quarterly", "One-time code confirmed"]
         fraud: false
       - id: "TXN-8812"
-        title: "₹49,999 · electronics, online"
-        lines: ["2 minutes after a ₹1 charge abroad", "New shipping address", "Just under a ₹50,000 alert limit"]
+        title: "$999 · electronics, online"
+        lines: ["2 minutes after a $1 charge abroad", "New shipping address", "Just under a $1,000 alert limit"]
         fraud: true
-        why: "A ₹1 'test' charge followed by a big purchase just under the alert limit is card-testing then cash-out. Rules that link the two events stop it."
+        why: "A $1 'test' charge followed by a big purchase just under the alert limit is card-testing then cash-out. Rules that link the two events stop it."
       - id: "TXN-8813"
-        title: "₹499 · streaming renewal"
+        title: "$15 · streaming renewal"
         lines: ["Recurring every month", "Same merchant for 3 years", "Same amount"]
         fraud: false
   - name: "New accounts"
@@ -55,10 +55,10 @@ rounds:
         fraud: false
       - id: "ACC-3303"
         title: "Savings account"
-        lines: ["23 small UPI credits from different senders", "All of it moved out within an hour", "No other activity"]
+        lines: ["23 small transfers in from different senders", "All of it moved out within an hour", "No other activity"]
         fraud: true
         why: "Many small credits from strangers, then everything moved out fast, is a money-mule pattern. Flow-based monitoring spots it within hours."
       - id: "ACC-3304"
         title: "Business account"
-        lines: ["Many UPI credits from customers", "Matches a registered shop", "Daily deposits to supplier"]
+        lines: ["Many card and bank payments from customers", "Matches a registered shop", "Daily deposits to supplier"]
         fraud: false

@@ -1,0 +1,144 @@
+# Game posts on LinkedIn: one Playground game every 3rd day for 90 days, posted by the hourly publish job.
+# Each game has its own share link (play/<id>.html) whose preview is the real game screen.
+# The games repeat in this order; each round of the loop uses a different style of text, so no post is a copy.
+# To stop: set enabled: false. To pause one post: add its number to skip.
+enabled: true
+start: "2026-11-11"        # first post
+every_days: 3
+days: 90                   # 30 posts: 11 Nov 2026 to 6 Feb 2027
+time: "12:47"              # India time; Saturdays move to the evening so they don't sit on top of the weekly article
+saturday_time: "19:17"
+skip: []
+
+# {hook} {teaser} {time} {more} {lesson} {url} come from each game below
+styles:
+  - name: puzzle
+    text: |-
+      {hook}
+
+      {teaser}
+
+      Comment your answer before you check. 👇
+
+      Then {more} in a {time} game (free, no sign-up):
+      {url}
+  - name: score
+    text: |-
+      {hook}
+
+      {blurb}
+
+      Play free, no sign-up 👉 {url}
+
+      Post your score in the comments. 🏆
+  - name: tag
+    text: |-
+      Who on your team would get this right first? 🤔
+
+      {hook}
+
+      {blurb}
+
+      {time} game, free, no sign-up: {url}
+
+      Tag them below. 👇
+  - name: lesson
+    text: |-
+      {lesson}
+
+      I turned it into a {time} game so you can test yourself:
+      {hook}
+
+      Play free 👉 {url}
+
+      What did you score?
+
+games:
+  - id: chart-tricks
+    lab: analytics-lab
+    title: "This chart is lying. Can you tell how?"
+    description: "4 charts, 4 tricks, 90 seconds. Spot what each one hides before it fools your boss. Free, no sign-up."
+    hook: "This chart is lying. Can you tell how? 📊"
+    teaser: '"Sales tripled this year!"'
+    more: "spot 3 more tricks"
+    blurb: "4 charts you might see in a board pack. Each one hides a trick that changes the story: squashed axes, cherry-picked dates, impossible pies and sneaky averages."
+    lesson: "Most misleading charts don't use fake data. A cropped axis or a hand-picked time window does the job."
+    time: "90-second"
+    hashtags: [DataVisualization, Analytics, DataLiteracy]
+  - id: scam-or-legit
+    lab: fraud-lab
+    title: "Six messages. Which ones are trying to rob you?"
+    description: "Account alerts, parcel fees, job offers, one-time codes. Decide in a tap, then see the red flags a fraud analyst would spot."
+    hook: "Six messages. Which ones are trying to rob you? 📱"
+    teaser: "An account alert, a parcel fee, a job offer, a one-time code. Which would you trust?"
+    more: "check all six"
+    blurb: "The messages everyone gets: account alerts, parcel fees, job offers, one-time codes, payment requests. Decide in a tap, then see the red flags a fraud analyst would spot."
+    lesson: "Most scams don't look like scams. They look like a parcel fee, a job offer or a code you were 'expecting'."
+    time: "60-second"
+    hashtags: [FraudPrevention, CyberSecurity, ScamAwareness]
+  - id: survive-recession
+    lab: risk-lab
+    title: "Can your loan book survive a recession?"
+    description: "You have $100 million to lend. Riskier loans pay more, until a recession hits. Build a book that earns and survives."
+    hook: "You have $100 million to lend. Can your loan book survive a recession? 📉"
+    teaser: "Riskier loans pay more, until the recession hits. How would you split the money?"
+    more: "build your book"
+    blurb: "Spread $100 million across four loan products. Earn a profit in a normal year, without making a loss when the recession hits."
+    lesson: "The loans that earn the most in a good year are often the ones that hurt most in a bad one."
+    time: "2-minute"
+    hashtags: [CreditRisk, RiskManagement, Banking]
+  - id: correlation
+    lab: analytics-lab
+    title: "How strongly do they move together?"
+    description: "Guess the correlation between two everyday things, from −1 to +1. Five rounds, best score 500."
+    hook: "Chai vs code. Rain vs umbrellas. How strongly do they move together? ☕"
+    teaser: "Guess the correlation, from −1 (perfectly opposite) to +1 (perfectly together)."
+    more: "play all five rounds"
+    blurb: "Each round shows made-up data on two everyday things. Slide to guess the correlation. Five rounds, best score 500."
+    lesson: "Correlation is not causation. And even guessing how strong a correlation is turns out to be harder than it looks."
+    time: "60-second"
+    hashtags: [DataScience, Statistics, Analytics]
+  - id: spot-the-fraud
+    lab: fraud-lab
+    title: "A fraud ring, a card-testing attack and a money mule. Can you catch all three?"
+    description: "Pick the one case you would block, and see the signal that gives it away. Three quick rounds."
+    hook: "A fraud ring, a card-testing attack and a money mule. Can you catch all three? 🕵️"
+    teaser: "Fraud teams decide in seconds which application, payment or account to stop. Which one would you block?"
+    more: "catch all three"
+    blurb: "Fraud teams decide in seconds which application, payment or account to stop. Three quick rounds: pick the one to block, then see the signal that gives it away."
+    lesson: "Fraud rarely hides in one big transaction. It shows up in small patterns: many cards, one device; many accounts, one address."
+    time: "60-second"
+    hashtags: [FraudPrevention, FraudDetection, RiskManagement]
+  - id: cut-off
+    lab: risk-lab
+    title: "Set the cut-off. Make the most profit."
+    description: "10,000 people applied for a loan today. Set the credit-score cut-off: too strict loses customers, too loose loses money."
+    hook: "10,000 people applied for a loan today. Where would you set the cut-off? 🏦"
+    teaser: "Each good loan earns $1,200. Each bad loan loses $7,000. 8% won't pay you back."
+    more: "run the bank for a day"
+    blurb: "Everyone has a credit score. Approve everyone above your cut-off. Too strict loses customers, too loose loses money."
+    lesson: "Every lender runs on one trade-off: approve more and grow, or approve fewer and lose less. The cut-off is where you choose."
+    time: "2-minute"
+    hashtags: [CreditRisk, Lending, Analytics]
+  - id: in-order
+    lab: framework-lab
+    title: "What comes first?"
+    description: "Making chai, launching a model, handling an incident. Tap the steps in the order you would do them."
+    hook: "Making chai, launching a model, handling an incident. What comes first? ☕"
+    teaser: "Validate before you approve? Contain before you investigate? Put the steps in order."
+    more: "put all three in order"
+    blurb: "Good frameworks are mostly about order: you validate before you approve, and you contain before you investigate. Start with chai."
+    lesson: "Good frameworks are mostly about order. Validate before you approve. Contain before you investigate."
+    time: "2-minute"
+    hashtags: [RiskManagement, ModelRisk, Leadership]
+  - id: sort-it-out
+    lab: framework-lab
+    title: "Who owns which risk?"
+    description: "The three lines of defence, at a cricket match and in a bank. Sort who does what."
+    hook: "Who owns which risk: at a cricket match, and in a bank? 🏏"
+    teaser: "The people doing the work, the people setting the rules, the people checking independently. Who is who?"
+    more: "sort them all"
+    blurb: "Banks split risk work into three lines of defence: doing the work, setting the rules, checking independently. Start with cricket, then try the real thing."
+    lesson: "Three lines of defence sounds like jargon until you sort real roles into them. Then it's obvious who owns what."
+    time: "2-minute"
+    hashtags: [RiskManagement, Governance, Banking]

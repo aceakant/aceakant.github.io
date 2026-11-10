@@ -47,6 +47,15 @@ jobs:
           git add -A content
           git diff --cached --quiet || (git commit -m "Scheduled publish/reminder" && git push)
           gh workflow run deploy.yml
+      - name: Game post on LinkedIn (every 3rd day, content/game-posts.yaml)
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+        run: |
+          python scripts/game_posts.py
+          git config user.name "insights-bot"
+          git config user.email "insights-bot@users.noreply.github.com"
+          git add content/game-posts-log.txt 2>/dev/null || true
+          git diff --cached --quiet || (git commit -m "Game post log" && git pull --rebase -q && git push)
       - name: Start anything the scheduler dropped today
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

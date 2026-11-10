@@ -253,10 +253,9 @@ def build():
 
     # one-game share links for LinkedIn posts: their own preview picture and headline, then straight into the game
     base = config["site"]["base_url"].rstrip("/")
-    for slug, lab, title, desc in (
-        ("chart-tricks", "analytics-lab", "This chart is lying. Can you tell how?",
-         "4 charts, 4 tricks, 90 seconds. Spot what each one hides before it fools your boss. Free, no sign-up."),
-    ):
+    from html import escape as _esc
+    for g in yaml.safe_load((ROOT / "content" / "game-posts.yaml").read_text())["games"]:
+        slug, lab, title, desc = g["id"], g["lab"], _esc(g["title"]), _esc(g["description"])
         target = f"/{lab}.html#{slug}"
         (OUT / "play").mkdir(exist_ok=True)
         (OUT / "play" / f"{slug}.html").write_text(
