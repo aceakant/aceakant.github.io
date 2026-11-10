@@ -251,6 +251,24 @@ def build():
             html = env.get_template("case.html").render(root="../", page="case", c=c, p=p, nodes=nodes, **common)
             (OUT / "cases" / f"{p['slug']}.html").write_text(html, encoding="utf-8")
 
+    # one-game share links for LinkedIn posts: their own preview picture and headline, then straight into the game
+    base = config["base_url"].rstrip("/")
+    for slug, lab, title, desc in (
+        ("chart-tricks", "analytics-lab", "This chart is lying. Can you tell how?",
+         "A 60-second game: spot the trick behind 4 misleading charts before they fool your boss. Free, no sign-up."),
+    ):
+        target = f"/{lab}.html#{slug}"
+        (OUT / "play").mkdir(exist_ok=True)
+        (OUT / "play" / f"{slug}.html").write_text(
+            f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+            f'<title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{base}{target}">'
+            f'<meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}">'
+            f'<meta property="og:url" content="{base}/play/{slug}.html"><meta property="og:image" content="{base}/static/og/game-{slug}.jpg">'
+            f'<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">'
+            f'<script>location.replace("{target}")</script></head>'
+            f'<body style="background:#09121e;color:#f0f6f9;font-family:system-ui;padding:40px"><a style="color:#3ccfc4" href="{target}">Play the game →</a></body></html>',
+            encoding="utf-8")
+
     # old addresses keep working
     for old, new in (("profile.html", "portfolio.html"), ("leadership.html", "portfolio.html"), ("lab.html", "fraud-lab.html")):
         (OUT / old).write_text(f'<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={new}">'
