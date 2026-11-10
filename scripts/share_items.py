@@ -51,10 +51,38 @@ def load(now=None):
                                              short=t["blurb"][0].lower() + t["blurb"][1:], hashtags=["RiskAnalytics", "Analytics"], new=True)
         out_tools.append(dict(extra, kind="tool", id=t["id"], name=t["name"], title=t["name"], description=t["blurb"], blurb=t["blurb"],
                               url=f"{base}/{t['url']}", picture=OG / f"tool-{t['id']}.jpg"))
+    lab_names = {lab["slug"]: lab["name"] for lab in labs}
+    for g in games:
+        g["lab_name"] = lab_names.get(g["lab"], "Playground")
     return c, games, out_tools
 
 
+def articles(c, now=None):
+    """Published VertexNode articles, each with its first LinkedIn post date (release) for the rest-day rule."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    base = yaml.safe_load((ROOT / "config.yaml").read_text())["site"]["base_url"].rstrip("/")
+    out = []
+    for path in sorted((ROOT / "content" / "articles").glob("*.md")):
+        _, front, _ = path.read_text(encoding="utf-8").split("---", 2)
+        m = yaml.safe_load(front)
+        if m.get("status") != "published" or m.get("test_run"):
+            continue
+        rel = m.get("linkedin_release")
+        release = datetime.datetime.fromisoformat(str(rel)) if rel else datetime.datetime.fromisoformat(str(m["date"]) + "T13:30:00+05:30")
+        star, hook = m.get("star") or {}, m.get("hook") or {}
+        market = m.get("market") or ""
+        out.append(dict(kind="article", id="article-" + m["slug"], slug=m["slug"], title=m["title"], description=m.get("summary", ""), summary=m.get("summary", ""),
+                        question=hook.get("question") or m["title"], situation=star.get("situation", ""), action=star.get("action", ""), result=star.get("result", ""),
+                        category=(m.get("category") or "").lower(), market_label=("" if market in ("", "Global") else market + " ") , release=release,
+                        url=f"{base}/articles/{m['slug']}.html", picture=ROOT / "content" / m["image"],
+                        hashtags=[t for t in (["FraudPrevention"] if "Fraud" in (m.get("category") or "") else ["CreditRisk"] if "Credit" in (m.get("category") or "") else ["DataAnalytics"])] + ["RiskManagement", "Banking"]))
+    return out
+
+
 def text(c, item, style_no):
-    styles = c["styles"] if item["kind"] == "game" else c["tool_styles"]
+    styles = {"game": c["styles"], "tool": c["tool_styles"], "article": c["article_styles"]}[item["kind"]]
     st = styles[style_no % len(styles)]
-    return st["name"], st["text"].format(**{k: v for k, v in item.items() if isinstance(v, str)})
+    fields = {k: v for k, v in item.items() if isinstance(v, str)}
+    label = (c.get("labels") or {}).get(item["kind"], "").format(**fields)
+    body = st["text"].format(**fields)
+    return st["name"], (label + "\n\n" + body) if label else body

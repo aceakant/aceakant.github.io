@@ -12,8 +12,18 @@ time: "12:47"              # India time; Saturdays move to the evening so they d
 saturday_time: "19:17"
 skip: [1]                  # slot 1 is the video post made on 10 Nov (content/post-now.yaml)
 
-# order of the queue: games and tools take turns, 2 games then 1 tool
-mix: [game, game, tool]
+# order of the queue: game, VertexNode article, game, Workbench tool, then round again
+mix: [game, article, game, tool]
+
+# the first line of every post says what it is, so people know what they're clicking into
+labels:
+  game: "🎮 Playground game · {lab_name} · free {time} play"
+  tool: "🛠️ Workbench tool · {name} · free to try"
+  article: "📰 VertexNode weekly analysis · {market_label}{category}"
+
+# articles are re-shared only once their own first LinkedIn post is this many days old,
+# and never on a day a new article goes out on LinkedIn
+article_rest_days: 21
 
 # {hook} {teaser} {time} {more} {lesson} {url} come from each game below
 styles:
@@ -149,6 +159,33 @@ games:
     hashtags: [RiskManagement, Governance, Banking]
 
 # Workbench tools. A live tool that isn't listed here is still posted, using its name and blurb from tools.yaml.
+article_styles:
+  - name: quiz
+    text: |-
+      {question} 🤔
+
+      Guess before you read on. 👇
+
+      The answer, and what it means in practice: {title}
+
+      Read it free 👉 {url}
+  - name: result
+    text: |-
+      {title}
+
+      {summary}
+
+      Read the full analysis, with the interactive calculator and sources 👉 {url}
+  - name: star
+    text: |-
+      The problem: {situation}
+
+      What to do: {action}
+
+      What it's worth: {result}
+
+      The full case, step by step 👉 {url}
+
 tool_styles:
   - name: problem
     text: |-
@@ -156,7 +193,7 @@ tool_styles:
 
       {blurb}
 
-      I built a free tool for it. Try it in your browser 👉 {url}
+      I built a free tool for it. Try it here 👉 {url}
 
       What would you add?
   - name: try

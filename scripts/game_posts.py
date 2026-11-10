@@ -46,21 +46,28 @@ def read_log():
     return rows
 
 
-def choose(c, games, tools, rows):
+def choose(c, games, tools, rows, when=None, arts=None):
     """The next item and how many times it has been posted before."""
     posted = [r for r in rows if not r[4].startswith("skipped")]
     times = {}
     for i, r in enumerate(posted):
         times.setdefault(r[2], []).append(i)
+    when = when or datetime.datetime.now(IST)
+    rest = datetime.timedelta(days=c.get("article_rest_days", 21))
+    arts = [a for a in (arts or []) if when >= a["release"] + rest]
+    if any(abs((a["release"] - when).total_seconds()) < 86400 for a in share_items.articles(c)):
+        arts = []  # a new article is going out on LinkedIn around today: no re-share
     kinds = c.get("mix", ["game", "game", "tool"])
-    want = kinds[len(posted) % len(kinds)] if tools else "game"
-    pool = {"game": games, "tool": tools}
-    fresh = [x for x in games + tools if x["id"] not in times]
-    if fresh:  # never posted: listed order, but a brand-new game or tool first
-        fresh.sort(key=lambda x: (not x.get("new"), x["kind"] != want))
-        item = fresh[0]
+    want = kinds[len(posted) % len(kinds)]
+    pool = {"game": games, "tool": tools, "article": arts}
+    if not pool.get(want):
+        want = "game"
+    brand_new = [x for x in games + tools if x.get("new") and x["id"] not in times]
+    if brand_new:  # a game or tool added since the post text was written: it jumps the queue
+        item = brand_new[0]
     else:
-        item = min(pool[want] or games, key=lambda x: times[x["id"]][-1])
+        fresh = [x for x in pool[want] if x["id"] not in times]
+        item = fresh[0] if fresh else min(pool[want], key=lambda x: times[x["id"]][-1])
     return item, len(times.get(item["id"], []))
 
 
@@ -153,7 +160,7 @@ def main():
                 r = next(r for r in rows if int(r[0]) == n)
                 print(f"#{n:>2}  {when:%a %d %b %Y %H:%M}  {r[2]} ({r[3]})  done: {r[4]}\n")
                 continue
-            item, k = choose(c, games, tools, fake)
+            item, k = choose(c, games, tools, fake, when, share_items.articles(c))
             style, body = share_items.text(c, item, k)
             fake.append((str(n), "", item["id"], style, "planned"))
             print(f"#{n:>2}  {when:%a %d %b %Y %H:%M} IST  {item['kind']}: {item['id']}  ({style})\n{body}\n{' '.join('#' + t for t in item.get('hashtags', []))}\n")
@@ -191,7 +198,7 @@ def main():
             f.write(f"{n} {w:%Y-%m-%d} - - skipped-missed\n")
         set_changed()
         return
-    item, k = choose(c, games, tools, read_log())
+    item, k = choose(c, games, tools, read_log(), w, share_items.articles(c))
     style, body = share_items.text(c, item, k)
     if os.environ.get("DRY_RUN") == "1" or not os.environ.get("LINKEDIN_ACCESS_TOKEN"):
         print(f"DRY RUN, not posted ({item['id']}, {style}):\n{body}")
