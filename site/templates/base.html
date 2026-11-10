@@ -71,6 +71,6 @@
 {% if page == 'cut-off-studio.html' %}<script src="{{ root }}static/cutoff/cutoff.js?v={{ asset_v }}" defer></script>{% endif %}
 {% if page == 'portfolio-monte-carlo.html' %}<script src="{{ root }}static/montecarlo/montecarlo.js?v={{ asset_v }}" defer></script>{% endif %}
 {% if page == 'analyst.html' %}<script src="{{ root }}static/analyst/profile.js?v={{ asset_v }}" defer></script><script src="{{ root }}static/analyst/analyst.js?v={{ asset_v }}" defer></script>{% endif %}
-{% if analytics.goatcounter and not (a is defined and a.status != 'published') %}<script data-goatcounter="https://{{ analytics.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{% endif %}
+{% if analytics.goatcounter and not (a is defined and a.status != 'published') %}<script>window.goatcounter={path:function(p){return p.replace(/([?&])ln=\d+&?/,"$1").replace(/[?&]$/,"")}}</script><script data-goatcounter="https://{{ analytics.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>{% endif %}
 </body>
 </html>
