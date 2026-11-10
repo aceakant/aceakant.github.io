@@ -12,6 +12,7 @@ import os
 import pathlib
 import re
 import shutil
+import sys
 
 import markdown
 import yaml
@@ -254,7 +255,10 @@ def build():
     # one-game share links for LinkedIn posts: their own preview picture and headline, then straight into the game
     base = config["site"]["base_url"].rstrip("/")
     from html import escape as _esc
-    for g in yaml.safe_load((ROOT / "content" / "game-posts.yaml").read_text())["games"]:
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import share_items
+    gc = (config.get("analytics") or {}).get("goatcounter") or ""
+    for g in share_items.load()[1]:
         slug, lab, title, desc = g["id"], g["lab"], _esc(g["title"]), _esc(g["description"])
         target = f"/{lab}.html#{slug}"
         (OUT / "play").mkdir(exist_ok=True)
@@ -264,7 +268,9 @@ def build():
             f'<meta property="og:type" content="website"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}">'
             f'<meta property="og:url" content="{base}/play/{slug}.html"><meta property="og:image" content="{base}/static/og/game-{slug}.jpg">'
             f'<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">'
-            f'<script>location.replace("{target}")</script></head>'
+            # count the visit (path /play/<game>, with where it came from) without slowing the jump into the game
+            + (f'<script>try{{fetch("https://{gc}.goatcounter.com/count?p=/play/{slug}&t="+encodeURIComponent(document.title)+"&r="+encodeURIComponent(document.referrer)+"&rnd="+Math.random(),{{mode:"no-cors",keepalive:true}})}}catch(e){{}}</script>' if gc else "")
+            + f'<script>location.replace("{target}")</script></head>'
             f'<body style="background:#09121e;color:#f0f6f9;font-family:system-ui;padding:40px"><a style="color:#3ccfc4" href="{target}">Play the game →</a></body></html>',
             encoding="utf-8")
 

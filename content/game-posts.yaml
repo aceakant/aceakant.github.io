@@ -1,14 +1,19 @@
-# Game posts on LinkedIn: one Playground game every 3rd day for 90 days, posted by the hourly publish job.
-# Each game has its own share link (play/<id>.html) whose preview is the real game screen.
-# The games repeat in this order; each round of the loop uses a different style of text, so no post is a copy.
+# Playground games and Workbench tools on LinkedIn: one post every 3rd day, posted by the hourly publish job.
+# Each game has its own share link (play/<id>.html) whose preview is the real game screen; tools link to their page.
+# Which one goes next is decided on the day: anything never posted yet goes first (so a new game or a newly
+# launched tool is posted at the next slot, even if it isn't listed below), then whatever was posted longest ago.
+# Each repeat of the same game or tool uses the next style of text, so no post is a copy.
 # To stop: set enabled: false. To pause one post: add its number to skip.
 enabled: true
-start: "2026-11-11"        # first post
+start: "2026-11-10"        # post #1 went out on 10 Nov (the video post); then every 3rd day
 every_days: 3
-days: 90                   # 30 posts: 11 Nov 2026 to 6 Feb 2027
+days: 90                   # 30 posts: 10 Nov 2026 to 5 Feb 2027
 time: "12:47"              # India time; Saturdays move to the evening so they don't sit on top of the weekly article
 saturday_time: "19:17"
-skip: []
+skip: [1]                  # slot 1 is the video post made on 10 Nov (content/post-now.yaml)
+
+# order of the queue: games and tools take turns, 2 games then 1 tool
+mix: [game, game, tool]
 
 # {hook} {teaser} {time} {more} {lesson} {url} come from each game below
 styles:
@@ -142,3 +147,64 @@ games:
     lesson: "Three lines of defence sounds like jargon until you sort real roles into them. Then it's obvious who owns what."
     time: "2-minute"
     hashtags: [RiskManagement, Governance, Banking]
+
+# Workbench tools. A live tool that isn't listed here is still posted, using its name and blurb from tools.yaml.
+tool_styles:
+  - name: problem
+    text: |-
+      {hook}
+
+      {blurb}
+
+      I built a free tool for it. Try it in your browser 👉 {url}
+
+      What would you add?
+  - name: try
+    text: |-
+      {question}
+
+      {blurb}
+
+      Try it free, nothing to install: {url}
+
+      Post your result in the comments. 👇
+  - name: lesson
+    text: |-
+      {lesson}
+
+      That's why I built {name}: {short}
+
+      Free to try 👉 {url}
+  - name: ask
+    text: |-
+      Quick question for risk and data people: {question}
+
+      I built {name} to answer it in a few minutes: {url}
+
+      Tell me what you find. 👇
+
+tools:
+  - id: fraud-roi
+    hook: "A fraud model that catches 90% of fraud can still lose money. 💸"
+    question: "What does your fraud model really save once false alarms and review costs are counted?"
+    lesson: "Detection rate is only half the story. Every false alarm costs a review and annoys a genuine customer."
+    short: "move the sliders and see the net saving, return and payback."
+    hashtags: [FraudPrevention, RiskAnalytics, Banking]
+  - id: model-risk
+    hook: "Would your model pass a regulator's review tomorrow? 📋"
+    question: "How ready is your credit, fraud or AI model for the regulator?"
+    lesson: "Most model findings aren't about the maths. They're about missing evidence: who approved it, how it was tested, who monitors it."
+    short: "10 quick questions, the gaps to fix first and the evidence to keep."
+    hashtags: [ModelRisk, RiskManagement, AIGovernance]
+  - id: cut-off-studio
+    hook: "Move a credit-score cut-off by 20 points. What happens to profit? 📈"
+    question: "Where should the credit-score cut-off sit, in a normal year and in a downturn?"
+    lesson: "A cut-off is never just a number. Approval rate, bad rate, expected loss and profit all move together."
+    short: "move the cut-off on a sample loan book and watch all four change, in a normal year and a downturn."
+    hashtags: [CreditRisk, Lending, Analytics]
+  - id: analyst
+    hook: "One AI drafts the findings. A second AI checks every number. 🤖"
+    question: "Can AI analyse a loan book or fraud-alert file without making numbers up?"
+    lesson: "The risk with AI in analytics isn't that it can't find patterns. It's that it states numbers it never checked."
+    short: "drop in a file, one AI drafts the findings and a second checks every number."
+    hashtags: [GenAI, RiskAnalytics, DataAnalytics]

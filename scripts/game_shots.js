@@ -2,8 +2,9 @@
 //   python3 -m http.server 8765 -d _site &   node scripts/game_shots.js
 const { chromium } = require("playwright");
 const fs = require("fs"), yaml = require("path");
-const games = fs.readFileSync("content/game-posts.yaml", "utf8").split("\n").filter(l => /^  - id: /.test(l)).map(l => l.split(": ")[1].trim());
-const labs = fs.readFileSync("content/game-posts.yaml", "utf8").split("\n").filter(l => /^    lab: /.test(l)).map(l => l.split(": ")[1].trim());
+const src = fs.readFileSync("content/game-posts.yaml", "utf8").split("\ntools:")[0];
+const games = src.split("\n").filter(l => /^  - id: /.test(l)).map(l => l.split(": ")[1].trim());
+const labs = src.split("\n").filter(l => /^    lab: /.test(l)).map(l => l.split(": ")[1].trim());
 (async () => {
   const b = await chromium.launch();
   for (let i = 0; i < games.length; i++) {

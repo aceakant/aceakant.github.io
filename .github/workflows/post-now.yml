@@ -1,0 +1,34 @@
+# Posts content/post-now.yaml on LinkedIn once (a one-off post approved in chat), then records it.
+name: 10 · Post now
+
+on:
+  push:
+    branches: [main]
+    paths: ["content/post-now.yaml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: content
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Post on LinkedIn
+        env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+        run: python scripts/game_posts.py --post-now
+      - name: Record it
+        run: |
+          git config user.name "insights-bot"
+          git config user.email "insights-bot@users.noreply.github.com"
+          git add content/game-posts-log.txt content/post-now.yaml
+          git diff --cached --quiet || (git commit -m "Posted now on LinkedIn" && git pull --rebase -q && git push)

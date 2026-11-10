@@ -1,0 +1,14 @@
+# A one-off LinkedIn post approved in chat. Saving this file posts it (workflow "10 · Post now") and records it
+# in game-posts-log.txt as the current slot, so the every-3rd-day plan carries on after it.
+id: chart-tricks
+style: puzzle
+video: site/static/video/chart-tricks-loop.mp4
+text: |-
+  This chart is lying. Can you tell how? 📊
+
+  "Sales tripled this year!"
+
+  Comment your answer before you check. 👇
+
+  Then spot 3 more tricks in a 90-second game (free, no sign-up):
+  https://aceakant.github.io/play/chart-tricks.html
