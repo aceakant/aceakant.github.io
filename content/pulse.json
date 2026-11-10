@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-09T08:06:39Z",
+  "updated": "2026-11-10T02:02:09Z",
   "since": "2026-11-02",
-  "visitors": 43,
+  "visitors": 50,
   "players": 6,
   "article_reads": 14,
   "countries": 4,
@@ -46,7 +46,7 @@
     },
     {
       "name": "Direct link or bookmark",
-      "count": 7
+      "count": 8
     },
     {
       "name": "Google and other search",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 34
+      "count": 40
     }
   ],
   "games": {
