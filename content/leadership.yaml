@@ -10,7 +10,7 @@ companies:
   - id: lt
     org: "L&T Finance"
     role: "Head of Fraud Risk Analytics"
-    period: "Dec 2023 – Present"
+    period: "28 Dec 2023 – Present"
     context: "One of India's largest non-bank lenders (~USD 11B retail book)."
     team: 7
     team_mix: ["Data scientists", "Data engineers", "Analysts"]
