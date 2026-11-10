@@ -21,6 +21,53 @@ labels:
   tool: "🛠️ Workbench tool · {name} · free to try"
   article: "📰 VertexNode weekly analysis · {market_label}{category}"
 
+# Teasers and launch posts. When a tool or game has a launch time (tools.yaml / labs.yaml `launch:`), or an article
+# has a time to go out on LinkedIn, a teaser goes out the day before. One post a day: if that day already has a post
+# (an article going out, another teaser or launch), the teaser moves a day earlier, and regular slots move a day later.
+# Tools and games also get a launch post on the day (an article's own LinkedIn post is its launch).
+teaser_styles:
+  tool: |-
+    🔜 Coming {when_word} on the Workbench: {name}
+
+    {blurb}
+
+    Free, and live {launch_day}. Watch this space 👉 {url}
+
+    What would you want it to show? Tell me below. 👇
+  game: |-
+    🔜 New game in the Playground {when_word}: {name}
+
+    {blurb}
+
+    Free, no sign-up, live {launch_day}. The other games are here meanwhile 👉 {url}
+
+    Who's going to top the Hall of Fame? 🏆
+  article: |-
+    🔜 {when_cap} on VertexNode: {topic}
+
+    {question} 🤔
+
+    Leave your guess below. 👇 I'll share the answer, the numbers and what to do about it {launch_day}.
+
+    Past issues 👉 {url}
+launch_styles:
+  tool: |-
+    🚀 Live now on the Workbench: {name}
+
+    {blurb}
+
+    Free to try 👉 {url}
+
+    Tell me what you find. 👇
+  game: |-
+    🚀 New in the Playground: {name}
+
+    {blurb}
+
+    Play free, no sign-up 👉 {url}
+
+    Post your score in the comments. 🏆
+
 # articles are re-shared only once their own first LinkedIn post is this many days old,
 # and never on a day a new article goes out on LinkedIn
 article_rest_days: 21

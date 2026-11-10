@@ -21,8 +21,8 @@ def main():
     li = (yaml.safe_load(li_file.read_text()) or {}) if li_file.exists() else {}
     rows = []
     for r in game_posts.plan_rows():
-        s, l = site.get(str(r["n"]), {}), li.get(r["n"]) or {}
-        rows.append({"post": r["n"], "date": r["when"].strftime("%Y-%m-%d"), "kind": r["kind"], "item": r["item"].replace("article-", ""), "style": r["style"],
+        s, l = site.get(game_posts.ln_tag(r["n"]), {}), li.get(r["n"]) or {}
+        rows.append({"post": r["n"], "date": r["when"].strftime("%Y-%m-%d"), "kind": r["kind"] if r["style"] not in ("teaser", "launch") else r["style"], "item": r["item"].replace("article-", ""), "style": r["style"],
                      "status": r["status"], "clicks": s.get("visit", ""), "started": s.get("start", s.get("use", "")), "finished": s.get("finish", s.get("read", "")),
                      "shared": s.get("share", ""), "impressions": l.get("impressions", ""), "reactions": l.get("reactions", ""), "comments": l.get("comments", "")})
     out = ROOT / "content" / "post-tracker.csv"

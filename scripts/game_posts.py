@@ -26,13 +26,97 @@ IST = datetime.timezone(datetime.timedelta(hours=5, minutes=30))
 LOG = ROOT / "content" / "game-posts-log.txt"
 
 
-def slots(c):
+def at(c, day):
+    hh, mm = map(int, (c["saturday_time"] if day.weekday() == 5 else c["time"]).split(":"))
+    return datetime.datetime(day.year, day.month, day.day, hh, mm, tzinfo=IST)
+
+
+def busy_days(c):
+    """Days that already have a LinkedIn post of their own: an article going out, a teaser or a launch post."""
+    days = {a["when"].astimezone(IST).date() for a in share_items.article_releases()}
+    return days | {x["when"].date() for x in specials(c)}
+
+
+def slots(c, busy=None):
+    """The every-3rd-day slots. One post a day: a slot that lands on a busy day moves to the next free day."""
+    busy = busy_days(c) if busy is None else busy
     start, out = datetime.date.fromisoformat(c["start"]), []
     for n in range(c["days"] // c["every_days"]):
         day = start + datetime.timedelta(days=n * c["every_days"])
-        hh, mm = map(int, (c["saturday_time"] if day.weekday() == 5 else c["time"]).split(":"))
-        out.append((n + 1, datetime.datetime(day.year, day.month, day.day, hh, mm, tzinfo=IST)))
+        for _ in range(3):
+            if day in busy and n > 0:
+                day += datetime.timedelta(days=1)
+        busy = busy | {day}
+        out.append((n + 1, at(c, day)))
     return out
+
+
+def ln_tag(n):
+    """What goes after ?ln= in a post's link: the slot number, or a short name for a teaser or launch post."""
+    return str(n).replace("teaser-article-", "ta-").replace("teaser-", "t-").replace("launch-", "l-")[:40]
+
+
+def specials(c):
+    """Teasers the day before anything new goes live, and a launch post on the day, each on a day of its own.
+    A teaser that would land on a busy day (an article going out, another teaser or launch) moves a day earlier."""
+    now = datetime.datetime.now(IST)
+    taken = {a["when"].astimezone(IST).date() for a in share_items.article_releases()}
+    out = []
+    base = yaml.safe_load((ROOT / "config.yaml").read_text())["site"]["base_url"].rstrip("/")
+    og = ROOT / "site" / "static" / "og"
+
+    def free_day(day, step, tries=3):
+        for _ in range(tries):
+            if day not in taken:
+                return day
+            day += datetime.timedelta(days=step)
+        return None
+
+    def weekday(d, launch_day):
+        return "tomorrow" if (launch_day - d).days == 1 else "this " + launch_day.strftime("%A")
+
+    for x in sorted(share_items.launches(), key=lambda x: x["when"]):
+        L = x["when"].astimezone(IST)
+        if L < now - datetime.timedelta(days=3):
+            continue
+        if x["kind"] == "tool":
+            pic = og / f"tool-{x['id']}.jpg"
+            pic = pic if pic.exists() else og / "workbench.jpg"
+            live_url, tease_url, where = f"{base}/{x['url']}", f"{base}/workbench.html", "the Workbench"
+        else:
+            pic = og / f"game-{x['id']}.jpg"
+            pic = pic if pic.exists() else og / f"lab-{x['lab']}.jpg"
+            live_url, tease_url, where = f"{base}/play/{x['id']}.html", f"{base}/playground.html", "the Playground"
+        lday = free_day(L.date(), +1)
+        if lday:
+            taken.add(lday)
+            when = max(at(c, lday), L + datetime.timedelta(minutes=20)) if lday == L.date() else at(c, lday)
+            out.append(dict(sid=f"launch-{x['id']}", when=when, kind=x["kind"], item=x["id"], style="launch", url=live_url, picture=pic,
+                            title=x["name"], description=x["blurb"], tags=["RiskAnalytics", "Analytics"],
+                            text=c["launch_styles"][x["kind"]].format(name=x["name"], blurb=x["blurb"], where=where, url=live_url)))
+        tday = free_day(L.date() - datetime.timedelta(days=1), -1)
+        if tday and at(c, tday) < L:
+            taken.add(tday)
+            out.append(dict(sid=f"teaser-{x['id']}", when=at(c, tday), kind=x["kind"], item=x["id"], style="teaser", url=tease_url, picture=pic,
+                            title=f"Coming {L:%a %d %b}: {x['name']}", description=x["blurb"], tags=["RiskAnalytics", "Analytics"],
+                            text=c["teaser_styles"][x["kind"]].format(name=x["name"], blurb=x["blurb"], where=where, url=tease_url,
+                                                                       when_word=weekday(tday, L.date()), when_cap=weekday(tday, L.date()).capitalize(), launch_day=L.strftime("%A %d %B"))))
+    for a in share_items.article_releases():
+        m, R = a["meta"], a["when"].astimezone(IST)
+        if R <= now or m.get("linkedin_shared"):
+            continue  # already out
+        tday = free_day(R.date() - datetime.timedelta(days=1), -1)
+        if not tday or at(c, tday) >= R:
+            continue
+        taken.add(tday)
+        hook, market = m.get("hook") or {}, m.get("market") or ""
+        url = f"{base}/vertexnode.html"
+        out.append(dict(sid=f"teaser-article-{m['slug']}"[:120], when=at(c, tday), kind="article", item="article-" + m["slug"], style="teaser", url=url,
+                        picture=ROOT / "content" / m["image"], title=f"Coming {R:%a %d %b} on VertexNode", description=m.get("summary", ""),
+                        tags=["RiskManagement", "Banking"],
+                        text=c["teaser_styles"]["article"].format(question=hook.get("question") or m["title"], when_word=weekday(tday, R.date()), when_cap=weekday(tday, R.date()).capitalize(),
+                                                                   launch_day=R.strftime("%A"), topic=(("" if market in ("", "Global") else market + " ") + (m.get("category") or "").lower()), url=url)))
+    return sorted(out, key=lambda x: x["when"])
 
 
 def read_log():
@@ -48,7 +132,7 @@ def read_log():
 
 def choose(c, games, tools, rows, when=None, arts=None):
     """The next item and how many times it has been posted before."""
-    posted = [r for r in rows if not r[4].startswith("skipped")]
+    posted = [r for r in rows if not r[4].startswith("skipped") and r[0].isdigit()]
     times = {}
     for i, r in enumerate(posted):
         times.setdefault(r[2], []).append(i)
@@ -78,7 +162,7 @@ def plan_rows():
     fake = list(rows)
     kinds = {x["id"]: x["kind"] for x in games + tools + arts}
     for n, when in slots(c):
-        r = next((r for r in rows if int(r[0]) == n), None)
+        r = next((r for r in rows if r[0] == str(n)), None)
         if r:
             out.append(dict(n=n, when=when, kind=kinds.get(r[2], "game" if r[2] != "-" else ""), item=r[2], style=r[3], status="skipped" if r[4].startswith("skipped") else "posted", post=r[4], body=""))
             continue
@@ -86,7 +170,11 @@ def plan_rows():
         style, body = share_items.text(c, item, k)
         fake.append((str(n), "", item["id"], style, "planned"))
         out.append(dict(n=n, when=when, kind=item["kind"], item=item["id"], style=style, status="coming up", post="", body=body, tags=item.get("hashtags", [])))
-    return out
+    for x in specials(c):
+        r = next((r for r in rows if r[0] == x["sid"]), None)
+        out.append(dict(n=x["sid"], when=x["when"], kind=x["kind"], item=x["item"], style=x["style"], status="posted" if r else "coming up",
+                        post=r[4] if r else "", body=x["text"], tags=x["tags"]))
+    return sorted(out, key=lambda r: r["when"])
 
 
 def commentary(body_text, url, tags):
@@ -170,18 +258,14 @@ def set_changed():
 def main():
     c, games, tools = share_items.load()
     rows, now = read_log(), datetime.datetime.now(IST)
-    done = {int(r[0]) for r in rows}
+    done = {r[0] for r in rows}
     if "--plan" in sys.argv:
-        fake = list(rows)
-        for n, when in slots(c):
-            if n in done:
-                r = next(r for r in rows if int(r[0]) == n)
-                print(f"#{n:>2}  {when:%a %d %b %Y %H:%M}  {r[2]} ({r[3]})  done: {r[4]}\n")
-                continue
-            item, k = choose(c, games, tools, fake, when, share_items.articles(c))
-            style, body = share_items.text(c, item, k)
-            fake.append((str(n), "", item["id"], style, "planned"))
-            print(f"#{n:>2}  {when:%a %d %b %Y %H:%M} IST  {item['kind']}: {item['id']}  ({style})\n{body}\n{' '.join('#' + t for t in item.get('hashtags', []))}\n")
+        for r in plan_rows():
+            head = f"#{r['n']:>2}" if isinstance(r["n"], int) else f"★ {r['style'].upper()}"
+            print(f"{head}  {r['when']:%a %d %b %Y %H:%M} IST  {r['kind']}: {r['item']}  ({r['style']})  [{r['status']}]")
+            if r["body"]:
+                print(r["body"] + ("\n" + " ".join("#" + t for t in r.get("tags", [])) if r.get("tags") else ""))
+            print()
         return
     if "--post-now" in sys.argv:  # a one-off post approved in chat, recorded as the current slot
         one = yaml.safe_load((ROOT / "content" / "post-now.yaml").read_text())
@@ -204,7 +288,20 @@ def main():
         return
     if not c.get("enabled"):
         return
-    due = [(n, w) for n, w in slots(c) if w <= now and n not in done and n not in c.get("skip", [])]
+    for x in specials(c):  # a teaser or launch post that has come due (within 12 hours of its time)
+        if x["sid"] not in done and x["when"] <= now < x["when"] + datetime.timedelta(hours=12):
+            if os.environ.get("DRY_RUN") == "1" or not os.environ.get("LINKEDIN_ACCESS_TOKEN"):
+                print(f"DRY RUN, not posted ({x['sid']}):\n{x['text']}")
+                return
+            tag = ln_tag(x["sid"])
+            item = dict(x, url=x["url"] + f"?ln={tag}", hashtags=x["tags"])
+            pid = post_item(item, x["text"].replace(x["url"], item["url"]))
+            with LOG.open("a") as f:
+                f.write(f"{x['sid']} {x['when']:%Y-%m-%d} {x['item']} {x['style']} {pid}\n")
+            print(f"Posted {x['sid']}")
+            set_changed()
+            return
+    due = [(n, w) for n, w in slots(c) if w <= now and str(n) not in done and n not in c.get("skip", [])]
     if not due:
         return
     with LOG.open("a") as f:

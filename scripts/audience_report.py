@@ -35,7 +35,7 @@ def window(gc, days):
         p, n = h.get("path") or "", int(h.get("count") or 0)
         if h.get("event"):
             if p.startswith("li-"):  # li-<post number>-<visit|start|finish|use|share|read|talk|halloffame>
-                _, num, step = p.split("-", 2)
+                num, step = p[3:].rsplit("-", 1)
                 out["posts"].setdefault(num, {})[step] = n
             elif p.startswith("game-") and p.endswith("-start"):
                 out["game_starts"][p[5:-6]] = n

@@ -86,3 +86,39 @@ def text(c, item, style_no):
     label = (c.get("labels") or {}).get(item["kind"], "").format(**fields)
     body = st["text"].format(**fields)
     return st["name"], (label + "\n\n" + body) if label else body
+
+
+def _ist(v):
+    if not v:
+        return None
+    d = v if isinstance(v, datetime.datetime) else datetime.datetime.fromisoformat(str(v).replace("Z", "+00:00"))
+    return d if d.tzinfo else d.replace(tzinfo=datetime.timezone(datetime.timedelta(hours=5, minutes=30)))
+
+
+def article_releases():
+    """Every article's LinkedIn moment (its held release, or its scheduled publish time), drafts included."""
+    out = []
+    for path in sorted((ROOT / "content" / "articles").glob("*.md")):
+        _, front, _ = path.read_text(encoding="utf-8").split("---", 2)
+        m = yaml.safe_load(front)
+        if m.get("test_run"):
+            continue
+        when = _ist(m.get("linkedin_release")) or _ist(m.get("publish_at"))
+        if not when and m.get("status") == "published":
+            when = _ist(str(m["date"]) + "T13:30:00+05:30")
+        if when:
+            out.append(dict(meta=m, when=when))
+    return out
+
+
+def launches():
+    """Things with a known launch time: Workbench tools (tools.yaml `launch`) and games (labs.yaml `launch`)."""
+    out = []
+    for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"]:
+        if t.get("launch") and t.get("status") != "preview":
+            out.append(dict(kind="tool", id=t["id"], name=t["name"], blurb=t["blurb"], when=_ist(t["launch"]), url=t["url"]))
+    for lab in yaml.safe_load((ROOT / "content" / "labs.yaml").read_text())["labs"]:
+        for g in lab["games"]:
+            if g.get("launch"):
+                out.append(dict(kind="game", id=g["id"], name=g["name"], blurb=g["hook"], when=_ist(g["launch"]), lab=lab["slug"], lab_name=lab["name"]))
+    return out

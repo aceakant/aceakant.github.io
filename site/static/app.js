@@ -70,7 +70,7 @@
   var lnPost = null, gcQueue = [];
   try {
     var q = new URLSearchParams(location.search).get("ln");
-    if (q && /^\d{1,3}$/.test(q)) { lnPost = q; sessionStorage.setItem("ak-ln", q); } else lnPost = sessionStorage.getItem("ak-ln");
+    if (q && /^[\w-]{1,40}$/.test(q)) { lnPost = q; sessionStorage.setItem("ak-ln", q); } else lnPost = sessionStorage.getItem("ak-ln");
   } catch (e) {}
   function gcSend(name) {
     if (window.goatcounter && window.goatcounter.count) { try { window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {} return; }
