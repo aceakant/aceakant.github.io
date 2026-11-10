@@ -252,7 +252,7 @@ def build():
             (OUT / "cases" / f"{p['slug']}.html").write_text(html, encoding="utf-8")
 
     # one-game share links for LinkedIn posts: their own preview picture and headline, then straight into the game
-    base = config["base_url"].rstrip("/")
+    base = config["site"]["base_url"].rstrip("/")
     for slug, lab, title, desc in (
         ("chart-tricks", "analytics-lab", "This chart is lying. Can you tell how?",
          "A 60-second game: spot the trick behind 4 misleading charts before they fool your boss. Free, no sign-up."),
