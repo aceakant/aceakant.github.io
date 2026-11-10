@@ -71,6 +71,24 @@ def choose(c, games, tools, rows, when=None, arts=None):
     return item, len(times.get(item["id"], []))
 
 
+def plan_rows():
+    """Every slot: done ones from the log, the rest as the queue would fill them today."""
+    c, games, tools = share_items.load()
+    rows, arts, out = read_log(), share_items.articles(c), []
+    fake = list(rows)
+    kinds = {x["id"]: x["kind"] for x in games + tools + arts}
+    for n, when in slots(c):
+        r = next((r for r in rows if int(r[0]) == n), None)
+        if r:
+            out.append(dict(n=n, when=when, kind=kinds.get(r[2], "game" if r[2] != "-" else ""), item=r[2], style=r[3], status="skipped" if r[4].startswith("skipped") else "posted", post=r[4], body=""))
+            continue
+        item, k = choose(c, games, tools, fake, when, arts)
+        style, body = share_items.text(c, item, k)
+        fake.append((str(n), "", item["id"], style, "planned"))
+        out.append(dict(n=n, when=when, kind=item["kind"], item=item["id"], style=style, status="coming up", post="", body=body, tags=item.get("hashtags", [])))
+    return out
+
+
 def commentary(body_text, url, tags):
     body = escape(body_text).replace(escape(url), url)
     if tags:
