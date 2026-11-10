@@ -255,7 +255,7 @@ def build():
     base = config["site"]["base_url"].rstrip("/")
     for slug, lab, title, desc in (
         ("chart-tricks", "analytics-lab", "This chart is lying. Can you tell how?",
-         "A 60-second game: spot the trick behind 4 misleading charts before they fool your boss. Free, no sign-up."),
+         "4 charts, 4 tricks, 90 seconds. Spot what each one hides before it fools your boss. Free, no sign-up."),
     ):
         target = f"/{lab}.html#{slug}"
         (OUT / "play").mkdir(exist_ok=True)
