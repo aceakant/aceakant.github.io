@@ -11,7 +11,7 @@ const labs = fs.readFileSync("content/game-posts.yaml", "utf8").split("\n").filt
     await p.goto(`http://localhost:8765/${labs[i]}.html#${games[i]}`, { waitUntil: "networkidle" });
     await p.addStyleTag({ content: "*{transition:none!important;animation:none!important}" });
     await p.evaluate((id) => {
-      document.querySelectorAll("body *").forEach(e => { if (getComputedStyle(e).position === "fixed" && !e.closest("header")) e.style.display = "none"; });
+      document.querySelectorAll("body *").forEach(e => { if (getComputedStyle(e).position === "fixed" && !e.closest("header") && e.id !== "sky") e.style.display = "none"; });
       const st = document.querySelector(`.game-stage[data-game="${id}"]`) || document;
       const copy = st.querySelector(".play-copy"), game = st.querySelector(".game");
       const a = document.createElement("div");
