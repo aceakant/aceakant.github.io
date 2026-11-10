@@ -6,7 +6,9 @@
 <meta property="og:title" content="{{ a.title }}">
 <meta property="og:description" content="{{ a.summary }}">
 <meta property="og:type" content="article">
-{% if a.image %}<meta property="og:image" content="{{ site.base_url }}/{{ a.image }}">{% endif %}
+<meta property="og:url" content="{{ site.base_url }}/{{ a.url }}">
+<meta property="og:image" content="{{ site.base_url }}/{{ a.image or 'static/img/og-card.jpg' }}">
+<meta name="twitter:card" content="summary_large_image">
 {% endblock %}
 {% block content %}
 <article class="article wrap">
@@ -21,6 +23,7 @@
   <div class="tagline"><span class="mono">{% if a.week_no %}Week {{ a.week_no }}{% else %}Draft{% endif %}</span><span>{{ a.category }}</span>{% if a.market %}<span>{{ a.market }}</span>{% endif %}<span>{{ a.date_label }}</span><span>{{ a.read_min }} min read</span></div>
   <h1>{{ a.title }}</h1>
   <p class="lede">{{ a.summary }}</p>
+  {% if a.status == 'published' %}{% set share_label = "Share this piece" %}{% set share_text = a.title ~ " — a fact-checked " ~ site.weekly_name ~ " analysis by " ~ site.author %}{% include "_share.html" %}{% endif %}
 
   {% if a.status == 'published' and a.factcheck.status != 'dry-run' %}
   <div class="check verified"><b>✓ Fact-checked</b><span>Every claim checked against {{ a.sources | length }} cited source{{ '' if a.sources | length == 1 else 's' }}, listed at the end.</span></div>

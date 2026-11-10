@@ -7,6 +7,7 @@
     <p class="kicker mono">{{ site.weekly_name }} · weekly analysis</p>
     <h1>One real problem. Solved in public, every week.</h1>
     <p class="lede">Each piece has a quick guessing game, a STAR breakdown, an ROI calculator you can play with, and a 3-question Myth or Fact.</p>
+  {% set share_label = "Share " ~ site.weekly_name %}{% set share_text = site.weekly_name ~ ": one real banking problem, solved in public every week, by " ~ site.author %}{% include "_share.html" %}
   </div>
   <div class="weekmeter" aria-label="{{ week_count }} of 52 weeks published">
     <span class="mono">WEEK</span>

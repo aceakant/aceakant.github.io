@@ -1,0 +1,10 @@
+{# Share buttons. Optional: share_label ("Share this tool"), share_text (the message for WhatsApp, X and email) #}
+<div class="share-bar" data-share{% if share_text %} data-text="{{ share_text }}"{% endif %}>
+  <span class="mono share-k">{{ share_label | default("Share") }}</span>
+  <button type="button" class="share-b share-native" data-net="native" hidden>Share…</button>
+  <a class="share-b" data-net="linkedin" href="#" target="_blank" rel="noopener">LinkedIn</a>
+  <a class="share-b" data-net="whatsapp" href="#" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="share-b" data-net="x" href="#" target="_blank" rel="noopener">X</a>
+  <a class="share-b" data-net="email" href="#">Email</a>
+  <button type="button" class="share-b" data-net="copy">Copy link</button>
+</div>

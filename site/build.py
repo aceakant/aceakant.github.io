@@ -221,6 +221,11 @@ def build():
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
             (dict(url=a["url"], short="fraud model ROI") for a in published if "fraud-model-roi" in a["slug"]), None))),
     }
+    # link-preview pictures (made by scripts/make_og.py): which picture each page shows when shared
+    og = {"workbench.html": "workbench", "updates.html": "updates", "pulse.html": "pulse"}
+    og.update({t["url"]: "tool-" + t["id"] for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"] if t.get("url")})
+    og.update({f"{l['slug']}.html": "lab-" + l["slug"] for l in labs["labs"]})
+    common["og_map"] = {k: f"static/og/{v}.jpg" for k, v in og.items() if (ROOT / "site" / "static" / "og" / f"{v}.jpg").exists()}
     for name, ctx in pages.items():
         html = env.get_template(ctx.pop("template", name)).render(root="", page=name, **common, **ctx)
         (OUT / name).write_text(html, encoding="utf-8")

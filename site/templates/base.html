@@ -8,10 +8,12 @@
 <title>{% block title %}{{ site.title }}{% endblock %}</title>
 <meta name="description" content="{% block description %}{{ site.tagline }}{% endblock %}">
 {% block meta %}
-<meta property="og:title" content="{{ site.title }}">
-<meta property="og:description" content="{{ site.tagline }}">
+<meta property="og:title" content="{{ self.title() | trim }}">
+<meta property="og:description" content="{{ self.description() | trim }}">
 <meta property="og:type" content="website">
-<meta property="og:image" content="{{ site.base_url }}/static/img/og-card.jpg">
+<meta property="og:url" content="{{ site.base_url }}/{{ '' if page == 'index.html' else page }}">
+<meta property="og:image" content="{{ site.base_url }}/{{ (og_map or {}).get(page, 'static/img/og-card.jpg') }}">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 {% endblock %}
 <link rel="preconnect" href="https://fonts.googleapis.com">

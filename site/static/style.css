@@ -1123,3 +1123,13 @@ a.wb-card.lite:hover{border-color:var(--amber)}
 .cs-svg .mc-leg{fill:var(--ink)}.cs-svg .mc-leg2{fill:var(--muted)}
 .mc-data{margin-top:16px}
 @media (max-width:900px){.mc-grid{grid-template-columns:1fr}}
+
+/* Share buttons */
+.share-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:14px 0 4px}
+.share-k{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.share-b{all:unset;box-sizing:border-box;cursor:pointer;font:600 13.5px var(--body,inherit);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:6px 13px;background:var(--surface);transition:border-color .2s}
+.share-b:hover{border-color:var(--accent);color:var(--accent)} .share-b:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+.share-b[data-net="linkedin"]:hover{border-color:#0A66C2;color:#5aa6ff} .share-b[data-net="whatsapp"]:hover{border-color:#25D366;color:#4ADE9A}
+.share-native{background:var(--accent);border-color:var(--accent);color:#04121c}
+.share-b[hidden]{display:none}
+.hof-share{margin-top:12px}

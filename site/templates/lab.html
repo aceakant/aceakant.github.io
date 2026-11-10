@@ -6,6 +6,7 @@
 <header class="wrap lab-intro {{ lab.color }}">
   <h1>{{ lab.name }}</h1>
   <p>{{ lab.teaches }} <a href="#shelf">{{ lab.games | length }} games in this lab ↓</a></p>
+  {% set share_label = "Challenge a friend" %}{% set share_text = "2-minute risk and analytics games in " ~ site.author ~ "'s " ~ lab.name ~ ". Try one and see how you score!" %}{% include "_share.html" %}
 </header>
 
 {% for g in lab.games %}

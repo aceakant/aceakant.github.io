@@ -350,6 +350,19 @@
         if (j.rank_all) box.appendChild(el("p", "hof-note", "And #" + j.rank_all + " across the whole Playground."));
         if (j.top && j.top.length) box.appendChild(list(j.top, { mine: j.rank_game }));
         var a = el("a", "hof-link", "See the full Hall of Fame on Pulse →"); a.href = "pulse.html#hall-of-fame"; box.appendChild(a);
+        if (window.AkShare) {
+          var sb = el("div", "share-bar hof-share"), sk = el("span", "mono share-k", "Share my score");
+          sb.appendChild(sk);
+          [["native", "Share…"], ["linkedin", "LinkedIn"], ["whatsapp", "WhatsApp"], ["x", "X"], ["copy", "Copy link"]].forEach(function (n) {
+            var x = el(n[0] === "native" || n[0] === "copy" ? "button" : "a", "share-b", n[1]); x.dataset.net = n[0];
+            if (x.tagName === "A") { x.target = "_blank"; x.rel = "noopener"; } else x.type = "button";
+            if (n[0] === "native") x.hidden = true;
+            sb.appendChild(x);
+          });
+          box.appendChild(sb);
+          var gameUrl = (document.querySelector('meta[property="og:url"]') || {}).content + "#" + id;
+          window.AkShare.wire(sb, function () { return gameUrl; }, function () { return "I scored " + pct + "% on " + (g.name || "this game") + (j.rank_game ? " and I'm #" + j.rank_game + " this month" : "") + ". Can you beat me?"; }, "score");
+        }
         if (window.akConfetti && j.rank_game === 1) window.akConfetti();
         if (window.akTrack) window.akTrack("hof-submit");
         var strip = stage.querySelector(".hof-strip"); if (strip) fillStrip(strip, j.top || []);
@@ -400,4 +413,42 @@
       }
     }).catch(function () {});
   }
+})();
+
+
+/* ---------- Share buttons (articles, labs, Workbench) and "share my score" ---------- */
+(function () {
+  "use strict";
+  function meta(p) { var m = document.querySelector('meta[property="' + p + '"]'); return m ? m.content : ""; }
+  function links(url, text) {
+    var u = encodeURIComponent(url), t = encodeURIComponent(text);
+    return { linkedin: "https://www.linkedin.com/sharing/share-offsite/?url=" + u, whatsapp: "https://wa.me/?text=" + encodeURIComponent(text + " " + url),
+      x: "https://twitter.com/intent/tweet?text=" + t + "&url=" + u, email: "mailto:?subject=" + t + "&body=" + encodeURIComponent(text + "\n\n" + url) };
+  }
+  function wire(bar, getUrl, getText, tag) {
+    var native = bar.querySelector('[data-net="native"]');
+    if (native && navigator.share) native.hidden = false;
+    function refresh() { var l = links(getUrl(), getText()); Array.prototype.forEach.call(bar.querySelectorAll("a[data-net]"), function (a) { a.href = l[a.dataset.net]; }); }
+    refresh();
+    bar.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-net]"); if (!b) return;
+      refresh();
+      var net = b.dataset.net; if (window.akTrack) window.akTrack("share-" + net + "-" + tag);
+      if (net === "native") { e.preventDefault(); navigator.share({ title: meta("og:title") || document.title, text: getText(), url: getUrl() }).catch(function () {}); }
+      if (net === "copy") {
+        e.preventDefault();
+        var done = function () { var old = b.textContent; b.textContent = "Link copied ✓"; setTimeout(function () { b.textContent = old; }, 1800); };
+        try { navigator.clipboard.writeText(getUrl()).then(done, function () { window.prompt("Copy this link", getUrl()); }); } catch (x) { window.prompt("Copy this link", getUrl()); }
+      }
+    });
+    return refresh;
+  }
+  var page = (document.body.className.match(/page-([\w-]+)/) || [])[1] || "page";
+  Array.prototype.forEach.call(document.querySelectorAll("[data-share]"), function (bar) {
+    var base = meta("og:url") || location.href.split("#")[0].split("?")[0];
+    var refresh = wire(bar, function () { var h = location.hash && /lab$/.test(page) ? location.hash : ""; return base + h; },
+      function () { return bar.dataset.text || meta("og:title") || document.title; }, page);
+    window.addEventListener("hashchange", refresh);
+  });
+  window.AkShare = { links: links, wire: wire };
 })();
