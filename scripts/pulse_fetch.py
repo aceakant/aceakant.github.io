@@ -145,6 +145,8 @@ def main():
                 tools["model_risk_samples"] += count
         elif h.get("event") and path.startswith("tool-talk-"):
             tools["talks"] += count
+        elif h.get("event") and path == "tool-montecarlo-use":
+            tools["montecarlo"] = tools.get("montecarlo", 0) + count
         elif h.get("event") and path == "tool-cutoff-use":
             tools["cutoff"] = tools.get("cutoff", 0) + count
         elif h.get("event") and path == "tool-roi-use":

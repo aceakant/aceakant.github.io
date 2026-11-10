@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Portfolio Monte Carlo · {{ site.author }}{% endblock %}
+{% block description %}Generate a sample loan book, then simulate thousands of possible years of credit defaults and fraud to see the full range of profit: the expected year, the chance of a loss and the bad years.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono"><a href="workbench.html">Workbench</a> · Portfolio Monte Carlo</p>
+  <h1>One loan book, five thousand possible years.</h1>
+  <p class="lede">A loan book doesn't have one profit number; it has a range. Generate a sample book, set the credit and fraud risks, and simulate thousands of years to see the expected profit, the chance of a loss and how bad a 1-in-20 year gets. Runs in your browser; nothing is sent.</p>
+</section>
+
+<section class="wrap">
+  <div class="an-step mc">
+    <div class="mc-grid">
+      <div class="mc-panel">
+        <span class="mono cs-k">1 · The loan book</span>
+        <div class="cs-row"><span class="mono cs-k">Loans</span><div class="roi-cur" role="radiogroup" aria-label="Number of loans" id="mc-n"></div></div>
+        <label class="roi-sl"><span class="roi-top"><span>Typical applicant credit score</span><b id="mc-q-v"></b></span><input type="range" id="mc-q" min="600" max="700" step="5" value="640"></label>
+        <div class="mc-mix" id="mc-mix"></div>
+        <button type="button" class="btn small ghost" id="mc-regen">Generate a new sample book</button>
+      </div>
+      <div class="mc-panel">
+        <span class="mono cs-k">2 · Credit risk</span>
+        <div class="cs-row"><span class="mono cs-k">Economy</span><div class="roi-cur" role="radiogroup" aria-label="Economy" id="mc-e">
+          <button type="button" class="roi-c" role="radio" data-e="normal" aria-checked="true">Normal</button>
+          <button type="button" class="roi-c" role="radio" data-e="mild" aria-checked="false">Mild downturn</button>
+          <button type="button" class="roi-c" role="radio" data-e="severe" aria-checked="false">Severe downturn</button></div></div>
+        <label class="roi-sl"><span class="roi-top"><span>How much defaults move together</span><b id="mc-rho-v"></b></span><input type="range" id="mc-rho" min="1" max="25" step="1" value="8"></label>
+        <label class="roi-sl"><span class="roi-top"><span>Funding cost a year</span><b id="mc-fund-v"></b></span><input type="range" id="mc-fund" min="1" max="10" step="0.5" value="5"></label>
+      </div>
+      <div class="mc-panel">
+        <span class="mono cs-k">3 · Fraud risk</span>
+        <label class="roi-sl"><span class="roi-top"><span>Applications that are fraudulent</span><b id="mc-fr-v"></b></span><input type="range" id="mc-fr" min="0" max="5" step="0.25" value="1.5"></label>
+        <label class="roi-sl"><span class="roi-top"><span>Fraud stopped by controls</span><b id="mc-fc-v"></b></span><input type="range" id="mc-fc" min="0" max="95" step="5" value="60"></label>
+        <label class="roi-sl"><span class="roi-top"><span>Card accounts that "bust out"</span><b id="mc-bo-v"></b></span><input type="range" id="mc-bo" min="0" max="3" step="0.25" value="1"></label>
+        <div class="cs-row"><span class="mono cs-k">Currency</span><div class="roi-cur" role="radiogroup" aria-label="Currency" id="mc-cur">
+          {% for c in ["$", "£", "€", "C$"] %}<button type="button" class="roi-c" role="radio" data-c="{{ c }}" aria-checked="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}</div></div>
+      </div>
+    </div>
+    <div class="mc-run"><button type="button" class="btn" id="mc-go">Run 5,000 simulated years</button><span class="mono ainote-left" id="mc-status"></span></div>
+
+    <div class="roi-kpis cs-kpis" aria-live="polite">
+      <div class="good"><b id="mc-exp"></b><span>expected profit a year</span></div>
+      <div><b id="mc-ploss"></b><span>chance of a loss-making year</span></div>
+      <div><b id="mc-p5"></b><span>profit in a 1-in-20 bad year</span></div>
+      <div><b id="mc-p1"></b><span>profit in a 1-in-100 bad year</span></div>
+    </div>
+    <p class="cs-story" id="mc-story"></p>
+
+    <div class="cs-charts">
+      <figure class="cs-fig">
+        <figcaption><b>Profit across all simulated years</b><span>Each bar counts the simulated years landing in that profit range; red bars are loss-making. Lines mark the expected year and the 1-in-20 and 1-in-100 bad years.</span></figcaption>
+        <div id="mc-hist"></div>
+      </figure>
+      <figure class="cs-fig">
+        <figcaption><b>Where the money goes in an average year, and in a bad one</b><span>Expected year vs the average of the worst 5% of years.</span></figcaption>
+        <div id="mc-bars"></div>
+      </figure>
+    </div>
+
+    <div class="cs-side">
+      <div><b id="mc-ecl"></b><span>expected credit losses a year</span></div>
+      <div><b id="mc-efl"></b><span>expected fraud losses a year</span></div>
+      <div><b id="mc-roa"></b><span>expected return on the book</span></div>
+    </div>
+  </div>
+
+  <details class="an-more mc-data">
+    <summary>See the sample loan book (dummy data)</summary>
+    <div class="cs-how-body">
+      <p class="an-sub" id="mc-data-sum"></p>
+      <div class="cs-table-wrap"><table class="cs-table" id="mc-table"></table></div>
+      <a class="btn small ghost" id="mc-csv" href="#" download="sample-loan-book.csv">Download 1,000 sample loans (CSV)</a>
+    </div>
+  </details>
+
+  <div id="mc-note"></div>
+  <div id="mc-talk"></div>
+
+  <details class="an-more cs-how">
+    <summary>How the simulation works</summary>
+    <div class="cs-how-body">
+      <p><b>The book.</b> Each loan gets a product, amount, rate, credit score and chance of default. Scores are scaled the usual way: every 20 points doubles the odds of a customer staying good.</p>
+      <p><b>Each simulated year</b> first draws the state of the economy. A weak year raises every loan's chance of default together, more so when defaults "move together" more (the one-factor model behind the Basel capital rules). It then draws which loans default, which applications were fraud that slipped past the controls, and which card accounts were run up and abandoned ("bust-out"). Fraud losses are mostly the whole amount; credit losses are what's owed after recoveries.</p>
+      <p><b>Profit</b> = interest and fees on loans that keep paying − funding cost − running costs − credit losses − fraud losses − the cost of fraud checks. Repeating that 5,000 times gives the range of outcomes: the expected year, the chance of a loss and the bad years (the 5th and 1st percentiles).</p>
+      <div class="cs-table-wrap"><table class="cs-table" id="mc-assume"></table></div>
+      <p class="an-sub">Dummy data, generated in your browser; not any lender's real portfolio. Real portfolio models also cover prepayment, multi-year terms, recoveries timing, capital and fairness. Built by {{ site.author }}.</p>
+    </div>
+  </details>
+</section>
+{% endblock %}
