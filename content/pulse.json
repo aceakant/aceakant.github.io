@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-10T08:29:27Z",
+  "updated": "2026-11-11T06:04:30Z",
   "since": "2026-11-02",
-  "visitors": 0,
-  "players": 6,
-  "article_reads": 14,
+  "visitors": 70,
+  "players": 9,
+  "article_reads": 17,
   "countries": 4,
   "weekly": [
     {
@@ -36,7 +36,7 @@
     },
     {
       "week": "2026-11-09",
-      "players": 0
+      "players": 3
     }
   ],
   "sources": [
@@ -54,10 +54,29 @@
     },
     {
       "name": "Other sites",
-      "count": 40
+      "count": 74
     }
   ],
   "games": {
+    "chart-tricks": {
+      "players": 3,
+      "finished": 3,
+      "scores": {
+        "100": 3
+      },
+      "scored": 3,
+      "avg_score": 100
+    },
+    "correlation": {
+      "players": 2,
+      "finished": 2,
+      "scores": {
+        "60": 1,
+        "90": 1
+      },
+      "scored": 2,
+      "avg_score": 75
+    },
     "scam-or-legit": {
       "players": 1,
       "finished": 1,
@@ -67,25 +86,7 @@
       "scored": 1,
       "avg_score": 100
     },
-    "correlation": {
-      "players": 1,
-      "finished": 1,
-      "scores": {
-        "60": 1
-      },
-      "scored": 1,
-      "avg_score": 60
-    },
     "cut-off": {
-      "players": 1,
-      "finished": 1,
-      "scores": {
-        "100": 1
-      },
-      "scored": 1,
-      "avg_score": 100
-    },
-    "chart-tricks": {
       "players": 1,
       "finished": 1,
       "scores": {
@@ -114,11 +115,11 @@
   "articles": [
     {
       "slug": "from-spreadsheet-sprawl-to-a-governed-mis-pipeline-with",
-      "reads": 4
+      "reads": 6
     },
     {
       "slug": "fraud-model-roi-look-past-the-detection-rate",
-      "reads": 3
+      "reads": 4
     },
     {
       "slug": "eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist",
@@ -135,15 +136,15 @@
   ],
   "tools": {
     "samples": {
-      "card-transactions": 1,
-      "retail-loan-book": 1
+      "retail-loan-book": 2,
+      "card-transactions": 1
     },
     "uploads": 0,
     "reviews": 0,
     "model_risk": 0,
     "model_risk_samples": 0,
     "roi": 0,
-    "talks": 0
+    "talks": 2
   },
   "analyst_live": {
     "reviews": 0,
