@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-11T06:04:30Z",
+  "updated": "2026-11-11T07:48:04Z",
   "since": "2026-11-02",
-  "visitors": 70,
-  "players": 9,
+  "visitors": 71,
+  "players": 10,
   "article_reads": 17,
   "countries": 4,
   "weekly": [
@@ -36,7 +36,7 @@
     },
     {
       "week": "2026-11-09",
-      "players": 3
+      "players": 4
     }
   ],
   "sources": [
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 74
+      "count": 76
     }
   ],
   "games": {
@@ -67,6 +67,15 @@
       "scored": 3,
       "avg_score": 100
     },
+    "scam-or-legit": {
+      "players": 2,
+      "finished": 1,
+      "scores": {
+        "100": 1
+      },
+      "scored": 1,
+      "avg_score": 100
+    },
     "correlation": {
       "players": 2,
       "finished": 2,
@@ -76,15 +85,6 @@
       },
       "scored": 2,
       "avg_score": 75
-    },
-    "scam-or-legit": {
-      "players": 1,
-      "finished": 1,
-      "scores": {
-        "100": 1
-      },
-      "scored": 1,
-      "avg_score": 100
     },
     "cut-off": {
       "players": 1,

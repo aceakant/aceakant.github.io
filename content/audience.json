@@ -9,7 +9,7 @@
    "post": "urn:li:ugcPost:7525937605125849088"
   }
  ],
- "updated": "2026-11-11T06:04+00:00",
+ "updated": "2026-11-11T07:48+00:00",
  "last_7_days": {
   "posts": {},
   "share_links": {},
@@ -17,8 +17,8 @@
    "analyst": 1
   },
   "game_starts": {
+   "scam-or-legit": 2,
    "chart-tricks": 2,
-   "scam-or-legit": 1,
    "correlation": 1
   },
   "game_finishes": {
@@ -27,7 +27,7 @@
    "correlation": 1
   },
   "share_clicks": 1,
-  "pages": 47,
+  "pages": 48,
   "from_linkedin": 2
  },
  "last_30_days": {
@@ -38,8 +38,8 @@
   },
   "game_starts": {
    "chart-tricks": 3,
+   "scam-or-legit": 2,
    "correlation": 2,
-   "scam-or-legit": 1,
    "cut-off": 1,
    "in-order": 1,
    "survive-recession": 1
@@ -52,7 +52,7 @@
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 70,
+  "pages": 71,
   "from_linkedin": 2
  }
 }
