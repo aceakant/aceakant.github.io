@@ -43,7 +43,7 @@ def slots(c, busy=None):
     start, out = datetime.date.fromisoformat(c["start"]), []
     for n in range(c["days"] // c["every_days"]):
         day = start + datetime.timedelta(days=n * c["every_days"])
-        for _ in range(3):
+        for _ in range(6):
             if day in busy and n > 0:
                 day += datetime.timedelta(days=1)
         busy = busy | {day}

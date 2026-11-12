@@ -73,7 +73,7 @@ tools:
     badge: EWS
     style: lite
     kind: Free simulator · optional AI note
-    status: preview
+    launch: "2026-11-22T09:00:00+05:30"
     url: early-warning-studio.html
     cta: Test your triggers
     featured: true

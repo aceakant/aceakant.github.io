@@ -6,7 +6,7 @@
 # add the tool's id to NOTE_TOOLS in worker/analyst/src/note.js).
 tools:
   - id: early-warning-studio
-    date: 2026-11-15
+    date: 2026-11-22
     name: Early-Warning Studio
     badge: EWS
     area: Credit monitoring
