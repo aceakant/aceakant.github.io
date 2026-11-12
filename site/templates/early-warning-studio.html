@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Early-Warning Studio · {{ site.author }}{% endblock %}
+{% block description %}Follow 12 monthly batches of new loans for 18 months, spot the quietly worse ones, and test early-warning triggers: when each fires, how much warning it gives and what acting on it saves.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono"><a href="workbench.html">Workbench</a> · Early-Warning Studio</p>
+  <h1>Which warning sign would have caught it in time?</h1>
+  <p class="lede">Twelve monthly batches of new loans, followed for 18 months. Three of them are quietly worse. Set your own early-warning triggers and see which month each one fires, how much warning it gives before losses peak, how many false alarms it raises and what acting on it would have saved. Runs in your browser; nothing is sent.</p>
+  {% set share_label = "Share this tool" %}{% set share_text = "Which early-warning sign would have caught a bad loan book in time? Set the triggers and see" %}{% include "_share.html" %}
+</section>
+
+<section class="wrap">
+  <div class="an-step cs ews">
+    <div class="ews-top">
+      <div class="cs-controls">
+        <div class="cs-row">
+          <span class="mono cs-k">Economy</span>
+          <div class="roi-cur" role="radiogroup" aria-label="Economy" id="ews-econ">
+            <button type="button" class="roi-c" role="radio" data-e="normal" aria-checked="true">Normal</button>
+            <button type="button" class="roi-c" role="radio" data-e="down" aria-checked="false">Downturn from month 19</button>
+          </div>
+        </div>
+        <div class="cs-row">
+          <span class="mono cs-k">Currency</span>
+          <div class="roi-cur" role="radiogroup" aria-label="Currency" id="ews-cur">
+            {% for c in ["$", "£", "€", "C$"] %}<button type="button" class="roi-c" role="radio" data-c="{{ c }}" aria-checked="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+          </div>
+        </div>
+        <div class="cs-jumps">
+          <button type="button" class="btn small ghost" id="ews-reveal">Show which batches were worse</button>
+          <button type="button" class="btn small ghost" id="ews-new">Generate a new sample book</button>
+        </div>
+      </div>
+      <div class="ews-trig">
+        <span class="mono cs-k">Your triggers: raise the alarm when…</span>
+        <label class="roi-sl"><span class="roi-top"><span><i class="ews-dot ews-t1c">1</i> a batch has more than this share 30+ days late at month 3</span><b id="ews-t1-v"></b></span><input type="range" id="ews-t1" min="1" max="4" step="0.1" value="2"></label>
+        <label class="roi-sl"><span class="roi-top"><span><i class="ews-dot ews-t2c">2</i> more than this share of 30-days-late loans roll to 60 days</span><b id="ews-t2-v"></b></span><input type="range" id="ews-t2" min="20" max="45" step="1" value="30"></label>
+        <label class="roi-sl"><span class="roi-top"><span><i class="ews-dot ews-t3c">3</i> more than this share of live loans default in a month</span><b id="ews-t3-v"></b></span><input type="range" id="ews-t3" min="0.1" max="1" step="0.05" value="0.25"></label>
+      </div>
+    </div>
+
+    <div class="roi-kpis cs-kpis" aria-live="polite">
+      <div><b id="ews-peak"></b><span>when monthly losses peak</span></div>
+      <div><b id="ews-loss"></b><span>credit losses over 30 months</span></div>
+      <div><b id="ews-warn"></b><span>warning from your earliest trigger</span></div>
+      <div class="good"><b id="ews-saved"></b><span>saved by acting on your best trigger, after its cost</span></div>
+    </div>
+    <p class="cs-story" id="ews-story"></p>
+
+    <div class="cs-charts">
+      <figure class="cs-fig">
+        <figcaption><b>Vintage curves: how each batch goes bad</b><span>Share of each monthly batch that has defaulted (90+ days late), by months since the loans were made. Can you spot the three worse batches before you reveal them?</span></figcaption>
+        <div id="ews-vint"></div>
+      </figure>
+      <figure class="cs-fig">
+        <figcaption><b>Losses each month, and when your triggers fire</b><span>Bars are credit losses by calendar month; the dark bar is the peak. Numbered markers show the month each trigger fires.</span></figcaption>
+        <div id="ews-time"></div>
+      </figure>
+    </div>
+
+    <div class="cs-table-wrap"><table class="cs-table ews-score" id="ews-score"></table></div>
+
+    <details class="an-more ews-roll">
+      <summary>Roll rates: how late loans move from 30 to 60 to 90+ days</summary>
+      <div class="cs-table-wrap"><table class="cs-table" id="ews-rolls"></table></div>
+    </details>
+  </div>
+
+  <div id="ews-note"></div>
+  <div id="ews-talk"></div>
+
+  <details class="an-more cs-how">
+    <summary>How it's worked out</summary>
+    <div class="cs-how-body">
+      <p><b>The book.</b> Twelve monthly batches (vintages) of {{ "2,000" }} personal loans, averaging 8,000 each, followed for 18 months on book: 30 calendar months in all. Each month some current loans miss a payment (30 days late), most often around month 7. Of those, some roll on to 60 days late, then to 90+ days, which counts as a default; the rest catch up. A default loses 75% of the balance after recoveries.</p>
+      <p><b>The worse batches.</b> Batches 7, 8 and 9 were lent under looser rules: they miss payments 1.9 times as often and roll to 60 and 90+ days more often. Nothing labels them; the triggers have to find them. A downturn from month 19 lifts every batch.</p>
+      <p><b>Triggers.</b> Trigger 1 checks each batch at month 3 on book, so it can flag a batch early. Triggers 2 and 3 watch the whole book; they fire at the start of the first run of 3 or more months above the line, and a shorter run is counted as a false alarm. A normal batch flagged by trigger 1 is also a false alarm.</p>
+      <p><b>Acting.</b> From the month a trigger fires, collections step up and limits tighten for what it flagged. For loans in the worse batches, missed payments fall 15%, rolls to 60 days 30% and rolls to 90+ days 20%; loans that were fine improve far less (3%, 8% and 5%). It costs 4 a month for every live loan in scope, so acting on the whole book costs much more than acting on the flagged batches. "Saved" is the losses avoided minus that cost.</p>
+      <p class="an-sub">An illustrative sample, not any lender's real data. Real early-warning systems also use bureau data, payment behaviour, affordability and economic forecasts, and check triggers for fairness across customer groups. Built by {{ site.author }}.</p>
+    </div>
+  </details>
+</section>
+{% endblock %}

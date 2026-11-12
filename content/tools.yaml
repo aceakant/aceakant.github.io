@@ -67,3 +67,16 @@ tools:
     blurb: Generate a dummy loan book, set credit and fraud risks, and simulate 5,000 possible years to see expected profit, the chance of a loss and how bad a 1-in-20 year gets.
     facts: ["Credit defaults that move with the economy", "Application fraud and card bust-out", "AI note for your CRO, checked by a second AI"]
     tags: [Credit, Fraud, Monte Carlo]
+
+  - id: early-warning-studio
+    name: Early-Warning Studio
+    badge: EWS
+    style: lite
+    kind: Free simulator · optional AI note
+    status: preview
+    url: early-warning-studio.html
+    cta: Test your triggers
+    featured: true
+    blurb: Follow 12 monthly batches of new loans for 18 months, spot the three quietly worse ones, and test early-warning triggers. See which month each fires, the warning it gives before losses peak, its false alarms and what acting on it saves.
+    facts: ["Vintage curves and 30 → 60 → 90 roll rates", "Your own triggers, scored", "AI note for your CRO, checked by a second AI"]
+    tags: [Credit, Portfolio monitoring, KRIs]

@@ -217,6 +217,7 @@ def build():
         "model-risk.html": dict(mr=model_risk_view(config)),
         "workbench.html": {},
         "cut-off-studio.html": {},
+        "early-warning-studio.html": {},
         "portfolio-monte-carlo.html": {},
         "result.html": {},
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
