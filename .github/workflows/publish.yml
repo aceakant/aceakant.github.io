@@ -1,4 +1,4 @@
-# STEP 2 — Every hour: send the 24-hour reminder, and publish drafts whose 48-hour window has passed.
+# STEP 2 — Every hour: send the 24-hour reminder, and publish drafts whose 48-hour window has passed. (run 13 Nov)
 # Held drafts and drafts that need review are never published here.
 # It also starts anything GitHub's scheduler dropped today (Monday article, LinkedIn check, Pulse numbers).
 name: 2 · Publish on schedule
