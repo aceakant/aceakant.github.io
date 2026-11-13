@@ -86,7 +86,7 @@ def specials(c):
         else:
             pic = og / f"game-{x['id']}.jpg"
             pic = pic if pic.exists() else og / f"lab-{x['lab']}.jpg"
-            live_url, tease_url, where = f"{base}/play/{x['id']}.html", f"{base}/playground.html", "the Playground"
+            live_url, tease_url, where = f"{base}/play/{x['id']}.html", f"{base}/lab.html", "the Playground"
         lday = free_day(L.date(), +1)
         if lday:
             taken.add(lday)
@@ -110,7 +110,7 @@ def specials(c):
             continue
         taken.add(tday)
         hook, market = m.get("hook") or {}, m.get("market") or ""
-        url = f"{base}/vertexnode.html"
+        url = f"{base}/updates.html"
         out.append(dict(sid=f"teaser-article-{m['slug']}"[:120], when=at(c, tday), kind="article", item="article-" + m["slug"], style="teaser", url=url,
                         picture=ROOT / "content" / m["image"], title=f"Coming {R:%a %d %b} on VertexNode", description=m.get("summary", ""),
                         tags=["RiskManagement", "Banking"],

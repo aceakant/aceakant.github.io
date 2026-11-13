@@ -275,6 +275,13 @@ def build():
             f'<body style="background:#09121e;color:#f0f6f9;font-family:system-ui;padding:40px"><a style="color:#3ccfc4" href="{target}">Play the game →</a></body></html>',
             encoding="utf-8")
 
+    # friendly names for the VertexNode and Playground pages (a LinkedIn teaser already links to vertexnode.html)
+    for alias, target in (("vertexnode", "updates"), ("playground", "lab")):
+        (OUT / f"{alias}.html").write_text(
+            f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex"><title>Redirecting…</title>'
+            f'<script>location.replace("/{target}.html" + location.search + location.hash)</script>'
+            f'<meta http-equiv="refresh" content="0;url=/{target}.html"></head><body><a href="/{target}.html">Continue</a></body></html>', encoding="utf-8")
+
     # old addresses keep working
     for old, new in (("profile.html", "portfolio.html"), ("leadership.html", "portfolio.html"), ("lab.html", "fraud-lab.html")):
         (OUT / old).write_text(f'<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={new}">'
