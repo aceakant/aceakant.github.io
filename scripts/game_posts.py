@@ -38,17 +38,39 @@ def busy_days(c):
 
 
 def slots(c, busy=None):
-    """The every-3rd-day slots. One post a day: a slot that lands on a busy day moves to the next free day."""
+    """The regular slots, one post a day at most. Every 3rd day until `weekdays_from`, then every weekday (Mon-Fri).
+    A day that already has a post of its own (an article, a teaser, a launch) is left to that post."""
     busy = busy_days(c) if busy is None else busy
     start, out = datetime.date.fromisoformat(c["start"]), []
-    for n in range(c["days"] // c["every_days"]):
-        day = start + datetime.timedelta(days=n * c["every_days"])
-        for _ in range(6):
-            if day in busy and n > 0:
-                day += datetime.timedelta(days=1)
-        busy = busy | {day}
-        out.append((n + 1, at(c, day)))
+    wfrom = datetime.date.fromisoformat(c["weekdays_from"]) if c.get("weekdays_from") else None
+    end = start + datetime.timedelta(days=c["days"])
+    n, day = 0, start
+    while day < end:
+        if not wfrom or day < wfrom:
+            if (day - start).days % c["every_days"] == 0 and (day == start or day not in busy):
+                n += 1
+                out.append((n, at(c, day)))
+        elif day.weekday() in c.get("weekdays", [0, 1, 2, 3, 4]) and day not in busy:
+            n += 1
+            out.append((n, at(c, day)))
+        day += datetime.timedelta(days=1)
     return out
+
+
+def insight_for(c, rows):
+    """The next Wednesday insight: the first one not posted yet, then round again."""
+    done = [r[2] for r in rows if r[3] == "insight" and not r[4].startswith("skipped")]
+    ins = c.get("insights") or []
+    fresh = [x for x in ins if "insight-" + x["id"] not in done]
+    x = fresh[0] if fresh else ins[len(done) % len(ins)]
+    body = c["insight_style"].format(hook=x["hook"], body="\n".join("→ " + p for p in x["points"]), question=x["question"])
+    return dict(kind="insight", id="insight-" + x["id"], title=x["title"], hashtags=x.get("hashtags", []),
+                picture=ROOT / "site" / "static" / "og" / f"insight-{x['id']}.jpg"), body
+
+
+def is_insight_day(c, when):
+    wfrom = c.get("weekdays_from")
+    return bool(c.get("insights")) and wfrom and when.date() >= datetime.date.fromisoformat(wfrom) and when.weekday() == c.get("insight_weekday", 2)
 
 
 def ln_tag(n):
@@ -132,7 +154,7 @@ def read_log():
 
 def choose(c, games, tools, rows, when=None, arts=None):
     """The next item and how many times it has been posted before."""
-    posted = [r for r in rows if not r[4].startswith("skipped") and r[0].isdigit()]
+    posted = [r for r in rows if not r[4].startswith("skipped") and r[0].isdigit() and r[3] != "insight"]
     times = {}
     for i, r in enumerate(posted):
         times.setdefault(r[2], []).append(i)
@@ -166,8 +188,12 @@ def plan_rows():
         if r:
             out.append(dict(n=n, when=when, kind=kinds.get(r[2], "game" if r[2] != "-" else ""), item=r[2], style=r[3], status="skipped" if r[4].startswith("skipped") else "posted", post=r[4], body=""))
             continue
-        item, k = choose(c, games, tools, fake, when, arts)
-        style, body = share_items.text(c, item, k)
+        if is_insight_day(c, when):
+            item, body = insight_for(c, fake)
+            style = "insight"
+        else:
+            item, k = choose(c, games, tools, fake, when, arts)
+            style, body = share_items.text(c, item, k)
         fake.append((str(n), "", item["id"], style, "planned"))
         out.append(dict(n=n, when=when, kind=item["kind"], item=item["id"], style=style, status="coming up", post="", body=body, tags=item.get("hashtags", [])))
     for x in specials(c):
@@ -311,6 +337,20 @@ def main():
     if now - w > datetime.timedelta(hours=24):
         with LOG.open("a") as f:
             f.write(f"{n} {w:%Y-%m-%d} - - skipped-missed\n")
+        set_changed()
+        return
+    if is_insight_day(c, w):  # Wednesday: a no-link insight post (picture and text, nothing to click)
+        item, body = insight_for(c, read_log())
+        if os.environ.get("DRY_RUN") == "1" or not os.environ.get("LINKEDIN_ACCESS_TOKEN"):
+            print(f"DRY RUN, not posted ({item['id']}):\n{body}")
+            return
+        li = LinkedIn()
+        pid = li.post(commentary(body, "https://none.invalid", item["hashtags"]), {"media": {"id": li.image(item["picture"]), "altText": item["title"]}})
+        if not pid:
+            raise RuntimeError("LinkedIn post failed")
+        with LOG.open("a") as f:
+            f.write(f"{n} {w:%Y-%m-%d} {item['id']} insight {pid}\n")
+        print(f"Posted slot #{n}: {item['id']} (insight)")
         set_changed()
         return
     item, k = choose(c, games, tools, read_log(), w, share_items.articles(c))

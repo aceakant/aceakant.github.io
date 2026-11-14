@@ -5,9 +5,12 @@
 # Each repeat of the same game or tool uses the next style of text, so no post is a copy.
 # To stop: set enabled: false. To pause one post: add its number to skip.
 enabled: true
-start: "2026-11-10"        # post #1 went out on 10 Nov (the video post); then every 3rd day
-every_days: 3
-days: 90                   # 30 posts: 10 Nov 2026 to 5 Feb 2027
+start: "2026-11-10"        # post #1 went out on 10 Nov (the video post)
+every_days: 3              # used until weekdays_from
+weekdays_from: "2026-11-16"   # from here: a post every weekday (Mon-Fri), agreed 14 Nov to test for 4 weeks, then review
+weekdays: [0, 1, 2, 3, 4]
+insight_weekday: 2         # Wednesdays: a no-link insight post (text and a picture, nothing to click), from `insights` below
+days: 90                   # to 7 Feb 2027
 time: "12:47"              # India time; Saturdays move to the evening so they don't sit on top of the weekly article
 saturday_time: "19:17"
 skip: [1]                  # slot 1 is the video post made on 10 Nov (content/post-now.yaml)
@@ -292,3 +295,85 @@ tools:
     lesson: "The risk with AI in analytics isn't that it can't find patterns. It's that it states numbers it never checked."
     short: "drop in a file, one AI drafts the findings and a second checks every number."
     hashtags: [GenAI, RiskAnalytics, DataAnalytics]
+
+# No-link insight posts, one each Wednesday, in this order. Pure value on LinkedIn itself: nothing to click.
+# General lessons only: no employer, no client, no invented personal stories or figures.
+insight_style: |-
+  {hook}
+
+  {body}
+
+  {question}
+insights:
+  - id: gini-vs-profit
+    title: "A better Gini doesn't always mean a better business"
+    hook: "A credit model with a higher Gini can still make the business worse off. 📉"
+    points: ["Gini measures how well a model ranks risk, not what the lender earns", "A gain at the low end of the score range may change no decisions at all", "Judge a new model by the approvals, losses and profit at your actual cut-off"]
+    question: "What do you report alongside Gini when you sign off a model?"
+    hashtags: [CreditRisk, ModelRisk, Analytics]
+  - id: vintages-first
+    title: "A growing book hides bad loans"
+    hook: "Portfolio delinquency can look flat while new lending is going bad. 👀"
+    points: ["Fast growth adds many young loans that haven't had time to miss a payment", "That pushes the overall delinquency rate down, whatever the new loans are like", "Vintage curves compare each month's lending at the same age, so the problem shows early"]
+    question: "Do your monthly packs lead with vintages or with the portfolio rate?"
+    hashtags: [CreditRisk, RiskManagement, Lending]
+  - id: false-positive-cost
+    title: "Every fraud alert has a customer on the other end"
+    hook: "A fraud model's false alarms are paid for by genuine customers. 💳"
+    points: ["A blocked payment can mean a lost sale, a call to the contact centre or a customer who leaves", "Detection rate alone hides that cost", "Track false alarms per fraud caught and genuine payments declined, next to fraud stopped"]
+    question: "How many genuine customers does your team accept stopping for each fraud caught?"
+    hashtags: [FraudPrevention, CustomerExperience, Payments]
+  - id: roll-rates
+    title: "Watch where late loans go next"
+    hook: "The earliest sign of trouble is often not how many loans are late, but how many stay late. ⏱️"
+    points: ["Roll rates show the share of 30-days-late loans that move to 60, then to 90+", "A rising 30-to-60 roll rate often comes before defaults rise", "Split it by product, channel and month of lending to see where it starts"]
+    question: "Which early-warning indicator has served you best?"
+    hashtags: [CreditRisk, EarlyWarning, Collections]
+  - id: overrides
+    title: "Overrides are a message from the front line"
+    hook: "When people keep overriding a model, the model or the policy is telling you something. 🔍"
+    points: ["A rising override rate can mean the model no longer fits the customers you see", "It can also mean the policy around the model is out of date", "Track override rates and how overridden cases perform, not just whether overrides were approved"]
+    question: "Do you report how overridden loans actually performed?"
+    hashtags: [ModelRisk, CreditRisk, Governance]
+  - id: stability-before-performance
+    title: "The applicants change before the losses do"
+    hook: "You can see a model starting to drift months before its defaults prove it. 📊"
+    points: ["Performance data takes months to mature, but the applicants' scores change at once", "A shift in score distribution or key inputs is an early flag", "Check it monthly, then ask what changed: marketing, channel, product or the economy"]
+    question: "What has caused the biggest drift you've seen in a model's inputs?"
+    hashtags: [ModelRisk, DataScience, CreditRisk]
+  - id: reject-blindness
+    title: "You only learn from the loans you approved"
+    hook: "A credit model never sees how the people you declined would have paid. 🙈"
+    points: ["Training only on approved loans can make a model blind to the edges of its policy", "Small controlled tests, careful reject inference and bureau outcomes all help", "Be careful before reading a widened policy's early results as proof"]
+    question: "How does your team learn about the applicants it declines?"
+    hashtags: [CreditRisk, DataScience, Lending]
+  - id: maker-checker-ai
+    title: "Give AI a checker, not just a prompt"
+    hook: "The risk with AI in analytics isn't that it can't find patterns. It's that it states numbers nobody checked. 🤖"
+    points: ["Treat an AI draft like a junior analyst's first draft: useful, not final", "Have a second, independent check of every number against the source", "Keep a record of what was checked and what was changed"]
+    question: "What checks do you put around AI-written analysis today?"
+    hashtags: [GenAI, AIGovernance, RiskAnalytics]
+  - id: cutoff-profit
+    title: "Set cut-offs by profit, not by bad rate alone"
+    hook: "The cut-off with the lowest bad rate is rarely the one that makes the most money. 🏦"
+    points: ["Raising a cut-off cuts losses, but also turns away good customers and their income", "Look at approval rate, bad rate, expected loss and profit together", "Then test the same cut-off in a downturn before you choose"]
+    question: "What else do you weigh when you move a cut-off?"
+    hashtags: [CreditRisk, Lending, Strategy]
+  - id: data-before-models
+    title: "Most model problems start as data problems"
+    hook: "Before you rebuild the model, check the data feeding it. 🧰"
+    points: ["A changed source system, a new default value or a broken join can look like model decay", "Data lineage and simple monthly checks catch many issues early", "Fixing the pipeline is often cheaper than rebuilding the model"]
+    question: "What's the strangest data issue you've traced a model problem back to?"
+    hashtags: [DataQuality, ModelRisk, Analytics]
+  - id: correlation-in-downturns
+    title: "Diversification shrinks when you need it most"
+    hook: "In a downturn, loans that looked unrelated start to default together. 🌧️"
+    points: ["In good years, defaults across products and regions look fairly independent", "A shared shock moves them together, so losses stack up", "Stress tests should raise correlation, not just default rates"]
+    question: "Which assumption broke first in the last stress you lived through?"
+    hashtags: [StressTesting, CreditRisk, RiskManagement]
+  - id: explainable-decisions
+    title: "If a customer can't understand the reason, neither can the regulator"
+    hook: "A decline reason a customer can't act on is a weak reason. 🗣️"
+    points: ["Reason codes should map to things a customer recognises and can change", "Check that the stated reasons match what actually drove the score", "Review them for fairness across customer groups, not just accuracy"]
+    question: "How do you test that your decline reasons make sense to customers?"
+    hashtags: [ResponsibleAI, CreditRisk, Fairness]
