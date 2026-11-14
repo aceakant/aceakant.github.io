@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-13T08:07:53Z",
+  "updated": "2026-11-14T03:09:10Z",
   "since": "2026-11-02",
-  "visitors": 0,
-  "players": 10,
-  "article_reads": 17,
+  "visitors": 87,
+  "players": 12,
+  "article_reads": 18,
   "countries": 4,
   "weekly": [
     {
@@ -36,13 +36,13 @@
     },
     {
       "week": "2026-11-09",
-      "players": 4
+      "players": 6
     }
   ],
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 2
+      "count": 3
     },
     {
       "name": "Direct link or bookmark",
@@ -54,12 +54,12 @@
     },
     {
       "name": "Other sites",
-      "count": 84
+      "count": 96
     }
   ],
   "games": {
     "chart-tricks": {
-      "players": 3,
+      "players": 4,
       "finished": 3,
       "scores": {
         "100": 3
@@ -86,6 +86,13 @@
       "scored": 2,
       "avg_score": 75
     },
+    "in-order": {
+      "players": 2,
+      "finished": 0,
+      "scores": {},
+      "scored": 0,
+      "avg_score": null
+    },
     "cut-off": {
       "players": 1,
       "finished": 1,
@@ -94,13 +101,6 @@
       },
       "scored": 1,
       "avg_score": 100
-    },
-    "in-order": {
-      "players": 1,
-      "finished": 0,
-      "scores": {},
-      "scored": 0,
-      "avg_score": null
     },
     "survive-recession": {
       "players": 1,
@@ -115,7 +115,7 @@
   "articles": [
     {
       "slug": "from-spreadsheet-sprawl-to-a-governed-mis-pipeline-with",
-      "reads": 6
+      "reads": 7
     },
     {
       "slug": "fraud-model-roi-look-past-the-detection-rate",
