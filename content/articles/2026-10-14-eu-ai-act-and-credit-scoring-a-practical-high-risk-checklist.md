@@ -131,9 +131,10 @@ linkedin_post: 'Credit scoring is officially "high-risk" under the EU AI Act. No
 
 
   How far along is your model inventory: tidy spreadsheet, or archaeological dig?'
-linkedin_shared: false
+linkedin_shared: true
 linkedin_hold: false
 linkedin_release: '2026-11-14T13:30:00+05:30'
+linkedin_post_id: urn:li:share:7527290892878147584
 ---
 
 ## The problem
