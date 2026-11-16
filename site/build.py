@@ -209,6 +209,7 @@ def build():
     pages = {
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
         "portfolio.html": {},
+        "leadership-approach.html": {},
         **{f"{l['slug']}.html": dict(lab=l, game=game, template="lab.html") for l in labs["labs"]},
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
         "pulse.html": dict(pulse=pulse_view(config, labs, published)),

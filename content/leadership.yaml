@@ -9,17 +9,21 @@ stats:
 companies:
   - id: lt
     org: "L&T Finance"
-    role: "Head of Fraud Risk Analytics"
+    role: "Head of RCU Analytics (Risk & Fraud)"
     period: "28 Dec 2023 – Present"
     context: "One of India's largest non-bank lenders (~USD 11B retail book)."
     team: 7
     team_mix: ["Data scientists", "Data engineers", "Analysts"]
     split: { analytics: 50, risk: 50 }
-    analytics_side: "Built the Fraud Risk Analytics function from zero: data-mart, BI layer, ML and GenAI capability, governance cadence with the CRO, CIO and business heads."
+    analytics_side: "Built the RCU Analytics (risk & fraud) function from zero: data-mart, BI layer, ML and GenAI capability, governance cadence with the CRO, CIO and business heads."
     risk_side: "Fraud detection across every retail product, and a single source of truth for fraud, audit and regulators."
+    exec:
+      decision: "Make fraud a governed, product-wide risk with its own analytics function, and bring Generative AI into risk work only behind proper controls."
+      impact: "One trusted view of fraud for every retail product, the auditors and the regulator; document checks cut from hours to minutes."
+      governance: "Monthly and quarterly reviews with the CRO, CIO and business heads; DPDP Act controls on every AI use."
     projects:
       - slug: lt-fraud-ews
-        title: "Fraud Risk Analytics function and Early-Warning System"
+        title: "RCU Analytics function and Early-Warning System"
         summary: "Set up the fraud analytics function and co-designed ML fraud detection and an Early-Warning System with EY and BCG."
         results: ["Covers every retail product", "Early-Warning System with EY and BCG"]
         status: planned
@@ -101,6 +105,10 @@ companies:
     split: { analytics: 50, risk: 50 }
     analytics_side: "Built the Alternate Data team and a Data Centre of Excellence: 8 production data products and a governance framework."
     risk_side: "Safer lending to thin-file, new-to-bank, new-to-credit and rural customers through Universal Underwriting."
+    exec:
+      decision: "Back alternate data as the way to lend to thin-file, first-time and rural customers, and run it as a bank-wide programme."
+      impact: "Customer acquisition 25% more efficient while risk exposure fell 20%; 100M+ existing customers in scope."
+      governance: "A Data Centre of Excellence with clear governance; quarterly reporting to the executive committee."
     projects:
       - slug: axis-universal-underwriting
         title: "Universal Underwriting with alternate data"
@@ -128,6 +136,10 @@ companies:
     split: { analytics: 50, risk: 50 }
     analytics_side: "Built Risk, Policy and Data Science teams from zero, with KRI dashboards for the CEO and CRO and A/B-tested alternate-data scores."
     risk_side: "A full credit-risk capability that carried the business through the COVID shock: moratorium, restructuring, securitisation and audits by the RBI (India's central bank)."
+    exec:
+      decision: "Build a full credit-risk organisation fast enough to keep a high-growth lender safe, then steer it through COVID."
+      impact: "Approvals up 12% with 27% less manual work; a ~€20M portfolio sale; moratorium, restructuring and securitisation plans."
+      governance: "Weekly KRI reviews with the CEO and CRO; audit-ready inputs for the RBI."
     projects:
       - slug: dhani-risk-function
         title: "Building Risk & Policy through COVID"
@@ -154,6 +166,21 @@ earlier:
     role: "Senior Business Analyst"
     period: "May 2014 – May 2016"
     note: "$10M annual fraud-loss reduction from analytics on ~8 billion transactions; +30% detection KPIs."
+
+# How Ajay leads risk: the four pillars on the Leadership page (each backed by a real result)
+pillars:
+  - name: "Strategy"
+    line: "Decide where risk should be taken, and where it shouldn't."
+    proof: "Made the case for alternate-data lending at Axis Bank: acquisition 25% more efficient, risk exposure down 20%."
+  - name: "P&L and losses"
+    line: "Tie every model and rule to a business number."
+    proof: "$10M a year less fraud loss at Westpac; approvals up 12% with 27% less manual work at Dhani Loans; $1–1.5M a year recovered with Visa at JPMorgan Chase."
+  - name: "Governance and regulators"
+    line: "Make risk visible to the people accountable for it."
+    proof: "Monthly CRO risk forum at JPMorgan Chase; weekly KRI reviews with the CEO and CRO at Dhani; RBI audit inputs; DPDP Act controls on every AI use at L&T Finance."
+  - name: "Building organisations"
+    line: "Hire the people, set the cadence, and leave a function that runs without me."
+    proof: "Three risk functions built from zero, 40 people hired and led: L&T Finance (7), Axis Bank (12), Dhani Loans (21). Partners: EY, BCG, Visa."
 
 # Speaking, recognition and who Ajay works with (all from the CV)
 recognition:

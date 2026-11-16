@@ -1149,3 +1149,17 @@ a.wb-card.lite:hover{border-color:var(--amber)}
 .cs-svg .ews-firet{fill:#09121e;font-weight:700;font-size:9px}
 .ews-roll{margin-top:4px}
 @media (max-width:860px){.ews-top{grid-template-columns:1fr}}
+
+/* CXO upgrade (Nov 2026): executive case block and leadership pillars */
+.exec-case{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 14px}
+.exec-case>div{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--accent-soft)}
+.exec-case .mono{color:var(--accent)}
+.exec-case p{margin:8px 0 0}
+.pillars{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:10px}
+.pillar{border:1px solid var(--line);border-radius:16px;padding:20px;background:var(--sunk)}
+.pillar .n{font-size:13px;color:var(--accent)}
+.pillar h3{margin:6px 0 4px}
+.pillar .line{font-size:18px;margin:0 0 12px}
+.pillar .proof{margin:0;opacity:.85}
+.pillar .proof b{color:var(--amber)}
+@media (max-width:760px){.exec-case,.pillars{grid-template-columns:1fr}}

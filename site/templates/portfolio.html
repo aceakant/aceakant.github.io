@@ -10,7 +10,8 @@
     <p class="muted">{{ profile.subline }}</p>
     <div class="btns">
       <a class="btn" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Connect on LinkedIn</a>
-      <a class="btn ghost" href="updates.html">Read {{ site.weekly_name }}</a>
+      <a class="btn ghost" href="leadership-approach.html">How I lead risk</a>
+      <a class="btn ghost" href="static/bio/Ajay-Kant-bio.pdf" download>Executive bio (PDF)</a>
     </div>
   </div>
 </section>
@@ -54,8 +55,15 @@
       <ul class="pills small">{% for m in c.team_mix %}<li>{{ m }}</li>{% endfor %}</ul>
     </div>
   </div>
+  {% if c.exec %}
+  <div class="exec-case">
+    <div><span class="mono">The decision</span><p>{{ c.exec.decision }}</p></div>
+    <div><span class="mono">Business impact</span><p>{{ c.exec.impact }}</p></div>
+    <div><span class="mono">Governance</span><p>{{ c.exec.governance }}</p></div>
+  </div>
+  {% endif %}
   <div class="halves">
-    <div class="half a"><span class="mono">Analytics team development</span><p>{{ c.analytics_side }}</p></div>
+    <div class="half a"><span class="mono">Function built</span><p>{{ c.analytics_side }}</p></div>
     <div class="half r"><span class="mono">Risk outcomes</span><p>{{ c.risk_side }}</p></div>
   </div>
   <div class="cases">

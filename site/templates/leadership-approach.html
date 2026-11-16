@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}How I lead risk · {{ site.author }}{% endblock %}
+{% block content %}
+<section class="wrap phead">
+  <img class="phead-photo" src="{{ profile.avatar }}" alt="{{ profile.name }}" width="400" height="400">
+  <div>
+    <p class="kicker mono">Leadership</p>
+    <h1>How I lead risk</h1>
+    <p class="role">{{ profile.headline }}</p>
+    <p class="muted">Four things I do in every organisation I join. Each one is backed by a result you can check on my portfolio.</p>
+    <div class="btns">
+      <a class="btn" href="portfolio.html">See the executive cases</a>
+      <a class="btn ghost" href="static/bio/Ajay-Kant-bio.pdf" download>Executive bio (PDF)</a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="pillars">
+    {% for p in leadership.pillars %}
+    <div class="pillar reveal">
+      <span class="mono n">0{{ loop.index }}</span>
+      <h3>{{ p.name }}</h3>
+      <p class="line">{{ p.line }}</p>
+      <p class="proof"><b>Proof:</b> {{ p.proof }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">Who I work with at the top table</h2>
+  <div class="earlier">
+    {% for t in leadership.top_table %}
+    <div class="earlier-item"><h3>{{ t.who }}</h3><p class="muted small">{{ t.how }}</p></div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="sec">Try the thinking yourself</h2>
+  <p class="muted">The Workbench tools turn the same decisions into something you can test on your own numbers, from fraud ROI to early-warning triggers and, soon, a risk appetite statement.</p>
+  <div class="btns"><a class="btn" href="workbench.html">Open the Workbench</a></div>
+</section>
+{% include "_talk.html" %}
+{% endblock %}

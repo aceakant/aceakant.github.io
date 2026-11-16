@@ -43,7 +43,7 @@ h2{font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#0B7470;m
 <main class="main">
   <p class="lead">{{ profile.hero.lede }}</p>
   <section>
-    <h2>Teams built from zero</h2>
+    <h2>Leadership roles · risk functions built from zero</h2>
     {% for c in leadership.companies %}
     <div class="co"><b>{{ c.org }} · {{ c.role }}</b><span class="team">{{ c.team }} people</span>
       <p>{{ c.period }} · {{ c.team_mix | join(", ") }}</p></div>
@@ -53,11 +53,17 @@ h2{font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#0B7470;m
     {% endfor %}
   </section>
   <section>
-    <h2>Selected work</h2>
+    <h2>Executive impact</h2>
     <ul class="cases">
-      {% for c in leadership.companies %}{% for p in c.projects %}
-      <li><b>{{ p.title }}</b><span>{{ c.org }} · {{ p.results | join(" · ") }}</span></li>
-      {% endfor %}{% endfor %}
+      {% for c in leadership.companies %}{% if c.exec %}
+      <li><b>{{ c.org }}: {{ c.exec.decision }}</b><span>{{ c.exec.impact }}</span></li>
+      {% endif %}{% endfor %}
+    </ul>
+  </section>
+  <section>
+    <h2>How I lead risk</h2>
+    <ul class="cases">
+      {% for p in leadership.pillars %}<li><b>{{ p.name }}</b><span>{{ p.line }}</span></li>{% endfor %}
     </ul>
   </section>
   <section>
