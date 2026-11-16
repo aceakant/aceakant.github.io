@@ -196,10 +196,17 @@ def plan_rows():
             style, body = share_items.text(c, item, k)
         fake.append((str(n), "", item["id"], style, "planned"))
         out.append(dict(n=n, when=when, kind=item["kind"], item=item["id"], style=style, status="coming up", post="", body=body, tags=item.get("hashtags", [])))
+    seen = set()
     for x in specials(c):
+        seen.add(x["sid"])
         r = next((r for r in rows if r[0] == x["sid"]), None)
         out.append(dict(n=x["sid"], when=x["when"], kind=x["kind"], item=x["item"], style=x["style"], status="posted" if r else "coming up",
                         post=r[4] if r else "", body=x["text"], tags=x["tags"]))
+    for r in rows:  # teasers and launch posts already out, which specials() no longer lists
+        if not r[0].isdigit() and r[0] not in seen:
+            kind = "article" if r[2].startswith("article-") else ("tool" if r[2] in kinds and kinds[r[2]] == "tool" else "game")
+            out.append(dict(n=r[0], when=datetime.datetime.fromisoformat(r[1] + "T12:47:00+05:30"), kind=kind, item=r[2], style=r[3],
+                            status="posted", post=r[4], body="", tags=[]))
     return sorted(out, key=lambda r: r["when"])
 
 
@@ -302,7 +309,8 @@ def main():
         n = max([s for s, w in slots(c) if w <= now + datetime.timedelta(hours=1)] or [1])
         li = LinkedIn()
         media = li.video(ROOT / one["video"]) if one.get("video") else li.image(item["picture"])
-        pid = li.post(commentary(one["text"], item["url"], item.get("hashtags", [])), {"media": {"id": media, "title": item["title"]}})
+        url = item["url"] + f"?ln={n}"  # tracked like every other post
+        pid = li.post(commentary(one["text"].replace(item["url"], url), url, item.get("hashtags", [])), {"media": {"id": media, "title": item["title"]}})
         if not pid:
             raise RuntimeError("LinkedIn post failed")
         with LOG.open("a") as f:
