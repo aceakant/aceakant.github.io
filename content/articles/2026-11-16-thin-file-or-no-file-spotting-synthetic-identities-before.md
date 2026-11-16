@@ -8,7 +8,7 @@ test_run: false
 market: US
 scenario: a mid-sized US regional bank with a credit card and personal loan book
 publish_at: null
-review_issue: null
+review_issue: 10
 reminded: false
 summary: Synthetic identities are built to look like thin-file customers, and traditional fraud models often miss them. This piece sets out the signals that separate a real newcomer to credit from a person who doesn't exist, and what catching them late costs a US lender.
 hook:
