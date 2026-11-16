@@ -382,6 +382,44 @@
     showMsg();
   }
 
+
+  /* ---------------- Generic two-choice games (AI Lab, Data Lab): one engine, data from labs.yaml ---------------- */
+  Array.prototype.forEach.call(document.querySelectorAll(".verdict-game"), function (root) {
+    var q = function (c) { return root.querySelector(c); };
+    var D = JSON.parse(q(".v-data").textContent), R = D.rounds, i = 0, sc = 0;
+    var btns = q(".v-btns"), foot = q(".v-foot"), bub = q(".v-text"), from = q(".v-from");
+    function show() {
+      var r = R[i];
+      q(".v-round").textContent = (i + 1) + " of " + R.length;
+      from.textContent = r.from; bub.textContent = r.text; bub.className = "bubble v-text pop";
+      btns.hidden = false; btns.dataset.locked = "";
+      Array.prototype.forEach.call(btns.querySelectorAll("button"), function (b) { b.disabled = false; b.classList.remove("right", "wrong"); });
+      foot.innerHTML = '<span class="hint">Decide in a tap, then read why.</span><span class="score">' + sc + " / " + R.length + "</span>";
+    }
+    btns.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-pick]"); if (!b || btns.dataset.locked) return;
+      btns.dataset.locked = "1";
+      var r = R[i], truth = r.bad ? "bad" : "good", ok = b.dataset.pick === truth; if (ok) sc++;
+      Array.prototype.forEach.call(btns.querySelectorAll("button"), function (x) { x.disabled = true; if (x.dataset.pick === truth) x.classList.add("right"); });
+      if (!ok) b.classList.add("wrong");
+      bub.classList.add(r.bad ? "is-scam" : "is-legit");
+      foot.innerHTML = '<div class="verdict"><b>' + esc(ok ? D.right : D.wrong) + '</b><ul class="flags">' +
+        r.why.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + '</ul></div><span class="score">' + sc + " / " + R.length +
+        '</span><button class="btn small v-next" type="button">' + (i === R.length - 1 ? "See my score" : "Next →") + "</button>";
+      if (ok && r.bad) party();
+    });
+    foot.addEventListener("click", function (e) {
+      if (e.target.classList.contains("v-next")) {
+        if (i < R.length - 1) { i++; show(); return; }
+        btns.hidden = true; from.textContent = "Your result"; bub.className = "bubble v-text"; done(root.dataset.id, sc / R.length * 100);
+        bub.textContent = sc === R.length ? "Perfect score. 🏆" : sc >= R.length - 2 ? "Strong instincts. Check the ones you missed." : "Tricky, right? Play again and watch for the patterns.";
+        foot.innerHTML = '<div class="final"><span class="mono">YOUR SCORE</span><div class="big">' + sc + " / " + R.length + "</div><p>" + esc(D.rule) + '</p></div><span class="btns"><button class="btn small ghost v-again" type="button">Play again</button></span>';
+        if (sc === R.length) party();
+      } else if (e.target.classList.contains("v-again")) { i = 0; sc = 0; show(); }
+    });
+    show();
+  });
+
   /* ---------------- Framework Lab: put it in order ---------------- */
   var og = $("#order-game");
   if (og) {

@@ -2,6 +2,7 @@
 # older games move to the 'Earlier games' shelf on the same lab page. All data is made up for play.
 labs:
 - slug: analytics-lab
+  seat: Analytics
   name: Analytics Lab
   teaches: Reading data quickly, and remembering that correlation is not causation.
   color: teal
@@ -18,6 +19,7 @@ labs:
     added: October 2026
     hook: Chai vs code, rain vs umbrellas. How strongly do they move together?
 - slug: risk-lab
+  seat: Risk
   name: Risk Lab
   teaches: The trade-off every lender makes between growth, losses and profit.
   color: amber
@@ -34,6 +36,7 @@ labs:
     added: October 2026
     hook: Set the approval cut-off. Too strict loses customers, too loose loses money.
 - slug: fraud-lab
+  seat: Risk
   name: Fraud Lab
   teaches: The early signals fraud teams use to stop losses before they happen.
   color: red
@@ -50,6 +53,7 @@ labs:
     added: October 2026
     hook: A fraud ring, a card-testing attack and a money mule. Can you catch all three?
 - slug: framework-lab
+  seat: Risk
   name: Framework Lab
   teaches: How risk responsibilities are split, and the difference between a KPI and a KRI.
   color: green
@@ -65,6 +69,169 @@ labs:
     part: sort
     added: October 2026
     hook: Who plays which line of defence, at a cricket match and in a bank?
+- slug: ai-lab
+  name: AI Lab
+  teaches: How to tell when an AI answer can be trusted, and when an AI use case is safe to put in front of customers.
+  color: violet
+  seat: AI
+  games:
+  - id: real-or-made-up
+    name: Real or made up?
+    part: verdict
+    added: November 2026
+    new: true
+    hook: An AI read the policy and answered. Six answers. Which ones did it invent?
+    title: The AI read the document. Did it make anything up?
+    intro: Each card shows a line from a made-up lending policy and what an AI assistant said about it. Decide whether the answer sticks to the source or adds something that isn't there.
+    points: ["Made-up policy, made-up bank", "Each answer explains the catch", "The checks a risk team runs before trusting an AI"]
+    choices: {bad: "🚩 Made up", good: "✅ Grounded"}
+    right: "Right call."
+    wrong: "Not quite."
+    rule: "Golden rule: an AI answer is only as good as the source it can point to. No source, no decision."
+    rounds:
+      - from: "Source: Personal loans are available from ₹50,000 to ₹10,00,000."
+        text: "AI: Personal loans range from ₹50,000 to ₹10,00,000."
+        bad: false
+        why: ["Same numbers, same product", "Nothing added that the source doesn't say"]
+      - from: "Source: Applicants must be aged 21 to 60 at the time of application."
+        text: "AI: Applicants must be 21 to 60, and self-employed applicants need two years of tax returns."
+        bad: true
+        why: ["The age range is right", "The tax-return rule is not in the source: the AI added it", "Confident extra detail is the most common way AI answers go wrong"]
+      - from: "Source: Prepayment is allowed after 12 EMIs, with a 2% charge on the amount prepaid."
+        text: "AI: You can prepay after 12 EMIs; a 2% charge applies to the amount you prepay."
+        bad: false
+        why: ["Both conditions match the source", "Reworded, but the meaning is unchanged"]
+      - from: "Source: Fraud alerts above ₹5 lakh are reviewed by a second analyst."
+        text: "AI: All fraud alerts are reviewed by two analysts."
+        bad: true
+        why: ["The source limits second review to alerts above ₹5 lakh", "Dropping a condition changes the rule completely", "Watch for answers that turn 'some' into 'all'"]
+      - from: "Source: The model is validated every year by the independent model risk team."
+        text: "AI: The model was last validated in March 2026 and passed."
+        bad: true
+        why: ["The source says how often, not when or with what result", "A specific date and outcome were invented", "Ask: which line of the source says this?"]
+      - from: "Source: Customer data is masked before it is used for model training."
+        text: "AI: Personal data is masked before any model training."
+        bad: false
+        why: ["Same control, plain wording", "Grounded answers can paraphrase as long as they don't add or drop facts"]
+  - id: safe-to-ship
+    name: Safe to ship?
+    part: verdict
+    added: November 2026
+    hook: Six AI ideas want to go live at a bank. Which ones are ready, and which need to wait?
+    title: Six AI use cases. Which are safe to go live?
+    intro: You chair the bank's AI review. Each card is a made-up AI use case and the controls around it. Decide whether it can ship now or must be held until a gap is fixed.
+    points: ["Made-up bank, realistic use cases", "Each verdict names the missing control", "Privacy, human review, testing, monitoring"]
+    choices: {bad: "✋ Hold", good: "🚀 Ship"}
+    right: "Good review."
+    wrong: "The review board would disagree."
+    rule: "Golden rule: ship AI when it is tested, monitored, protects personal data, and a human owns every decision it touches."
+    rounds:
+      - from: "Use case: AI drafts replies to customer emails"
+        text: "An agent checks and edits every draft before it is sent. Personal data is masked. Quality is sampled weekly."
+        bad: false
+        why: ["A human approves every message", "Personal data protected", "Ongoing quality checks"]
+      - from: "Use case: AI rejects loan applications automatically"
+        text: "The AI declines applicants with no human review. Accuracy looked good on last year's data. No one has checked outcomes by customer group."
+        bad: true
+        why: ["No human in a decision that affects customers", "No fairness check by customer group", "Tested only on old data, with no monitoring"]
+      - from: "Use case: AI summarises fraud cases for investigators"
+        text: "Summaries link to the source records. Investigators decide every case. Errors are logged and reviewed monthly."
+        bad: false
+        why: ["Every summary is traceable to source", "Investigators keep the decision", "Errors are tracked and fixed"]
+      - from: "Use case: Staff paste customer files into a public chatbot"
+        text: "Teams use a free public AI tool to speed up credit notes. Files include names, PAN and bank statements."
+        bad: true
+        why: ["Personal data leaves the bank's control", "Breaks data-protection rules such as India's DPDP Act", "Use an approved, private tool with masking instead"]
+      - from: "Use case: AI answers analysts' data questions"
+        text: "Runs inside the bank's cloud, reads only approved tables, shows the query it used, and logs every question."
+        bad: false
+        why: ["Access limited to approved data", "Every answer shows its working", "Full audit trail"]
+      - from: "Use case: AI sets collections call scripts"
+        text: "The AI writes scripts tuned to raise payments. No one has reviewed the wording for pressure or vulnerable customers."
+        bad: true
+        why: ["No conduct review of customer-facing wording", "Risk of unfair pressure on vulnerable customers", "Needs compliance sign-off and monitoring first"]
+- slug: data-lab
+  name: Data Lab
+  teaches: Why good decisions start with clean data, and which data is fair and useful to lend on.
+  color: blue
+  seat: Data
+  games:
+  - id: spot-dirty-data
+    name: Spot the dirty data
+    part: verdict
+    added: November 2026
+    new: true
+    hook: Six customer records just landed in the data lake. Which ones would break your model?
+    title: Six records. Which ones are dirty?
+    intro: Each card is a made-up customer record from a loan system. Decide whether it is clean enough to use, or has a problem a data team must fix first.
+    points: ["Made-up records", "Each answer names the data-quality check", "The checks behind trusted reporting"]
+    choices: {bad: "🧹 Dirty", good: "✅ Clean"}
+    right: "Sharp eyes."
+    wrong: "Look again."
+    rule: "Golden rule: check data for completeness, validity, consistency and duplicates before any model or report uses it."
+    rounds:
+      - from: "Record #1042"
+        text: "Age 34 · Monthly income ₹85,000 · Loan ₹4,00,000 · Opened 12 Mar 2025"
+        bad: false
+        why: ["Every field present and in a sensible range", "Dates and amounts are valid"]
+      - from: "Record #1043"
+        text: "Age 212 · Monthly income ₹62,000 · Loan ₹2,50,000 · Opened 03 Jun 2025"
+        bad: true
+        why: ["Age 212 is impossible: a validity check fails", "Probably a typing error for 21 or 22", "Range checks catch this automatically"]
+      - from: "Record #1044"
+        text: "Age 29 · Monthly income — · Loan ₹6,00,000 · Opened 18 Aug 2025"
+        bad: true
+        why: ["Income is missing: a completeness check fails", "Affordability can't be judged without it"]
+      - from: "Record #1045"
+        text: "Age 41 · Monthly income ₹1,20,000 · Loan ₹8,00,000 · Opened 31 Feb 2025"
+        bad: true
+        why: ["31 February doesn't exist", "Invalid dates break vintage and roll-rate reports"]
+      - from: "Record #1046"
+        text: "Age 37 · Monthly income ₹74,000 · Loan ₹3,00,000 · Opened 09 Jan 2026"
+        bad: false
+        why: ["All fields complete and valid", "Nothing to fix"]
+      - from: "Records #1047 and #1048"
+        text: "Same name, PAN, phone and address · Loan ₹5,00,000 each · Both opened 14 Oct 2025"
+        bad: true
+        why: ["Looks like the same loan loaded twice: a duplicate check fails", "Duplicates inflate the book and the losses", "Could also be a fraud signal worth a look"]
+  - id: which-data-predicts
+    name: Which data predicts?
+    part: verdict
+    added: November 2026
+    hook: Telecom, UPI, farmland satellites, a customer's surname. Which data is fair and useful to lend on?
+    title: Six data sources. Would you use them to lend?
+    intro: Lenders now use alternate data to reach people with no credit history. Decide whether each made-up data idea is a fair, useful signal, or one to avoid.
+    points: ["Based on how alternate-data lending works", "Each answer covers usefulness and fairness", "Consent and fairness come first"]
+    choices: {bad: "⛔ Avoid", good: "✅ Use it"}
+    right: "Good judgement."
+    wrong: "Think about fairness and consent."
+    rule: "Golden rule: use data that reflects how someone manages money, with their consent, and never data that stands in for who they are."
+    rounds:
+      - from: "Data idea"
+        text: "Regular UPI payments for rent and bills over 12 months, shared with the customer's consent."
+        bad: false
+        why: ["Shows how someone manages money", "Customer consented", "Helps people with no credit history"]
+      - from: "Data idea"
+        text: "The customer's surname, to estimate community and family background."
+        bad: true
+        why: ["A proxy for caste, religion or ethnicity", "Unfair and against fair-lending principles", "Never use data that stands in for who someone is"]
+      - from: "Data idea"
+        text: "Satellite images of crop health on a farmer's registered land, to time and size a farm loan."
+        bad: false
+        why: ["Linked to the farmer's ability to repay", "Used for rural lending at scale", "Should be explained to the customer"]
+      - from: "Data idea"
+        text: "Scraping a customer's social media friends to see if they have friends who defaulted."
+        bad: true
+        why: ["No consent, and judges people by who they know", "Privacy and fairness problems", "Weak link to the customer's own behaviour"]
+      - from: "Data idea"
+        text: "Mobile recharge history and how long the customer has kept the same number, with consent."
+        bad: false
+        why: ["Stability and regular payment are real signals", "Consented telecom data powers thin-file scores", "Combine with other data, not alone"]
+      - from: "Data idea"
+        text: "The customer's postcode, to decline everyone from certain neighbourhoods."
+        bad: true
+        why: ["Blanket declines by area can discriminate against whole communities", "Judge the person, not the postcode", "Area data may only be used with fairness testing"]
+
 analytics:
   rounds:
   - x: Cups of chai before noon

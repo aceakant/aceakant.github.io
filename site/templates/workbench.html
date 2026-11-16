@@ -6,7 +6,7 @@
 {% set ai = live | selectattr("style", "equalto", "ai") | list %}
 <section class="wrap an-head">
   <p class="kicker mono">Workbench</p>
-  <h1>Tools for risk, fraud and model work.</h1>
+  <h1>Tools for risk, AI, analytics and data.</h1>
   <p class="lede">The Playground is for fun; the Workbench is for work. Each tool tackles a real problem from banking risk and analytics. The AI tools run under maker-checker governance, and the calculators run in your browser. New tools are added over time.</p>
   {% set share_label = "Share the Workbench" %}{% set share_text = "Free risk, fraud and model tools by " ~ site.author ~ ", with maker-checker AI" %}{% include "_share.html" %}
   <div class="wb-facts">
@@ -17,12 +17,16 @@
 </section>
 
 <section class="wrap">
+  <div class="seat-filter" role="group" aria-label="Filter by leadership area" data-target=".wb-grid">
+    <button type="button" class="chip" aria-pressed="true" data-seat="">All</button>
+    {% for s in ["Risk","AI","Analytics","Data"] %}<button type="button" class="chip" aria-pressed="false" data-seat="{{ s }}">{{ s }}</button>{% endfor %}
+  </div>
   <div class="wb-grid">
     {% for t in tools %}
-    {% if t.status == 'live' %}<a class="wb-card {{ t.style }} reveal" href="{{ t.url }}">{% else %}<div class="wb-card {{ t.style }} soon reveal">{% endif %}
+    {% if t.status == 'live' %}<a class="wb-card {{ t.style }} reveal" href="{{ t.url }}" data-seat="{{ t.seat }}">{% else %}<div class="wb-card {{ t.style }} soon reveal" data-seat="{{ t.seat }}">{% endif %}
       <div class="wb-top">
         <span class="tool-badge" aria-hidden="true">{{ t.badge }}</span>
-        <span class="mono wb-kind">{% if t.status == 'live' %}{{ t.kind }}{% else %}{{ t.due or "Coming soon" }}{% endif %}</span>
+        {% if t.seat %}<span class="seat-badge">{{ t.seat }}</span>{% endif %}<span class="mono wb-kind">{% if t.status == 'live' %}{{ t.kind }}{% else %}{{ t.due or "Coming soon" }}{% endif %}</span>
       </div>
       <h2>{{ t.name }}</h2>
       <p>{{ t.blurb }}</p>

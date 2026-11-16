@@ -1,11 +1,16 @@
 {# Home page Playground: the four labs #}
 <section class="wrap" id="playground">
   <h2 class="sec">Playground</h2>
-  <p class="pg-intro">Four labs, new games added over time. Made-up data, real lessons from risk and analytics work. No sign-up{% if analytics.goatcounter %}; plays are counted anonymously, with no cookies, for the <a href="pulse.html">Pulse</a> page{% else %}, nothing stored{% endif %}.</p>
+  <p class="pg-intro">Six labs across risk, AI, analytics and data, with new games added over time. Made-up data, real lessons from risk and analytics work. No sign-up{% if analytics.goatcounter %}; plays are counted anonymously, with no cookies, for the <a href="pulse.html">Pulse</a> page{% else %}, nothing stored{% endif %}.</p>
+  <div class="seat-filter" role="group" aria-label="Filter by leadership area" data-target=".pg-grid">
+    <button type="button" class="chip" aria-pressed="true" data-seat="">All</button>
+    {% for s in ["Risk","AI","Analytics","Data"] %}<button type="button" class="chip" aria-pressed="false" data-seat="{{ s }}">{{ s }}</button>{% endfor %}
+  </div>
   <div class="pg-grid">
     {% for l in labs.labs %}
-    <a class="pg-card {{ l.color }} reveal" href="{{ l.slug }}.html">
+    <a class="pg-card {{ l.color }} reveal" href="{{ l.slug }}.html" data-seat="{{ l.seat }}">
       {% include "_labicon.html" %}
+      <span class="seat-badge">{{ l.seat }}</span>
       <span class="mono">{{ l.name }}{% if l.games[0].new %} <em class="new-badge">New game</em>{% endif %}</span>
       <h3>{{ l.games[0].name }}</h3>
       <p>{{ l.games[0].hook }}</p>

@@ -475,3 +475,14 @@
   });
   window.AkShare = { links: links, wire: wire };
 })();
+
+/* Filter Playground labs and Workbench tools by leadership area (Risk, AI, Analytics, Data) */
+document.querySelectorAll(".seat-filter").forEach(function (bar) {
+  bar.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-seat]"); if (!b) return;
+    bar.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    var grid = document.querySelector(bar.dataset.target), seat = b.dataset.seat;
+    if (!grid) return;
+    grid.querySelectorAll("[data-seat]").forEach(function (c) { c.classList.toggle("seat-hidden", !!seat && c.dataset.seat !== seat); });
+  });
+});

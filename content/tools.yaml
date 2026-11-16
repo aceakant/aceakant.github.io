@@ -4,6 +4,7 @@
 #   style:  ai = maker-checker AI tool (teal); lite = free tool with no AI (amber)
 tools:
   - id: analyst
+    seat: AI
     name: Analyst on Call
     badge: AI
     style: ai
@@ -17,6 +18,7 @@ tools:
     tags: [Credit, Fraud, Data quality]
 
   - id: model-risk
+    seat: AI
     name: Model Risk Check
     badge: MR
     style: ai
@@ -30,6 +32,7 @@ tools:
     tags: [Model risk, AI governance, Regulation]
 
   - id: fraud-roi
+    seat: Analytics
     name: Fraud ROI Calculator
     badge: ROI
     style: lite
@@ -43,6 +46,7 @@ tools:
     tags: [Fraud, Business case]
 
   - id: cut-off-studio
+    seat: Risk
     name: Cut-off Studio
     badge: CUT
     style: lite
@@ -56,6 +60,7 @@ tools:
     tags: [Credit, Strategy, Stress testing]
 
   - id: portfolio-monte-carlo
+    seat: Risk
     name: Portfolio Monte Carlo
     badge: MC
     style: lite
@@ -69,6 +74,7 @@ tools:
     tags: [Credit, Fraud, Monte Carlo]
 
   - id: early-warning-studio
+    seat: Risk
     name: Early-Warning Studio
     badge: EWS
     style: lite

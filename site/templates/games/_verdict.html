@@ -1,0 +1,24 @@
+{# Generic two-choice game: data lives on the game entry in content/labs.yaml (rounds, choices). #}
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">{{ lab.name }} · {{ g.name }} · 60 seconds</p>
+      <h2 class="game-title">{{ g.title }}</h2>
+      <p>{{ g.intro }}</p>
+      <ul class="play-points">{% for p in g.points %}<li>{{ p }}</li>{% endfor %}</ul>
+    </div>
+    <div class="game verdict-game" data-id="{{ g.id }}" aria-live="polite">
+      <div class="game-head"><span class="mono">{{ g.name | upper }}</span><span class="mono v-round">1 of {{ g.rounds | length }}</span></div>
+      <div class="phone">
+        <div class="phone-from v-from"></div>
+        <div class="bubble v-text"></div>
+      </div>
+      <div class="phish-btns v-btns">
+        <button type="button" class="btn scam" data-pick="bad">{{ g.choices.bad }}</button>
+        <button type="button" class="btn legit" data-pick="good">{{ g.choices.good }}</button>
+      </div>
+      <div class="game-foot v-foot"></div>
+      <script type="application/json" class="v-data">{{ dict(rounds=g.rounds, rule=g.rule, right=g.right, wrong=g.wrong) | tojson }}</script>
+    </div>
+  </div>
+</section>
