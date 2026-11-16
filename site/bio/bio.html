@@ -61,9 +61,9 @@ h2{font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:#0B7470;m
     </ul>
   </section>
   <section>
-    <h2>How I lead risk</h2>
+    <h2>Four leadership seats</h2>
     <ul class="cases">
-      {% for p in leadership.pillars %}<li><b>{{ p.name }}</b><span>{{ p.line }}</span></li>{% endfor %}
+      {% for r in leadership.cxo_roles %}<li><b>{{ r.title }}</b><span>{{ r.proof[:2] | join(" · ") }}</span></li>{% endfor %}
     </ul>
   </section>
   <section>

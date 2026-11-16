@@ -167,6 +167,25 @@ earlier:
     period: "May 2014 – May 2016"
     note: "$10M annual fraud-loss reduction from analytics on ~8 billion transactions; +30% detection KPIs."
 
+# Four leadership seats: the work Ajay has done that each C-level role needs (evidence, not titles held)
+cxo_roles:
+  - seat: "Risk"
+    title: "Chief Risk Officer agenda"
+    line: "Fraud, credit and portfolio risk, run with governance the board and regulator trust."
+    proof: ["Three risk functions built from zero", "Second line of defence at JPMorgan Chase", "Weekly KRI reviews with CEO and CRO; RBI audits", "Risk exposure down 20% at Axis Bank"]
+  - seat: "AI"
+    title: "Chief AI Officer agenda"
+    line: "Generative AI and machine learning in live risk decisions, with controls built in."
+    proof: ["Gemini analytics agent on Google Cloud", "AI document checks: hours to minutes", "ML fraud detection and early warning with EY and BCG", "DPDP Act controls and human review on every AI use"]
+  - seat: "Analytics"
+    title: "Chief Analytics Officer agenda"
+    line: "Analytics that changes business numbers, not just reports."
+    proof: ["$10M a year less fraud loss (Westpac)", "Acquisition 25% more efficient (Axis Bank)", "Approvals up 12% with 27% less manual work (Dhani)", "Cross-sell revenue up 18% (Westpac)"]
+  - seat: "Data"
+    title: "Chief Data Officer agenda"
+    line: "New data sources, platforms and governance that make every decision sharper."
+    proof: ["8 alternate-data sources into production (Axis Bank)", "Data Centre of Excellence with governance", "Data-mart and BI layer built at L&T Finance", "BCBS 239-aligned reporting; CI/CD on Google Cloud"]
+
 # How Ajay leads risk: the four pillars on the Leadership page (each backed by a real result)
 pillars:
   - name: "Strategy"

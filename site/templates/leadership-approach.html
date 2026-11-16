@@ -16,6 +16,21 @@
 </section>
 
 <section class="wrap">
+  <h2 class="sec">Four leadership seats, one track record</h2>
+  <p class="muted">The work behind each C-level agenda, with results you can check.</p>
+  <div class="cxo-grid">
+    {% for r in leadership.cxo_roles %}
+    <div class="cxo reveal">
+      <span class="mono seat">{{ r.seat }}</span>
+      <h3>{{ r.title }}</h3>
+      <p class="line">{{ r.line }}</p>
+      <ul>{% for x in r.proof %}<li>{{ x }}</li>{% endfor %}</ul>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap">
   <div class="pillars">
     {% for p in leadership.pillars %}
     <div class="pillar reveal">

@@ -5,7 +5,7 @@ name: "Ajay Kant"
 headline: "Head of RCU Analytics (Risk & Fraud) · L&T Finance"
 photo: "static/img/ajay-portrait.jpg"     # replace the file to change the photo
 avatar: "static/img/ajay-avatar.jpg"
-subline: "Risk & AI leader · builds risk functions that let lenders grow safely · 14+ years across banking, fintech and consulting in India, the US and Australia"
+subline: "Risk, AI, analytics & data leader · builds risk functions that let lenders grow safely · 14+ years across banking, fintech and consulting in India, the US and Australia"
 summary: >
   I build risk functions that let lenders grow without growing their losses. At my last three
   organisations I set up the function from zero, hired the leaders, agreed governance with the
@@ -15,8 +15,8 @@ summary: >
 
 # Home page opening (edit the words freely)
 hero:
-  headline: "I build risk functions that let lenders grow safely."
-  lede: "Risk and AI leader with 14+ years across banks, NBFCs, fintech and consulting. I set the risk strategy, build the function from zero, report to the CEO, CRO and executive committee, and turn fraud, credit and AI decisions into measurable business results."
+  headline: "Risk, AI, analytics and data: I build the functions that let lenders grow safely."
+  lede: "Risk, AI, analytics and data leader with 14+ years across banks, NBFCs, fintech and consulting. I set the risk strategy, build the function from zero, report to the CEO, CRO and executive committee, and turn fraud, credit and AI decisions into measurable business results."
   credentials:
     - "3 risk functions built from zero · 40 people led"
     - "Reporting to CEOs, CROs and executive committees"
