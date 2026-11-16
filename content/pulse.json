@@ -1,15 +1,11 @@
 {
-  "updated": "2026-11-15T07:55:26Z",
+  "updated": "2026-11-16T01:21:57Z",
   "since": "2026-11-02",
-  "visitors": 87,
+  "visitors": 88,
   "players": 12,
   "article_reads": 18,
   "countries": 4,
   "weekly": [
-    {
-      "week": "2026-09-21",
-      "players": 0
-    },
     {
       "week": "2026-09-28",
       "players": 0
@@ -37,6 +33,10 @@
     {
       "week": "2026-11-09",
       "players": 6
+    },
+    {
+      "week": "2026-11-16",
+      "players": 0
     }
   ],
   "sources": [
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 96
+      "count": 97
     }
   ],
   "games": {
