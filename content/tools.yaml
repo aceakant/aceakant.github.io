@@ -60,7 +60,7 @@ tools:
     badge: MC
     style: lite
     kind: Free simulator · optional AI note
-    status: preview
+    launch: "2026-12-01T09:00:00+05:30"
     url: portfolio-monte-carlo.html
     cta: Run the simulation
     featured: true
