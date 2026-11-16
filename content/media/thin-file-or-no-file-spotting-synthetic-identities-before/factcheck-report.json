@@ -1,0 +1,69 @@
+{
+  "status": "needs-review",
+  "summary": "3 corrected, 6 verified · Needs review: Please confirm the exact wording of the Federal Reserve's definition of synthetic identity fraud against the Fed's 2020 paper 'Mitigating Synthetic Identity Fraud in the U.S. Payment System'. I saw it only as quoted by a secondary source.; The hook's earlier source URL (fedpaymentsimprovement.org/synthetic-identity-fraud/) could not be confirmed, so it was replaced with the July 2019 white paper PDF.; The article uses UK-style spellings (utilisation, randomised, authorised). Consider switching to US spellings for a US audience.",
+  "checks": [
+    {
+      "claim": "85-95% of applicants identified as synthetic identities are not flagged by traditional fraud models (hook answer, ROI row, article, LinkedIn post).",
+      "status": "corrected",
+      "source_url": "https://fedpaymentsimprovement.org/wp-content/uploads/frs-synthetic-identity-payments-fraud-white-paper-july-2019.pdf",
+      "source_title": "Federal Reserve, Payments Fraud Insights: Synthetic Identity Fraud, July 2019",
+      "note": "The figure is verified and the 85% hook answer stands. The draft dated it to 2023 materials and presented it as a Fed statement. It is an ID Analytics estimate cited in the Fed's July 2019 white paper (repeated in its October 2019 paper). I corrected the year, the attribution and the source URL, and reworded the hook question, article text, ROI basis and LinkedIn post to match."
+    },
+    {
+      "claim": "Federal Reserve definition of synthetic identity fraud (combining fictitious and sometimes real information such as SSNs and names to create new identities).",
+      "status": "verified",
+      "source_url": "https://fedpaymentsimprovement.org/wp-content/uploads/frs-synthetic-identity-payments-fraud-white-paper-july-2019.pdf",
+      "source_title": "Federal Reserve, Payments Fraud Insights: Synthetic Identity Fraud, July 2019",
+      "note": "The 2019 white paper describes a fraudster combining fake and sometimes real information to establish a credit record. The exact wording of the draft's definition appears in the Fed's 2020 mitigation paper, which I saw only as quoted by a secondary source. Wording is kept as 'describes'."
+    },
+    {
+      "claim": "FTC: consumers lost more than US$12.5 billion to fraud in 2024 (announced March 2025).",
+      "status": "corrected",
+      "source_url": "https://search.ftc.gov/system/files/ftc_gov/pdf/ftc-testimony-jec-hearing-on-the-rising-scam-economy.pdf",
+      "source_title": "FTC, Prepared Statement to the Joint Economic Committee, March 2026",
+      "note": "A newer official figure exists. Consumers reported US$15.9 billion in fraud losses in 2025 across about 3 million reports, up from US$12.5 billion in 2024. I updated the article text, ROI row and claims list to 2025 and kept the 2024 figure only as the comparison. It is reported losses, not total losses."
+    },
+    {
+      "claim": "SSA randomised SSN assignment in June 2011, ending the geographic meaning of the first three digits.",
+      "status": "verified",
+      "source_url": "https://www.ssa.gov/employer/randomizationfaqs.html",
+      "source_title": "SSA, Social Security Number Randomization FAQs",
+      "note": "SSA states that randomisation took effect on June 25, 2011 and eliminated the geographic significance of the area number. I added the exact date to the Myth/Fact explanation. The Myth/Fact value (false) is correct."
+    },
+    {
+      "claim": "SSA's eCBSV service lets permitted entities verify name, SSN and date of birth with the number holder's consent.",
+      "status": "verified",
+      "source_url": "https://www.ssa.gov/dataexchange/eCBSV/",
+      "source_title": "SSA, eCBSV Home",
+      "note": "Confirmed that the service is fee-based, is limited to permitted entities, and needs the number holder's written or electronic consent. I clarified the article text to say it is for permitted entities."
+    },
+    {
+      "claim": "ECOA / Regulation B adverse action notices are required when credit is declined, with specific principal reasons.",
+      "status": "verified",
+      "source_url": "https://www.law.cornell.edu/cfr/text/12/1002.9",
+      "source_title": "Cornell LII, 12 CFR 1002.9 (Regulation B) Notifications",
+      "note": "12 CFR 1002.9 requires a notice of action taken within 30 days of a completed application. An adverse action notice must be in writing and must include a statement of specific reasons or of the right to request them. The reasons must indicate the principal reason(s) for the action."
+    },
+    {
+      "claim": "Bust-outs are often booked as credit losses rather than fraud; synthetic identities use authorised-user piggybacking and then bust out.",
+      "status": "corrected",
+      "source_url": "https://fedpaymentsimprovement.org/wp-content/uploads/frs-synthetic-identity-payments-fraud-white-paper-october-2019.pdf",
+      "source_title": "Federal Reserve, Payments Fraud Insights: Detecting Synthetic Identity Fraud, Oct 2019",
+      "note": "The Fed says losses are often incorrectly categorised as credit losses, and describes piggybacking and bust-outs. I softened 'usually' to 'often' in the article and summary."
+    },
+    {
+      "claim": "Worked example arithmetic (240,000 applications x 0.3% = 720 accounts; x US$9,000 = US$6.48m; x 40% = about US$2.6m).",
+      "status": "verified",
+      "source_url": "https://fedpaymentsimprovement.org/wp-content/uploads/frs-synthetic-identity-payments-fraud-white-paper-july-2019.pdf",
+      "source_title": "Illustrative model (no external source)",
+      "note": "The arithmetic is correct (US$2.592m rounds to about US$2.6m). Inputs are labelled as illustrative assumptions and are not presented as sourced statistics, and the calculator basis is honest."
+    },
+    {
+      "claim": "Employer mentions and personal-result claims.",
+      "status": "verified",
+      "source_url": "https://fedpaymentsimprovement.org/wp-content/uploads/frs-synthetic-identity-payments-fraud-white-paper-july-2019.pdf",
+      "source_title": "Editorial check (no external source)",
+      "note": "No listed employer names or hints found. The STAR story and 40% result are explicitly a composite scenario and illustrative."
+    }
+  ]
+}
