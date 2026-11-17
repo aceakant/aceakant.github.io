@@ -27,9 +27,16 @@
    "item": "-",
    "style": "-",
    "post": "skipped-missed"
+  },
+  {
+   "n": "3",
+   "date": "2026-11-16",
+   "item": "scam-or-legit",
+   "style": "puzzle",
+   "post": "urn:li:share:7528005364483690496"
   }
  ],
- "updated": "2026-11-16T08:03+00:00",
+ "updated": "2026-11-17T02:36+00:00",
  "last_7_days": {
   "posts": {
    "ta-eu-ai-act-and-credit-scoring-a-practi": {
@@ -44,6 +51,7 @@
   },
   "game_starts": {
    "chart-tricks": 3,
+   "safe-to-ship": 1,
    "scam-or-legit": 1,
    "correlation": 1,
    "in-order": 1
@@ -53,8 +61,8 @@
    "correlation": 1
   },
   "share_clicks": 1,
-  "pages": 47,
-  "from_linkedin": 2
+  "pages": 51,
+  "from_linkedin": 4
  },
  "last_30_days": {
   "posts": {
@@ -73,6 +81,7 @@
    "scam-or-legit": 2,
    "correlation": 2,
    "in-order": 2,
+   "safe-to-ship": 1,
    "cut-off": 1,
    "survive-recession": 1
   },
@@ -84,7 +93,7 @@
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 88,
-  "from_linkedin": 3
+  "pages": 101,
+  "from_linkedin": 5
  }
 }

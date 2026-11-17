@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-16T08:03:27Z",
+  "updated": "2026-11-17T02:36:07Z",
   "since": "2026-11-02",
-  "visitors": 0,
-  "players": 12,
+  "visitors": 101,
+  "players": 13,
   "article_reads": 18,
   "countries": 4,
   "weekly": [
@@ -36,13 +36,13 @@
     },
     {
       "week": "2026-11-16",
-      "players": 0
+      "players": 1
     }
   ],
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 3
+      "count": 5
     },
     {
       "name": "Direct link or bookmark",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 97
+      "count": 109
     }
   ],
   "games": {
@@ -88,6 +88,13 @@
     },
     "in-order": {
       "players": 2,
+      "finished": 0,
+      "scores": {},
+      "scored": 0,
+      "avg_score": null
+    },
+    "safe-to-ship": {
+      "players": 1,
       "finished": 0,
       "scores": {},
       "scored": 0,
