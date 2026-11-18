@@ -1,5 +1,8 @@
 {
  "per_post_all_time": {
+  "3": {
+   "visit": 1
+  },
   "ta-eu-ai-act-and-credit-scoring-a-practi": {
    "start": 1,
    "read": 1,
@@ -36,43 +39,51 @@
    "post": "urn:li:share:7528005364483690496"
   }
  ],
- "updated": "2026-11-17T09:18+00:00",
+ "updated": "2026-11-18T08:37+00:00",
  "last_7_days": {
   "posts": {
+   "3": {
+    "visit": 1
+   },
    "ta-eu-ai-act-and-credit-scoring-a-practi": {
     "start": 1,
     "read": 1,
     "visit": 1
    }
   },
-  "share_links": {},
-  "tool_pages": {
-   "analyst": 1
+  "share_links": {
+   "scam-or-legit": 1
   },
+  "tool_pages": {},
   "game_starts": {
-   "chart-tricks": 3,
+   "chart-tricks": 2,
    "safe-to-ship": 1,
    "scam-or-legit": 1,
    "correlation": 1,
    "in-order": 1
   },
   "game_finishes": {
-   "chart-tricks": 2,
-   "correlation": 1
+   "correlation": 1,
+   "chart-tricks": 1
   },
-  "share_clicks": 1,
-  "pages": 51,
-  "from_linkedin": 4
+  "share_clicks": 0,
+  "pages": 48,
+  "from_linkedin": 6
  },
  "last_30_days": {
   "posts": {
+   "3": {
+    "visit": 1
+   },
    "ta-eu-ai-act-and-credit-scoring-a-practi": {
     "start": 1,
     "read": 1,
     "visit": 1
    }
   },
-  "share_links": {},
+  "share_links": {
+   "scam-or-legit": 1
+  },
   "tool_pages": {
    "analyst": 1
   },
@@ -93,7 +104,7 @@
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 101,
-  "from_linkedin": 5
+  "pages": 110,
+  "from_linkedin": 8
  }
 }
