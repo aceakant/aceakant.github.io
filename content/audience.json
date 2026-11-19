@@ -1,5 +1,9 @@
 {
  "per_post_all_time": {
+  "ta-fraud-model-roi-look-past-the-detecti": {
+   "read": 1,
+   "visit": 1
+  },
   "3": {
    "visit": 1
   },
@@ -51,11 +55,22 @@
    "item": "insight-gini-vs-profit",
    "style": "insight",
    "post": "urn:li:share:7528768998587498496"
+  },
+  {
+   "n": "teaser-article-fraud-model-roi-look-past-the-detection-rate",
+   "date": "2026-11-19",
+   "item": "article-fraud-model-roi-look-past-the-detection-rate",
+   "style": "teaser",
+   "post": "urn:li:share:7529096989884547072"
   }
  ],
- "updated": "2026-11-19T01:27+00:00",
+ "updated": "2026-11-19T08:52+00:00",
  "last_7_days": {
   "posts": {
+   "ta-fraud-model-roi-look-past-the-detecti": {
+    "read": 1,
+    "visit": 1
+   },
    "3": {
     "visit": 1
    },
@@ -76,11 +91,15 @@
   },
   "game_finishes": {},
   "share_clicks": 0,
-  "pages": 33,
-  "from_linkedin": 6
+  "pages": 38,
+  "from_linkedin": 10
  },
  "last_30_days": {
   "posts": {
+   "ta-fraud-model-roi-look-past-the-detecti": {
+    "read": 1,
+    "visit": 1
+   },
    "3": {
     "visit": 1
    },
@@ -113,7 +132,7 @@
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 110,
-  "from_linkedin": 8
+  "pages": 115,
+  "from_linkedin": 12
  }
 }
