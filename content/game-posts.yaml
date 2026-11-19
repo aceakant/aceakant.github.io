@@ -208,6 +208,51 @@ games:
     time: "2-minute"
     hashtags: [RiskManagement, Governance, Banking]
 
+  - id: real-or-made-up
+    lab: ai-lab
+    title: "Real or made up? Spot the AI's invented answers"
+    description: "An AI read the policy and answered six questions. Which answers did it invent? Free, no sign-up."
+    hook: "An AI read the policy and answered six questions. Some answers are made up. Can you spot which? 🤖"
+    teaser: "Every answer sounds confident. Only some are in the policy."
+    more: "check all six"
+    blurb: "An AI read a policy and answered six customer questions. Each answer sounds sure of itself. Decide which ones it invented, then see the line in the policy that proves it."
+    lesson: "The danger with AI answers isn't that they sound wrong. It's that made-up answers sound exactly as confident as real ones."
+    time: "60-second"
+    hashtags: [GenAI, AIGovernance, ResponsibleAI]
+  - id: spot-dirty-data
+    lab: data-lab
+    title: "Spot the dirty data before it breaks your model"
+    description: "Six customer records just landed in the data lake. Which ones would break your model? Free, no sign-up."
+    hook: "Six customer records just landed. Which ones would quietly break your model? 🧹"
+    teaser: "A date of birth in the future. An income of 0. A postcode that doesn't exist. Which matter?"
+    more: "check all six records"
+    blurb: "Six customer records just landed in the data lake. Some are fine, some would quietly break a model. Spot the bad ones and see what each would have done."
+    lesson: "Most model problems start as data problems. A wrong default value can look exactly like a change in customer behaviour."
+    time: "60-second"
+    hashtags: [DataQuality, DataScience, Analytics]
+  - id: safe-to-ship
+    lab: ai-lab
+    title: "Safe to ship? Six AI ideas want to go live at a bank"
+    description: "Six AI ideas want to go live at a bank. Which ones are ready, and which need to wait? Free, no sign-up."
+    hook: "Six AI ideas want to go live at a bank. Which ones are safe to ship? 🚦"
+    teaser: "A chatbot, a credit decision, a fraud alert. Which would you approve today?"
+    more: "judge all six"
+    blurb: "Six AI use cases are waiting for approval at a bank. Decide which are ready for customers and which need more checks, then see what a risk team would ask."
+    lesson: "Not every AI use case carries the same risk. A drafting assistant and an automated credit decision need very different checks."
+    time: "60-second"
+    hashtags: [AIGovernance, GenAI, RiskManagement]
+  - id: which-data-predicts
+    lab: data-lab
+    title: "Which data is fair and useful to lend on?"
+    description: "Phone bills, payment history, satellite pictures of farmland, a customer's surname. Which data is fair and useful to lend on? Free, no sign-up."
+    hook: "Phone bills, payment history, satellite pictures of farmland, a customer's surname. Which would you lend on? ⚖️"
+    teaser: "Some predict well and are fair. Some predict well and are not. Which is which?"
+    more: "sort them all"
+    blurb: "New data can help lenders say yes to people with thin credit files. But predictive isn't the same as fair. Decide which data you would use, and see why."
+    lesson: "A data source can predict repayment well and still be unfair to use. Lenders have to ask both questions."
+    time: "60-second"
+    hashtags: [ResponsibleAI, CreditRisk, Fairness]
+
 # Workbench tools. A live tool that isn't listed here is still posted, using its name and blurb from tools.yaml.
 article_styles:
   - name: quiz

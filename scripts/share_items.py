@@ -40,8 +40,8 @@ def load(now=None):
                                   hashtags=["Analytics", "RiskManagement"], new=True))
     for g in games:
         g["url"] = f"{base}/play/{g['id']}.html"
-        pic = OG / f"game-{g['id']}.jpg"
-        g["picture"] = pic if pic.exists() else OG / f"lab-{g['lab']}.jpg"
+        # the real game screen, else the lab's card, else the Playground's: a post never fails for want of a picture
+        g["picture"] = next((x for x in (OG / f"game-{g['id']}.jpg", OG / f"lab-{g['lab']}.jpg", OG / "workbench.jpg") if x.exists()), OG / "updates.jpg")
 
     out_tools, tlisted = [], {t["id"]: t for t in c.get("tools", [])}
     for t in tools:
