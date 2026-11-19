@@ -37,9 +37,23 @@
    "item": "scam-or-legit",
    "style": "puzzle",
    "post": "urn:li:share:7528005364483690496"
+  },
+  {
+   "n": "4",
+   "date": "2026-11-17",
+   "item": "-",
+   "style": "-",
+   "post": "skipped-missed"
+  },
+  {
+   "n": "5",
+   "date": "2026-11-18",
+   "item": "insight-gini-vs-profit",
+   "style": "insight",
+   "post": "urn:li:share:7528768998587498496"
   }
  ],
- "updated": "2026-11-18T08:37+00:00",
+ "updated": "2026-11-19T01:27+00:00",
  "last_7_days": {
   "posts": {
    "3": {
@@ -56,18 +70,13 @@
   },
   "tool_pages": {},
   "game_starts": {
-   "chart-tricks": 2,
    "safe-to-ship": 1,
-   "scam-or-legit": 1,
-   "correlation": 1,
+   "chart-tricks": 1,
    "in-order": 1
   },
-  "game_finishes": {
-   "correlation": 1,
-   "chart-tricks": 1
-  },
+  "game_finishes": {},
   "share_clicks": 0,
-  "pages": 48,
+  "pages": 33,
   "from_linkedin": 6
  },
  "last_30_days": {
