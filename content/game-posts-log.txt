@@ -5,3 +5,4 @@ teaser-article-eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist 2026
 4 2026-11-17 - - skipped-missed
 5 2026-11-18 insight-gini-vs-profit insight urn:li:share:7528768998587498496
 teaser-article-fraud-model-roi-look-past-the-detection-rate 2026-11-19 article-fraud-model-roi-look-past-the-detection-rate teaser urn:li:share:7529096989884547072
+teaser-early-warning-studio 2026-11-20 early-warning-studio teaser urn:li:share:7529459498256674816
