@@ -1,9 +1,9 @@
 {
-  "updated": "2026-11-19T08:52:54Z",
+  "updated": "2026-11-20T03:06:30Z",
   "since": "2026-11-02",
-  "visitors": 115,
+  "visitors": 0,
   "players": 13,
-  "article_reads": 18,
+  "article_reads": 20,
   "countries": 4,
   "weekly": [
     {
@@ -42,7 +42,7 @@
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 12
+      "count": 15
     },
     {
       "name": "Direct link or bookmark",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 119
+      "count": 126
     }
   ],
   "games": {
@@ -122,11 +122,11 @@
   "articles": [
     {
       "slug": "from-spreadsheet-sprawl-to-a-governed-mis-pipeline-with",
-      "reads": 7
+      "reads": 8
     },
     {
       "slug": "fraud-model-roi-look-past-the-detection-rate",
-      "reads": 4
+      "reads": 5
     },
     {
       "slug": "eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist",
