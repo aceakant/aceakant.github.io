@@ -1,5 +1,8 @@
 {
  "per_post_all_time": {
+  "t-early-warning-studio": {
+   "visit": 2
+  },
   "ta-fraud-model-roi-look-past-the-detecti": {
    "read": 2,
    "visit": 2
@@ -71,38 +74,39 @@
    "post": "urn:li:share:7529459498256674816"
   }
  ],
- "updated": "2026-11-20T08:39+00:00",
+ "updated": "2026-11-21T01:27+00:00",
  "last_7_days": {
   "posts": {
+   "t-early-warning-studio": {
+    "visit": 2
+   },
    "ta-fraud-model-roi-look-past-the-detecti": {
     "read": 2,
     "visit": 2
    },
    "3": {
     "visit": 1
-   },
-   "ta-eu-ai-act-and-credit-scoring-a-practi": {
-    "start": 1,
-    "read": 1,
-    "visit": 1
    }
   },
   "share_links": {
    "scam-or-legit": 1
   },
-  "tool_pages": {},
+  "tool_pages": {
+   "fraud-roi": 1
+  },
   "game_starts": {
-   "safe-to-ship": 1,
-   "chart-tricks": 1,
-   "in-order": 1
+   "safe-to-ship": 1
   },
   "game_finishes": {},
   "share_clicks": 0,
-  "pages": 44,
-  "from_linkedin": 13
+  "pages": 39,
+  "from_linkedin": 16
  },
  "last_30_days": {
   "posts": {
+   "t-early-warning-studio": {
+    "visit": 2
+   },
    "ta-fraud-model-roi-look-past-the-detecti": {
     "read": 2,
     "visit": 2
@@ -120,6 +124,7 @@
    "scam-or-legit": 1
   },
   "tool_pages": {
+   "fraud-roi": 1,
    "analyst": 1
   },
   "game_starts": {
@@ -139,7 +144,7 @@
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 123,
-  "from_linkedin": 15
+  "pages": 126,
+  "from_linkedin": 19
  }
 }
