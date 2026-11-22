@@ -72,9 +72,16 @@
    "item": "early-warning-studio",
    "style": "teaser",
    "post": "urn:li:share:7529459498256674816"
+  },
+  {
+   "n": "6",
+   "date": "2026-11-19",
+   "item": "-",
+   "style": "-",
+   "post": "skipped-missed"
   }
  ],
- "updated": "2026-11-21T08:21+00:00",
+ "updated": "2026-11-22T01:32+00:00",
  "last_7_days": {
   "posts": {
    "t-early-warning-studio": {
@@ -92,6 +99,7 @@
    "scam-or-legit": 1
   },
   "tool_pages": {
+   "early-warning-studio": 1,
    "fraud-roi": 1
   },
   "game_starts": {
@@ -99,7 +107,7 @@
   },
   "game_finishes": {},
   "share_clicks": 0,
-  "pages": 39,
+  "pages": 41,
   "from_linkedin": 16
  },
  "last_30_days": {
@@ -124,6 +132,7 @@
    "scam-or-legit": 1
   },
   "tool_pages": {
+   "early-warning-studio": 1,
    "fraud-roi": 1,
    "analyst": 1
   },
@@ -144,7 +153,7 @@
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 126,
+  "pages": 128,
   "from_linkedin": 19
  }
 }
