@@ -2,6 +2,10 @@
 # Facts come from the CV (v1.1). Lines marked "confirm: true" are drafted and need Ajay's check
 # before a case page goes public (status: draft shows a review banner; status: live hides it).
 
+# Leadership page ("How I lead risk") on/off. false = hidden from the menu and buttons;
+# its address forwards to the Portfolio page. Change to true to bring it back.
+show_page: false
+
 stats:
   people_led: 40            # 7 + 12 + 21
   teams_built: 3

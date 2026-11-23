@@ -209,7 +209,6 @@ def build():
     pages = {
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
         "portfolio.html": {},
-        "leadership-approach.html": {},
         **{f"{l['slug']}.html": dict(lab=l, game=game, template="lab.html") for l in labs["labs"]},
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
         "pulse.html": dict(pulse=pulse_view(config, labs, published)),
@@ -221,6 +220,7 @@ def build():
         "early-warning-studio.html": {},
         "portfolio-monte-carlo.html": {},
         "result.html": {},
+        **({"leadership-approach.html": {}} if leadership.get("show_page", True) else {}),
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(
             (dict(url=a["url"], short="fraud model ROI") for a in published if "fraud-model-roi" in a["slug"]), None))),
     }
@@ -284,7 +284,8 @@ def build():
             f'<meta http-equiv="refresh" content="0;url=/{target}.html"></head><body><a href="/{target}.html">Continue</a></body></html>', encoding="utf-8")
 
     # old addresses keep working
-    for old, new in (("profile.html", "portfolio.html"), ("leadership.html", "portfolio.html"), ("lab.html", "fraud-lab.html")):
+    for old, new in (("profile.html", "portfolio.html"), ("leadership.html", "portfolio.html"), ("lab.html", "fraud-lab.html"),
+                     *([] if leadership.get("show_page", True) else [("leadership-approach.html", "portfolio.html")])):
         (OUT / old).write_text(f'<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url={new}">'
                                f'<link rel="canonical" href="{new}"><a href="{new}">Continue</a>')
 

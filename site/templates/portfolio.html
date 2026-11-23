@@ -10,7 +10,7 @@
     <p class="muted">{{ profile.subline }}</p>
     <div class="btns">
       <a class="btn" href="{{ site.linkedin_url }}" target="_blank" rel="noopener">Connect on LinkedIn</a>
-      <a class="btn ghost" href="leadership-approach.html">How I lead risk</a>
+      {% if leadership.show_page %}<a class="btn ghost" href="leadership-approach.html">How I lead risk</a>{% endif %}
       <a class="btn ghost" href="static/bio/Ajay-Kant-bio.pdf" download>Executive bio (PDF)</a>
     </div>
   </div>

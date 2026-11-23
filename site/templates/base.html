@@ -31,7 +31,7 @@
     </a>
     <nav aria-label="Main">
       <a href="{{ root }}portfolio.html" {% if page in ('portfolio.html','case') %}aria-current="page"{% endif %}>Portfolio</a>
-      <a href="{{ root }}leadership-approach.html" {% if page == 'leadership-approach.html' %}aria-current="page"{% endif %}>Leadership</a>
+      {% if leadership.show_page %}<a href="{{ root }}leadership-approach.html" {% if page == 'leadership-approach.html' %}aria-current="page"{% endif %}>Leadership</a>{% endif %}
       <a href="{{ root }}updates.html" {% if page in ('updates.html','article') %}aria-current="page"{% endif %}>{{ site.weekly_name }}</a>
       <a href="{{ root }}index.html#playground" {% if page.endswith('-lab.html') %}aria-current="page"{% endif %}>Playground</a>
       <a href="{{ root }}workbench.html" {% if page in ('workbench.html','analyst.html','model-risk.html','fraud-roi.html','cut-off-studio.html','portfolio-monte-carlo.html','early-warning-studio.html') %}aria-current="page"{% endif %}>Workbench</a>
