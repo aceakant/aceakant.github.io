@@ -1,15 +1,11 @@
 {
-  "updated": "2026-11-22T08:07:50Z",
+  "updated": "2026-11-23T03:58:31Z",
   "since": "2026-11-02",
-  "visitors": 128,
+  "visitors": 0,
   "players": 13,
-  "article_reads": 20,
+  "article_reads": 21,
   "countries": 5,
   "weekly": [
-    {
-      "week": "2026-09-28",
-      "players": 0
-    },
     {
       "week": "2026-10-05",
       "players": 0
@@ -37,12 +33,16 @@
     {
       "week": "2026-11-16",
       "players": 1
+    },
+    {
+      "week": "2026-11-23",
+      "players": 0
     }
   ],
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 19
+      "count": 34
     },
     {
       "name": "Direct link or bookmark",
@@ -126,7 +126,7 @@
     },
     {
       "slug": "fraud-model-roi-look-past-the-detection-rate",
-      "reads": 5
+      "reads": 6
     },
     {
       "slug": "eu-ai-act-and-credit-scoring-a-practical-high-risk-checklist",
