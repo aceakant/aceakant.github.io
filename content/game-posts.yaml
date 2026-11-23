@@ -9,6 +9,8 @@ start: "2026-11-10"        # post #1 went out on 10 Nov (the video post)
 every_days: 3              # used until weekdays_from
 weekdays_from: "2026-11-16"   # from here: a post every weekday (Mon-Fri), agreed 14 Nov to test for 4 weeks, then review
 weekdays: [0, 1, 2, 3, 4]
+repeat_gap_days: 21        # the same game, tool or article (teasers and launch posts included) is never posted again within 3 weeks
+quiet_days: ["2026-12-24", "2026-12-25", "2026-12-31", "2027-01-01"]   # holidays: no regular posts
 insight_weekday: 2         # Wednesdays: a no-link insight post (text and a picture, nothing to click), from `insights` below
 days: 90                   # to 7 Feb 2027
 time: "12:47"              # India time; Saturdays move to the evening so they don't sit on top of the weekly article

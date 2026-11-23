@@ -50,7 +50,7 @@ def slots(c, busy=None):
             if (day - start).days % c["every_days"] == 0 and (day == start or day not in busy):
                 n += 1
                 out.append((n, at(c, day)))
-        elif day.weekday() in c.get("weekdays", [0, 1, 2, 3, 4]) and day not in busy:
+        elif day.weekday() in c.get("weekdays", [0, 1, 2, 3, 4]) and day not in busy and day.isoformat() not in c.get("quiet_days", []):
             n += 1
             out.append((n, at(c, day)))
         day += datetime.timedelta(days=1)
@@ -168,12 +168,21 @@ def choose(c, games, tools, rows, when=None, arts=None):
     pool = {"game": games, "tool": tools, "article": arts}
     if not pool.get(want):
         want = "game"
-    brand_new = [x for x in games + tools if x.get("new") and x["id"] not in times]
+    # every post of an item counts, teasers and launch posts included, so nothing is posted twice in a row
+    last, last_day = {}, {}
+    for i, r in enumerate(r for r in rows if not r[4].startswith("skipped") and r[2] != "-"):
+        last[r[2]] = i
+        if r[1]:
+            last_day[r[2]] = datetime.date.fromisoformat(r[1])
+    gap = datetime.timedelta(days=c.get("repeat_gap_days", 21))
+    recent = {k for k, d in last_day.items() if when.date() - d < gap}
+    brand_new = [x for x in games + tools if x.get("new") and x["id"] not in last]
     if brand_new:  # a game or tool added since the post text was written: it jumps the queue
         item = brand_new[0]
     else:
-        fresh = [x for x in pool[want] if x["id"] not in times]
-        item = fresh[0] if fresh else min(pool[want], key=lambda x: times[x["id"]][-1])
+        cands = [x for x in pool[want] if x["id"] not in recent] or pool[want]
+        fresh = [x for x in cands if x["id"] not in last]
+        item = fresh[0] if fresh else min(cands, key=lambda x: last[x["id"]])
     return item, len(times.get(item["id"], []))
 
 
@@ -194,7 +203,7 @@ def plan_rows():
         else:
             item, k = choose(c, games, tools, fake, when, arts)
             style, body = share_items.text(c, item, k)
-        fake.append((str(n), "", item["id"], style, "planned"))
+        fake.append((str(n), when.strftime("%Y-%m-%d"), item["id"], style, "planned"))
         out.append(dict(n=n, when=when, kind=item["kind"], item=item["id"], style=style, status="coming up", post="", body=body, tags=item.get("hashtags", [])))
     seen = set()
     for x in specials(c):
