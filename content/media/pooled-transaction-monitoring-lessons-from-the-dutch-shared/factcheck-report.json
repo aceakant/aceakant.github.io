@@ -1,0 +1,83 @@
+{
+  "status": "needs-review",
+  "summary": "8 verified, 3 corrected · Needs review: TMNL's status after the 2024 wind-down (any restructured or smaller form in 2025–2026) was not verified. A human should check tmnl.nl for the latest position before publishing.; EDPB/AMLA joint guidelines on Article 75 partnerships are reportedly due for consultation in H1 2027. Check whether they have been published, and whether the Netherlands has designated national arrangements for Article 75 partnerships.; The LinkedIn post names 'VertexNode'. This is not on the employer list, but the author should confirm that reference is intended.",
+  "checks": [
+    {
+      "claim": "TMNL was established in 2020 by five large Dutch banks, initially focused on business clients.",
+      "status": "verified",
+      "source_url": "https://tmnl.nl/en/article/tmnl-assesses-the-opportunities-of-new-european-anti-money-laundering-legislation/",
+      "source_title": "TMNL, assessment of new European AML legislation",
+      "note": "TMNL's own site confirms the five banks and the 2020 start. ACAMS reports formal establishment on 10 July 2020, starting with corporate clients. NOS reports the scope was business clients with turnover up to €250m. I named the five banks in the text."
+    },
+    {
+      "claim": "Draft implied the legal basis for TMNL was still being built and that a Wgs bill covered bank data sharing.",
+      "status": "corrected",
+      "source_url": "https://www.autoriteitpersoonsgegevens.nl/en/themes/police-and-judicial-authorities/the-fight-against-subversive-crime/data-processing-by-partnerships-act",
+      "source_title": "Autoriteit Persoonsgegevens, Data Processing by Partnerships Act",
+      "note": "The Wgs is no longer a bill. It entered into force on 1 March 2025 and covers four partnerships (FEC, iCOV, RIECs, Care and Safety Houses), not bank-to-bank transaction monitoring. I rewrote point 3 and the takeaways, and removed 'the Wgs bill' as a basis for pooled monitoring."
+    },
+    {
+      "claim": "Dutch legislation on joint transaction monitoring by banks (Wet plan van aanpak witwassen).",
+      "status": "corrected",
+      "source_url": "https://www.taxence.nl/nieuws/wet-plan-van-aanpak-witwassen-gepubliceerd/",
+      "source_title": "Taxence, Wet plan van aanpak witwassen gepubliceerd",
+      "note": "The joint transaction monitoring and data-sharing parts were dropped from the bill because of upcoming EU rules. The enacted law (Stb. 2025, 262) enters into force on 1 January 2026, except Article IIA (Staatsblad 2025, 362). Added to article point 3."
+    },
+    {
+      "claim": "TMNL's status after 2024 (omitted in the draft).",
+      "status": "corrected",
+      "source_url": "https://nos.nl/l/2526940",
+      "source_title": "NOS, Banken bouwen gezamenlijk antiwitwasproject af",
+      "note": "In 2024 TMNL announced it would wind down in its then-current form because it conflicted with the EU rules applying from 2027. Added a short factual line so the case study is not misleading. Draft wording 'experiment ran ahead of the law' kept."
+    },
+    {
+      "claim": "Wwft: each institution must monitor and report unusual transactions to FIU-Nederland; the duty stays with the institution.",
+      "status": "verified",
+      "source_url": "https://www.raadvanstate.nl/@122774/w06-20-0354-iii/",
+      "source_title": "Raad van State, advies Wet plan van aanpak witwassen",
+      "note": "The Council of State advice states banks are responsible and liable, not the joint facility. The Tweede Kamer explanatory text describes transaction monitoring and reporting to FIU-Nederland as a Wwft duty."
+    },
+    {
+      "claim": "AMLR (Reg. (EU) 2024/1624) published in OJ June 2024; applies from 10 July 2027 (hook answer 2027).",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj/eng",
+      "source_title": "EUR-Lex, Regulation (EU) 2024/1624 (AMLR)",
+      "note": "EUR-Lex confirms application from 10 July 2027 (10 July 2029 for the two categories in Art. 3(3)(n) and (o)) and publication in OJ L on 19.6.2024. Hook answer 2027 is correct. I added the exact publication date (19 June 2024) to the hook explanation."
+    },
+    {
+      "claim": "AMLR Article 75 provides a framework for information-sharing partnerships; responsibility stays with participants.",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj/eng",
+      "source_title": "EUR-Lex, Regulation (EU) 2024/1624 (AMLR), Article 75",
+      "note": "Article 75 (Chapter VI) is titled 'Exchange of information in the framework of partnerships for information sharing'. It states that responsibility for compliance stays with the participants."
+    },
+    {
+      "claim": "GDPR/AVG principles apply to pooled monitoring data; the Autoriteit Persoonsgegevens supervises.",
+      "status": "verified",
+      "source_url": "https://www.autoriteitpersoonsgegevens.nl/en/themes/police-and-judicial-authorities/the-fight-against-subversive-crime/data-processing-by-partnerships-act",
+      "source_title": "Autoriteit Persoonsgegevens, Data Processing by Partnerships Act",
+      "note": "The AP page says partnerships sharing personal data must meet privacy legislation. The AP also advised on the bank joint-monitoring proposal (Tweede Kamer documents). The wording 'takes a close interest' is kept as a soft statement."
+    },
+    {
+      "claim": "AMLA seat is Frankfurt, chosen in 2024.",
+      "status": "verified",
+      "source_url": "https://www.consilium.europa.eu/en/press/press-releases/2024/02/22/frankfurt-to-host-the-eus-new-anti-money-laundering-authority-amla/",
+      "source_title": "Council of the EU, Frankfurt to host AMLA, 22 Feb 2024",
+      "note": "Council and Parliament representatives agreed on Frankfurt on 22 February 2024. I added the date to the myth/fact explanation."
+    },
+    {
+      "claim": "Illustrative ROI model: 1,250 hours/month, €900,000/year, 30-month payback.",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "source_title": "Illustrative model (author's assumptions, no external source)",
+      "note": "Arithmetic rechecked: 20,000×15%=3,000 alerts; ×25÷60=1,250 h; ×€60=€75,000/month, €900,000/year; net €600,000 after €300,000 run cost; €1.5m ÷ €0.6m = 2.5 years = 30 months. All inputs are labelled as assumptions. The source_url is a placeholder only; no external source applies."
+    },
+    {
+      "claim": "Employer mentions and personal-result claims.",
+      "status": "verified",
+      "source_url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "source_title": "Internal check, no external source",
+      "note": "No listed employers appear. The STAR story, ROI rows and calculator are explicitly illustrative. The analyst-alerts joke is humour, not a claim of personal result."
+    }
+  ]
+}
