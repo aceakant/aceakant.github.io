@@ -1,7 +1,7 @@
 {
  "per_post_all_time": {
   "l-early-warning-studio": {
-   "visit": 4,
+   "visit": 5,
    "use": 3
   },
   "t-early-warning-studio": {
@@ -90,13 +90,20 @@
    "item": "early-warning-studio",
    "style": "launch",
    "post": "urn:li:share:7530184223681396736"
+  },
+  {
+   "n": "7",
+   "date": "2026-11-23",
+   "item": "-",
+   "style": "-",
+   "post": "skipped-deleted-repeat"
   }
  ],
- "updated": "2026-11-23T03:58+00:00",
+ "updated": "2026-11-23T09:12+00:00",
  "last_7_days": {
   "posts": {
    "l-early-warning-studio": {
-    "visit": 4,
+    "visit": 5,
     "use": 3
    },
    "t-early-warning-studio": {
@@ -114,21 +121,24 @@
    "scam-or-legit": 1
   },
   "tool_pages": {
-   "early-warning-studio": 5,
+   "early-warning-studio": 6,
    "fraud-roi": 1
   },
   "game_starts": {
+   "spot-dirty-data": 1,
    "safe-to-ship": 1
   },
-  "game_finishes": {},
+  "game_finishes": {
+   "spot-dirty-data": 1
+  },
   "share_clicks": 0,
-  "pages": 45,
-  "from_linkedin": 31
+  "pages": 61,
+  "from_linkedin": 35
  },
  "last_30_days": {
   "posts": {
    "l-early-warning-studio": {
-    "visit": 4,
+    "visit": 5,
     "use": 3
    },
    "t-early-warning-studio": {
@@ -151,7 +161,7 @@
    "scam-or-legit": 1
   },
   "tool_pages": {
-   "early-warning-studio": 5,
+   "early-warning-studio": 6,
    "fraud-roi": 1,
    "analyst": 1
   },
@@ -160,6 +170,7 @@
    "scam-or-legit": 2,
    "correlation": 2,
    "in-order": 2,
+   "spot-dirty-data": 1,
    "safe-to-ship": 1,
    "cut-off": 1,
    "survive-recession": 1
@@ -167,12 +178,13 @@
   "game_finishes": {
    "chart-tricks": 3,
    "correlation": 2,
+   "spot-dirty-data": 1,
    "scam-or-legit": 1,
    "cut-off": 1,
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 133,
-  "from_linkedin": 34
+  "pages": 149,
+  "from_linkedin": 38
  }
 }
