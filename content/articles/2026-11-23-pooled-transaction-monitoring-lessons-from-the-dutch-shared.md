@@ -8,7 +8,7 @@ test_run: false
 market: Netherlands
 scenario: a mid-sized Dutch retail bank (an illustrative composite, not a real institution)
 publish_at: null
-review_issue: null
+review_issue: 11
 reminded: false
 summary: In 2020 five large Dutch banks set up a shared transaction-monitoring initiative to see what no single bank can see. Here is what it set out to find, where the legal limits sat, and how I'd measure whether the alerts are any better.
 hook:
