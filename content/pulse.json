@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-24T02:33:16Z",
+  "updated": "2026-11-24T11:05:48Z",
   "since": "2026-11-02",
-  "visitors": 151,
-  "players": 14,
+  "visitors": 0,
+  "players": 15,
   "article_reads": 21,
   "countries": 5,
   "weekly": [
@@ -36,13 +36,13 @@
     },
     {
       "week": "2026-11-23",
-      "players": 1
+      "players": 2
     }
   ],
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 39
+      "count": 40
     },
     {
       "name": "Direct link or bookmark",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 147
+      "count": 154
     }
   ],
   "games": {
@@ -93,6 +93,15 @@
       "scored": 0,
       "avg_score": null
     },
+    "survive-recession": {
+      "players": 2,
+      "finished": 2,
+      "scores": {
+        "0": 2
+      },
+      "scored": 2,
+      "avg_score": 0
+    },
     "spot-dirty-data": {
       "players": 1,
       "finished": 1,
@@ -117,15 +126,6 @@
       },
       "scored": 1,
       "avg_score": 100
-    },
-    "survive-recession": {
-      "players": 1,
-      "finished": 1,
-      "scores": {
-        "0": 1
-      },
-      "scored": 1,
-      "avg_score": 0
     }
   },
   "articles": [

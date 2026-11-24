@@ -11,6 +11,11 @@
    "read": 2,
    "visit": 2
   },
+  "8": {
+   "finish": 1,
+   "start": 1,
+   "visit": 1
+  },
   "3": {
    "visit": 1
   },
@@ -97,9 +102,16 @@
    "item": "-",
    "style": "-",
    "post": "skipped-deleted-repeat"
+  },
+  {
+   "n": "8",
+   "date": "2026-11-24",
+   "item": "survive-recession",
+   "style": "puzzle",
+   "post": "urn:li:share:7530908838502350848"
   }
  ],
- "updated": "2026-11-24T02:33+00:00",
+ "updated": "2026-11-24T11:05+00:00",
  "last_7_days": {
   "posts": {
    "l-early-warning-studio": {
@@ -113,11 +125,17 @@
     "read": 2,
     "visit": 2
    },
+   "8": {
+    "finish": 1,
+    "start": 1,
+    "visit": 1
+   },
    "3": {
     "visit": 1
    }
   },
   "share_links": {
+   "survive-recession": 1,
    "scam-or-legit": 1
   },
   "tool_pages": {
@@ -125,14 +143,16 @@
    "fraud-roi": 1
   },
   "game_starts": {
-   "spot-dirty-data": 1
+   "spot-dirty-data": 1,
+   "survive-recession": 1
   },
   "game_finishes": {
-   "spot-dirty-data": 1
+   "spot-dirty-data": 1,
+   "survive-recession": 1
   },
   "share_clicks": 0,
-  "pages": 51,
-  "from_linkedin": 35
+  "pages": 53,
+  "from_linkedin": 36
  },
  "last_30_days": {
   "posts": {
@@ -147,6 +167,11 @@
     "read": 2,
     "visit": 2
    },
+   "8": {
+    "finish": 1,
+    "start": 1,
+    "visit": 1
+   },
    "3": {
     "visit": 1
    },
@@ -157,6 +182,7 @@
    }
   },
   "share_links": {
+   "survive-recession": 1,
    "scam-or-legit": 1
   },
   "tool_pages": {
@@ -169,21 +195,21 @@
    "scam-or-legit": 2,
    "correlation": 2,
    "in-order": 2,
+   "survive-recession": 2,
    "spot-dirty-data": 1,
    "safe-to-ship": 1,
-   "cut-off": 1,
-   "survive-recession": 1
+   "cut-off": 1
   },
   "game_finishes": {
    "chart-tricks": 3,
    "correlation": 2,
+   "survive-recession": 2,
    "spot-dirty-data": 1,
    "scam-or-legit": 1,
-   "cut-off": 1,
-   "survive-recession": 1
+   "cut-off": 1
   },
   "share_clicks": 1,
-  "pages": 151,
-  "from_linkedin": 39
+  "pages": 153,
+  "from_linkedin": 40
  }
 }
