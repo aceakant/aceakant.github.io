@@ -19,7 +19,7 @@
 <section class="wrap">
   <div class="seat-filter" role="group" aria-label="Filter by leadership area" data-target=".wb-grid">
     <button type="button" class="chip" aria-pressed="true" data-seat="">All</button>
-    {% for s in ["Risk","AI","Analytics","Data"] %}<button type="button" class="chip" aria-pressed="false" data-seat="{{ s }}">{{ s }}</button>{% endfor %}
+    {% for s in ["AI","Analytics","Data","Risk"] %}<button type="button" class="chip" aria-pressed="false" data-seat="{{ s }}">{{ s }}</button>{% endfor %}
   </div>
   <div class="wb-grid">
     {% for t in tools %}

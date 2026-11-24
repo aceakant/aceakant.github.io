@@ -4,7 +4,7 @@
   <p class="pg-intro">Six labs across risk, AI, analytics and data, with new games added over time. Made-up data, real lessons from risk and analytics work. No sign-up{% if analytics.goatcounter %}; plays are counted anonymously, with no cookies, for the <a href="pulse.html">Pulse</a> page{% else %}, nothing stored{% endif %}.</p>
   <div class="seat-filter" role="group" aria-label="Filter by leadership area" data-target=".pg-grid">
     <button type="button" class="chip" aria-pressed="true" data-seat="">All</button>
-    {% for s in ["Risk","AI","Analytics","Data"] %}<button type="button" class="chip" aria-pressed="false" data-seat="{{ s }}">{{ s }}</button>{% endfor %}
+    {% for s in ["AI","Analytics","Data","Risk"] %}<button type="button" class="chip" aria-pressed="false" data-seat="{{ s }}">{{ s }}</button>{% endfor %}
   </div>
   <div class="pg-grid">
     {% for l in labs.labs %}
