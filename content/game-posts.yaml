@@ -4,7 +4,7 @@
 # launched tool is posted at the next slot, even if it isn't listed below), then whatever was posted longest ago.
 # Each repeat of the same game or tool uses the next style of text, so no post is a copy.
 # To stop: set enabled: false. To pause one post: add its number to skip.
-enabled: false             # 24 Nov: all LinkedIn post schedules removed at Sweta's request (re-plan pending)
+enabled: true
 paused: true               # 24 Nov: paused while the new 2-posts-a-week plan is agreed (the Saturday article still goes out)
 start: "2026-11-10"        # post #1 went out on 10 Nov (the video post)
 every_days: 3              # used until weekdays_from
