@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 {% if api_url and page in ('cut-off-studio.html','fraud-roi.html','portfolio-monte-carlo.html','early-warning-studio.html') %}<meta name="ak-api" content="{{ api_url }}">{% endif %}
-{% if page == 'result.html' %}<meta name="robots" content="noindex">{% endif %}
+{% if page == 'result.html' or noindex %}<meta name="robots" content="noindex">{% endif %}
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{% block title %}{{ site.title }}{% endblock %}</title>
 <meta name="description" content="{% block description %}{{ site.tagline }}{% endblock %}">

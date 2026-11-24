@@ -32,8 +32,12 @@ def load(now=None):
     games, listed = [], {g["id"]: g for g in c.get("games", [])}
     for g in c.get("games", []):
         games.append(dict(g, kind="game"))
+    hidden = {g["id"] for lab in labs for g in lab["games"] if not _live(dict(g, url="x"), now)}  # preview or not launched yet
+    games = [g for g in games if g["id"] not in hidden]
     for lab in labs:
         for g in lab["games"]:
+            if g["id"] in hidden:
+                continue
             if g["id"] not in listed:  # a new game nobody wrote post text for yet
                 games.append(dict(kind="game", id=g["id"], lab=lab["slug"], title=g["name"], description=g["hook"], hook=g["hook"],
                                   teaser=g["hook"], more="play the full game", blurb=g["hook"], lesson=lab["teaches"], time="quick",

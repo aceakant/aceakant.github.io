@@ -187,6 +187,11 @@ def build():
         when = when if isinstance(when, datetime.datetime) else datetime.datetime.fromisoformat(str(when))
         return (when if when.tzinfo else when.replace(tzinfo=ist)) <= datetime.datetime.now(ist)
     tools = [t for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"] if launched(t)]
+    # games follow the same rule: a game with status "preview" (or a future launch) is left off the public lab pages
+    # and appears only on that lab's private preview page, preview-<lab>.html, until it is approved
+    labs_all = labs
+    labs = dict(labs_all, labs=[dict(l, games=[g for g in l["games"] if launched(g)]) for l in labs_all["labs"]])
+    preview_labs = [l for l in labs_all["labs"] if any(not launched(g) for g in l["games"])]
     # Workbench roadmap: the next two tools not yet live appear as "Coming <date>" cards
     live_ids = {t["id"] for t in tools}
     roadmap = yaml.safe_load((ROOT / "content" / "tool-roadmap.yaml").read_text())["tools"] if (ROOT / "content" / "tool-roadmap.yaml").exists() else []
@@ -210,6 +215,7 @@ def build():
         "index.html": dict(latest=published[0] if published else None, game=game, week_count=len(published)),
         "portfolio.html": {},
         **{f"{l['slug']}.html": dict(lab=l, game=game, template="lab.html") for l in labs["labs"]},
+        **{f"preview-{l['slug']}.html": dict(lab=l, game=game, template="lab.html", noindex=True) for l in preview_labs},
         "updates.html": dict(articles=published, categories=categories, week_count=len(published)),
         "pulse.html": dict(pulse=pulse_view(config, labs, published)),
         "analyst.html": dict(analyst=config.get("analyst") or {},
