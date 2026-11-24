@@ -73,6 +73,38 @@ def is_insight_day(c, when):
     return bool(c.get("insights")) and wfrom and when.date() >= datetime.date.fromisoformat(wfrom) and when.weekday() == c.get("insight_weekday", 2)
 
 
+def pick(c, games, tools, rows, when, arts):
+    """The post for a regular slot that passes the 'already posted?' check, or (None, None, None) if nothing does."""
+    tried = []
+    for _ in range(40):
+        item, k = choose(c, games, tools, rows + tried, when, arts)
+        style, body = share_items.text(c, item, k)
+        if not already_done(c, item["id"], style, rows + tried, when):
+            return item, style, body
+        tried.append(("x", when.strftime("%Y-%m-%d"), item["id"], "checked", "planned"))
+        if len({t[2] for t in tried}) >= len(games) + len(tools) + len(arts):
+            break
+    return None, None, None
+
+
+def already_done(c, item_id, style, rows, when):
+    """Why a post must not go out: the same text was posted before, or the same game, tool or article went out
+    (in any form: regular post, teaser or launch) within the repeat gap. Empty string when it's fine to post."""
+    gap = c.get("repeat_gap_days", 21)
+    for r in rows:
+        if r[2] != item_id or r[4].startswith("skipped") or r[3] == "checked":
+            continue
+        if r[3] == style and r[0].isdigit():
+            return f"the same text ({style}) already went out on {r[1]}"
+        if r[1] and (when.date() - datetime.date.fromisoformat(r[1])).days < gap:
+            return f"it was already posted on {r[1]} ({r[3]})"
+    if item_id.startswith("article-"):  # its own LinkedIn post, made by the website job
+        rel = next((a for a in share_items.article_releases() if "article-" + a["meta"]["slug"] == item_id), None)
+        if rel and abs((when - rel["when"]).days) < c.get("article_rest_days", 21):
+            return f"the article itself went out on LinkedIn on {rel['when']:%d %b}"
+    return ""
+
+
 def ln_tag(n):
     """What goes after ?ln= in a post's link: the slot number, or a short name for a teaser or launch post."""
     return str(n).replace("teaser-article-", "ta-").replace("teaser-", "t-").replace("launch-", "l-")[:40]
@@ -180,7 +212,9 @@ def choose(c, games, tools, rows, when=None, arts=None):
     if brand_new:  # a game or tool added since the post text was written: it jumps the queue
         item = brand_new[0]
     else:
-        cands = [x for x in pool[want] if x["id"] not in recent] or pool[want]
+        cands = [x for x in pool[want] if x["id"] not in recent]
+        if not cands:  # nothing of this kind is fresh: take another kind that has something
+            cands = next(([x for x in pool[k] if x["id"] not in recent] for k in ("game", "tool", "article") if any(x["id"] not in recent for x in pool[k])), pool[want])
         fresh = [x for x in cands if x["id"] not in last]
         item = fresh[0] if fresh else min(cands, key=lambda x: last[x["id"]])
     return item, len(times.get(item["id"], []))
@@ -201,8 +235,10 @@ def plan_rows():
             item, body = insight_for(c, fake)
             style = "insight"
         else:
-            item, k = choose(c, games, tools, fake, when, arts)
-            style, body = share_items.text(c, item, k)
+            item, style, body = pick(c, games, tools, fake, when, arts)
+            if not item:
+                out.append(dict(n=n, when=when, kind="", item="-", style="-", status="no post (nothing fresh)", post="", body=""))
+                continue
         fake.append((str(n), when.strftime("%Y-%m-%d"), item["id"], style, "planned"))
         out.append(dict(n=n, when=when, kind=item["kind"], item=item["id"], style=style, status="coming up", post="", body=body, tags=item.get("hashtags", [])))
     seen = set()
@@ -370,8 +406,14 @@ def main():
         print(f"Posted slot #{n}: {item['id']} (insight)")
         set_changed()
         return
-    item, k = choose(c, games, tools, read_log(), w, share_items.articles(c))
-    style, body = share_items.text(c, item, k)
+    # last check before posting: has this already gone out? If so, pick the next one instead
+    item, style, body = pick(c, games, tools, read_log(), w, share_items.articles(c))
+    if not item:
+        print("Everything has gone out within the repeat gap; no post in this slot.")
+        with LOG.open("a") as f:
+            f.write(f"{n} {w:%Y-%m-%d} - - skipped-nothing-fresh\n")
+        set_changed()
+        return
     if os.environ.get("DRY_RUN") == "1" or not os.environ.get("LINKEDIN_ACCESS_TOKEN"):
         print(f"DRY RUN, not posted ({item['id']}, {style}):\n{body}")
         return

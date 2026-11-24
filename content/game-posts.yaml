@@ -9,7 +9,7 @@ start: "2026-11-10"        # post #1 went out on 10 Nov (the video post)
 every_days: 3              # used until weekdays_from
 weekdays_from: "2026-11-16"   # from here: a post every weekday (Mon-Fri), agreed 14 Nov to test for 4 weeks, then review
 weekdays: [0, 1, 2, 3, 4]
-repeat_gap_days: 21        # the same game, tool or article (teasers and launch posts included) is never posted again within 3 weeks
+repeat_gap_days: 90        # the same game, tool or article (teasers and launch posts included) is never posted again within 90 days (Sweta, 24 Nov)
 quiet_days: ["2026-12-24", "2026-12-25", "2026-12-31", "2027-01-01"]   # holidays: no regular posts
 insight_weekday: 2         # Wednesdays: a no-link insight post (text and a picture, nothing to click), from `insights` below
 days: 90                   # to 7 Feb 2027
@@ -75,7 +75,7 @@ launch_styles:
 
 # articles are re-shared only once their own first LinkedIn post is this many days old,
 # and never on a day a new article goes out on LinkedIn
-article_rest_days: 21
+article_rest_days: 90
 
 # {hook} {teaser} {time} {more} {lesson} {url} come from each game below
 styles:
