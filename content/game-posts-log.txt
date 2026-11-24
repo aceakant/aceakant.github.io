@@ -9,3 +9,4 @@ teaser-early-warning-studio 2026-11-20 early-warning-studio teaser urn:li:share:
 6 2026-11-19 - - skipped-missed
 launch-early-warning-studio 2026-11-22 early-warning-studio launch urn:li:share:7530184223681396736
 7 2026-11-23 - - skipped-deleted-repeat
+8 2026-11-24 survive-recession puzzle urn:li:share:7530908838502350848
