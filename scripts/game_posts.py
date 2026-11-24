@@ -45,8 +45,6 @@ def slots(c, busy=None):
     wfrom = datetime.date.fromisoformat(c["weekdays_from"]) if c.get("weekdays_from") else None
     end = start + datetime.timedelta(days=c["days"])
     n, day = 0, start
-    if c.get("paused"):  # paused: no regular posts from today on (posts already made stay in the log)
-        end = min(end, datetime.datetime.now(IST).date())
     while day < end:
         if not wfrom or day < wfrom:
             if (day - start).days % c["every_days"] == 0 and (day == start or day not in busy):
@@ -86,8 +84,6 @@ def specials(c):
     now = datetime.datetime.now(IST)
     taken = {a["when"].astimezone(IST).date() for a in share_items.article_releases()}
     out = []
-    if c.get("paused"):
-        return out
     base = yaml.safe_load((ROOT / "config.yaml").read_text())["site"]["base_url"].rstrip("/")
     og = ROOT / "site" / "static" / "og"
 
