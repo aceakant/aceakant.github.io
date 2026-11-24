@@ -490,7 +490,7 @@
   window.AkShare = { links: links, wire: wire };
 })();
 
-/* Filter Playground labs and Workbench tools by leadership area (Risk, AI, Analytics, Data) */
+/* Filter Playground labs and Workbench tools by leadership area (AI, Analytics, Data, Risk) */
 document.querySelectorAll(".seat-filter").forEach(function (bar) {
   bar.addEventListener("click", function (e) {
     var b = e.target.closest("button[data-seat]"); if (!b) return;

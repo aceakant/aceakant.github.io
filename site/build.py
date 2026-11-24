@@ -151,6 +151,11 @@ def build():
     game = yaml.safe_load((ROOT / "content" / "game.yaml").read_text())
     leadership = yaml.safe_load((ROOT / "content" / "leadership.yaml").read_text())
     labs = yaml.safe_load((ROOT / "content" / "labs.yaml").read_text())
+    # one order across the whole site: AI, Analytics, Data, Risk (stable, so items keep their own order within an area)
+    SEAT_ORDER = {"AI": 0, "Analytics": 1, "Data": 2, "Risk": 3}
+    by_seat = lambda x: SEAT_ORDER.get(x.get("seat"), 9)
+    labs["labs"] = sorted(labs["labs"], key=by_seat)
+    leadership["cxo_roles"] = sorted(leadership.get("cxo_roles") or [], key=by_seat)
     topics = yaml.safe_load((ROOT / "content" / "topics.yaml").read_text())["topics"]
     upcoming = next((t["title"] for t in topics if t.get("status") == "pending"), None)
 
@@ -186,7 +191,7 @@ def build():
             return True
         when = when if isinstance(when, datetime.datetime) else datetime.datetime.fromisoformat(str(when))
         return (when if when.tzinfo else when.replace(tzinfo=ist)) <= datetime.datetime.now(ist)
-    tools = [t for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"] if launched(t)]
+    tools = sorted([t for t in yaml.safe_load((ROOT / "content" / "tools.yaml").read_text())["tools"] if launched(t)], key=by_seat)
     # games follow the same rule: a game with status "preview" (or a future launch) is left off the public lab pages
     # and appears only on that lab's private preview page, preview-<lab>.html, until it is approved
     labs_all = labs
