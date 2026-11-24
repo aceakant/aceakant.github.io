@@ -5,6 +5,7 @@
 # Each repeat of the same game or tool uses the next style of text, so no post is a copy.
 # To stop: set enabled: false. To pause one post: add its number to skip.
 enabled: true
+paused: true               # 24 Nov: paused while the new 2-posts-a-week plan is agreed (the Saturday article still goes out)
 start: "2026-11-10"        # post #1 went out on 10 Nov (the video post)
 every_days: 3              # used until weekdays_from
 weekdays_from: "2026-11-16"   # from here: a post every weekday (Mon-Fri), agreed 14 Nov to test for 4 weeks, then review
