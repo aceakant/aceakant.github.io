@@ -151,11 +151,25 @@
   }
 
   /* ---------- Quick answers (profile) ---------- */
+  // web addresses in an answer become real links (LinkedIn opens in a new tab)
+  function setAnswer(out, text) {
+    out.textContent = "";
+    var re = /(?:https?:\/\/)?(?:www\.)?[a-z0-9-]+\.(?:com|io|org|net)\/[^\s,;)]+/gi, last = 0, m;
+    while ((m = re.exec(text))) {
+      out.appendChild(document.createTextNode(text.slice(last, m.index)));
+      var a = document.createElement("a"), url = m[0].replace(/[.]$/, "");
+      a.href = /^https?:/.test(url) ? url : "https://www." + url.replace(/^www\./, "");
+      a.target = "_blank"; a.rel = "noopener"; a.textContent = url; a.className = "qa-link";
+      out.appendChild(a); last = m.index + url.length;
+    }
+    out.appendChild(document.createTextNode(text.slice(last)));
+  }
+  if ($("#qa-answer")) setAnswer($("#qa-answer"), $("#qa-answer").textContent);
   var qa = $("#qa");
   if (qa) qa.addEventListener("click", function (ev) {
     var chip = ev.target.closest(".chip"); if (!chip) return;
     $$(".chip", qa).forEach(function (c) { c.setAttribute("aria-selected", c === chip ? "true" : "false"); });
-    var out = $("#qa-answer"); out.textContent = chip.getAttribute("data-a");
+    var out = $("#qa-answer"); setAnswer(out, chip.getAttribute("data-a"));
     out.style.animation = "none"; void out.offsetWidth; out.style.animation = "";
   });
 

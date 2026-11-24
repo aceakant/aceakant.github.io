@@ -1178,3 +1178,5 @@ a.wb-card.lite:hover{border-color:var(--amber)}
 .seat-badge{display:inline-block;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--accent);background:var(--accent-soft)}
 .pg-card .seat-badge{margin-bottom:6px;align-self:flex-start}
 [data-seat].seat-hidden{display:none !important}
+
+.qa-answer a.qa-link{color:var(--accent,#67d3c8);text-decoration:underline;text-underline-offset:3px;font-weight:600}
