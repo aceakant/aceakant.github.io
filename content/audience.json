@@ -99,7 +99,7 @@
    "post": "skipped-deleted-repeat"
   }
  ],
- "updated": "2026-11-23T09:12+00:00",
+ "updated": "2026-11-24T02:33+00:00",
  "last_7_days": {
   "posts": {
    "l-early-warning-studio": {
@@ -125,14 +125,13 @@
    "fraud-roi": 1
   },
   "game_starts": {
-   "spot-dirty-data": 1,
-   "safe-to-ship": 1
+   "spot-dirty-data": 1
   },
   "game_finishes": {
    "spot-dirty-data": 1
   },
   "share_clicks": 0,
-  "pages": 61,
+  "pages": 51,
   "from_linkedin": 35
  },
  "last_30_days": {
@@ -184,7 +183,7 @@
    "survive-recession": 1
   },
   "share_clicks": 1,
-  "pages": 149,
-  "from_linkedin": 38
+  "pages": 151,
+  "from_linkedin": 39
  }
 }
