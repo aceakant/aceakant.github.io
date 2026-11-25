@@ -4,17 +4,17 @@
    "visit": 5,
    "use": 3
   },
+  "8": {
+   "visit": 2,
+   "finish": 1,
+   "start": 1
+  },
   "t-early-warning-studio": {
    "visit": 2
   },
   "ta-fraud-model-roi-look-past-the-detecti": {
    "read": 2,
    "visit": 2
-  },
-  "8": {
-   "finish": 1,
-   "start": 1,
-   "visit": 1
   },
   "3": {
    "visit": 1
@@ -111,12 +111,17 @@
    "post": "urn:li:share:7530908838502350848"
   }
  ],
- "updated": "2026-11-24T11:05+00:00",
+ "updated": "2026-11-25T02:47+00:00",
  "last_7_days": {
   "posts": {
    "l-early-warning-studio": {
     "visit": 5,
     "use": 3
+   },
+   "8": {
+    "visit": 2,
+    "finish": 1,
+    "start": 1
    },
    "t-early-warning-studio": {
     "visit": 2
@@ -125,17 +130,12 @@
     "read": 2,
     "visit": 2
    },
-   "8": {
-    "finish": 1,
-    "start": 1,
-    "visit": 1
-   },
    "3": {
     "visit": 1
    }
   },
   "share_links": {
-   "survive-recession": 1,
+   "survive-recession": 2,
    "scam-or-legit": 1
   },
   "tool_pages": {
@@ -150,8 +150,8 @@
    "spot-dirty-data": 1,
    "survive-recession": 1
   },
-  "share_clicks": 0,
-  "pages": 53,
+  "share_clicks": 2,
+  "pages": 57,
   "from_linkedin": 36
  },
  "last_30_days": {
@@ -160,17 +160,17 @@
     "visit": 5,
     "use": 3
    },
+   "8": {
+    "visit": 2,
+    "finish": 1,
+    "start": 1
+   },
    "t-early-warning-studio": {
     "visit": 2
    },
    "ta-fraud-model-roi-look-past-the-detecti": {
     "read": 2,
     "visit": 2
-   },
-   "8": {
-    "finish": 1,
-    "start": 1,
-    "visit": 1
    },
    "3": {
     "visit": 1
@@ -182,7 +182,7 @@
    }
   },
   "share_links": {
-   "survive-recession": 1,
+   "survive-recession": 2,
    "scam-or-legit": 1
   },
   "tool_pages": {
@@ -208,8 +208,8 @@
    "scam-or-legit": 1,
    "cut-off": 1
   },
-  "share_clicks": 1,
-  "pages": 153,
-  "from_linkedin": 40
+  "share_clicks": 3,
+  "pages": 159,
+  "from_linkedin": 42
  }
 }

@@ -1,7 +1,7 @@
 {
-  "updated": "2026-11-24T11:05:48Z",
+  "updated": "2026-11-25T02:47:11Z",
   "since": "2026-11-02",
-  "visitors": 0,
+  "visitors": 159,
   "players": 15,
   "article_reads": 21,
   "countries": 5,
@@ -42,7 +42,7 @@
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 40
+      "count": 42
     },
     {
       "name": "Direct link or bookmark",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 154
+      "count": 161
     }
   ],
   "games": {
