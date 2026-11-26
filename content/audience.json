@@ -125,7 +125,7 @@
    "post": "urn:li:share:7531271469390254081"
   }
  ],
- "updated": "2026-11-25T09:54+00:00",
+ "updated": "2026-11-26T04:58+00:00",
  "last_7_days": {
   "posts": {
    "l-early-warning-studio": {
@@ -143,14 +143,10 @@
    "ta-fraud-model-roi-look-past-the-detecti": {
     "read": 2,
     "visit": 2
-   },
-   "3": {
-    "visit": 1
    }
   },
   "share_links": {
-   "survive-recession": 2,
-   "scam-or-legit": 1
+   "survive-recession": 2
   },
   "tool_pages": {
    "early-warning-studio": 6,
@@ -165,8 +161,8 @@
    "survive-recession": 1
   },
   "share_clicks": 2,
-  "pages": 58,
-  "from_linkedin": 37
+  "pages": 50,
+  "from_linkedin": 35
  },
  "last_30_days": {
   "posts": {
