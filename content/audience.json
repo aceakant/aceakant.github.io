@@ -16,6 +16,13 @@
    "read": 2,
    "visit": 2
   },
+  "11": {
+   "halloffame": 1,
+   "finish": 1,
+   "start": 1,
+   "share": 1,
+   "visit": 1
+  },
   "3": {
    "visit": 1
   },
@@ -123,9 +130,16 @@
    "item": "insight-vintages-first",
    "style": "insight",
    "post": "urn:li:share:7531271469390254081"
+  },
+  {
+   "n": "11",
+   "date": "2026-11-26",
+   "item": "analyst",
+   "style": "problem",
+   "post": "urn:li:share:7531634024847429633"
   }
  ],
- "updated": "2026-11-26T04:58+00:00",
+ "updated": "2026-11-26T08:59+00:00",
  "last_7_days": {
   "posts": {
    "l-early-warning-studio": {
@@ -143,6 +157,13 @@
    "ta-fraud-model-roi-look-past-the-detecti": {
     "read": 2,
     "visit": 2
+   },
+   "11": {
+    "halloffame": 1,
+    "finish": 1,
+    "start": 1,
+    "share": 1,
+    "visit": 1
    }
   },
   "share_links": {
@@ -150,19 +171,24 @@
   },
   "tool_pages": {
    "early-warning-studio": 6,
-   "fraud-roi": 1
+   "fraud-roi": 1,
+   "analyst": 1
   },
   "game_starts": {
-   "spot-dirty-data": 1,
+   "spot-dirty-data": 2,
+   "sort-it-out": 1,
+   "real-or-made-up": 1,
+   "in-order": 1,
    "survive-recession": 1
   },
   "game_finishes": {
-   "spot-dirty-data": 1,
+   "spot-dirty-data": 2,
+   "real-or-made-up": 1,
    "survive-recession": 1
   },
-  "share_clicks": 2,
-  "pages": 50,
-  "from_linkedin": 35
+  "share_clicks": 7,
+  "pages": 59,
+  "from_linkedin": 43
  },
  "last_30_days": {
   "posts": {
@@ -182,6 +208,13 @@
     "read": 2,
     "visit": 2
    },
+   "11": {
+    "halloffame": 1,
+    "finish": 1,
+    "start": 1,
+    "share": 1,
+    "visit": 1
+   },
    "3": {
     "visit": 1
    },
@@ -197,29 +230,32 @@
   },
   "tool_pages": {
    "early-warning-studio": 6,
-   "fraud-roi": 1,
-   "analyst": 1
+   "analyst": 2,
+   "fraud-roi": 1
   },
   "game_starts": {
    "chart-tricks": 4,
+   "in-order": 3,
+   "spot-dirty-data": 2,
    "scam-or-legit": 2,
    "correlation": 2,
-   "in-order": 2,
    "survive-recession": 2,
-   "spot-dirty-data": 1,
+   "sort-it-out": 1,
+   "real-or-made-up": 1,
    "safe-to-ship": 1,
    "cut-off": 1
   },
   "game_finishes": {
    "chart-tricks": 3,
+   "spot-dirty-data": 2,
    "correlation": 2,
    "survive-recession": 2,
-   "spot-dirty-data": 1,
+   "real-or-made-up": 1,
    "scam-or-legit": 1,
    "cut-off": 1
   },
-  "share_clicks": 3,
-  "pages": 160,
-  "from_linkedin": 43
+  "share_clicks": 8,
+  "pages": 169,
+  "from_linkedin": 51
  }
 }

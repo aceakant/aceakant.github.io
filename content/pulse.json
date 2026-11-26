@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-26T04:58:46Z",
+  "updated": "2026-11-26T08:59:39Z",
   "since": "2026-11-02",
-  "visitors": 0,
-  "players": 15,
+  "visitors": 169,
+  "players": 19,
   "article_reads": 21,
   "countries": 5,
   "weekly": [
@@ -36,13 +36,13 @@
     },
     {
       "week": "2026-11-23",
-      "players": 2
+      "players": 6
     }
   ],
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 43
+      "count": 51
     },
     {
       "name": "Direct link or bookmark",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 161
+      "count": 181
     }
   ],
   "games": {
@@ -66,6 +66,22 @@
       },
       "scored": 3,
       "avg_score": 100
+    },
+    "in-order": {
+      "players": 3,
+      "finished": 0,
+      "scores": {},
+      "scored": 0,
+      "avg_score": null
+    },
+    "spot-dirty-data": {
+      "players": 2,
+      "finished": 2,
+      "scores": {
+        "50": 2
+      },
+      "scored": 2,
+      "avg_score": 50
     },
     "scam-or-legit": {
       "players": 2,
@@ -86,13 +102,6 @@
       "scored": 2,
       "avg_score": 75
     },
-    "in-order": {
-      "players": 2,
-      "finished": 0,
-      "scores": {},
-      "scored": 0,
-      "avg_score": null
-    },
     "survive-recession": {
       "players": 2,
       "finished": 2,
@@ -102,14 +111,21 @@
       "scored": 2,
       "avg_score": 0
     },
-    "spot-dirty-data": {
+    "sort-it-out": {
+      "players": 1,
+      "finished": 0,
+      "scores": {},
+      "scored": 0,
+      "avg_score": null
+    },
+    "real-or-made-up": {
       "players": 1,
       "finished": 1,
       "scores": {
-        "50": 1
+        "70": 1
       },
       "scored": 1,
-      "avg_score": 50
+      "avg_score": 70
     },
     "safe-to-ship": {
       "players": 1,
