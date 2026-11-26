@@ -131,11 +131,11 @@
   /* ---------------- Framework Lab: sort it out ---------------- */
   var sg = $("#sort-game");
   if (sg) {
-    var rounds = JSON.parse($("#sort-data").textContent).rounds, ri = 0, right = 0, total = 0, done = 0;
+    var rounds = JSON.parse($("#sort-data").textContent).rounds, ri = 0, right = 0, total = 0, placed = 0;
     var items = $("#sort-items"), sfoot = $("#sort-foot");
     rounds.forEach(function (r) { total += r.items.length; });
     function showRound() {
-      var r = rounds[ri]; done = 0;
+      var r = rounds[ri]; placed = 0;
       $("#sort-round").textContent = "Round " + (ri + 1) + " of " + rounds.length;
       $("#sort-title").textContent = r.title; $("#sort-intro").textContent = r.intro;
       items.innerHTML = r.items.map(function (it, i) {
@@ -148,14 +148,14 @@
       var btn = e.target.closest("button[data-k]"); if (!btn) return;
       var card = btn.closest(".sort-card"); if (card.dataset.done) return;
       var r = rounds[ri], it = r.items[+card.dataset.i], k = +btn.dataset.k;
-      card.dataset.done = "1"; done++;
+      card.dataset.done = "1"; placed++;
       var ok = k === it.answer; if (ok) right++;
       Array.prototype.forEach.call(card.querySelectorAll("button"), function (b) {
         b.disabled = true; if (+b.dataset.k === it.answer) b.classList.add("right");
       });
       if (!ok) btn.classList.add("wrong");
       card.classList.add(ok ? "ok" : "miss");
-      if (done === r.items.length) {
+      if (placed === r.items.length) {
         var last = ri === rounds.length - 1;
         sfoot.innerHTML = '<span class="score">' + right + " / " + total + '</span><button class="btn small" type="button" id="sort-next">' + (last ? "See my score" : "Next round →") + "</button>";
       } else {
