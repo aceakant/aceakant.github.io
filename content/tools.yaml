@@ -3,6 +3,20 @@
 #   status: live = has its own page (url); next = shown as "Coming soon", no link
 #   style:  ai = maker-checker AI tool (teal); lite = free tool with no AI (amber)
 tools:
+  - id: fraud-alert-tuner
+    seat: AI
+    name: Fraud Alert Tuner
+    badge: FAT
+    style: ai
+    kind: Simulator · maker-checker AI rules
+    status: preview
+    url: fraud-alert-tuner.html
+    cta: Tune the rules
+    featured: true
+    blurb: Tune fraud rules on sample payments or loan applications against the alerts your team can actually work. Describe your own pattern in plain English; one AI writes the rule, a second checks it.
+    facts: ["Detection vs false alarms vs capacity", "Includes a synthetic-identity sample", "AI writes the rule, a second AI checks it"]
+    tags: [Fraud, Operations, Rules]
+
   - id: analyst
     seat: AI
     name: Analyst on Call

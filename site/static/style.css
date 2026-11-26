@@ -1180,3 +1180,24 @@ a.wb-card.lite:hover{border-color:var(--amber)}
 [data-seat].seat-hidden{display:none !important}
 
 .qa-answer a.qa-link{color:var(--accent,#67d3c8);text-decoration:underline;text-underline-offset:3px;font-weight:600}
+
+/* Fraud Alert Tuner */
+.fat-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:18px}
+.fat-rules{display:grid;gap:10px;align-content:start}
+.fat-rule{border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:6px}
+.fat-rule.off{opacity:.55}.fat-rule .roi-sl{margin:0}.fat-rule .roi-top{font-size:14px}
+.fat-on{display:flex;align-items:center;gap:8px;cursor:pointer}.fat-on input{width:18px;height:18px;accent-color:var(--accent)}
+.fat-unit{margin:-4px 0 0}
+.fat-cond{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.fat-offrow td{opacity:.55}
+.cs-svg .fat-false{fill:var(--accent);opacity:.35}.cs-svg .fat-over{fill:var(--risk);opacity:.45}.cs-svg .fat-fraud{fill:var(--accent)}
+.cs-svg .fat-cap{stroke:var(--amber);stroke-width:2;stroke-dasharray:6 4}.cs-svg .fat-capt{fill:var(--amber);font-weight:700}
+.cs-svg .fat-overzone{fill:var(--risk);opacity:.07}
+.fat-ai{margin-top:16px}.fat-ai h2{margin:0 0 4px}
+.fat-ex{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.fat-ex .chip{text-align:left;white-space:normal}
+.fat-textl{display:block;font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+#fat-text{width:100%;box-sizing:border-box;background:var(--sunk);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:15px/1.4 inherit;resize:vertical}
+#fat-text:focus{outline:2px solid var(--accent);outline-offset:1px}
+.fat-airule{border:1px solid var(--accent);border-radius:14px;padding:12px 14px;margin-top:10px;display:grid;gap:6px}
+@media (max-width:760px){.fat-top{grid-template-columns:1fr}}

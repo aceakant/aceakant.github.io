@@ -9,6 +9,7 @@ export const NOTE_TOOLS = {
   cutoff: "Cut-off Studio, a credit-score cut-off simulator on an illustrative sample loan book",
   "fraud-roi": "the Fraud ROI Calculator, which works out what a fraud model saves after false alarms and review costs",
   "monte-carlo": "Portfolio Monte Carlo, which simulates thousands of years of credit defaults and fraud on a dummy loan book to show the range of profit",
+  "fraud-alert": "Fraud Alert Tuner, which tests fraud detection rules on illustrative sample transactions or loan applications against a review team's daily capacity",
   "early-warning": "Early-Warning Studio, which watches monthly batches of loans and tests early-warning triggers on an illustrative sample book",
 };
 

@@ -230,6 +230,7 @@ def build():
         "cut-off-studio.html": {},
         "early-warning-studio.html": {},
         "portfolio-monte-carlo.html": {},
+        "fraud-alert-tuner.html": {},
         "result.html": {},
         **({"leadership-approach.html": {}} if leadership.get("show_page", True) else {}),
         "fraud-roi.html": dict(roi=dict(sliders=ROI_SLIDERS, article=next(

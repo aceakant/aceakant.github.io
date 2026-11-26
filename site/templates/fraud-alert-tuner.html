@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Fraud Alert Tuner · {{ site.author }}{% endblock %}
+{% block description %}Tune fraud detection rules on 14 days of sample payments or loan applications, against the alerts your team can actually work each day. Describe your own rule in plain English: one AI writes it, a second checks it.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono"><a href="workbench.html">Workbench</a> · Fraud Alert Tuner</p>
+  <h1>Can your team keep up with your fraud rules?</h1>
+  <p class="lede">Every fraud rule is a trade: catch more, and your team drowns in false alarms; tighten it, and fraud slips through. Tune three ready-made rules on 14 days of sample payments or loan applications, set the size of your review team, and see what you stop, what you miss and what goes unworked. Then describe a pattern of your own: one AI writes it as a rule, a second checks it, and it's tested here.</p>
+  {% set share_label = "Share this tool" %}{% set share_text = "Can a fraud team keep up with its own rules? Tune them against real review capacity and see" %}{% include "_share.html" %}
+</section>
+
+<section class="wrap">
+  <div class="an-step cs fat">
+    <div class="fat-top">
+      <div class="cs-controls">
+        <div class="cs-row">
+          <span class="mono cs-k">Sample</span>
+          <div class="roi-cur" role="radiogroup" aria-label="Sample" id="fat-sc">
+            <button type="button" class="roi-c" role="radio" data-s="payments" aria-checked="true">Card &amp; bank payments</button>
+            <button type="button" class="roi-c" role="radio" data-s="applications" aria-checked="false">Loan applications (synthetic identity)</button>
+          </div>
+        </div>
+        <p class="an-sub fat-unit"><span id="fat-unit"></span> · 14 days</p>
+        <div class="cs-row">
+          <span class="mono cs-k">Currency</span>
+          <div class="roi-cur" role="radiogroup" aria-label="Currency" id="fat-cur">
+            {% for c in ["$", "£", "€", "C$"] %}<button type="button" class="roi-c" role="radio" data-c="{{ c }}" aria-checked="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+          </div>
+        </div>
+        <span class="mono cs-k">Your review team</span>
+        <label class="roi-sl"><span class="roi-top"><span>Analysts working alerts</span><b id="fat-an-v">2</b></span><input type="range" id="fat-an" min="1" max="20" step="1" value="2"></label>
+        <label class="roi-sl"><span class="roi-top"><span>Alerts each analyst can work in a day</span><b id="fat-pa-v">40</b></span><input type="range" id="fat-pa" min="10" max="150" step="5" value="40"></label>
+        <label class="roi-sl"><span class="roi-top"><span>Cost of reviewing one alert</span><b id="fat-rc-v">$6</b></span><input type="range" id="fat-rc" min="1" max="40" step="1" value="6"></label>
+        <div class="cs-jumps">
+          <button type="button" class="btn small" id="fat-best">Fit the rules to my team</button>
+          <button type="button" class="btn small ghost" id="fat-new">Generate a new sample</button>
+        </div>
+        <p class="an-sub" id="fat-fit" aria-live="polite"></p>
+      </div>
+      <div class="fat-rules">
+        <span class="mono cs-k">Your rules: raise an alert when…</span>
+        <div id="fat-rules"></div>
+      </div>
+    </div>
+
+    <div class="roi-kpis cs-kpis" aria-live="polite">
+      <div><b id="fat-alerts"></b><span>alerts raised</span><em id="fat-alerts-em"></em></div>
+      <div><b id="fat-caught"></b><span>of fraud losses stopped in time</span><em id="fat-caught-em"></em></div>
+      <div><b id="fat-prec"></b><span>alerts is real fraud</span><em id="fat-prec-em"></em></div>
+      <div class="good"><b id="fat-net"></b><span>net benefit over 14 days</span><em id="fat-net-em"></em></div>
+    </div>
+    <p class="cs-story" id="fat-story"></p>
+
+    <div class="cs-charts">
+      <figure class="cs-fig">
+        <figcaption><b>Alerts each day against your team</b><span>Bars are alerts raised each day; the dark part is real fraud. Red bars overflow the team, so some alerts wait past the point where the fraud can be stopped.</span></figcaption>
+        <div id="fat-days"></div>
+      </figure>
+      <figure class="cs-fig">
+        <figcaption><b>The trade-off for the rule you last moved</b><span id="fat-sweep-cap"></span></figcaption>
+        <div id="fat-sweep"></div>
+      </figure>
+    </div>
+
+    <div class="cs-table-wrap"><table class="cs-table fat-score" id="fat-score"></table></div>
+    <details class="an-more" open>
+      <summary>Which kinds of fraud get through</summary>
+      <div class="cs-table-wrap"><table class="cs-table" id="fat-types"></table></div>
+    </details>
+  </div>
+
+  <div class="an-step fat-ai">
+    <h2>Write your own rule</h2>
+    <p class="an-sub">Describe a fraud pattern in plain English. A maker AI writes it as a rule using only this sample's fields, and a checker AI checks the rule says what you meant and fixes it if not. Then it's tested on the sample above. Only your description is sent; don't include customer details.</p>
+    <div class="fat-ex" id="fat-ex"></div>
+    <label class="fat-textl" for="fat-text">Your fraud pattern</label>
+    <textarea id="fat-text" rows="3" maxlength="400" placeholder="e.g. Large payments to a new payee from accounts opened in the last month"></textarea>
+    <p class="an-sub" id="fat-fields"></p>
+    <div class="ainote-row"><button type="button" class="btn small" id="fat-ai-go">Write the rule</button><span class="mono ainote-left" id="fat-ai-left"></span></div>
+    <p class="an-wait" id="fat-ai-msg" aria-live="polite"></p>
+    <div id="fat-ai-out" hidden></div>
+  </div>
+
+  <div id="fat-note"></div>
+  <div id="fat-talk"></div>
+
+  <details class="an-more cs-how">
+    <summary>How it's worked out</summary>
+    <div class="cs-how-body">
+      <p><b>The samples.</b> Card &amp; bank payments: 3,000 payments a day for 14 days, about 0.5% fraudulent, split into account takeover (a fraudster in the customer's account, usually a new device and a new payee), card testing (bursts of tiny payments to check stolen card numbers, which lead to bigger losses later, counted as 350 each) and scam payments the customer is tricked into making (they look much like genuine payments, which is why rules struggle). Loan applications: 800 a day for 14 days, about 1.3% fraudulent. Synthetic identities are built from a mix of real and invented details: a young credit file padded with authorised-user accounts, often a phone or address shared with other applications and a new email. They borrow the most they can and never repay (95% of the loan lost). Stolen identities have older files but new emails.</p>
+      <p><b>Rules and alerts.</b> A transaction or application raises an alert if any rule that's switched on matches it. Every genuine one flagged is a false alarm, with a friction cost: a genuine payment held (3) or a genuine applicant held up, some of whom walk away (40).</p>
+      <p><b>Your team.</b> Capacity is analysts × alerts each can work in a day. Alerts are worked in the order they arrive; on a day with more alerts than capacity, only that share are worked in time, so the same share of real fraud among them is stopped. A fraud worked in time stops 90% of an account-takeover or card loss and 95% of a loan loss, but only 50% of a scam payment: tricked customers often insist the payment is genuine. Every alert worked costs the review cost you set.</p>
+      <p><b>Net benefit</b> is fraud losses stopped, minus review cost, minus friction. <b>Fit the rules to my team</b> moves each switched-on rule, one at a time and twice over, to the setting with the highest net benefit that keeps the average day within capacity; it's a simple search, not the best possible answer. <b>Your own rule</b> is written by Claude, by Anthropic, as a maker and a checker; it can only use the fields listed, and every condition must be true for an alert.</p>
+      <p class="an-sub">An illustrative sample, not any bank's or lender's real data. Real fraud teams also use machine-learning scores, device and network data, consortium data and customer contact, and check rules for fairness across customer groups. Built by {{ site.author }}.</p>
+    </div>
+  </details>
+</section>
+{% endblock %}

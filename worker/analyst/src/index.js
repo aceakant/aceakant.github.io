@@ -7,6 +7,7 @@ import { MR_VERSION, parseRequest, runModelRisk } from "./modelrisk.js";
 import { hofRead, hofStart, hofSubmit } from "./hof.js";
 import { shareCreate, shareRead, sign } from "./share.js";
 import { NOTE_VERSION, parseNote, runNote } from "./note.js";
+import { RULE_VERSION, parseRule, runRule } from "./rule.js";
 
 const json = (body, status, headers) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", ...headers } });
 
@@ -19,6 +20,7 @@ const TOOLS = {
   review: { prefix: "", stats: "stats", noun: "reviews", paused: "Live reviews are paused for now. The three samples still work, or message Ajay for a review." },
   "model-risk": { prefix: "mr", stats: "stats_mr", noun: "checks", paused: "Live checks are paused for now. Your score above still stands; message Ajay for a full review." },
   note: { prefix: "nt", stats: "stats_note", noun: "AI notes", paused: "AI notes are paused for now. Your result above still stands." },
+  rule: { prefix: "rl", stats: "stats_rule", noun: "AI rules", paused: "AI rules are paused for now. The ready-made rules above still work." },
 };
 
 export default {
@@ -33,7 +35,7 @@ export default {
     };
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
     const url = new URL(request.url);
-    if (request.method === "GET" && url.pathname === "/") return json({ ok: true, service: "analyst-on-call", version: VERSION, model_risk: MR_VERSION, note: NOTE_VERSION }, 200, cors);
+    if (request.method === "GET" && url.pathname === "/") return json({ ok: true, service: "analyst-on-call", version: VERSION, model_risk: MR_VERSION, note: NOTE_VERSION, rule: RULE_VERSION }, 200, cors);
     // Public accountability tally for the Pulse page: totals only, nothing about any file, model or visitor.
     if (request.method === "GET" && url.pathname === "/stats") {
       const st = env.LIMITS ? JSON.parse((await env.LIMITS.get("stats")) || "null") : null;
@@ -62,7 +64,8 @@ export default {
 
     const asked = url.pathname.slice(1) || url.searchParams.get("tool") || "";
     const toolName = asked === "model-risk" || url.searchParams.get("tool") === "model-risk" ? "model-risk"
-      : asked === "note" || url.searchParams.get("tool") === "note" ? "note" : "review";
+      : asked === "note" || url.searchParams.get("tool") === "note" ? "note"
+      : asked === "rule" || url.searchParams.get("tool") === "rule" ? "rule" : "review";
     const tool = TOOLS[toolName];
     const perVisitor = Number(env.FREE_PER_VISITOR || 5);
     const windowDays = Number(env.VISITOR_WINDOW_DAYS || 30);
@@ -76,7 +79,7 @@ export default {
 
     if (request.method === "GET" && url.pathname === "/status")
       return json({ free: perVisitor, used, remaining: Math.max(0, perVisitor - used), open_today: today < dailyCap }, 200, cors);
-    if (request.method !== "POST" || !["/review", "/model-risk", "/note"].includes(url.pathname)) return json({ error: "not_found" }, 404, cors);
+    if (request.method !== "POST" || !["/review", "/model-risk", "/note", "/rule"].includes(url.pathname)) return json({ error: "not_found" }, 404, cors);
 
     if (used >= perVisitor) return json({ error: "visitor_limit", remaining: 0, message: `You've used your ${perVisitor} free ${tool.noun}.` }, 429, cors);
     if (today >= dailyCap) return json({ error: "daily_cap", remaining: perVisitor - used, message: `Today's free ${tool.noun} have all been used. Please try again tomorrow.` }, 429, cors);
@@ -98,6 +101,11 @@ export default {
       if (!req) return json({ error: "bad_request", message: "That result couldn't be read." }, 400, cors);
       job = (opts) => runNote(req, opts);
       signed = (result) => result;
+    } else if (toolName === "rule") {
+      const req = parseRule(body);
+      if (!req) return json({ error: "bad_request", message: "Describe the pattern in a sentence or two." }, 400, cors);
+      job = (opts) => runRule(req, opts);
+      signed = (result) => result;
     } else {
       const req = parseRequest(body);
       if (!req) return json({ error: "bad_request", message: "Please answer all 10 questions and pick a market." }, 400, cors);
@@ -117,9 +125,10 @@ export default {
     await env.LIMITS.put(vKey, String(used + 1), { expirationTtl: windowDays * 86400 });
     await env.LIMITS.put(dKey, String(today + 1), { expirationTtl: 2 * 86400 });
     if (request.headers.get("X-Analyst-Test") !== "1") {  // the deploy job's own test isn't counted
-      const blank = toolName === "review" ? { reviews: 0, findings: 0 } : toolName === "note" ? { notes: 0, numbers: 0, tools: {} } : { checks: 0, gaps: 0, markets: {} };
+      const blank = toolName === "review" ? { reviews: 0, findings: 0 } : toolName === "note" ? { notes: 0, numbers: 0, tools: {} } : toolName === "rule" ? { rules: 0, scenarios: {} } : { checks: 0, gaps: 0, markets: {} };
       const st = JSON.parse((await env.LIMITS.get(tool.stats)) || "null") || { since: day, ...blank, seconds: 0, verdicts: { confirmed: 0, corrected: 0, removed: 0, added: 0 } };
       if (toolName === "review") { st.reviews += 1; st.findings += result.findings.length; }
+      else if (toolName === "rule") { st.rules += 1; st.scenarios[result.scenario] = (st.scenarios[result.scenario] || 0) + 1; }
       else if (toolName === "note") { st.notes += 1; st.numbers += result.numbers_checked || 0; st.tools[result.tool] = (st.tools[result.tool] || 0) + 1; }
       else { st.checks += 1; st.gaps += result.gaps.length; st.markets[result.market] = (st.markets[result.market] || 0) + 1; }
       st.seconds += Math.round((Date.now() - started) / 1000);
