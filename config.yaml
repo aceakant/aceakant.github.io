@@ -55,7 +55,7 @@ analyst:
 
 pulse:
   start: "2026-11-01"          # count from this date
-  min_visitors: 200            # the Pulse page shows numbers once the site has had this many visits; before that it says "warming up"
+  min_visitors: 100            # the Pulse page shows numbers once the site has had this many visits; before that it says "warming up"
 
 linkedin:
   enabled: true
