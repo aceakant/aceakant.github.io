@@ -1,1 +1,2 @@
 Pulse refresh requested 2026-11-02T06:03:44Z. Edit this file to fetch the Pulse numbers again.
+refresh 2026-11-26T08:59:25Z after visitor-count fix

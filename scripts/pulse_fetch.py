@@ -162,7 +162,10 @@ def main():
         g["avg_score"] = round(sum(k * v for k, v in g["scores"].items()) / n) if n else None
         g["scores"] = {str(k): v for k, v in sorted(g["scores"].items())}
 
-    visitors = max(0, int(total.get("total") or 0) - int(total.get("total_events") or 0))
+    # page visits (not game/tool events). GoatCounter's own total minus events came out as 0 here because the
+    # site sends many events per visit, so count the visits recorded on the pages themselves.
+    page_visits = sum(int(h.get("count") or 0) for h in hits if not h.get("event"))
+    visitors = max(page_visits, int(total.get("total") or 0) - int(total.get("total_events") or 0), 0)
     grouped = {}
     for r in refs:
         grouped[source_group(r.get("name"))] = grouped.get(source_group(r.get("name")), 0) + int(r.get("count") or 0)
