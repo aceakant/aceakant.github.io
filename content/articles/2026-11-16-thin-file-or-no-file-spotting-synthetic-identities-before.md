@@ -9,7 +9,7 @@ market: US
 scenario: a mid-sized US regional bank with a credit card and personal loan book
 publish_at: '2026-11-28T13:30:00+05:30'
 review_issue: 10
-reminded: false
+reminded: true
 summary: Synthetic identities are built to look like thin-file customers, and traditional fraud models often miss them. This piece sets out the signals that separate a real newcomer to credit from a person who doesn't exist, and what catching them late costs a US lender.
 hook:
   question: Of the applicants identified as synthetic identities, what share were not flagged by traditional fraud models, according to an estimate the Federal Reserve cited? Guess the lower end of the range.
