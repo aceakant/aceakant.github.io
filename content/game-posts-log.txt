@@ -13,3 +13,4 @@ launch-early-warning-studio 2026-11-22 early-warning-studio launch urn:li:share:
 9 2026-11-24 - - skipped-missed
 10 2026-11-25 insight-vintages-first insight urn:li:share:7531271469390254081
 11 2026-11-26 analyst problem urn:li:share:7531634024847429633
+teaser-article-thin-file-or-no-file-spotting-synthetic-identities-before 2026-11-27 article-thin-file-or-no-file-spotting-synthetic-identities-before teaser urn:li:share:7531994555135537152
