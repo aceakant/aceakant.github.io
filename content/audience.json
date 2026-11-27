@@ -137,9 +137,16 @@
    "item": "analyst",
    "style": "problem",
    "post": "urn:li:share:7531634024847429633"
+  },
+  {
+   "n": "teaser-article-thin-file-or-no-file-spotting-synthetic-identities-before",
+   "date": "2026-11-27",
+   "item": "article-thin-file-or-no-file-spotting-synthetic-identities-before",
+   "style": "teaser",
+   "post": "urn:li:share:7531994555135537152"
   }
  ],
- "updated": "2026-11-26T09:39+00:00",
+ "updated": "2026-11-27T08:17+00:00",
  "last_7_days": {
   "posts": {
    "l-early-warning-studio": {
@@ -152,10 +159,6 @@
     "start": 1
    },
    "t-early-warning-studio": {
-    "visit": 2
-   },
-   "ta-fraud-model-roi-look-past-the-detecti": {
-    "read": 2,
     "visit": 2
    },
    "11": {
@@ -187,8 +190,8 @@
    "survive-recession": 1
   },
   "share_clicks": 7,
-  "pages": 60,
-  "from_linkedin": 43
+  "pages": 48,
+  "from_linkedin": 36
  },
  "last_30_days": {
   "posts": {
@@ -255,7 +258,7 @@
    "cut-off": 1
   },
   "share_clicks": 8,
-  "pages": 170,
+  "pages": 171,
   "from_linkedin": 51
  }
 }
