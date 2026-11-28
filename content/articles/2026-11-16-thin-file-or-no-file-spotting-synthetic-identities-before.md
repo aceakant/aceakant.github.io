@@ -3,7 +3,7 @@ title: Thin file or no file? Spotting synthetic identities before they bust out
 slug: thin-file-or-no-file-spotting-synthetic-identities-before
 date: '2026-11-16'
 category: Fraud Risk
-status: draft
+status: published
 test_run: false
 market: US
 scenario: a mid-sized US regional bank with a credit card and personal loan book
