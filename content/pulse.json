@@ -1,8 +1,8 @@
 {
-  "updated": "2026-11-28T01:56:21Z",
+  "updated": "2026-11-28T08:57:39Z",
   "since": "2026-11-02",
-  "visitors": 182,
-  "players": 19,
+  "visitors": 187,
+  "players": 20,
   "article_reads": 21,
   "countries": 5,
   "weekly": [
@@ -36,13 +36,13 @@
     },
     {
       "week": "2026-11-23",
-      "players": 6
+      "players": 7
     }
   ],
   "sources": [
     {
       "name": "LinkedIn",
-      "count": 53
+      "count": 56
     },
     {
       "name": "Direct link or bookmark",
@@ -54,7 +54,7 @@
     },
     {
       "name": "Other sites",
-      "count": 192
+      "count": 202
     }
   ],
   "games": {
@@ -73,6 +73,15 @@
       "scores": {},
       "scored": 0,
       "avg_score": null
+    },
+    "real-or-made-up": {
+      "players": 2,
+      "finished": 2,
+      "scores": {
+        "70": 2
+      },
+      "scored": 2,
+      "avg_score": 70
     },
     "spot-dirty-data": {
       "players": 2,
@@ -117,15 +126,6 @@
       "scores": {},
       "scored": 0,
       "avg_score": null
-    },
-    "real-or-made-up": {
-      "players": 1,
-      "finished": 1,
-      "scores": {
-        "70": 1
-      },
-      "scored": 1,
-      "avg_score": 70
     },
     "safe-to-ship": {
       "players": 1,
