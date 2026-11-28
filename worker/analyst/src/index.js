@@ -37,7 +37,7 @@ export default {
     };
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
     const url = new URL(request.url);
-    if (request.method === "GET" && url.pathname === "/") return json({ ok: true, service: "analyst-on-call", version: VERSION, model_risk: MR_VERSION, note: NOTE_VERSION, rule: RULE_VERSION }, 200, cors);
+    if (request.method === "GET" && url.pathname === "/") return json({ ok: true, service: "analyst-on-call", version: VERSION, model_risk: MR_VERSION, note: NOTE_VERSION, rule: RULE_VERSION, appetite: APPETITE_VERSION }, 200, cors);
     // Public accountability tally for the Pulse page: totals only, nothing about any file, model or visitor.
     if (request.method === "GET" && url.pathname === "/stats") {
       const st = env.LIMITS ? JSON.parse((await env.LIMITS.get("stats")) || "null") : null;
