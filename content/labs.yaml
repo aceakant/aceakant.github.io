@@ -12,7 +12,7 @@ labs:
     part: sure
     added: December 2026
     new: true
-    status: preview
+    launch: "2026-12-07T09:00:00+05:30"
     hook: Eight quick questions about chance and data. Say how sure you are. Being 99% sure and wrong costs a lot.
   - id: chart-tricks
     name: Spot the chart trick
@@ -53,7 +53,7 @@ labs:
     part: freeze
     added: December 2026
     new: true
-    status: preview
+    launch: "2026-12-14T09:00:00+05:30"
     hook: Five credit cards, one month at a time. Freeze the frauds before they cash out, but don't freeze a good customer.
   - id: scam-or-legit
     name: Scam or legit?

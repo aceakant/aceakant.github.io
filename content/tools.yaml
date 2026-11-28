@@ -107,7 +107,7 @@ tools:
     badge: RAB
     style: ai
     kind: Builder · maker-checker AI statement
-    status: preview
+    launch: "2026-12-02T09:00:00+05:30"
     url: risk-appetite-builder.html
     cta: Build an appetite
     featured: true
@@ -121,7 +121,7 @@ tools:
     badge: CFU
     style: lite
     kind: Free simulator
-    status: preview
+    launch: "2026-12-09T09:00:00+05:30"
     url: cash-flow-underwriting.html
     cta: Compare decisions
     featured: true
