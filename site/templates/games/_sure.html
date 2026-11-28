@@ -1,0 +1,28 @@
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">{{ lab.name }} · How sure are you? · 2 minutes</p>
+      <h2 class="game-title">Right is good. Knowing how sure to be is better.</h2>
+      <p>Eight quick statements about chance, money and data. Say whether each is true or false, and how sure you are. Being 55% sure and wrong costs little; being 99% sure and wrong costs a lot. That's how good forecasters, and good AI models, are scored.</p>
+      <ul class="play-points">
+        <li>One tap: your answer and how sure you are</li>
+        <li>Each answer explains the maths in a line</li>
+        <li>See your calibration: are you overconfident?</li>
+      </ul>
+    </div>
+    <div class="game" id="sure-game" aria-live="polite">
+      <div class="game-head"><span class="mono">HOW SURE ARE YOU?</span><span class="mono" id="sure-round">1 of 8</span></div>
+      <p class="sure-q" id="sure-q"></p>
+      <div class="sure-pick" id="sure-pick">
+        {% for side in [("true", "✅ True"), ("false", "❌ False")] %}
+        <div class="sure-col" role="group" aria-label="{{ side[1][2:] }}">
+          <span class="mono sure-h">{{ side[1] }}</span>
+          {% for c in labs.sure.levels %}<button type="button" class="opt sure-b" data-a="{{ side[0] }}" data-c="{{ c }}">{{ c }}% sure</button>{% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="game-foot" id="sure-foot"></div>
+      <script type="application/json" id="sure-data">{{ labs.sure | tojson }}</script>
+    </div>
+  </div>
+</section>

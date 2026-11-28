@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Cash-Flow Underwriting Lab · {{ site.author }}{% endblock %}
+{% block description %}Decide the same 5,000 loan applicants twice: on the credit bureau file alone, and with bank-account cash flow added. See who gets approved fairly that the bureau would miss, at the same bad rate.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono"><a href="workbench.html">Workbench</a> · Cash-Flow Underwriting Lab</p>
+  <h1>Who does the credit file miss?</h1>
+  <p class="lede">A credit bureau file tells a lender a lot about people with long credit histories and very little about everyone else. With open banking, applicants can share their bank-account cash flow too: steady income, essential spending, the money left at month end. Decide the same 5,000 sample applicants twice, and see how many more you can approve at the same bad rate, and who they are. Runs in your browser; nothing is sent.</p>
+  {% set share_label = "Share this tool" %}{% set share_text = "Who does the credit file miss? Compare bureau-only lending with cash-flow underwriting at the same bad rate" %}{% include "_share.html" %}
+</section>
+
+<section class="wrap">
+  <div class="an-step cs cfu">
+    <div class="cfu-top">
+      <div class="cs-controls">
+        <div class="cs-row">
+          <span class="mono cs-k">Currency</span>
+          <div class="roi-cur" role="radiogroup" aria-label="Currency" id="cfu-cur">
+            {% for c in ["$", "£", "€", "C$"] %}<button type="button" class="roi-c" role="radio" data-c="{{ c }}" aria-checked="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+          </div>
+        </div>
+        <p class="an-sub">5,000 applicants for a personal loan of about 6,000; a quarter have thin credit files (one or two accounts, under a year of history).</p>
+        <div class="cs-jumps"><button type="button" class="btn small ghost" id="cfu-new">Generate new applicants</button></div>
+      </div>
+      <div class="cfu-sl">
+        <label class="roi-sl"><span class="roi-top"><span>Highest bad rate you'll accept on approved loans</span><b id="cfu-t-v"></b></span><input type="range" id="cfu-t" min="2" max="7" step="0.5" value="5"></label>
+        <label class="roi-sl"><span class="roi-top"><span>Applicants who agree to share bank data</span><b id="cfu-c-v"></b></span><input type="range" id="cfu-c" min="10" max="100" step="5" value="70"></label>
+        <label class="roi-sl"><span class="roi-top"><span>Weight on cash flow for long credit files</span><b id="cfu-w-v"></b></span><input type="range" id="cfu-w" min="0" max="100" step="5" value="50"></label>
+      </div>
+    </div>
+
+    <div class="roi-kpis cs-kpis" aria-live="polite">
+      <div><b id="cfu-extra"></b><span>more approvals a month, same bad rate</span><em id="cfu-extra-em"></em></div>
+      <div><b id="cfu-thin"></b><span>of thin-file applicants approved</span><em id="cfu-thin-em"></em></div>
+      <div><b id="cfu-in"></b><span>expected bad rate of the newly approved</span><em id="cfu-in-em"></em></div>
+      <div class="good"><b id="cfu-profit"></b><span>extra profit</span><em id="cfu-profit-em"></em></div>
+    </div>
+    <p class="cs-story" id="cfu-story"></p>
+
+    <div class="cs-charts">
+      <figure class="cs-fig">
+        <figcaption><b>How many you can approve before the bad rate bites</b><span>Approve the best-scored applicants first: the line shows the expected bad rate of everyone approved so far. Where each line crosses your appetite is how many it can approve. <i class="cfu-key a"></i>bureau only <i class="cfu-key b"></i>with cash flow</span></figcaption>
+        <div id="cfu-curve"></div>
+      </figure>
+      <figure class="cs-fig">
+        <figcaption><b>Who gets approved</b><span>Approval rate for long and thin credit files, with the expected bad rate of those approved underneath. <i class="cfu-key a"></i>bureau only <i class="cfu-key b"></i>with cash flow</span></figcaption>
+        <div id="cfu-groups"></div>
+      </figure>
+    </div>
+
+    <h3 class="cfu-h">Who changes</h3>
+    <div class="cs-table-wrap"><table class="cs-table" id="cfu-swap"></table></div>
+    <div class="cfu-apps" id="cfu-apps"></div>
+  </div>
+
+  <div id="cfu-talk"></div>
+
+  <details class="an-more cs-how">
+    <summary>How it's worked out</summary>
+    <div class="cs-how-body">
+      <p><b>The applicants.</b> 5,000 made-up applicants. Each has a hidden "how well they manage money" value that sets their chance of not repaying (about 8% on average, a little higher for thin files). The bureau file reflects that value well for people with long credit histories, and only faintly for thin files, which also score lower simply for having little history. Bank-account cash flow reflects it about as well for everyone, through four signals: months with steady income, essential spending as a share of income, money left at month end, and days overdrawn. These are combined into a cash-flow score.</p>
+      <p><b>The two policies.</b> <em>Bureau only</em> ranks everyone by bureau score. <em>With cash flow</em> ranks applicants who share their bank data on a blend: for long credit files, your chosen weight on cash flow; for thin files, 80% cash flow and 20% bureau, because their bureau file says so little. Applicants who don't share are ranked on the bureau score, as before. Each policy approves from the top of its ranking for as long as the expected bad rate of everyone approved stays within your appetite.</p>
+      <p><b>Money.</b> Each good loan earns 14% of 6,000 over its life; each bad loan loses 65% of it after recoveries. Extra profit is the difference between the two policies for one month of 5,000 applications, times 12.</p>
+      <p class="an-sub">An illustrative sample, not any lender's real data. Real cash-flow underwriting needs the applicant's clear consent, checks the bank data is genuine, tests outcomes for fairness across customer groups, and follows each market's open-banking and credit rules. Built by {{ site.author }}.</p>
+    </div>
+  </details>
+</section>
+{% endblock %}

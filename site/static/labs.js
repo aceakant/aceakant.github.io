@@ -469,4 +469,108 @@
     });
     orderRound();
   }
+
+  /* ---------------- Analytics Lab: how sure are you? (calibration, scored like a forecaster) ---------------- */
+  var sug = $("#sure-game");
+  if (sug) {
+    var SD = JSON.parse($("#sure-data").textContent), SR = SD.rounds, si = 0, stot = 0, sans = [];
+    var spick = $("#sure-pick"), sfoot2 = $("#sure-foot"), sq = $("#sure-q");
+    var SMAX = SR.length * 100;
+    function sPts(right, c) { var q = right ? c / 100 : 1 - c / 100; return Math.round(100 - 400 * (1 - q) * (1 - q)); }
+    function sShow() {
+      var r = SR[si];
+      $("#sure-round").textContent = (si + 1) + " of " + SR.length;
+      sq.textContent = r.text; sq.className = "sure-q pop"; spick.hidden = false; spick.dataset.locked = "";
+      Array.prototype.forEach.call(spick.querySelectorAll("button"), function (b) { b.disabled = false; b.classList.remove("right", "wrong", "picked"); });
+      sfoot2.innerHTML = '<span class="hint">True or false, and how sure? One tap.</span><span class="score">' + stot + " pts</span>";
+    }
+    spick.addEventListener("click", function (e) {
+      var b = e.target.closest(".sure-b"); if (!b || spick.dataset.locked) return;
+      spick.dataset.locked = "1";
+      var r = SR[si], said = b.dataset.a === "true", c = +b.dataset.c, right = said === r.answer, pts = sPts(right, c);
+      stot += pts; sans.push({ c: c, right: right });
+      Array.prototype.forEach.call(spick.querySelectorAll("button"), function (x) { x.disabled = true; });
+      b.classList.add(right ? "right" : "wrong", "picked");
+      var head = right ? (c >= 99 ? "Right, and you knew it. 🎯" : c >= 85 ? "Right, and confident." : "Right, but you weren't sure.") : (c >= 85 ? "Wrong, and very sure. Ouch." : "Wrong, but you hedged.");
+      sfoot2.innerHTML = '<div class="verdict"><b>' + head + ' <span class="sure-pts ' + (pts >= 0 ? "up" : "down") + '">' + (pts >= 0 ? "+" : "−") + Math.abs(pts) + "</span></b>It's <b class=\"inline\">" + (r.answer ? "true" : "false") + "</b>. " + esc(r.why) + '</div><span class="score">' + stot + ' pts</span><button class="btn small" type="button" id="sure-next">' + (si === SR.length - 1 ? "See my calibration" : "Next →") + "</button>";
+      if (right && c >= 99) party();
+    });
+    function sFinal() {
+      spick.hidden = true; done("how-sure", Math.max(0, stot) / SMAX * 100);
+      var hits = 0, conf = 0; sans.forEach(function (a) { if (a.right) hits++; conf += a.c; });
+      var hitRate = hits / sans.length * 100, avgC = conf / sans.length;
+      var verdict = hitRate < avgC - 10 ? "Overconfident: you were " + Math.round(avgC) + "% sure on average but right " + Math.round(hitRate) + "% of the time." :
+        hitRate > avgC + 10 ? "Underconfident: you were right " + Math.round(hitRate) + "% of the time but only " + Math.round(avgC) + "% sure on average. Trust yourself more." :
+        "Well calibrated: " + Math.round(avgC) + "% sure on average, right " + Math.round(hitRate) + "% of the time.";
+      sq.textContent = "Your calibration"; sq.className = "sure-q";
+      // calibration chart: for each level used, how often you were right (bar) against how sure you said you were (line)
+      var W = 320, H = 170, L = 34, B = 140, T = 12, lv = SD.levels, bw = 44, gap = (W - L - 10) / lv.length;
+      var g = '<svg class="trick sure-cal" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="How often you were right at each level of confidence">';
+      [0, 50, 100].forEach(function (v) { var y = B - v / 100 * (B - T); g += '<line x1="' + L + '" x2="' + (W - 8) + '" y1="' + y + '" y2="' + y + '" class="grid"/><text x="' + (L - 5) + '" y="' + (y + 3) + '" class="tick" text-anchor="end">' + v + "%</text>"; });
+      lv.forEach(function (c, k) {
+        var set = sans.filter(function (a) { return a.c === c; }), x = L + 10 + k * gap, yC = B - c / 100 * (B - T);
+        if (set.length) { var hr = set.filter(function (a) { return a.right; }).length / set.length, y = B - hr * (B - T);
+          g += '<rect x="' + x + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + (B - y).toFixed(1) + '" rx="3" class="bar' + (hr * 100 >= c - 10 ? " hi" : " miss") + '"/><text x="' + (x + bw / 2) + '" y="' + (Math.min(y, yC) - 5).toFixed(1) + '" class="val" text-anchor="middle">' + Math.round(hr * 100) + "%</text>"; }
+        g += '<line x1="' + (x - 4) + '" x2="' + (x + bw + 4) + '" y1="' + yC.toFixed(1) + '" y2="' + yC.toFixed(1) + '" class="sure-ideal"/>';
+        g += '<text x="' + (x + bw / 2) + '" y="' + (B + 13) + '" class="tick" text-anchor="middle">' + c + "% sure</text><text x=\"" + (x + bw / 2) + '" y="' + (B + 25) + '" class="tick" text-anchor="middle">' + set.length + " answer" + (set.length === 1 ? "" : "s") + "</text>";
+      });
+      g += "</svg>";
+      sfoot2.innerHTML = '<div class="final"><span class="mono">YOUR SCORE</span><div class="big">' + stot + " / " + SMAX + "</div><p>" + esc(verdict) + "</p>" + g +
+        '<p class="sure-leg">Bars: how often you were right. Lines: how sure you said you were. Well calibrated means the bar reaches the line.</p><p>Golden rule: a 90% forecast should be right about 9 times in 10. Check that of every model, and of yourself.</p></div><span class="btns"><button class="btn small ghost" type="button" id="sure-again">Play again</button></span>';
+      if (stot >= SMAX * 0.75) party();
+    }
+    sfoot2.addEventListener("click", function (e) {
+      if (e.target.id === "sure-next") { if (si < SR.length - 1) { si++; sShow(); } else sFinal(); }
+      else if (e.target.id === "sure-again") { si = 0; stot = 0; sans = []; sShow(); }
+    });
+    sShow();
+  }
+
+  /* ---------------- Fraud Lab: freeze or wait? (one month at a time) ---------------- */
+  var fzg = $("#freeze-game");
+  if (fzg) {
+    var FA = JSON.parse($("#freeze-data").textContent).accounts, fi = 0, fm = 0, ftot = 0, FMAX = FA.length * 100;
+    var fcard = $("#fz-card"), fmonths = $("#fz-months"), ffoot = $("#fz-foot");
+    function usd(v) { return "$" + Math.round(v).toLocaleString("en-US"); }
+    function fRow(m, k, now) {
+      var u = Math.min(1, m.owed / m.limit), over = m.owed > m.limit;
+      return '<li class="' + (now ? "now" : "") + '"><div class="fz-top"><b>Month ' + (k + 1) + "</b><span>spent " + usd(m.spend) + " · owes " + usd(m.owed) + " of " + usd(m.limit) + '</span></div><span class="fz-bar"><i class="' + (over ? "over" : u > 0.8 ? "hi" : "") + '" style="width:' + (u * 100).toFixed(0) + '%"></i></span>' +
+        '<span class="fz-paid">' + esc(m.paid) + "</span><span class=\"fz-note\">" + esc(m.note) + "</span></li>";
+    }
+    function fShow() {
+      var a = FA[fi];
+      $("#fz-round").textContent = "Card " + (fi + 1) + " of " + FA.length;
+      fcard.innerHTML = '<span class="fz-chip" aria-hidden="true"></span><b>' + esc(a.card) + "</b><span>" + esc(a.opened) + "</span>";
+      fcard.className = "fz-card";
+      fmonths.innerHTML = a.months.slice(0, fm + 1).map(function (m, k) { return fRow(m, k, k === fm); }).reverse().join("");
+      var lastM = fm === a.months.length - 1;
+      ffoot.innerHTML = '<span class="btns"><button class="btn small ghost" type="button" id="fz-wait">' + (lastM ? "Let it run" : "Next month →") + '</button><button class="btn small fz-freeze" type="button" id="fz-freeze">❄️ Freeze the card</button></span><span class="score">' + ftot + " / " + FMAX + "</span>";
+    }
+    function fEnd(frozen) {
+      var a = FA[fi], pts = a.fraud ? (frozen ? a.pts[fm] : 0) : (frozen ? 0 : 100), head;
+      ftot += pts;
+      if (a.fraud && frozen) head = pts >= 100 ? "Frozen in time! 🧊" : pts >= 50 && fm < a.pts.indexOf(100) ? "Frozen, but on a hunch: nothing looked wrong yet." : "Frozen, but late: most of the money had gone.";
+      else if (a.fraud) head = "The fraud cashed out. 💸";
+      else head = frozen ? "That was a good customer. ❄️ Lost them." : "Right call: a good customer. ✅";
+      fcard.className = "fz-card " + (a.fraud ? "is-fraud" : "is-good");
+      fcard.innerHTML += '<em class="fz-tag">' + esc(a.fraud ? a.kind : "Genuine customer") + "</em>";
+      ffoot.innerHTML = '<div class="verdict"><b>' + head + " +" + pts + "</b>" + esc(a.outcome) + '<ul class="flags">' + a.why.map(function (f) { return "<li>" + esc(f) + "</li>"; }).join("") + '</ul></div><span class="score">' + ftot + " / " + FMAX +
+        '</span><button class="btn small" type="button" id="fz-next">' + (fi === FA.length - 1 ? "See my score" : "Next card →") + "</button>";
+      if (pts >= 100 && a.fraud) party();
+    }
+    ffoot.addEventListener("click", function (e) {
+      var id = e.target.id, a = FA[fi];
+      if (id === "fz-wait") { if (fm < a.months.length - 1) { fm++; fShow(); } else fEnd(false); }
+      else if (id === "fz-freeze") fEnd(true);
+      else if (id === "fz-next") {
+        if (fi < FA.length - 1) { fi++; fm = 0; fShow(); fzg.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
+        done("freeze-or-wait", ftot / FMAX * 100);
+        fcard.className = "fz-card"; fcard.innerHTML = "<b>Your result</b>"; fmonths.innerHTML = "";
+        var msg = ftot >= 450 ? "Fraud-team lead material. You froze the frauds early and left good customers alone. 🏆" : ftot >= 350 ? "Good instincts. Watch for the moment behaviour changes, not just big numbers." : "Tricky! Big spending isn't fraud, and perfect payments can be part of the plan.";
+        ffoot.innerHTML = '<div class="final"><span class="mono">YOUR SCORE</span><div class="big">' + ftot + " / " + FMAX + "</div><p>" + msg + '</p><p>Golden rule: look for a change in behaviour that only makes sense for a fraudster, then act fast.</p></div><span class="btns"><button class="btn small ghost" type="button" id="fz-again">Play again</button></span>';
+        if (ftot >= 450) party();
+      } else if (id === "fz-again") { fi = 0; fm = 0; ftot = 0; fShow(); }
+    });
+    fShow();
+  }
 })();

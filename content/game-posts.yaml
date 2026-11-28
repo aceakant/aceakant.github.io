@@ -255,6 +255,29 @@ games:
     time: "60-second"
     hashtags: [ResponsibleAI, CreditRisk, Fairness]
 
+  - id: how-sure
+    lab: analytics-lab
+    title: "How sure are you? Eight questions, scored like a forecaster"
+    description: "Coins, birthdays, medical tests and fraud alerts. Say true or false and how sure you are. Being 99% sure and wrong costs a lot. Free, no sign-up."
+    hook: "Being right is good. Knowing how sure to be is better. How calibrated are you? 🎯"
+    teaser: "A test that's 99% accurate says you're ill. How likely is it that you are?"
+    more: "answer all eight"
+    blurb: "Eight quick statements about chance, money and data. Pick true or false and how sure you are, then see your calibration: when you say 85%, are you right 85% of the time?"
+    lesson: "A forecast of 90% should come true about 9 times in 10. Most people, and many AI models, are more confident than they are right."
+    time: "2-minute"
+    hashtags: [DataScience, Statistics, DecisionMaking]
+  - id: freeze-or-wait
+    lab: fraud-lab
+    title: "Freeze or wait? Stop the fraud before it cashes out"
+    description: "Watch five credit cards one month at a time. Freeze the frauds as soon as the signs appear, but don't freeze a good customer. Free, no sign-up."
+    hook: "Five credit cards, one month at a time. When would you freeze them? ❄️"
+    teaser: "A perfect payer asks for a higher limit. A loyal customer spends 3x more. Which one is the fraud?"
+    more: "watch all five cards"
+    blurb: "Some cards belong to good customers having an unusual month. Some are frauds building up to a big cash-out. Freeze too late and the money's gone; freeze a good customer and you've lost them."
+    lesson: "Bust-out fraud looks like the perfect customer, right up until it doesn't. The signal is a change in behaviour, not a big number."
+    time: "2-minute"
+    hashtags: [FraudPrevention, CreditCards, RiskManagement]
+
 # Workbench tools. A live tool that isn't listed here is still posted, using its name and blurb from tools.yaml.
 article_styles:
   - name: quiz

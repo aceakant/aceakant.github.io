@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Risk Appetite Builder · {{ site.author }}{% endblock %}
+{% block description %}Choose the measures a lender's board should watch, set an early-warning trigger and a limit for each, and test them today, through next year's plan and in a downturn. Then let one AI draft the risk appetite statement while a second checks every limit.{% endblock %}
+{% block content %}
+<section class="wrap an-head">
+  <p class="kicker mono"><a href="workbench.html">Workbench</a> · Risk Appetite Builder</p>
+  <h1>How much risk will your board accept?</h1>
+  <p class="lede">A risk appetite turns "we're comfortable with this much risk" into numbers the board can hold you to. Pick the measures for a sample lender, set an early-warning trigger and a limit for each, and see which are green today, which next year's growth plan breaks, and which would warn you in time in a downturn. Then get a draft risk appetite statement: one AI writes it, a second checks every limit against your settings.</p>
+  {% set share_label = "Share this tool" %}{% set share_text = "How much risk would your board accept? Set the limits and triggers and test them in a downturn" %}{% include "_share.html" %}
+</section>
+
+<section class="wrap">
+  <div class="an-step cs rab">
+    <div class="rab-top">
+      <div class="cs-controls">
+        <div class="cs-row">
+          <span class="mono cs-k">Stance</span>
+          <div class="roi-cur" role="radiogroup" aria-label="Risk stance" id="rab-stance">
+            <button type="button" class="roi-c" role="radio" data-s="cautious" aria-checked="false">Cautious</button>
+            <button type="button" class="roi-c" role="radio" data-s="balanced" aria-checked="true">Balanced</button>
+            <button type="button" class="roi-c" role="radio" data-s="growth" aria-checked="false">Growth</button>
+          </div>
+        </div>
+        <div class="cs-row">
+          <span class="mono cs-k">Currency</span>
+          <div class="roi-cur" role="radiogroup" aria-label="Currency" id="rab-cur">
+            {% for c in ["$", "£", "€", "C$"] %}<button type="button" class="roi-c" role="radio" data-c="{{ c }}" aria-checked="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+          </div>
+        </div>
+        <label class="roi-sl cs-cut"><span class="roi-top"><span>Planned lending growth next year</span><b id="rab-g-v">8%</b></span><input type="range" id="rab-g" min="0" max="25" step="1" value="8"></label>
+        <p class="an-sub">The sample lender has 4,000 million of consumer loans. The stance sets every trigger and limit to a starting point; then move them yourself.</p>
+        <div class="cs-jumps"><button type="button" class="btn small ghost" id="rab-reset">Reset to the stance</button></div>
+      </div>
+      <div>
+        <span class="mono cs-k">Your measures: switch on the ones your board watches</span>
+        <div class="rab-ms" id="rab-ms"></div>
+      </div>
+    </div>
+
+    <div class="roi-kpis cs-kpis" aria-live="polite">
+      <div><b id="rab-today"></b><span>green · amber · red today</span></div>
+      <div><b id="rab-grow"></b><span>fastest growth the plan fits inside every limit</span><em id="rab-grow-em"></em></div>
+      <div><b id="rab-brk"></b><span>limits broken in a downturn</span><em id="rab-brk-em"></em></div>
+      <div class="good"><b id="rab-good"></b><span>measures well set: green now, amber before red</span></div>
+    </div>
+    <p class="cs-story" id="rab-story"></p>
+
+    <div class="cs-charts">
+      <figure class="cs-fig">
+        <figcaption><b>Where each measure sits, against your lines</b><span>Green, amber and red zones from your triggers and limits; each row has its own scale. The dot is today, the diamond is the worst it gets in a downturn.</span></figcaption>
+        <div id="rab-board"></div>
+      </figure>
+      <figure class="cs-fig">
+        <figcaption><b>The next four quarters</b><span id="rab-path-cap"></span></figcaption>
+        <label class="rab-focus"><span class="mono cs-k">Show</span><select id="rab-focus" aria-label="Measure to show"></select></label>
+        <div id="rab-path"></div>
+      </figure>
+    </div>
+
+    <div class="cs-table-wrap"><table class="cs-table rab-table" id="rab-table"></table></div>
+  </div>
+
+  <div class="an-step rab-st">
+    <h2>Your risk appetite statement</h2>
+    <p class="an-sub">A plain draft from your settings is below. For a board-ready version, a maker AI drafts the statement and a checker AI checks every number and direction against your settings and fixes them if needed; then your browser checks each line again. Only your settings are sent: the measure names, numbers and stance.</p>
+    <div class="ainote-memo" id="rab-plain"></div>
+    <div class="ainote-row rab-airow"><button type="button" class="btn small" id="rab-ai-go">Draft the statement with AI</button><span class="mono ainote-left" id="rab-ai-left"></span></div>
+    <p class="an-wait" id="rab-ai-msg" aria-live="polite"></p>
+    <div id="rab-ai-out" class="ainote-out" hidden></div>
+  </div>
+
+  <div id="rab-talk"></div>
+
+  <details class="an-more cs-how">
+    <summary>How it's worked out</summary>
+    <div class="cs-how-body">
+      <p><b>The sample lender.</b> A consumer lender with 4,000 million of loans. Each measure has four quarters of history, then two paths for the next four quarters: the plan, and a downturn in which arrears, losses and complaints rise, borrowers drift into riskier grades, and capital and liquidity fall. Both paths assume 8% lending growth. Faster growth pushes most measures towards their limits, and slower growth eases them: for example, every point of growth above 8% lowers the capital ratio by 0.12 points and adds half a point to lending in the riskiest grades by the end of the year.</p>
+      <p><b>Triggers and limits.</b> A trigger is the early-warning line: past it, a measure is amber and the Chief Risk Officer acts. A limit is the line the board has said not to cross: past it, a measure is red. For measures where lower is safer (losses, arrears, concentration, fraud, complaints) the lines are ceilings; for capital, liquidity and the score's power they are floors. The trigger is always kept on the safe side of the limit.</p>
+      <p><b>Calibration.</b> A measure is <em>well set</em> when it's green today, the plan doesn't break it, and in a downturn it turns amber at least a quarter before it turns red (or turns amber and the limit holds). <em>Too tight</em>: amber already today, so nobody reads it. <em>Plan breaks it</em>: the growth plan and the appetite disagree. <em>Too loose?</em>: green even in a downturn. <em>No warning</em>: trigger and limit break in the same quarter. <b>Fastest growth</b> is the highest growth, in steps of half a point, at which no switched-on measure turns red over the next four quarters.</p>
+      <p><b>The statement.</b> The plain draft is filled in from your settings in your browser. The AI version is written by Claude, by Anthropic, as a maker and a checker; it receives only the measure names, your numbers, their status and your stance. Your browser then checks that each line carries your exact trigger and limit.</p>
+      <p class="an-sub">An illustrative sample, not any lender's real figures or any regulator's minimums. Real risk appetite frameworks also cover operational, conduct, model and climate risk, are cascaded into business limits, and are approved by the board each year. Built by {{ site.author }}.</p>
+    </div>
+  </details>
+</section>
+{% endblock %}

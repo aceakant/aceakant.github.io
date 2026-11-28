@@ -7,6 +7,13 @@ labs:
   teaches: Reading data quickly, and remembering that correlation is not causation.
   color: teal
   games:
+  - id: how-sure
+    name: How sure are you?
+    part: sure
+    added: December 2026
+    new: true
+    status: preview
+    hook: Eight quick questions about chance and data. Say how sure you are. Being 99% sure and wrong costs a lot.
   - id: chart-tricks
     name: Spot the chart trick
     part: chart
@@ -41,6 +48,13 @@ labs:
   teaches: The early signals fraud teams use to stop losses before they happen.
   color: red
   games:
+  - id: freeze-or-wait
+    name: Freeze or wait?
+    part: freeze
+    added: December 2026
+    new: true
+    status: preview
+    hook: Five credit cards, one month at a time. Freeze the frauds before they cash out, but don't freeze a good customer.
   - id: scam-or-legit
     name: Scam or legit?
     part: phish
@@ -505,3 +519,99 @@ order:
     - Fix the weak control
     - Report to leadership and regulators
     - Learn and update the rules
+# How sure are you? (Analytics Lab): points = 100 - 400 x (1 - chance you gave the right answer)^2, so 50% sure scores 0,
+# 99% sure and right scores 100, and 99% sure and wrong scores -292 (a Brier score, as used to grade forecasters).
+sure:
+  levels: [55, 70, 85, 99]
+  rounds:
+  - text: Toss a fair coin 10 times. Getting exactly 5 heads is more likely than not.
+    answer: false
+    why: Exactly 5 heads happens only about 25% of the time (252 of the 1,024 equally likely sequences). It's the most likely single result, but far from a sure thing.
+  - text: In a group of 23 people, it's more likely than not that two of them share a birthday.
+    answer: true
+    why: 23 people make 253 different pairs, so a match is likely. The chance is about 51%.
+  - text: Money growing at 7% a year doubles in about 10 years.
+    answer: true
+    why: 1.07 multiplied by itself 10 times is about 1.97. The "rule of 72" agrees, since 72 ÷ 7 is about 10.
+  - text: A test finds 99% of people who have an illness and wrongly flags 1% of healthy people. 1 in 1,000 people has the illness. If you test positive, you most likely have it.
+    answer: false
+    why: In 100,000 people, 99 of the 100 who are ill test positive, but so do 999 healthy people. Only about 1 positive in 11 is really ill.
+  - text: To halve a survey's margin of error, you need twice as many people.
+    answer: false
+    why: The margin of error shrinks with the square root of the sample size, so halving it takes four times as many people.
+  - text: Fraud is 0.1% of payments, and a fraud model flags 1% of payments. Even at best, no more than 1 in 10 of its alerts can be fraud.
+    answer: true
+    why: Even if every fraud is flagged, 0.1% fraud inside 1% flagged is 1 alert in 10. When fraud is rare, false alarms are unavoidable.
+  - text: If two things have a correlation of zero, there is no relationship between them.
+    answer: false
+    why: Correlation only measures straight-line patterns. Points on a perfect U-shape (y = x² for x from −3 to 3) have a correlation of exactly zero, yet x decides y completely.
+  - text: On a game show you pick 1 of 3 doors. The host, who knows where the prize is, opens another door with nothing behind it. Switching to the last door wins 2 times in 3.
+    answer: true
+    why: Your first pick is right only 1 time in 3. In the other 2 times in 3, the host has to leave the prize behind the last door, so switching wins.
+# Freeze or wait? (Fraud Lab): freezing after seeing month m scores pts[m-1] for a fraud (0 if never frozen);
+# a genuine customer scores 100 if never frozen, 0 if frozen.
+freeze:
+  accounts:
+  - card: Card ending 4417
+    opened: Open 4 years
+    fraud: false
+    months:
+    - {spend: 820, owed: 820, limit: 5000, paid: Last bill paid in full, note: "Groceries, fuel and a streaming subscription"}
+    - {spend: 910, owed: 910, limit: 5000, paid: Last bill paid in full, note: Same shops as usual}
+    - {spend: 3650, owed: 3650, limit: 5000, paid: Last bill paid in full, note: "Flights and hotels abroad, booked from the customer's usual phone"}
+    - {spend: 1900, owed: 1900, limit: 5000, paid: Last bill paid in full, note: "Card used abroad: restaurants, a museum, a hire car"}
+    - {spend: 760, owed: 760, limit: 5000, paid: Last bill paid in full, note: "Back home: the usual shops"}
+    - {spend: 840, owed: 840, limit: 5000, paid: Last bill paid in full, note: The usual shops}
+    outcome: A good customer's holiday.
+    why: ["Big spending, but on travel booked from the usual phone", "Every bill paid in full from the usual bank account", "A 4-year-old account with a steady history: a holiday, not a fraud"]
+  - card: Card ending 9032
+    opened: Open 5 months
+    fraud: true
+    kind: Bust-out fraud
+    pts: [50, 50, 50, 100, 100, 10]
+    months:
+    - {spend: 240, owed: 240, limit: 3000, paid: First bill paid in full, note: A few small purchases}
+    - {spend: 310, owed: 310, limit: 3000, paid: Last bill paid in full, note: "Small purchases, every bill paid on the day it's due"}
+    - {spend: 380, owed: 380, limit: 9000, paid: Last bill paid in full, note: "Asks for a higher limit. Limit raised to 9,000"}
+    - {spend: 2050, owed: 2050, limit: 9000, paid: Last bill paid in full, note: Opens 3 new credit cards with other lenders this month. Spending jumps fivefold}
+    - {spend: 400, owed: 2450, limit: 9000, paid: "Pays 8,000: far more than the 2,050 owed", note: Asks to use the extra credit straight away}
+    - {spend: 8700, owed: 11150, limit: 9000, paid: The 8,000 payment bounces, note: "8,700 spent in 4 days on gift cards, electronics and cash, using the 'extra credit' from the payment"}
+    outcome: "Bust-out fraud: months of perfect behaviour win a bigger limit, then a payment that never clears lets the card be spent past it, and the fraudster vanishes. Loss: $11,150, more than the whole limit."
+    why: ["Months of perfect payments build trust and a bigger limit", "Then the tells: new credit everywhere and a payment far bigger than the bill", "Freeze when the signs appear, before the overpayment clears"]
+  - card: Card ending 2268
+    opened: Open 2 years
+    fraud: false
+    months:
+    - {spend: 300, owed: 3600, limit: 5000, paid: Minimum payment made, note: Groceries and household bills}
+    - {spend: 250, owed: 3810, limit: 5000, paid: Minimum payment made, note: Groceries and bills}
+    - {spend: 260, owed: 4030, limit: 5000, paid: Minimum payment made, note: Groceries and bills}
+    - {spend: 180, owed: 4140, limit: 5000, paid: "Minimum payment, 6 days late", note: Calls the bank to ask about a payment plan}
+    - {spend: 120, owed: 4110, limit: 5000, paid: "Payment plan agreed: interest paused, 150 a month", note: Spending cut right back}
+    - {spend: 100, owed: 4060, limit: 5000, paid: Plan payment of 150 made, note: The balance starts to fall}
+    outcome: A good customer going through a hard patch.
+    why: ["A high balance and minimum payments are signs of money worries, not fraud", "They called the bank and kept paying: a customer to support, not block", "Freezing would push a struggling customer into deeper trouble"]
+  - card: Card ending 7751
+    opened: Open 3 years
+    fraud: true
+    kind: Account takeover
+    pts: [50, 50, 100, 40, 10]
+    months:
+    - {spend: 1100, owed: 1100, limit: 6000, paid: Last bill paid in full, note: The usual shops near home}
+    - {spend: 980, owed: 980, limit: 6000, paid: Last bill paid in full, note: The usual shops}
+    - {spend: 1050, owed: 1050, limit: 6000, paid: Last bill paid in full, note: "Email and phone number changed online from a device never seen before, then a new card is sent to a new address"}
+    - {spend: 4900, owed: 4900, limit: 6000, paid: Last bill paid by the usual direct debit, note: "Cash withdrawals in 3 countries on the same day, and online gift cards"}
+    - {spend: 1100, owed: 6000, limit: 6000, paid: "Next bill: 4,900, not yet due", note: "Card at its limit. The customer calls: they never changed their details"}
+    outcome: "Account takeover: a criminal got into a genuine customer's account, changed the contact details so alerts went to them, and drained the card. Loss: $6,000, and an upset customer."
+    why: ["Contact details changed from a new device, then a new card sent to a new address", "That combination is the classic start of an account takeover", "Freeze, then call the customer on the old, trusted number"]
+  - card: Card ending 3390
+    opened: Open 6 years
+    fraud: false
+    months:
+    - {spend: 1400, owed: 1400, limit: 8000, paid: Last bill paid in full, note: The usual shops}
+    - {spend: 1250, owed: 1250, limit: 8000, paid: Last bill paid in full, note: The usual shops}
+    - {spend: 2900, owed: 2900, limit: 8000, paid: Last bill paid in full, note: "Address changed in the banking app, confirmed with a code sent to the usual phone. A removal company is paid"}
+    - {spend: 3400, owed: 3400, limit: 8000, paid: Last bill paid in full, note: "Furniture, paint and a new fridge, from shops near the new address"}
+    - {spend: 1500, owed: 1500, limit: 8000, paid: Last bill paid in full, note: A new local supermarket}
+    - {spend: 1350, owed: 1350, limit: 8000, paid: Last bill paid in full, note: The usual mix of spending}
+    outcome: A good customer moving home.
+    why: ["The address change was confirmed on the usual phone, not a new device", "Spending fits a move: removals, then furniture near the new address", "Bills paid in full, as for 6 years: a move, not a takeover"]

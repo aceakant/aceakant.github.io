@@ -1,0 +1,21 @@
+<section class="play">
+  <div class="wrap play-grid">
+    <div class="play-copy">
+      <p class="kicker mono">{{ lab.name }} · Freeze or wait? · 2 minutes</p>
+      <h2 class="game-title">Freeze the fraud before it cashes out. Don't freeze a good customer.</h2>
+      <p>You watch five credit cards, one month at a time. Some belong to good customers having an unusual month. Some are frauds building up to a big cash-out. Freeze too late and the money's gone; freeze a good customer and you've lost them.</p>
+      <ul class="play-points">
+        <li>Tap "Next month" to watch, or freeze the card</li>
+        <li>Most points for freezing a fraud as soon as the signs appear</li>
+        <li>Made-up cards, real fraud patterns</li>
+      </ul>
+    </div>
+    <div class="game" id="freeze-game" aria-live="polite">
+      <div class="game-head"><span class="mono">FREEZE OR WAIT?</span><span class="mono" id="fz-round">Card 1 of 5</span></div>
+      <div class="fz-card" id="fz-card"></div>
+      <ol class="fz-months" id="fz-months"></ol>
+      <div class="game-foot" id="fz-foot"></div>
+      <script type="application/json" id="freeze-data">{{ labs.freeze | tojson }}</script>
+    </div>
+  </div>
+</section>

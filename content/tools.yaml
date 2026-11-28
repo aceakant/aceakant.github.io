@@ -100,3 +100,31 @@ tools:
     blurb: Follow 12 monthly batches of new loans for 18 months, spot the three quietly worse ones, and test early-warning triggers. See which month each fires, the warning it gives before losses peak, its false alarms and what acting on it saves.
     facts: ["Vintage curves and 30 → 60 → 90 roll rates", "Your own triggers, scored", "AI note for your CRO, checked by a second AI"]
     tags: [Credit, Portfolio monitoring, KRIs]
+
+  - id: risk-appetite-builder
+    seat: Risk
+    name: Risk Appetite Builder
+    badge: RAB
+    style: ai
+    kind: Builder · maker-checker AI statement
+    status: preview
+    url: risk-appetite-builder.html
+    cta: Build an appetite
+    featured: true
+    blurb: Pick the measures a lender's board watches, set an early-warning trigger and a limit for each, and test them today, through next year's growth plan and in a downturn. Then one AI drafts the risk appetite statement and a second checks every limit.
+    facts: ["Triggers and limits, red/amber/green", "Growth the plan can afford", "AI-drafted statement, checked twice"]
+    tags: [Risk appetite, Governance, Board reporting]
+
+  - id: cash-flow-underwriting
+    seat: Data
+    name: Cash-Flow Underwriting Lab
+    badge: CFU
+    style: lite
+    kind: Free simulator
+    status: preview
+    url: cash-flow-underwriting.html
+    cta: Compare decisions
+    featured: true
+    blurb: Decide the same 5,000 loan applicants twice, on the credit bureau file alone and with bank-account cash flow added. See how many more you can approve at the same bad rate, and who the bureau would have missed.
+    facts: ["Thin-file approvals vs bad rate", "Who is newly approved, and who is now declined", "Runs in your browser"]
+    tags: [Credit, Open banking, Alternate data]

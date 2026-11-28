@@ -1201,3 +1201,80 @@ a.wb-card.lite:hover{border-color:var(--amber)}
 #fat-text:focus{outline:2px solid var(--accent);outline-offset:1px}
 .fat-airule{border:1px solid var(--accent);border-radius:14px;padding:12px 14px;margin-top:10px;display:grid;gap:6px}
 @media (max-width:760px){.fat-top{grid-template-columns:1fr}}
+
+/* Risk Appetite Builder */
+.rab-top{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.5fr);gap:18px}
+.rab-ms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:8px}
+.rab-m{border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:4px;min-width:0}
+.rab-m.off{opacity:.55}.rab-m .roi-sl{margin:0}.rab-m .roi-top{font-size:13px}
+.rab-u{color:var(--muted);font-size:12px}
+.rab-sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:0}.rab-sw.amber{background:var(--amber)}.rab-sw.red{background:var(--risk)}
+.cs-svg .rab-lab{fill:var(--ink);font:600 12px var(--body)}.cs-svg .rab-st{font-weight:700}.cs-svg .rab-st.green{fill:var(--safe)}.cs-svg .rab-st.amber{fill:var(--amber)}.cs-svg .rab-st.red{fill:var(--risk)}
+.cs-svg .rab-tick{font-size:9px}
+.rab-zg{fill:var(--safe);opacity:.28}.rab-za{fill:var(--amber);opacity:.4}.rab-zr{fill:var(--risk);opacity:.4}
+.rab-now{fill:var(--ink);stroke:var(--bg);stroke-width:2}.rab-worst{fill:var(--risk);stroke:var(--bg);stroke-width:1.5}.rab-move{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:2 2;opacity:.7}
+.rab-ba{fill:var(--amber);opacity:.1}.rab-br{fill:var(--risk);opacity:.1}
+.rab-tl{stroke:var(--amber);stroke-width:1.5;stroke-dasharray:5 4}.rab-ll{stroke:var(--risk);stroke-width:2}
+.cs-svg .rab-tlt{fill:var(--amber);font-weight:700}.cs-svg .rab-llt{fill:var(--risk);font-weight:700}
+.rab-ph{fill:none;stroke:var(--ink);stroke-width:2.5}.rab-pp{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-dasharray:6 4}.rab-pd{fill:none;stroke:var(--risk);stroke-width:2.5;stroke-dasharray:6 4}
+.rab-dh{fill:var(--ink)}.rab-dp{fill:var(--accent)}.rab-dd{fill:var(--risk)}
+.cs-svg .rab-ppt{fill:var(--accent);font-weight:700}.cs-svg .rab-pdt{fill:var(--risk);font-weight:700}
+.rab-focus{display:flex;align-items:center;gap:8px;margin:0 0 6px}
+.rab-focus select{font:14px var(--body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:5px 8px;max-width:100%}
+.rab-table{min-width:780px}.rab-table td{vertical-align:top}
+.rab-pick{all:unset;cursor:pointer;font-weight:600;border-bottom:1px dashed var(--muted)}.rab-pick:hover{color:var(--accent)}.rab-pick:focus-visible{outline:2px solid var(--amber)}
+.rab-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}.rab-dot.green{background:var(--safe)}.rab-dot.amber{background:var(--amber)}.rab-dot.red{background:var(--risk)}
+.rab-why{display:block;color:var(--muted);font-size:12px;margin-top:4px;max-width:30ch}
+.rab-st{margin-top:16px}.rab-st h2{margin:0 0 4px}
+.rab-sk{color:var(--accent);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;margin:0 0 4px!important}
+.rab-airow{margin-top:14px}
+@media (max-width:900px){.rab-top{grid-template-columns:1fr}}
+@media (max-width:560px){.rab-ms{grid-template-columns:1fr}}
+
+/* Cash-Flow Underwriting Lab */
+.cfu-top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:18px}
+.cfu-sl{display:grid;gap:6px;align-content:start}.cfu-sl .roi-sl{margin:0}
+.cfu-target{stroke:var(--amber);stroke-width:2;stroke-dasharray:6 4}.cs-svg .cfu-targett{fill:var(--amber);font-weight:700}
+.cfu-ca{fill:none;stroke:var(--muted);stroke-width:2.5}.cfu-cb{fill:none;stroke:var(--accent);stroke-width:2.5}
+.cfu-pa{fill:var(--muted);stroke:var(--bg);stroke-width:2}.cfu-pb{fill:var(--accent);stroke:var(--bg);stroke-width:2}
+.cfu-pal{stroke:var(--muted);stroke-dasharray:2 3}.cfu-pbl{stroke:var(--accent);stroke-dasharray:2 3}
+.cs-svg .cfu-pat{fill:var(--muted);font-weight:700}.cs-svg .cfu-pbt{fill:var(--accent);font-weight:700}
+.cfu-ba{fill:var(--muted);opacity:.55}.cfu-bb{fill:var(--accent)}
+.cs-svg .cfu-v{fill:var(--ink);font-weight:700;font-size:11px}.cs-svg .cfu-g{fill:var(--ink);font:600 12px var(--body)}
+.cfu-key{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 8px;vertical-align:0}.cfu-key.a{background:var(--muted)}.cfu-key.b{background:var(--accent)}
+.cfu-h{margin:6px 0 0;font:700 17px var(--display)}
+.cfu-in td:first-child{color:var(--safe);font-weight:600}.cfu-out td:first-child{color:var(--amber);font-weight:600}
+.cfu-apps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cfu-app{border:1px solid var(--line);border-left:3px solid var(--safe);border-radius:14px;padding:12px 14px;min-width:0;display:grid;gap:4px}
+.cfu-app.cfu-out{border-left-color:var(--amber)}
+.cfu-app dl{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;margin:4px 0 0;font-size:13.5px}.cfu-app dt{color:var(--muted)}.cfu-app dd{margin:0;text-align:right;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.cfu-top,.cfu-apps{grid-template-columns:1fr}}
+
+/* How sure are you? (Analytics Lab) */
+.sure-q{margin:12px 0 4px;padding:14px 16px;background:var(--sunk);border:1px solid var(--line);border-radius:14px;font-size:16px;line-height:1.45;min-height:84px}
+.sure-pick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.sure-pick[hidden]{display:none}
+.sure-col{display:grid;gap:6px;align-content:start}
+.sure-h{font-size:12px;text-align:center;color:var(--muted)}
+.sure-b{text-align:center;padding:9px 10px}
+.sure-b.picked.right{border-color:var(--safe)}.sure-b.picked.wrong{border-color:var(--risk);background:var(--risk-soft);color:var(--risk);font-weight:600}
+.sure-pts{font:700 15px var(--mono);margin-left:4px}.sure-pts.up{color:var(--safe)}.sure-pts.down{color:var(--risk)}
+.sure-cal{margin:10px 0 4px}.sure-cal .bar.miss{fill:color-mix(in srgb,var(--risk) 55%,transparent);stroke:var(--risk)}
+.sure-ideal{stroke:var(--amber);stroke-width:2.5}
+.sure-leg{font-size:13px;color:var(--muted)}
+
+/* Freeze or wait? (Fraud Lab) */
+.fz-card{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:12px;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(135deg,color-mix(in srgb,var(--lab,#2FD3C8) 16%,var(--surface)),var(--sunk));transition:border-color .2s,background .2s}
+.fz-card b{font:700 17px var(--display)}.fz-card span{color:var(--muted);font-size:13.5px}
+.fz-chip{width:30px;height:22px;border-radius:5px;background:linear-gradient(135deg,#F5C04E,#b88a2a);opacity:.85}
+.fz-card.is-fraud{border-color:var(--risk);background:var(--risk-soft)}.fz-card.is-good{border-color:var(--safe);background:var(--safe-soft)}
+.fz-tag{margin-left:auto;font:700 11.5px var(--mono);font-style:normal;letter-spacing:.05em;text-transform:uppercase;padding:3px 8px;border-radius:8px;border:1px solid currentColor}
+.is-fraud .fz-tag{color:var(--risk)}.is-good .fz-tag{color:var(--safe)}
+.fz-months{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px;max-height:330px;overflow-y:auto}
+.fz-months li{display:grid;gap:3px;padding:9px 12px;border:1px solid var(--line);border-radius:12px;background:var(--sunk);font-size:14px;opacity:.72}
+.fz-months li.now{opacity:1;border-color:var(--lab,var(--accent));animation:fadeUp .25s ease both}
+.fz-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 10px}.fz-top span{font:600 12.5px var(--mono);color:var(--muted)}
+.fz-bar{display:block;height:7px;border-radius:999px;background:var(--line);overflow:hidden}.fz-bar i{display:block;height:100%;background:var(--accent);border-radius:999px}.fz-bar i.hi{background:var(--amber)}.fz-bar i.over{background:var(--risk)}
+.fz-paid{font-size:12.5px;color:var(--muted)}.fz-note{font-size:14px}
+.fz-freeze{background:color-mix(in srgb,#60A5FA 22%,var(--surface));border-color:#60A5FA;color:var(--ink)}
+@media (max-width:480px){.sure-pick{gap:8px}.sure-b{padding:9px 6px;font-size:13.5px}}
+.rab-top .cs-controls,.cfu-top .cs-controls{align-content:start}.rab-table td{white-space:nowrap}.rab-table td:last-child{white-space:normal}
