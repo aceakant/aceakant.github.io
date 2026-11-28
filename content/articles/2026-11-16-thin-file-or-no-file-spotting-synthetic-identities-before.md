@@ -128,7 +128,8 @@ linkedin_post: '85-95%. That is the share of applicants identified as synthetic 
 
 
   How does your team tell a thin-file customer from a thin-air customer?'
-linkedin_shared: false
+linkedin_shared: true
+linkedin_post_id: urn:li:share:7532359282910973952
 ---
 
 ## The problem
