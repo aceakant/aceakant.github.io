@@ -266,6 +266,32 @@ games:
     lesson: "A forecast of 90% should come true about 9 times in 10. Most people, and many AI models, are more confident than they are right."
     time: "2-minute"
     hashtags: [DataScience, Statistics, DecisionMaking]
+    teaser_post: |-
+      🔜 New game {when_word} in the Playground: How sure are you?
+
+      Try this one before you scroll on 👇
+
+      A test catches 99% of people who have an illness, and wrongly flags 1% of healthy people. 1 in 1,000 people has the illness.
+
+      You test positive. What's the chance you're actually ill?
+
+      Comment your guess, and how sure you are. 🎯
+
+      The answer, and 7 more questions like it, go live {launch_day}. The other games are here meanwhile 👉 {url}
+    launch_post: |-
+      🚀 New in the Playground: How sure are you?
+
+      The answer to the test question: only about 9%. 🤯
+
+      In 100,000 people, 99 who are ill test positive. So do 999 who are healthy. A common guess is 99%, said with total confidence.
+
+      That's what this game is about: 8 quick questions where you pick true or false AND say how sure you are. 99% sure and right: +100. 99% sure and wrong: −292.
+
+      At the end you see your calibration: when you say you're 85% sure, are you right 85% of the time?
+
+      2 minutes, free, no sign-up 👉 {url}
+
+      Post your score. Were you overconfident? 👇
   - id: freeze-or-wait
     lab: fraud-lab
     title: "Freeze or wait? Stop the fraud before it cashes out"
@@ -277,6 +303,32 @@ games:
     lesson: "Bust-out fraud looks like the perfect customer, right up until it doesn't. The signal is a change in behaviour, not a big number."
     time: "2-minute"
     hashtags: [FraudPrevention, CreditCards, RiskManagement]
+    teaser_post: |-
+      🔜 New game {when_word} in the Playground: Freeze or wait?
+
+      A credit card, open 5 months:
+
+      Months 1 to 3: small spends, every bill paid on the day it's due.
+      Month 3: asks for a higher limit, and gets it. 3,000 → 9,000.
+      Month 4: opens 3 new credit cards with other lenders. Spending jumps fivefold.
+
+      Do you freeze the card now, or wait? 🧊 or ⏳ Tell me below 👇
+
+      Find out {launch_day}, with 4 more cards to judge. The other games are here meanwhile 👉 {url}
+    launch_post: |-
+      🚀 New in the Playground: Freeze or wait?
+
+      Remember the perfect customer who got a higher limit, then opened 3 new cards elsewhere? Freeze. 🧊
+
+      Next month they pay in 8,000, far more than they owe, and spend it before the payment clears. Then it bounces. Loss: $11,150, more than the whole limit.
+
+      That's bust-out fraud: it looks like your best customer, right up until it doesn't.
+
+      But freeze too quickly and you lose good customers: the holidaymaker, the family moving home, the person going through a hard month.
+
+      Watch 5 cards, one month at a time. 2 minutes, free, no sign-up 👉 {url}
+
+      What's your score out of 500? 👇
 
 # Workbench tools. A live tool that isn't listed here is still posted, using its name and blurb from tools.yaml.
 article_styles:
@@ -341,6 +393,68 @@ tool_styles:
       Tell me what you find. 👇
 
 tools:
+  - id: risk-appetite-builder
+    hook: "Your board set the limits. Would the warning fire in time to act? 🚦"
+    question: "Where would you put the warning line and the limit for your capital ratio?"
+    lesson: "A risk appetite only works if the trigger fires before the limit breaks, with time to act."
+    short: "set triggers and limits for a sample lender and test them in a downturn."
+    hashtags: [RiskManagement, RiskAppetite, Banking]
+    teaser_post: |-
+      🔜 {when_cap} on the Workbench: Risk Appetite Builder
+
+      A quick one for risk leaders 👇
+
+      A lender's capital ratio is 13.7% today. Where would you put the early-warning line, and where the hard limit?
+
+      Most boards agree the limits. Far fewer test whether the warning would fire in time to do something about it.
+
+      From {launch_day} you can test yours: pick the measures, set the lines, and watch them through a downturn.
+
+      Drop your two numbers in the comments. 👇 Then try them on launch day 👉 {url}
+    launch_post: |-
+      🚀 Live now on the Workbench: Risk Appetite Builder
+
+      A risk appetite only works if the warning fires before the limit breaks.
+
+      On the sample lender, sensible "balanced" settings look fine today: everything green. ✅ Then a downturn hits, and 4 of 6 limits break, with just 1 or 2 quarters of warning.
+
+      Try your own lines in 2 minutes:
+      → Pick the measures your board watches
+      → Set an early-warning trigger and a limit for each
+      → See how much growth the plan can afford, and what breaks in a downturn
+      → Get a draft risk appetite statement
+
+      Free 👉 {url}
+
+      How many of your measures came out "well set"? 👇
+  - id: cash-flow-underwriting
+    hook: "Who does the credit file miss? 🏦"
+    question: "How many more thin-file applicants could you approve with bank-account data, at the same bad rate?"
+    lesson: "A thin credit file says little about someone. Their bank account, shared with consent, can say a lot."
+    short: "decide the same 5,000 loan applicants with and without bank-account cash flow."
+    hashtags: [OpenBanking, CreditRisk, FinancialInclusion]
+    teaser_post: |-
+      🔜 {when_cap} on the Workbench: Cash-Flow Underwriting Lab
+
+      A quarter of loan applicants have a thin credit file: one or two accounts, under a year of history. The bureau barely sees them.
+
+      Guess 👇 If a lender also reads their bank-account cash flow (with their consent), how many more of them can it approve, at the same bad rate?
+
+      A) A few more
+      B) About a quarter more
+      C) Half as many again, or more
+
+      Comment A, B or C. The answer goes live {launch_day} 👉 {url}
+    launch_post: |-
+      🚀 Live now on the Workbench: Cash-Flow Underwriting Lab
+
+      If you guessed C, you were right. On the sample, thin-file approvals go from 40% to 65% once cash flow is added, at the same 5% bad rate. Overall, 520 more people a month get a yes. 🙌
+
+      But it isn't a free lunch: cash flow also turns down 133 people the credit file would have approved. Their expected bad rate is about 15%.
+
+      Decide the same 5,000 applicants twice, and see exactly who changes 👉 {url}
+
+      Would you lend on cash flow? What's stopping you? 👇
   - id: fraud-roi
     hook: "A fraud model that catches 90% of fraud can still lose money. 💸"
     question: "What does your fraud model really save once false alarms and review costs are counted?"

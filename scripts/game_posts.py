@@ -129,8 +129,12 @@ def specials(c):
     def weekday(d, launch_day):
         return "tomorrow" if (launch_day - d).days == 1 else "this " + launch_day.strftime("%A")
 
+    # an item can carry its own teaser and launch text (teaser_post / launch_post) and hashtags in game-posts.yaml
+    own = {g["id"]: g for g in (c.get("games") or []) + (c.get("tools") or [])}
     for x in sorted(share_items.launches(), key=lambda x: x["when"]):
         L = x["when"].astimezone(IST)
+        ex = own.get(x["id"], {})
+        tags = ex.get("hashtags") or ["RiskAnalytics", "Analytics"]
         if L < now - datetime.timedelta(days=3):
             continue
         if x["kind"] == "tool":
@@ -146,15 +150,15 @@ def specials(c):
             taken.add(lday)
             when = max(at(c, lday), L + datetime.timedelta(minutes=20)) if lday == L.date() else at(c, lday)
             out.append(dict(sid=f"launch-{x['id']}", when=when, kind=x["kind"], item=x["id"], style="launch", url=live_url, picture=pic,
-                            title=x["name"], description=x["blurb"], tags=["RiskAnalytics", "Analytics"],
-                            text=c["launch_styles"][x["kind"]].format(name=x["name"], blurb=x["blurb"], where=where, url=live_url)))
+                            title=x["name"], description=x["blurb"], tags=tags,
+                            text=(ex.get("launch_post") or c["launch_styles"][x["kind"]]).format(name=x["name"], blurb=x["blurb"], where=where, url=live_url)))
         tday = free_day(L.date() - datetime.timedelta(days=1), -1)
         if tday and at(c, tday) < L:
             taken.add(tday)
             out.append(dict(sid=f"teaser-{x['id']}", when=at(c, tday), kind=x["kind"], item=x["id"], style="teaser", url=tease_url, picture=pic,
-                            title=f"Coming {L:%a %d %b}: {x['name']}", description=x["blurb"], tags=["RiskAnalytics", "Analytics"],
-                            text=c["teaser_styles"][x["kind"]].format(name=x["name"], blurb=x["blurb"], where=where, url=tease_url,
-                                                                       when_word=weekday(tday, L.date()), when_cap=weekday(tday, L.date()).capitalize(), launch_day=L.strftime("%A %d %B"))))
+                            title=f"Coming {L:%a %d %b}: {x['name']}", description=x["blurb"], tags=tags,
+                            text=(ex.get("teaser_post") or c["teaser_styles"][x["kind"]]).format(name=x["name"], blurb=x["blurb"], where=where, url=tease_url,
+                                                                       when_word=weekday(tday, L.date()), when_cap=(lambda w: w[:1].upper() + w[1:])(weekday(tday, L.date())), launch_day=f"{L:%A} {L.day} {L:%B}")))
     for a in share_items.article_releases():
         m, R = a["meta"], a["when"].astimezone(IST)
         if R <= now or m.get("linkedin_shared"):
@@ -168,7 +172,7 @@ def specials(c):
         out.append(dict(sid=f"teaser-article-{m['slug']}"[:120], when=at(c, tday), kind="article", item="article-" + m["slug"], style="teaser", url=url,
                         picture=ROOT / "content" / m["image"], title=f"Coming {R:%a %d %b} on VertexNode", description=m.get("summary", ""),
                         tags=["RiskManagement", "Banking"],
-                        text=c["teaser_styles"]["article"].format(question=hook.get("question") or m["title"], when_word=weekday(tday, R.date()), when_cap=weekday(tday, R.date()).capitalize(),
+                        text=c["teaser_styles"]["article"].format(question=hook.get("question") or m["title"], when_word=weekday(tday, R.date()), when_cap=(lambda w: w[:1].upper() + w[1:])(weekday(tday, R.date())),
                                                                    launch_day=R.strftime("%A"), topic=(("" if market in ("", "Global") else market + " ") + (m.get("category") or "").lower()), url=url)))
     return sorted(out, key=lambda x: x["when"])
 
